@@ -1,16 +1,63 @@
 @import 'tailwindcss';
 
 :root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-
     color-scheme: light dark;
-    /* color: rgba(255, 255, 255, 0.87); */
-    /* background-color: #242424; */
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+    --font-display: 'Poppins', 'sans-serif';
+    --font-logo2: 'Red Hat Display', sans-serif;
+    --font-logo3: 'Cal Sans', 'serif';
+
+    --breakpoint-3xl: 120rem;
+
+    --color-purple-50: #eff0fe;
+    --color-purple-100: #e2e3fd;
+    --color-purple-200: #cacbfb;
+    --color-purple-300: #acaaf7;
+    --color-purple-400: #9288f1;
+    --color-purple-500: #806be9;
+    --color-purple-600: #6741d9;
+    --color-purple-700: #6340c2;
+    --color-purple-800: #51379c;
+    --color-purple-900: #43337c;
+    --color-purple-950: #281e48;
+
+    --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+    --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+
+    --color-mainDarkBg: #0e0e11;
+    --color-mainHoverDarkBg: #19191f;
+
+    --color-mainGray: #262629;
+    --color-mainHoverOnGray: rgba(74, 85, 101, 0.3);
+
+    --color-mainBorder: #242324;
+    --color-grayDull: #4a5565;
+    --color-secondary: #666666;
+    --shadow-mainShadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+    --color-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

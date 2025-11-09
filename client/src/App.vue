@@ -3,9 +3,6 @@
 </script>
 
 <template>
-    <v-app>
-        <Navbar />
-
-        <RouterView />
-    </v-app>
+    <Navbar />
+    <RouterView />
 </template>
