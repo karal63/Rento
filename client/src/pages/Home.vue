@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
+    import { Button } from '../shared';
 </script>
 
 <template>
@@ -18,12 +19,14 @@
                     that fits your budget without compromising on quality or value.
                 </p>
 
-                <button
-                    class="mt-10 inline-flex gap-2 justify-center items-center rounded-md text-lg tracking-widest bg-blue-500 px-7 h-14 hover:bg-blue-400 transition cursor-pointer"
-                >
-                    BROWSE OFFERS
-                    <Icon icon="material-symbols:search-rounded" class="text-xl" />
-                </button>
+                <Button class="mt-10">
+                    <div
+                        class="inline-flex gap-2 justify-center items-center text-lg tracking-widest"
+                    >
+                        BROWSE OFFERS
+                        <Icon icon="material-symbols:search-rounded" class="text-xl" />
+                    </div>
+                </Button>
             </div>
             <div class="w-1/2">
                 <img src="../assets/car.png" alt="" />

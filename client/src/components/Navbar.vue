@@ -2,6 +2,7 @@
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
     import { useI18n } from 'vue-i18n';
+    import { Button } from '../shared';
 
     const { t, locale } = useI18n();
 
@@ -14,22 +15,19 @@
             <h3 class="text-3xl">{{ t('app.name') }}</h3>
 
             <div class="flex items-center gap-3">
-                <button
-                    class="inline-flex justify-center items-center rounded-md bg-transparent px-3 h-10 hover:bg-mainHoverDarkBg transition cursor-pointer"
-                >
+                <Button color="transparent">
                     <Icon icon="fontisto:day-sunny" class="text-xl" />
-                </button>
+                </Button>
 
                 <!-- separate reusable UI element | move into shared dir -->
                 <div class="relative inline-block text-left">
                     <!-- make fixed height or ask how to not set fixed height but have both elements same height -->
-                    <button
-                        @click="open = !open"
-                        class="inline-flex gap-1 justify-center items-center rounded-md bg-transparent px-5 h-10 hover:bg-mainHoverDarkBg transition cursor-pointer"
-                    >
-                        EN
-                        <Icon class="text-xl" icon="iconamoon:arrow-down-2-light" />
-                    </button>
+                    <Button color="transparent" @click="open = !open">
+                        <div class="flex gap-2">
+                            EN
+                            <Icon class="text-xl" icon="iconamoon:arrow-down-2-light" />
+                        </div>
+                    </Button>
 
                     <transition name="fade">
                         <div
@@ -45,11 +43,7 @@
                 </div>
 
                 <!-- separate reusable UI element | move into shared dir -->
-                <button
-                    class="px-5 h-10 rounded-md bg-blue-500 hover:bg-blue-400 transition cursor-pointer"
-                >
-                    LOG IN
-                </button>
+                <Button @click="console.log('log')">LOG IN</Button>
             </div>
         </div>
     </nav>
