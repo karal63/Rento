@@ -7,6 +7,12 @@
     const { t, locale } = useI18n();
 
     const open = ref(false);
+    const isDarkTheme = ref(false);
+
+    const toggleTheme = () => {
+        isDarkTheme.value = !isDarkTheme.value;
+        document.documentElement.classList.toggle('dark', isDarkTheme.value);
+    };
 </script>
 
 <template>
@@ -15,8 +21,13 @@
             <h3 class="text-3xl">{{ t('app.name') }}</h3>
 
             <div class="flex items-center gap-3">
-                <Button color="transparent">
-                    <Icon icon="fontisto:day-sunny" class="text-xl" />
+                <Button @click="toggleTheme" color="transparent">
+                    <Icon v-if="isDarkTheme" icon="fontisto:day-sunny" class="text-2xl" />
+                    <Icon
+                        v-else
+                        icon="material-symbols-light:partly-cloudy-night-outline"
+                        class="text-2xl"
+                    />
                 </Button>
 
                 <div class="relative inline-block text-left">

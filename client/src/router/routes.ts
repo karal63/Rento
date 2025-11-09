@@ -1,9 +1,9 @@
 import type { RouteRecordRaw } from 'vue-router';
-import Home from '../pages/Home.vue';
+import Landing from '../pages/landing/LandingPage.vue';
 
 export const routes: RouteRecordRaw[] = [
     {
         path: '/',
-        component: Home,
+        component: Landing,
     },
 ];

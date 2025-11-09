@@ -1,13 +1,13 @@
 @import 'tailwindcss';
 
 :root {
-    color-scheme: light dark;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
     --font-display: 'Poppins', 'sans-serif';
@@ -31,18 +31,33 @@
     --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
     --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
 
-    --color-mainDarkBg: #0e0e11;
-    --color-mainHoverDarkBg: #19191f;
+    --color-main-bg: #efefef;
+    --color-main-hover-bg: #d6d6d6;
 
-    --color-mainGray: #262629;
+    --color-primary: hsl(220 90% 66%);
+
+    /* --color-mainHoverDarkBg: #19191f; */
+    /* --color-mainGray: #262629;
     --color-mainHoverOnGray: rgba(74, 85, 101, 0.3);
-
     --color-mainBorder: #242324;
     --color-grayDull: #4a5565;
     --color-secondary: #666666;
-    --shadow-mainShadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    --shadow-mainShadow: 0 0 20px rgba(0, 0, 0, 0.3); */
+    /* --color-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); */
+}
 
-    --color-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+@layer theme {
+    .dark {
+        --color-main-bg: #011628;
+        --color-main-hover-bg: #212121;
+
+        --color-main-text: hsl(0 0% 96%);
+    }
+}
+
+body {
+    background-color: var(--color-main-bg);
+    color: var(--color-main-text);
 }
 
 .flex-center {
