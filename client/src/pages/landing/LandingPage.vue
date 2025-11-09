@@ -32,7 +32,7 @@
                 </Button>
             </div>
             <div class="w-1/2">
-                <img src="../../assets/car.png" alt="" />
+                <img src="../../shared/assets/car.png" alt="" />
             </div>
         </div>
     </div>
