@@ -1,0 +1,26 @@
+import { createI18n } from 'vue-i18n';
+
+function loadLocaleMessages() {
+    const messages: Record<string, any> = {};
+
+    const locales = import.meta.glob('./lang/*.json', { eager: true });
+
+    for (const path in locales) {
+        const matched = path.match(/\.\/lang\/([A-Za-z0-9-_]+)\.json$/i);
+        if (matched && matched[1]) {
+            const locale = matched[1];
+            messages[locale] = (locales[path] as any).default || locales[path];
+        }
+    }
+
+    return messages;
+}
+
+const i18n = createI18n({
+    legacy: false, // optional, depending on Composition or Legacy API
+    locale: 'en',
+    fallbackLocale: 'en',
+    messages: loadLocaleMessages(),
+});
+
+export default i18n;

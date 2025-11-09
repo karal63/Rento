@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import './style.css';
 import App from './App.vue';
 import router from './router/router';
+import i18n from './i18n';
 
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
@@ -28,5 +29,6 @@ const app = createApp(App);
 
 app.use(vuetify);
 app.use(router);
+app.use(i18n);
 
 app.mount('#app');
