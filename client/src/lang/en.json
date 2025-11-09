@@ -1,5 +1,6 @@
 {
     "app": {
-        "name": "Rento"
+        "name": "Rento",
+        "browse_offers": "BROWS OFFERS"
     }
 }

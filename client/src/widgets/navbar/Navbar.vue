@@ -2,7 +2,7 @@
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
     import { useI18n } from 'vue-i18n';
-    import { Button } from '../shared';
+    import { Button } from '../../shared';
 
     const { t, locale } = useI18n();
 
@@ -19,9 +19,7 @@
                     <Icon icon="fontisto:day-sunny" class="text-xl" />
                 </Button>
 
-                <!-- separate reusable UI element | move into shared dir -->
                 <div class="relative inline-block text-left">
-                    <!-- make fixed height or ask how to not set fixed height but have both elements same height -->
                     <Button color="transparent" @click="open = !open">
                         <div class="flex gap-2">
                             EN
@@ -34,15 +32,24 @@
                             v-if="open"
                             class="absolute right-0 z-10 mt-2 w-20 origin-top-right rounded-lg bg-mainHoverOnGray shadow-lg ring-1 ring-black ring-opacity-5"
                         >
-                            <div class="py-1">
-                                <a href="#" class="block px-4 py-2 text-sm">PL</a>
-                                <a href="#" class="block px-4 py-2 text-sm">DE</a>
+                            <div class="">
+                                <button
+                                    @click="locale = 'pl'"
+                                    class="block py-2 text-sm w-full rounded-md cursor-pointer hover:bg-gray-700 transition"
+                                >
+                                    PL
+                                </button>
+                                <button
+                                    @click="locale = 'en'"
+                                    class="block py-2 text-sm w-full rounded-md cursor-pointer hover:bg-gray-700 transition"
+                                >
+                                    EN
+                                </button>
                             </div>
                         </div>
                     </transition>
                 </div>
 
-                <!-- separate reusable UI element | move into shared dir -->
                 <Button @click="console.log('log')">LOG IN</Button>
             </div>
         </div>

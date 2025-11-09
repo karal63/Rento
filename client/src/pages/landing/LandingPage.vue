@@ -1,6 +1,9 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import { Button } from '../shared';
+    import { Button } from '../../shared';
+    import { useI18n } from 'vue-i18n';
+
+    const { t, locale } = useI18n();
 </script>
 
 <template>
@@ -23,7 +26,7 @@
                     <div
                         class="inline-flex gap-2 justify-center items-center text-lg tracking-widest"
                     >
-                        BROWSE OFFERS
+                        {{ t('app.browse_offers') }}
                         <Icon icon="material-symbols:search-rounded" class="text-xl" />
                     </div>
                 </Button>
