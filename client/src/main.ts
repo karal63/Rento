@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import './style.css';
 import App from './App.vue';
+import router from './router/router';
 
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
@@ -16,6 +17,7 @@ const vuetify = createVuetify({
             light: {
                 colors: {
                     customWhite: '#F8F8F8', // define your color here
+                    primary: '#5865f2',
                 },
             },
         },
@@ -25,5 +27,6 @@ const vuetify = createVuetify({
 const app = createApp(App);
 
 app.use(vuetify);
+app.use(router);
 
 app.mount('#app');

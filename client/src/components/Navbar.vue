@@ -2,7 +2,7 @@
 
 <template>
     <v-app-bar flat app color="customWhite">
-        <div class="w-full max-w-[1200px] m-auto flex items-center px-4">
+        <div class="w-full max-w-[1800px] m-auto flex items-center px-4">
             <!-- Left side -->
             <v-toolbar-title>
                 <span class="text-2xl font-semibold">Rento</span>

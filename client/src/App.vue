@@ -5,5 +5,7 @@
 <template>
     <v-app>
         <Navbar />
+
+        <RouterView />
     </v-app>
 </template>
