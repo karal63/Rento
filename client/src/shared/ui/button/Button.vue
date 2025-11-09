@@ -14,10 +14,10 @@
         class="px-5 h-10 rounded-md transition cursor-pointer"
         :class="
             color === 'transparent'
-                ? `bg-${color}-500 hover:bg-mainHoverDarkBg`
+                ? `bg-${color}-500 hover:bg-main-hover-bg`
                 : color
                   ? `bg-${color}-500 hover:bg-${color}-400`
-                  : `bg-blue-500 hover:bg-blue-400`
+                  : `text-white bg-primary hover:bg-blue-400`
         "
     >
         <slot />
