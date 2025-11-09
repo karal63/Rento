@@ -1,11 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    import Navbar from './components/Navbar.vue';
+</script>
 
 <template>
     <v-app>
-        <v-main>
-            <v-container>
-                <v-btn color="primary">Hello Vuetify</v-btn>
-            </v-container>
-        </v-main>
+        <Navbar />
+
+        <RouterView />
     </v-app>
 </template>

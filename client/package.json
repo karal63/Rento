@@ -10,7 +10,12 @@
         "format": "prettier --write ."
     },
     "dependencies": {
+        "@mdi/font": "^7.4.47",
+        "@tailwindcss/vite": "^4.1.17",
+        "tailwindcss": "^4.1.17",
         "vue": "^3.5.22",
+        "vue-i18n": "^11.1.12",
+        "vue-router": "^4.6.3",
         "vuetify": "^3.10.9"
     },
     "devDependencies": {
