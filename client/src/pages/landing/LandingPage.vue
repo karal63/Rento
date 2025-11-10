@@ -3,13 +3,15 @@
     import { Button } from '../../shared/ui/button';
     import { useI18n } from 'vue-i18n';
     import Brands from './Brands.vue';
+    import Spacer from './Spacer.vue';
+    import KeyFeatures from './KeyFeatures.vue';
 
-    const { t, locale } = useI18n();
+    const { t } = useI18n();
 </script>
 
 <template>
     <div>
-        <div class="max-w-[1500px] m-auto mt-36">
+        <div class="max-w-[1500px] h-[81vh] m-auto mt-36">
             <div class="flex gap-5 items-center px-4">
                 <div class="w-1/2">
                     <h1 class="text-8xl font-extrabold">
@@ -40,5 +42,8 @@
 
             <Brands />
         </div>
+
+        <Spacer />
+        <KeyFeatures />
     </div>
 </template>
