@@ -41,18 +41,18 @@
                     <transition name="fade">
                         <div
                             v-if="open"
-                            class="absolute right-0 z-10 mt-2 w-20 origin-top-right rounded-lg bg-mainHoverOnGray shadow-lg ring-1 ring-black ring-opacity-5"
+                            class="absolute right-0 z-10 mt-2 w-20 origin-top-right rounded-lg shadow-lg ring-1 ring-main-border ring-opacity-5"
                         >
                             <div class="">
                                 <button
                                     @click="locale = 'pl'"
-                                    class="block py-2 text-sm w-full rounded-md cursor-pointer hover:bg-gray-700 transition"
+                                    class="block py-2 text-sm w-full rounded-md cursor-pointer hover:bg-main-hover-bg transition"
                                 >
                                     PL
                                 </button>
                                 <button
                                     @click="locale = 'en'"
-                                    class="block py-2 text-sm w-full rounded-md cursor-pointer hover:bg-gray-700 transition"
+                                    class="block py-2 text-sm w-full rounded-md cursor-pointer hover:bg-main-hover-bg transition"
                                 >
                                     EN
                                 </button>
