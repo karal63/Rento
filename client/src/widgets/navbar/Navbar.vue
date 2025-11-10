@@ -2,7 +2,7 @@
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
     import { useI18n } from 'vue-i18n';
-    import { Button } from '../../shared';
+    import { Button } from '../../shared/ui/button';
 
     const { t, locale } = useI18n();
 
