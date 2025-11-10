@@ -3,6 +3,7 @@
     import { ref } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { Button } from '../../shared/ui/button';
+    import { languages } from '@/shared/config';
 
     const { t, locale } = useI18n();
 
@@ -45,16 +46,13 @@
                         >
                             <div class="">
                                 <button
-                                    @click="locale = 'pl'"
-                                    class="block py-2 text-sm w-full rounded-md cursor-pointer hover:bg-main-hover-bg transition"
+                                    v-for="lang in languages"
+                                    :key="lang"
+                                    @click="locale = lang"
+                                    class="block py-2 w-full rounded-md cursor-pointer hover:bg-main-hover-bg transition"
+                                    :class="lang === locale && 'bg-main-hover-bg'"
                                 >
-                                    PL
-                                </button>
-                                <button
-                                    @click="locale = 'en'"
-                                    class="block py-2 text-sm w-full rounded-md cursor-pointer hover:bg-main-hover-bg transition"
-                                >
-                                    EN
+                                    {{ lang }}
                                 </button>
                             </div>
                         </div>

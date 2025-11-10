@@ -1,5 +1,7 @@
 import { createI18n } from 'vue-i18n';
 
+const languages: string[] = [];
+
 function loadLocaleMessages() {
     const messages: Record<string, any> = {};
 
@@ -10,6 +12,7 @@ function loadLocaleMessages() {
         if (matched && matched[1]) {
             const locale = matched[1];
             messages[locale] = (locales[path] as any).default || locales[path];
+            languages.push(locale);
         }
     }
 
@@ -23,4 +26,4 @@ const i18n = createI18n({
     messages: loadLocaleMessages(),
 });
 
-export default i18n;
+export { i18n, languages };
