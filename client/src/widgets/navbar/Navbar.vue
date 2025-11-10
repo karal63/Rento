@@ -23,20 +23,18 @@
     <nav class="py-5 fixed top-0 w-full bg-main-bg z-20">
         <div class="max-w-[1900px] m-auto flex items-center flex-between">
             <h3 class="text-3xl">
-                <RouterLink to="/">
-                    {{ t('app.name') }}
-                </RouterLink>
+                <RouterLink to="/">Rento</RouterLink>
             </h3>
 
             <ul class="flex divide-x divide-main-border">
                 <li class="text-lg px-6 font-semibold transition hover:text-primary">
-                    <RouterLink to="/about">About Us</RouterLink>
+                    <RouterLink to="/about">{{ t('app.about_us') }}</RouterLink>
                 </li>
                 <li class="text-lg px-6 font-semibold transition hover:text-primary">
-                    <RouterLink to="/cars">Cars</RouterLink>
+                    <RouterLink to="/cars">{{ t('app.cars') }}</RouterLink>
                 </li>
                 <li class="text-lg px-6 font-semibold transition hover:text-primary">
-                    <RouterLink to="/contact">Contact</RouterLink>
+                    <RouterLink to="/contact">{{ t('app.contact') }}</RouterLink>
                 </li>
             </ul>
 
@@ -53,7 +51,7 @@
                 <div class="relative inline-block text-left">
                     <Button color="transparent" @click="open = !open">
                         <div class="flex gap-2">
-                            EN
+                            {{ locale }}
                             <Icon class="text-xl" icon="iconamoon:arrow-down-2-light" />
                         </div>
                     </Button>
@@ -76,7 +74,7 @@
                     </transition>
                 </div>
 
-                <Button @click="console.log('log')">LOG IN</Button>
+                <Button @click="console.log('log')">{{ t('app.login_btn') }}</Button>
             </div>
         </div>
     </nav>

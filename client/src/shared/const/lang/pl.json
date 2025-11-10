@@ -1,6 +1,17 @@
 {
     "app": {
-        "name": "Rento (pl)",
-        "browse_offers": "PRZEGLĄDAJ OFERTY"
+        "about_us": "O nas",
+        "cars": "Samochody",
+        "contact": "Kontakt",
+        "login_btn": "ZAŁOGUJ SIĘ",
+        "landing_title": "Wynajem\n Aut Premium\n w Warszawie",
+        "landing_desc": "Odkryj świat motoryzacyjnej doskonałości — wybierz samochód premium, który podkreśli Twój styl, klasę i niezależność. Komfort, prestiż i moc – bez kompromisów.",
+        "browse_offers": "PRZEGLĄDAJ OFERTY",
+        "key_features": "Kluczowe funkcje",
+        "key_features_desc": "Odkryj wyjątkowe cechy, które sprawiają, że nasz produkt jest niezawodny, wydajny i łatwy w obsłudze.",
+        "key_delivery": "Dostawa samochodu w ciągu 24 godzin",
+        "key_support": "Wsparcie techniczne 24/7",
+        "key_premium": "Wszystkie modele posiadają pakiet premium",
+        "key_confidentiality": "Absolutna poufność"
     }
 }

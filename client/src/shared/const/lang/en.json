@@ -1,6 +1,17 @@
 {
     "app": {
-        "name": "Rento",
-        "browse_offers": "BROWS OFFERS"
+        "about_us": "About Us",
+        "cars": "Cars",
+        "contact": "Contact",
+        "login_btn": "LOG IN",
+        "landing_title": "Premium\nCar Rental\n In Warsaw",
+        "landing_desc": "Discover a world of automotive excellence—choose a premium car that emphasizes your style, class, and independence. Comfort, prestige, and power—without compromise.",
+        "browse_offers": "BROWS OFFERS",
+        "key_features": "Key Features",
+        "key_features_desc": "Discover the standout features that make our product reliable, efficient, and easy to use.",
+        "key_delivery": "24-hour car delivery",
+        "key_support": "24/7 technical support",
+        "key_premium": "All models have a premium package",
+        "key_confidentiality": "Absolute confidentiality"
     }
 }

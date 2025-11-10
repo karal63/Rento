@@ -1,15 +1,19 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
     import { keyFeatures } from '@/shared/const';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 </script>
 
 <template>
     <section class="max-w-[1500px] m-auto my-52">
-        <h1 class="text-6xl font-extrabold">Key Features</h1>
+        <h1 class="text-6xl font-extrabold">
+            {{ t('app.key_features') }}
+        </h1>
 
         <p class="text-2xl my-13">
-            Discover the standout features that make our product reliable, efficient, and easy to
-            use.
+            {{ t('app.key_features_desc') }}
         </p>
 
         <div class="grid grid-cols-4 gap-10">
@@ -30,7 +34,7 @@
                 </div>
 
                 <div class="h-32 flex-col justify-end text-2xl font-bold">
-                    <p class="w-2/3">{{ feat.text }}</p>
+                    <p class="w-2/3">{{ t(`app.${feat.text}`) }}</p>
                 </div>
             </div>
         </div>
