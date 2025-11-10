@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="mt-40 grid grid-cols-9 gap-10">
+    <div class="mt-32 grid grid-cols-9 gap-10">
         <div
             v-for="brand in carBrands"
             :key="brand.id"

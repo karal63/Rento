@@ -4,22 +4,41 @@
     import { useI18n } from 'vue-i18n';
     import { Button } from '../../shared/ui/button';
     import { languages } from '@/shared/config';
+    import { useThemeStore } from '@/shared/model';
 
     const { t, locale } = useI18n();
+    const themeStore = useThemeStore();
 
     const open = ref(false);
     const isDarkTheme = ref(false);
 
     const toggleTheme = () => {
         isDarkTheme.value = !isDarkTheme.value;
+        themeStore.setTheme(isDarkTheme.value);
         document.documentElement.classList.toggle('dark', isDarkTheme.value);
     };
 </script>
 
 <template>
-    <nav class="my-5">
+    <nav class="py-5 fixed top-0 w-full bg-main-bg z-20">
         <div class="max-w-[1900px] m-auto flex items-center flex-between">
-            <h3 class="text-3xl">{{ t('app.name') }}</h3>
+            <h3 class="text-3xl">
+                <RouterLink to="/">
+                    {{ t('app.name') }}
+                </RouterLink>
+            </h3>
+
+            <ul class="flex divide-x divide-main-border">
+                <li class="text-lg px-6 font-semibold transition hover:text-primary">
+                    <RouterLink to="/about">About Us</RouterLink>
+                </li>
+                <li class="text-lg px-6 font-semibold transition hover:text-primary">
+                    <RouterLink to="/cars">Cars</RouterLink>
+                </li>
+                <li class="text-lg px-6 font-semibold transition hover:text-primary">
+                    <RouterLink to="/contact">Contact</RouterLink>
+                </li>
+            </ul>
 
             <div class="flex items-center gap-3">
                 <Button @click="toggleTheme" color="transparent">
