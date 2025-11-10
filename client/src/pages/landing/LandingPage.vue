@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import { Button } from '../../shared';
+    import { Button } from '../../shared/ui/button';
     import { useI18n } from 'vue-i18n';
 
     const { t, locale } = useI18n();
