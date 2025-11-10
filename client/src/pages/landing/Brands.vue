@@ -7,7 +7,7 @@
         <div
             v-for="brand in carBrands"
             :key="brand.id"
-            class="h-full flex-center py-4 rounded-lg border grayscale transition shadow-md cursor-pointer hover:grayscale-0 border-main-border"
+            class="h-full flex-center py-4 rounded-lg grayscale transition shadow-md cursor-pointer hover:grayscale-0"
         >
             <img :src="brand.img" alt="" class="h-[100px]" />
         </div>

@@ -61,19 +61,17 @@
                     <transition name="fade">
                         <div
                             v-if="open"
-                            class="absolute right-0 z-10 mt-2 w-20 origin-top-right rounded-lg shadow-lg ring-1 ring-main-border ring-opacity-5"
+                            class="absolute right-0 z-10 mt-2 w-20 origin-top-right rounded-lg bg-main-bg shadow-lg ring-1 ring-main-border ring-opacity-5"
                         >
-                            <div class="">
-                                <button
-                                    v-for="lang in languages"
-                                    :key="lang"
-                                    @click="locale = lang"
-                                    class="block py-2 w-full rounded-md cursor-pointer hover:bg-main-hover-bg transition"
-                                    :class="lang === locale && 'bg-main-hover-bg'"
-                                >
-                                    {{ lang }}
-                                </button>
-                            </div>
+                            <button
+                                v-for="lang in languages"
+                                :key="lang"
+                                @click="locale = lang"
+                                class="block py-2 w-full rounded-md cursor-pointer hover:bg-main-hover-bg transition"
+                                :class="lang === locale && 'bg-main-hover-bg'"
+                            >
+                                {{ lang }}
+                            </button>
                         </div>
                     </transition>
                 </div>
