@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { CarsList } from '@/entities/car';
+    import { CarsList } from '@/features/car/carsList/ui';
     import { carsBg } from '@/shared/assets';
     import { useI18n } from 'vue-i18n';
 
@@ -21,3 +21,5 @@
         </div>
     </div>
 </template>
+
+<!-- solve problem with architecuture, it cannot be so complicated -->
