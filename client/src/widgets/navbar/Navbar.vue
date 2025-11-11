@@ -74,7 +74,7 @@
                     </transition>
                 </div>
 
-                <Button @click="console.log('log')">{{ t('app.login_btn') }}</Button>
+                <Button @click="console.log('log')">{{ t('app.book_btn') }}</Button>
             </div>
         </div>
     </nav>

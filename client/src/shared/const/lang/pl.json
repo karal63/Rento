@@ -12,6 +12,13 @@
         "key_delivery": "Dostawa samochodu w ciągu 24 godzin",
         "key_support": "Wsparcie techniczne 24/7",
         "key_premium": "Wszystkie modele posiadają pakiet premium",
-        "key_confidentiality": "Absolutna poufność"
+        "key_confidentiality": "Absolutna poufność",
+        "acceleration": "Przyspieszenie",
+        "transmission": "Skrzynia biegów",
+        "power": "Moc",
+        "number_of_seats": "Liczba miejsc",
+        "price_desc": "cena netto/doba przy min 30 dniach",
+        "book_btn": "ZAREZERWUJ",
+        "price_from": "Od"
     }
 }

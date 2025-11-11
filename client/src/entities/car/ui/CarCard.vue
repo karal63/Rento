@@ -1,5 +1,8 @@
 <script setup lang="ts">
     import { Button } from '@/shared/ui/button';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 </script>
 
 <template>
@@ -17,35 +20,33 @@
 
                 <div class="mt-8 text-lg flex-col gap-3 text-main-gray">
                     <div class="flex-between">
-                        <p>Acceleration:</p>
+                        <p>{{ t('app.acceleration') }}:</p>
                         <p>2,9 s do 100km/h</p>
                     </div>
                     <div class="flex-between">
-                        <p>Transmission:</p>
+                        <p>{{ t('app.transmission') }}:</p>
                         <p>Auto</p>
                     </div>
                     <div class="flex-between">
-                        <p>Power:</p>
+                        <p>{{ t('app.power') }}:</p>
                         <p>640 KM / 600 Nm</p>
                     </div>
                     <div class="flex-between">
-                        <p>Number of seats:</p>
+                        <p>{{ t('app.number_of_seats') }}:</p>
                         <p>2</p>
                     </div>
                 </div>
             </div>
 
             <div class="flex justify-between items-end">
-                <!-- <div class="flex items-center gap-2">
-                    <div class="w-3 h-3 bg-green-500 rounded-xl"></div>
-                    <p class="text-lg">Online reservation available</p>
-                </div> -->
                 <div>
-                    <p class="text-xl mt-8 font-bold">Od 1500 zł</p>
-                    <p class="text-sm text-main-gray">cena netto/doba przy min 30 dniach</p>
+                    <p class="text-xl mt-8 font-bold text-red-700">
+                        {{ t('app.price_from') }} 1500 zł
+                    </p>
+                    <p class="text-sm text-main-gray">{{ t('app.price_desc') }}</p>
                 </div>
 
-                <Button>RESERVE</Button>
+                <Button>{{ t('app.book_btn') }}</Button>
             </div>
         </div>
     </div>
