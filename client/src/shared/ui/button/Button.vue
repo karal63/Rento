@@ -11,7 +11,7 @@
 <template>
     <button
         @click="$emit('click')"
-        class="px-5 h-10 rounded-md transition cursor-pointer"
+        class="px-5 h-10 rounded-md transition cursor-pointer tracking-widest"
         :class="
             color === 'transparent'
                 ? `bg-${color}-500 hover:bg-main-hover-bg`

@@ -34,6 +34,7 @@
     --color-main-bg: #efefef;
     --color-main-hover-bg: #d6d6d6;
     --color-main-border: #d5d5d5;
+    --color-main-gray: #6d6d6d;
 
     --color-primary: hsl(220 90% 66%);
 
@@ -52,6 +53,7 @@
         --color-main-bg: #141414;
         --color-main-hover-bg: #212121;
         --color-main-border: #202020;
+        --color-main-gray: #adadad;
 
         --color-main-text: hsl(0 0% 96%);
     }

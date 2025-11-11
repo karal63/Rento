@@ -32,9 +32,7 @@
                         </p>
 
                         <Button class="mt-10">
-                            <div
-                                class="inline-flex gap-2 justify-center items-center text-lg tracking-widest"
-                            >
+                            <div class="inline-flex gap-2 justify-center items-center text-lg">
                                 {{ t('app.browse_offers') }}
                                 <Icon icon="material-symbols:search-rounded" class="text-xl" />
                             </div>

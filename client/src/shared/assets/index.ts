@@ -4,3 +4,4 @@ export { default as porsche } from './logos/porsche.png';
 export { default as bmw } from './logos/bmw.png';
 export { default as darkBg } from './dark-bg.png';
 export { default as lightBg } from './light-bg.png';
+export { default as carsBg } from './cars_bg.png';
