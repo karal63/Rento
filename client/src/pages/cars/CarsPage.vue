@@ -9,7 +9,7 @@
     <div>
         <div class="max-w-[1900px] m-auto 0">
             <div class="mt-40 font-extrabold text-8xl">
-                <div>Rent a car in Warsaw</div>
+                <div>{{ t('app.cars_page_title') }}</div>
             </div>
             <div class="flex gap-8 mt-20">
                 <div class="w-[20%] h-[600px] sticky top-24"></div>
