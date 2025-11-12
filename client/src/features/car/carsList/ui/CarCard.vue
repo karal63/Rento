@@ -11,9 +11,15 @@
 </script>
 
 <template>
-    <div class="shadow-xl hover:shadow-md transition rounded-bl-xl rounded-br-md cursor-pointer">
-        <div>
-            <img :src="car.image" alt="" class="rounded-tl-xl rounded-tr-md" />
+    <div
+        class="shadow-xl shadow-main-border hover:shadow-md transition rounded-bl-xl rounded-br-md cursor-pointer overflow-hidden"
+    >
+        <div class="h-[400px]">
+            <img
+                :src="car.image"
+                alt=""
+                class="rounded-tl-xl rounded-tr-md h-full w-full object-cover"
+            />
         </div>
         <div class="h-[400px] px-8 py-10 flex-col justify-between">
             <div>
