@@ -1,17 +1,28 @@
 <script setup lang="ts">
     import { Button } from '@/shared/ui/button';
     import { useI18n } from 'vue-i18n';
-    import type { Car, PriceRange } from '@/entities/car';
+    import { useCarStore, type Car, type PriceRange } from '@/entities/car';
+    import { useRouter } from 'vue-router';
 
     const { t } = useI18n();
+    const carStore = useCarStore();
+    const router = useRouter();
 
-    defineProps<{
+    const props = defineProps<{
         car: Car;
     }>();
+
+    const select = () => {
+        carStore.selectCar(props.car);
+        router.push(`/cars/${props.car.id}`);
+    };
 </script>
 
 <template>
-    <div class="shadow-xl hover:shadow-md transition rounded-bl-xl rounded-br-md cursor-pointer">
+    <div
+        @click="select"
+        class="shadow-xl hover:shadow-md transition rounded-bl-xl rounded-br-md cursor-pointer"
+    >
         <div>
             <img :src="car.image" alt="" class="rounded-tl-xl rounded-tr-md" />
         </div>

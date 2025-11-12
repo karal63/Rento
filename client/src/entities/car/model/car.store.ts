@@ -43,8 +43,10 @@ export const useCarStore = defineStore('car', () => {
             ],
         },
     ]);
+    const selectedCar = ref<Car | null>(null);
 
     const setCars = (newCars: Car[]) => (cars.value = newCars);
+    const selectCar = (car: Car) => (selectedCar.value = car);
 
-    return { cars, setCars };
+    return { cars, setCars, selectCar, selectedCar };
 });
