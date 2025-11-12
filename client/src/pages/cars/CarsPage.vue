@@ -1,23 +1,20 @@
 <script setup lang="ts">
     import { CarsList } from '@/features/car/carsList/ui';
-    import { carsBg } from '@/shared/assets';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
 </script>
 
 <template>
-    <div class="mt-20">
-        <div
-            :style="{
-                backgroundImage: `url(${carsBg})`,
-            }"
-            class="bg-no-repeat bg-cover h-[350px] flex justify-center items-end pb-10 text-white font-extrabold text-8xl"
-        >
-            <div>{{ t('app.cars') }}</div>
-        </div>
-        <div class="max-w-[1500px] m-auto">
-            <CarsList />
+    <div>
+        <div class="max-w-[1900px] m-auto 0">
+            <div class="mt-40 font-extrabold text-8xl">
+                <div>{{ t('app.cars_page_title') }}</div>
+            </div>
+            <div class="flex gap-8 mt-20">
+                <div class="w-[20%] h-[600px] sticky top-24"></div>
+                <CarsList />
+            </div>
         </div>
     </div>
 </template>

@@ -20,9 +20,9 @@
 </script>
 
 <template>
-    <nav class="py-5 fixed top-0 w-full bg-main-bg z-20">
+    <nav class="py-5 fixed top-0 w-full backdrop-blur-md bg-main-bg/30 z-20">
         <div class="max-w-[1900px] m-auto flex items-center flex-between">
-            <h3 class="text-3xl">
+            <h3 class="text-4xl font-semibold">
                 <RouterLink to="/">Rento</RouterLink>
             </h3>
 
@@ -39,7 +39,7 @@
             </ul>
 
             <div class="flex items-center gap-3">
-                <Button @click="toggleTheme" color="transparent">
+                <Button @click="toggleTheme" color="transparent" size="sm">
                     <Icon v-if="isDarkTheme" icon="fontisto:day-sunny" class="text-2xl" />
                     <Icon
                         v-else
@@ -49,7 +49,7 @@
                 </Button>
 
                 <div class="relative inline-block text-left">
-                    <Button color="transparent" @click="open = !open">
+                    <Button @click="open = !open" color="transparent" size="sm">
                         <div class="flex gap-2">
                             {{ locale }}
                             <Icon class="text-xl" icon="iconamoon:arrow-down-2-light" />
@@ -74,7 +74,7 @@
                     </transition>
                 </div>
 
-                <Button @click="console.log('log')">{{ t('app.book_btn') }}</Button>
+                <Button @click="console.log('log')" size="sm">{{ t('app.book_btn') }}</Button>
             </div>
         </div>
     </nav>
