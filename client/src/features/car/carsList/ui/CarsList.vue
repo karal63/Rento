@@ -6,7 +6,7 @@
 </script>
 
 <template>
-    <div class="mt-20 grid grid-cols-3 gap-8">
+    <div class="w-[80%] grid grid-cols-2 gap-8">
         <CarCard v-for="car in carStore.cars" :key="car.id" :car="car" />
     </div>
 </template>

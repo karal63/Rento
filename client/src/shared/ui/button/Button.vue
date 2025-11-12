@@ -1,25 +1,40 @@
 <script setup lang="ts">
-    defineProps<{
+    import { computed } from 'vue';
+
+    const props = defineProps<{
         color?: 'red' | 'transparent';
+        size?: 'sm' | 'md';
     }>();
 
     defineEmits<{
         (e: 'click'): void;
     }>();
+
+    const sizeClasses = {
+        sm: 'px-5 h-10 text-md',
+        md: 'px-7 h-14 text-lg',
+        // lg: 'px-6 py-3 text-lg',
+    };
+
+    const colorClasses = computed(() => {
+        if (props.color === 'transparent') {
+            return 'bg-transparent hover:bg-main-hover-bg';
+        } else if (props.color) {
+            return `bg-${props.color}-500 hover:bg-${props.color}-400`;
+        } else {
+            return 'text-white bg-primary hover:bg-blue-400';
+        }
+    });
+
+    const buttonClass = computed(() => {
+        const sizeClass = (props.size && sizeClasses[props.size]) || sizeClasses.md;
+
+        return `${colorClasses.value} ${sizeClass} px-5 h-10 rounded-md transition cursor-pointer tracking-widest`;
+    });
 </script>
 
 <template>
-    <button
-        @click="$emit('click')"
-        class="px-5 h-10 rounded-md transition cursor-pointer tracking-widest"
-        :class="
-            color === 'transparent'
-                ? `bg-${color}-500 hover:bg-main-hover-bg`
-                : color
-                  ? `bg-${color}-500 hover:bg-${color}-400`
-                  : `text-white bg-primary hover:bg-blue-400`
-        "
-    >
+    <button @click="$emit('click')" :class="buttonClass">
         <slot />
     </button>
 </template>
