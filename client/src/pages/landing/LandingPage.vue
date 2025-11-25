@@ -16,22 +16,23 @@
 <template>
     <div>
         <div
-            class="h-screen bg-no-repeat bg-cover"
+            class="bg-no-repeat bg-cover h-[1000px]"
             :style="{
                 backgroundImage: `url('${themeStore.isDark ? darkBg : lightBg}')`,
+                backgroundPositionY: 'center',
             }"
         >
-            <div class="max-w-[1500px] m-auto pt-60">
+            <div class="max-w-[1500px] m-auto pt-44">
                 <div class="flex gap-5 items-center px-4">
                     <div class="w-1/2">
                         <h1 class="text-8xl font-extrabold multiline">
                             {{ t('app.landing_title') }}
                         </h1>
-                        <p class="mt-10 text-xl text-gray-400 leading-8 max-w-4/5">
+                        <p class="my-10 text-xl text-gray-400 leading-8 max-w-4/5">
                             {{ t('app.landing_desc') }}
                         </p>
 
-                        <Button class="mt-10">
+                        <Button>
                             <div class="inline-flex gap-2 justify-center items-center text-lg">
                                 {{ t('app.browse_offers') }}
                                 <Icon icon="material-symbols:search-rounded" class="text-xl" />
