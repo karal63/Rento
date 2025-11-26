@@ -20,6 +20,16 @@
         "number_of_seats": "Liczba miejsc",
         "price_desc": "cena netto/doba przy min 30 dniach",
         "book_btn": "ZAREZERWUJ",
-        "price_from": "Od"
+        "price_from": "Od",
+        "prices_header": "Ceny",
+
+        "prices": {
+            "day": "Dzień",
+            "2_3_days": "2-3 dni",
+            "4_6_days": "4-6 dni",
+            "7_13_days": "7-13 dni",
+            "14_29_days": "14-29 dni",
+            "month": "Miesiąc"
+        }
     }
 }

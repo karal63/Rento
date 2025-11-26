@@ -7,7 +7,7 @@
 
 <template>
     <div>
-        <div class="max-w-[1900px] m-auto 0">
+        <div class="max-w-[1700px] m-auto 0">
             <div class="mt-40 font-extrabold text-8xl">
                 <div>{{ t('app.cars_page_title') }}</div>
             </div>
@@ -18,5 +18,3 @@
         </div>
     </div>
 </template>
-
-<!-- solve problem with architecuture, it cannot be so complicated -->
