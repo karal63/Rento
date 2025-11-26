@@ -21,7 +21,7 @@
 
 <template>
     <nav class="py-5 fixed top-0 w-full backdrop-blur-md bg-main-bg/30 z-20">
-        <div class="max-w-[1900px] m-auto flex items-center flex-between">
+        <div class="max-w-[1700px] m-auto flex items-center flex-between">
             <h3 class="text-4xl font-semibold">
                 <RouterLink to="/">Rento</RouterLink>
             </h3>

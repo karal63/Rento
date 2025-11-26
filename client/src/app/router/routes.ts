@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router';
-import { LandingPage, CarsPage } from '@/pages';
+import { LandingPage, CarsPage, SingleCar } from '@/pages';
 
 export const routes: RouteRecordRaw[] = [
     {
@@ -9,5 +9,9 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/cars',
         component: CarsPage,
+    },
+    {
+        path: '/cars/:id',
+        component: SingleCar,
     },
 ];
