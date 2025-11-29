@@ -2,10 +2,20 @@
     import { useCarStore } from '@/entities/car';
     import { Button } from '@/shared/ui/button';
     import { Icon } from '@iconify/vue';
+    import { onMounted } from 'vue';
     import { useI18n } from 'vue-i18n';
+    import { useRoute } from 'vue-router';
 
     const carStore = useCarStore();
     const { t } = useI18n();
+    const { params } = useRoute();
+
+    onMounted(async () => {
+        if (!carStore.selectedCar) {
+            console.log('car doesnt exist, fetching car with id: ' + params.id);
+            await carStore.getCarById(params.id as string);
+        }
+    });
 </script>
 
 <template>
@@ -16,7 +26,7 @@
             </div>
             <div class="flex mt-20 gap-10">
                 <div class="w-[75%]">
-                    <img :src="carStore.selectedCar?.image" alt="" />
+                    <img :src="carStore.selectedCar?.image" alt="" class="w-full rounded-md" />
                 </div>
 
                 <div
