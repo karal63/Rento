@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param } from '@nestjs/common';
 import { CarService } from './car.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -12,5 +12,12 @@ export class CarController {
     @Get()
     async getAllCars() {
         return await this.carService.findAll();
+    }
+
+    @ApiOperation({ summary: 'Get car' })
+    @ApiResponse({ status: 200, description: 'Returns a car.' })
+    @Get(':id')
+    async getCar(@Param('id') id: string) {
+        return await this.carService.find(id);
     }
 }

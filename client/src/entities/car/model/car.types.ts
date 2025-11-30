@@ -1,5 +1,5 @@
 export type Car = {
-    id: string;
+    _id: string;
     name: string;
     image: string;
     details: {
