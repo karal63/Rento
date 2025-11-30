@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { Car } from './car.types';
+import { apiGetCars, apiGetSingleCar } from '../api/car.api';
 
 export const useCarStore = defineStore('car', () => {
     const cars = ref<Car[]>([
@@ -162,5 +163,15 @@ export const useCarStore = defineStore('car', () => {
     const setCars = (newCars: Car[]) => (cars.value = newCars);
     const selectCar = (car: Car) => (selectedCar.value = car);
 
-    return { cars, setCars, selectCar, selectedCar };
+    const getCars = async () => {
+        const carsRes = await apiGetCars();
+        cars.value = carsRes.data;
+    };
+
+    const getCarById = async (id: string) => {
+        const car = await apiGetSingleCar(id);
+        selectCar(car.data);
+    };
+
+    return { cars, setCars, selectCar, selectedCar, getCarById, getCars };
 });

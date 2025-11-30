@@ -1,8 +1,13 @@
 <script setup lang="ts">
     import { useCarStore } from '@/entities/car';
     import CarCard from './CarCard.vue';
+    import { onMounted } from 'vue';
 
     const carStore = useCarStore();
+
+    onMounted(async () => {
+        await carStore.getCars();
+    });
 </script>
 
 <template>
