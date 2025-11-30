@@ -10,4 +10,8 @@ export class CarService {
     async findAll() {
         return await this.carModel.find().exec();
     }
+
+    async find(id: string) {
+        return await this.carModel.findById(id).exec();
+    }
 }

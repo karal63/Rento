@@ -12,6 +12,6 @@
 
 <template>
     <div class="w-[80%] grid grid-cols-2 gap-8">
-        <CarCard v-for="car in carStore.cars" :key="car.id" :car="car" />
+        <CarCard v-for="car in carStore.cars" :key="car._id" :car="car" />
     </div>
 </template>

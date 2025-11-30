@@ -12,7 +12,6 @@
 
     onMounted(async () => {
         if (!carStore.selectedCar) {
-            console.log('car doesnt exist, fetching car with id: ' + params.id);
             await carStore.getCarById(params.id as string);
         }
     });

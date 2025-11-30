@@ -14,7 +14,7 @@
 
     const select = () => {
         carStore.selectCar(props.car);
-        router.push(`/cars/${props.car.id}`);
+        router.push(`/cars/${props.car._id}`);
     };
 </script>
 

@@ -169,8 +169,8 @@ export const useCarStore = defineStore('car', () => {
     };
 
     const getCarById = async (id: string) => {
-        const car = await apiGetSingleCar(id);
-        selectCar(car.data);
+        const carRes = await apiGetSingleCar(id);
+        selectCar(carRes.data);
     };
 
     return { cars, setCars, selectCar, selectedCar, getCarById, getCars };
