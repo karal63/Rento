@@ -11,6 +11,8 @@ async function bootstrap() {
         origin: process.env.CORS_ORIGIN?.split(','),
     });
 
+    app.setGlobalPrefix('api');
+
     const config = new DocumentBuilder()
         .setTitle('API Documentation')
         .setDescription('documentation for the Rento')
