@@ -111,3 +111,7 @@ body {
         background-position: 100% 0;
     }
 }
+
+.dp__input {
+    @apply py-4 px-5;
+}
