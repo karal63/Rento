@@ -1,18 +1,26 @@
 <script setup lang="ts">
     import { useCarStore } from '@/entities/car';
+    import { useThemeStore } from '@/shared/model';
     import { Button } from '@/shared/ui/button';
-    import { Icon } from '@iconify/vue';
-    import { onMounted } from 'vue';
+    import { VueDatePicker } from '@vuepic/vue-datepicker';
+    import { onMounted, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { useRoute } from 'vue-router';
 
     const carStore = useCarStore();
+    const themeStore = useThemeStore();
     const { t } = useI18n();
     const { params } = useRoute();
 
+    const loading = ref(false);
+    const dateRange = ref<[Date | null, Date | null]>([null!, null!]);
+    const phone = ref('');
+
     onMounted(async () => {
         if (!carStore.selectedCar) {
+            loading.value = true;
             await carStore.getCarById(params.id as string);
+            loading.value = false;
         }
     });
 </script>
@@ -21,63 +29,73 @@
     <div>
         <div class="max-w-[1700px] m-auto 0">
             <div class="mt-40 font-extrabold text-8xl">
-                <div>{{ carStore.selectedCar?.name }}</div>
+                <div v-if="loading" class="skeleton h-[100px] w-2/3"></div>
+                <div v-else>{{ carStore.selectedCar?.name }}</div>
             </div>
-            <div class="flex mt-20 gap-10">
-                <div class="w-[75%]">
-                    <img :src="carStore.selectedCar?.image" alt="" class="w-full rounded-md" />
+            <div class="flex xl:flex-row mt-20 gap-10">
+                <!-- Car Image Section -->
+                <div class="w-full xl:w-3/4">
+                    <div v-if="loading" class="w-full h-[420px] skeleton rounded-xl"></div>
+                    <img
+                        v-else
+                        :src="carStore.selectedCar?.image"
+                        alt="Selected car"
+                        class="w-full rounded-xl shadow-md"
+                    />
                 </div>
 
+                <!-- Booking Card -->
                 <div
-                    class="w-[25%] max-h-max p-7 flex-col gap-8 shadow-md shadow-main-border border border-main-border rounded-md"
+                    class="w-full xl:w-1/4 p-7 flex flex-col border border-main-border rounded-2xl sticky top-24 h-max"
                 >
-                    <div>
-                        <h3 class="text-xl mb-2">Your phone</h3>
-                        <div class="relative">
-                            <input
-                                type="tel"
-                                class="w-full border border-main-lightgray outline-none pl-5 pr-10 py-3 rounded-md text-lg"
-                            />
-                            <Icon
-                                icon="material-symbols-light:call-outline"
-                                class="absolute right-0 top-1/2 transform -translate-1/2 text-3xl"
-                            />
-                        </div>
+                    <!-- Phone Number Input -->
+                    <div class="mb-5">
+                        <h3 class="text-xl mb-1 font-semibold">Your Phone</h3>
+                        <vue-tel-input
+                            v-model="phone"
+                            mode="international"
+                            :input-options="{ placeholder: 'Enter phone number' }"
+                            class="border-0 border-main-border px-1 w-full text-lg"
+                        />
                     </div>
 
-                    <div>
-                        <h3 class="text-xl mb-2">Choose dates</h3>
-                        <div class="relative">
-                            <input
-                                type="tel"
-                                class="w-full border border-main-lightgray outline-none pl-5 pr-10 py-3 rounded-md text-lg"
-                            />
-                            <Icon
-                                icon="formkit:date"
-                                class="absolute right-0 top-1/2 transform -translate-1/2 text-3xl"
-                            />
-                        </div>
+                    <!-- Date Picker -->
+                    <div class="mb-10">
+                        <h3 class="text-xl mb-1 font-semibold">Choose Dates</h3>
+                        <VueDatePicker
+                            v-model="dateRange"
+                            range
+                            text-input
+                            :enable-time-picker="false"
+                            placeholder="Select rental dates"
+                            :dark="themeStore.isDark"
+                            :ui="{
+                                menu: 'rounded-xl shadow-lg',
+                                calendar: 'p-3',
+                            }"
+                        />
                     </div>
 
-                    <Button class="sticky top-24 w-full">
+                    <!-- Book Button -->
+                    <Button class="font-semibold mb-10">
                         {{ t('app.book_btn') }}
                     </Button>
 
-                    <hr class="text-main-lightgray" />
-
+                    <!-- Pricing Table -->
+                    <hr class="text-main-lightgray mb-4" />
                     <div>
-                        <h4 class="text-3xl mb-3 font-semibold">{{ t('app.prices_header') }}</h4>
-                        <table class="w-full">
-                            <tr v-for="price in carStore.selectedCar?.pricing" :key="price.name">
-                                <td
-                                    class="border border-collapse border-main-border pl-4 py-2 text-lg"
-                                >
+                        <h4 class="text-3xl mb-4 font-semibold">{{ t('app.prices_header') }}</h4>
+                        <table class="w-full border-collapse overflow-hidden rounded-xl">
+                            <tr
+                                v-for="price in carStore.selectedCar?.pricing"
+                                :key="price.name"
+                                class="even:bg-main-gray-bg"
+                            >
+                                <td class="border border-main-border px-4 py-2 text-lg">
                                     {{ t(`app.prices.${price.name}`) }}
                                 </td>
-                                <td
-                                    class="border border-collapse border-main-border pl-4 py-2 text-lg"
-                                >
-                                    {{ price.price }}zł
+                                <td class="border border-main-border px-4 py-2 text-lg font-medium">
+                                    {{ price.price }} zł
                                 </td>
                             </tr>
                         </table>

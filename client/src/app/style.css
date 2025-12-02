@@ -91,3 +91,27 @@ body {
 .multiline {
     white-space: pre-line;
 }
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-main-hover-bg),
+        var(--color-main-gray-bg),
+        var(--color-main-hover-bg)
+    );
+    background-size: 200%;
+    animation: leftToRight 1.5s infinite reverse;
+}
+
+@keyframes leftToRight {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+.dp__input {
+    @apply py-4 px-5;
+}
