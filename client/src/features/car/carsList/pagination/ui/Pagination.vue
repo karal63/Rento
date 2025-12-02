@@ -35,7 +35,7 @@
             @click="goTo(p)"
             class="w-10 h-10 flex items-center justify-center rounded-xl border border-main-border transition cursor-pointer"
             :class="{
-                'bg-blue-500 text-white border-blue-500': p === page,
+                'bg-primary text-white border-primary': p === page,
                 'hover:bg-main-hover-bg': p !== page,
             }"
         >
