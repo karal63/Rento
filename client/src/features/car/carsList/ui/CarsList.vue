@@ -3,8 +3,10 @@
     import CarCard from './CarCard.vue';
     import { ref, watch } from 'vue';
     import Pagination from '../pagination/ui/Pagination.vue';
+    import { useRouter } from 'vue-router';
 
     const carStore = useCarStore();
+    const router = useRouter();
 
     const loading = ref(false);
     const pages = ref(1);
@@ -16,6 +18,7 @@
             loading.value = true;
             const { pagesAmount: newPagesAmount } = await carStore.getCars(newPage);
             pages.value = newPagesAmount;
+            router.push(`/cars?page=${currentPage.value}`);
             loading.value = false;
         },
         { immediate: true }

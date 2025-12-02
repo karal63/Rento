@@ -55,9 +55,14 @@
 
             <div class="flex justify-between items-end">
                 <div>
-                    <p class="text-xl mt-8 font-bold text-red-700">
+                    <p class="text-3xl mt-8 font-bold text-primary">
                         {{ t('app.price_from') }}
-                        {{ (car.pricing[car.pricing.length - 1] as PriceRange).price / 30 }} zł
+                        {{
+                            Math.floor(
+                                (car.pricing[car.pricing.length - 1] as PriceRange).price / 30
+                            ).toFixed(0)
+                        }}
+                        zł
                     </p>
                     <p class="text-sm text-main-gray">{{ t('app.price_desc') }}</p>
                 </div>

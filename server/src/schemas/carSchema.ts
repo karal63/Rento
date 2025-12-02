@@ -3,12 +3,12 @@ import { HydratedDocument } from 'mongoose';
 
 export type CatDocument = HydratedDocument<Car>;
 
-type Detail = {
+class Details {
     acceleration: string;
     transmission: string;
     power: string;
     numberOfSeats: number;
-};
+}
 
 type Price = {
     price: number;
@@ -24,7 +24,7 @@ export class Car {
     image: string;
 
     @Prop()
-    details: Detail[];
+    details: Details;
 
     @Prop()
     deposit: number;
