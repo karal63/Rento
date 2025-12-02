@@ -50,18 +50,18 @@
                 >
                     <!-- Phone Number Input -->
                     <div class="mb-5">
-                        <h3 class="text-xl mb-3 font-semibold">Your Phone</h3>
+                        <h3 class="text-xl mb-1 font-semibold">Your Phone</h3>
                         <vue-tel-input
                             v-model="phone"
                             mode="international"
                             :input-options="{ placeholder: 'Enter phone number' }"
-                            class="outline-0 border-0 border-main-border px-4 py-2 w-full text-lg"
+                            class="border-0 border-main-border px-1 w-full text-lg"
                         />
                     </div>
 
                     <!-- Date Picker -->
                     <div class="mb-10">
-                        <h3 class="text-xl mb-3 font-semibold">Choose Dates</h3>
+                        <h3 class="text-xl mb-1 font-semibold">Choose Dates</h3>
                         <VueDatePicker
                             v-model="dateRange"
                             range
@@ -70,7 +70,6 @@
                             placeholder="Select rental dates"
                             :dark="themeStore.isDark"
                             :ui="{
-                                input: 'py-10 px-5 rounded-xl bg-main-bg border border-main-lightgray text-lg w-full',
                                 menu: 'rounded-xl shadow-lg',
                                 calendar: 'p-3',
                             }"
@@ -83,7 +82,7 @@
                     </Button>
 
                     <!-- Pricing Table -->
-                    <hr class="text-main-lightgray" />
+                    <hr class="text-main-lightgray mb-4" />
                     <div>
                         <h4 class="text-3xl mb-4 font-semibold">{{ t('app.prices_header') }}</h4>
                         <table class="w-full border-collapse overflow-hidden rounded-xl">
