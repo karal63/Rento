@@ -163,9 +163,11 @@ export const useCarStore = defineStore('car', () => {
     const setCars = (newCars: Car[]) => (cars.value = newCars);
     const selectCar = (car: Car) => (selectedCar.value = car);
 
-    const getCars = async () => {
-        const carsRes = await apiGetCars();
-        cars.value = carsRes.data;
+    const getCars = async (page: number): Promise<{ pagesAmount: number }> => {
+        const res = await apiGetCars(page);
+        cars.value = res.data.cars;
+
+        return { pagesAmount: res.data.pagesAmount };
     };
 
     const getCarById = async (id: string) => {

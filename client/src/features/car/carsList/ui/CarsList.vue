@@ -1,20 +1,25 @@
 <script setup lang="ts">
     import { useCarStore } from '@/entities/car';
     import CarCard from './CarCard.vue';
-    import { onMounted, ref } from 'vue';
+    import { ref, watch } from 'vue';
     import Pagination from '../pagination/ui/Pagination.vue';
 
     const carStore = useCarStore();
 
     const loading = ref(false);
-    const pagesAmount = ref(1);
+    const pages = ref(1);
     const currentPage = ref(1);
 
-    onMounted(async () => {
-        loading.value = true;
-        await carStore.getCars();
-        loading.value = false;
-    });
+    watch(
+        currentPage,
+        async newPage => {
+            loading.value = true;
+            const { pagesAmount: newPagesAmount } = await carStore.getCars(newPage);
+            pages.value = newPagesAmount;
+            loading.value = false;
+        },
+        { immediate: true }
+    );
 </script>
 
 <template>
@@ -25,6 +30,6 @@
         <div class="grid grid-cols-2 gap-8">
             <CarCard v-for="car in carStore.cars" :key="car._id" :car="car" />
         </div>
-        <Pagination v-model="currentPage" :total="pagesAmount" />
+        <Pagination v-model="currentPage" :total="pages" />
     </div>
 </template>
