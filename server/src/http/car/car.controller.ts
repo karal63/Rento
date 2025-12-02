@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Req } from '@nestjs/common';
 import { CarService } from './car.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import type { Request } from 'express';
 
 @ApiTags('Cars')
 @Controller('cars')
@@ -10,8 +11,9 @@ export class CarController {
     @ApiOperation({ summary: 'Get all cars' })
     @ApiResponse({ status: 200, description: 'Returns a list of cars.' })
     @Get()
-    async getAllCars() {
-        return await this.carService.findAll();
+    async getAllCars(@Req() req: Request) {
+        const { cars, pages } = await this.carService.findAll(req.query as any);
+        return { cars, pagesAmount: pages };
     }
 
     @ApiOperation({ summary: 'Get car' })
