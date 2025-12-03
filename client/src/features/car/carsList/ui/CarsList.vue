@@ -29,6 +29,11 @@
         loading.value = false;
     };
 
+    const manualGetCars = async () => {
+        currentPage.value = 1;
+        await getCars();
+    };
+
     const addBrand = (brand: string) => {
         brands.value.push(brand);
     };
@@ -50,7 +55,7 @@
             </div>
 
             <div class="mt-10">
-                <Button @click="getCars" class="w-full flex-center">
+                <Button @click="manualGetCars" class="w-full flex-center">
                     <span>BROWSE RESULT</span>
                     <Icon icon="mdi:magnify" class="w-5 h-5 ml-2" />
                 </Button>
