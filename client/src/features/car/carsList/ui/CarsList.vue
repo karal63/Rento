@@ -52,6 +52,19 @@
             <div>
                 <h2 class="text-main-gray mt-6 mb-1">Brand</h2>
                 <CheckboxSelect @addBrand="addBrand($event)" />
+
+                <ul class="mt-2 flex-col gap-2">
+                    <li
+                        v-for="brand in brands"
+                        :key="brand"
+                        class="bg-main-border px-2 py-1 rounded-md max-w-max flex-center"
+                    >
+                        <span>{{ brand }}</span>
+                        <button @click="brands = brands.filter(b => b !== brand)">
+                            <Icon icon="mdi:close" class="w-4 h-4 ml-2 cursor-pointer" />
+                        </button>
+                    </li>
+                </ul>
             </div>
 
             <div class="mt-10">
