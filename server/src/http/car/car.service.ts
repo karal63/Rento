@@ -18,9 +18,6 @@ export class CarService {
         const page = parseInt(query.page, 10) || 1;
         const offset = (page - 1) * limit;
 
-        // Count total documents (for pagination)
-        const total = await this.carModel.countDocuments();
-
         let cars = this.carModel.find();
 
         if (Array.isArray(query.brand)) {
@@ -33,6 +30,9 @@ export class CarService {
             const searchRegex = new RegExp(query.search, 'i');
             cars = cars.or([{ name: searchRegex }, { brand: searchRegex }]);
         }
+
+        // Count total documents (for pagination)
+        const total = await cars.clone().countDocuments();
 
         const result = await cars
             .sort({ name: -1 }) // -1 for descending
