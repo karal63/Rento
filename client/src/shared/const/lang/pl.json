@@ -29,6 +29,14 @@
         "brand": "Marka",
         "browse_results": "Zobacz wyniki",
 
+        "footer": {
+            "app_desc": "Luksusowe samochody klasy premium dla tych, którzy oczekują czegoś więcej niż tylko transportu. Poczuj elegancję, osiągi i pełen komfort.",
+            "quick_links": "Szybkie linki",
+            "contact": "Kontakt",
+            "home": "Strona główna",
+            "cars": "Lista samochodów"
+        },
+
         "prices": {
             "day": "Dzień",
             "2_3_days": "2-3 dni",

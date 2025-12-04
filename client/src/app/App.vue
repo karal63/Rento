@@ -1,8 +1,9 @@
 <script setup lang="ts">
-    import { Navbar } from '@/widgets';
+    import { Footer, Navbar } from '@/widgets';
 </script>
 
 <template>
     <Navbar />
     <RouterView />
+    <Footer />
 </template>

@@ -29,6 +29,14 @@
         "brand": "Brand",
         "browse_results": "Browse Results",
 
+        "footer": {
+            "app_desc": "Premium luxury cars for those who demand more than just transportation. Experience elegance, performance, and total comfort.",
+            "quick_links": "Quick Links",
+            "contact": "Contact",
+            "home": "Home",
+            "cars": "Cars"
+        },
+
         "prices": {
             "day": "Day",
             "2_3_days": "2-3 days",
