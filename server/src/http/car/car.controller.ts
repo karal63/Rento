@@ -12,8 +12,10 @@ export class CarController {
     @ApiResponse({ status: 200, description: 'Returns a list of cars.' })
     @Get()
     async getAllCars(@Req() req: Request) {
-        const { cars, pages } = await this.carService.findAll(req.query as any);
-        return { cars, pagesAmount: pages };
+        const { cars, pages, brands } = await this.carService.findAll(
+            req.query as any,
+        );
+        return { cars, pagesAmount: pages, allBrands: brands };
     }
 
     @ApiOperation({ summary: 'Get car' })

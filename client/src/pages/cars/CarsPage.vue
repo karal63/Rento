@@ -11,8 +11,7 @@
             <div class="mt-40 font-extrabold text-8xl">
                 <div>{{ t('app.cars_page_title') }}</div>
             </div>
-            <div class="flex gap-8 mt-20">
-                <div class="w-[20%] h-[600px] sticky top-24"></div>
+            <div class="mt-20">
                 <CarsList />
             </div>
         </div>
