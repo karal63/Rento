@@ -7,9 +7,11 @@
     import { CheckboxSelect, Input } from '@/shared/ui';
     import { Button } from '@/shared/ui/button';
     import { Icon } from '@iconify/vue';
+    import { useI18n } from 'vue-i18n';
 
     const carStore = useCarStore();
     const router = useRouter();
+    const { t } = useI18n();
 
     const loading = ref(false);
     const pages = ref(1);
@@ -54,14 +56,23 @@
 <template>
     <div class="flex gap-8">
         <div class="w-[20%] border rounded-md border-main-border max-h-max p-5">
-            <h1 class="text-3xl font-semibold mb-4">Filters</h1>
+            <h1 class="text-3xl font-semibold mb-4">{{ t('app.filters') }}</h1>
 
-            <h2 class="text-main-gray mb-1">Search</h2>
-            <Input v-model="searchInput" placeholder="Search..." size="large" class="w-full" />
+            <h2 class="text-main-gray mb-1">{{ t('app.search') }}</h2>
+            <Input
+                v-model="searchInput"
+                :placeholder="t('app.search') + '...'"
+                size="large"
+                class="w-full"
+            />
 
             <div>
-                <h2 class="text-main-gray mt-6 mb-1">Brand</h2>
-                <CheckboxSelect @addBrand="addBrand($event)" :items="brands" />
+                <h2 class="text-main-gray mt-6 mb-1">{{ t('app.brand') }}</h2>
+                <CheckboxSelect
+                    @addBrand="addBrand($event)"
+                    :items="brands"
+                    :selectedCount="selectedBrands.length"
+                />
 
                 <ul class="mt-2 flex-col gap-2">
                     <li
@@ -79,7 +90,7 @@
 
             <div class="mt-10">
                 <Button @click="manualGetCars" class="w-full flex-center">
-                    <span>BROWSE RESULTS</span>
+                    <span>{{ t('app.browse_results') }}</span>
                     <Icon icon="mdi:magnify" class="w-5 h-5 ml-2" />
                 </Button>
             </div>

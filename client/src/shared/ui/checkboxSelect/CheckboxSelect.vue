@@ -2,11 +2,14 @@
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
     import CheckboxItem from './CheckboxItem.vue';
+    import { useI18n } from 'vue-i18n';
 
+    const { t } = useI18n();
     const isDropdownOpen = ref(false);
 
     defineProps<{
         items: string[];
+        selectedCount: number;
     }>();
 
     defineEmits<{
@@ -20,7 +23,11 @@
             @click="isDropdownOpen = !isDropdownOpen"
             class="border border-main-border rounded-md w-full py-2 text-lg flex-between px-4 cursor-pointer"
         >
-            <span>All brands</span>
+            <span>
+                {{
+                    selectedCount ? `${t('app.selected')} (${selectedCount})` : t('app.all_brands')
+                }}
+            </span>
             <Icon :icon="isDropdownOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'" class="text-2xl" />
         </button>
 

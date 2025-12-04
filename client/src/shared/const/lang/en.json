@@ -22,6 +22,12 @@
         "book_btn": "BOOK NOW",
         "price_from": "From",
         "prices_header": "Prices",
+        "selected": "Selected",
+        "all_brands": "All brands",
+        "filters": "Filters",
+        "search": "Search",
+        "brand": "Brand",
+        "browse_results": "Browse Results",
 
         "prices": {
             "day": "Day",

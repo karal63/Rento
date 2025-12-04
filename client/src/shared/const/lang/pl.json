@@ -22,6 +22,12 @@
         "book_btn": "ZAREZERWUJ",
         "price_from": "Od",
         "prices_header": "Ceny",
+        "selected": "Wybrane",
+        "all_brands": "Wszystkie marki",
+        "filters": "Filtry",
+        "search": "Szukaj",
+        "brand": "Marka",
+        "browse_results": "Zobacz wyniki",
 
         "prices": {
             "day": "Dzień",

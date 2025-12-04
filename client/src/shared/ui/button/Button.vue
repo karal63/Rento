@@ -34,7 +34,7 @@
 </script>
 
 <template>
-    <button @click="$emit('click')" :class="buttonClass">
+    <button @click="$emit('click')" class="uppercase" :class="buttonClass">
         <slot />
     </button>
 </template>
