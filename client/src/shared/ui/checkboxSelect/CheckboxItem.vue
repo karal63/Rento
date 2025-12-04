@@ -15,6 +15,7 @@
             emit('addBrand', props.item);
         }
     });
+    console.log(123);
 </script>
 
 <template>

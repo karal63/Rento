@@ -25,7 +25,7 @@
         </button>
 
         <div
-            v-if="isDropdownOpen"
+            v-show="isDropdownOpen"
             class="absolute top-[110%] left-0 border border-main-border bg-main-bg shadow-sm shadow-main-border rounded-md w-full"
         >
             <CheckboxItem
