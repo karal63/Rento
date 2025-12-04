@@ -41,8 +41,9 @@ export class CarService {
             .exec();
 
         const pages = Math.ceil(total / limit);
+        const brands = await this.carModel.distinct('brand');
 
-        return { cars: result, pages };
+        return { cars: result, pages, brands };
     }
 
     async find(id: string) {

@@ -3,13 +3,16 @@
 
     const isChecked = ref(false);
 
+    const props = defineProps<{
+        item: string;
+    }>();
     const emit = defineEmits<{
         (e: 'addBrand', brand: string): void;
     }>();
 
     watch(isChecked, () => {
         if (isChecked.value) {
-            emit('addBrand', 'Porsche');
+            emit('addBrand', props.item);
         }
     });
 </script>
@@ -29,6 +32,6 @@
                 ✓
             </div>
         </button>
-        <p class="text-xl">Porsche</p>
+        <p class="text-xl">{{ item }}</p>
     </div>
 </template>

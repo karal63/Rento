@@ -167,11 +167,11 @@ export const useCarStore = defineStore('car', () => {
         page: number,
         brands: string[],
         search: string
-    ): Promise<{ pagesAmount: number }> => {
+    ): Promise<{ pagesAmount: number; allBrands: string[] }> => {
         const res = await apiGetCars(page, brands, search);
         cars.value = res.data.cars;
 
-        return { pagesAmount: res.data.pagesAmount };
+        return { pagesAmount: res.data.pagesAmount, allBrands: res.data.allBrands };
     };
 
     const getCarById = async (id: string) => {

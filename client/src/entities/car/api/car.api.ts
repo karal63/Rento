@@ -11,6 +11,6 @@ export const apiGetCars = async (
     page: number,
     brands: string[],
     search: string
-): Promise<AxiosResponse<{ cars: Car[]; pagesAmount: number }>> => {
+): Promise<AxiosResponse<{ cars: Car[]; pagesAmount: number; allBrands: string[] }>> => {
     return await axiosInstance.get(API_GET_CAR_LIST(page, brands, search));
 };

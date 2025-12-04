@@ -15,16 +15,21 @@
     const pages = ref(1);
     const currentPage = ref(1);
     const brands = ref<string[]>([]);
-    const search = ref('');
+
+    // input
+    const selectedBrands = ref<string[]>([]);
+    const searchInput = ref('');
 
     const getCars = async () => {
         loading.value = true;
-        const { pagesAmount: newPagesAmount } = await carStore.getCars(
+
+        const { pagesAmount: newPagesAmount, allBrands } = await carStore.getCars(
             currentPage.value,
-            brands.value,
-            search.value
+            selectedBrands.value,
+            searchInput.value
         );
         pages.value = newPagesAmount;
+        brands.value = allBrands;
         router.push(`/cars?page=${currentPage.value}`);
         loading.value = false;
     };
@@ -35,7 +40,12 @@
     };
 
     const addBrand = (brand: string) => {
-        brands.value.push(brand);
+        selectedBrands.value.push(brand);
+    };
+
+    const removeBrands = (brand: string) => {
+        selectedBrands.value = selectedBrands.value.filter(b => b !== brand);
+        manualGetCars();
     };
 
     watch(currentPage, async () => getCars(), { immediate: true });
@@ -47,20 +57,20 @@
             <h1 class="text-3xl font-semibold mb-4">Filters</h1>
 
             <h2 class="text-main-gray mb-1">Search</h2>
-            <Input v-model="search" placeholder="Search..." size="large" class="w-full" />
+            <Input v-model="searchInput" placeholder="Search..." size="large" class="w-full" />
 
             <div>
                 <h2 class="text-main-gray mt-6 mb-1">Brand</h2>
-                <CheckboxSelect @addBrand="addBrand($event)" />
+                <CheckboxSelect @addBrand="addBrand($event)" :items="brands" />
 
                 <ul class="mt-2 flex-col gap-2">
                     <li
-                        v-for="brand in brands"
+                        v-for="brand in selectedBrands"
                         :key="brand"
                         class="bg-main-border px-2 py-1 rounded-md max-w-max flex-center"
                     >
                         <span>{{ brand }}</span>
-                        <button @click="brands = brands.filter(b => b !== brand)">
+                        <button @click="removeBrands(brand)">
                             <Icon icon="mdi:close" class="w-4 h-4 ml-2 cursor-pointer" />
                         </button>
                     </li>
@@ -69,7 +79,7 @@
 
             <div class="mt-10">
                 <Button @click="manualGetCars" class="w-full flex-center">
-                    <span>BROWSE RESULT</span>
+                    <span>BROWSE RESULTS</span>
                     <Icon icon="mdi:magnify" class="w-5 h-5 ml-2" />
                 </Button>
             </div>
