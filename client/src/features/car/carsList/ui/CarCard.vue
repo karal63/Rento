@@ -22,14 +22,14 @@
     <div
         class="shadow-xl shadow-main-border hover:shadow-md transition rounded-bl-xl rounded-br-md cursor-pointer overflow-hidden"
     >
-        <div @click="select" class="h-[400px]">
+        <div @click="select" class="h-[300px] md:h-[400px]">
             <img
                 :src="car.image"
                 alt=""
                 class="rounded-tl-xl rounded-tr-md h-full w-full object-cover"
             />
         </div>
-        <div class="h-[400px] px-8 py-10 flex-col justify-between">
+        <div class="px-4 lg:px-8 py-10 flex-col justify-between">
             <div>
                 <h1 class="text-2xl font-bold">{{ car.name }}</h1>
 
@@ -53,9 +53,9 @@
                 </div>
             </div>
 
-            <div class="flex justify-between items-end">
+            <div class="lg:flex justify-between items-end">
                 <div>
-                    <p class="text-3xl mt-8 font-bold text-primary">
+                    <p class="text-xl lg:text-3xl mt-8 font-bold text-primary">
                         {{ t('app.price_from') }}
                         {{
                             Math.floor(
@@ -67,7 +67,7 @@
                     <p class="text-sm text-main-gray">{{ t('app.price_desc') }}</p>
                 </div>
 
-                <Button>{{ t('app.book_btn') }}</Button>
+                <Button class="w-full mt-5 lg:max-w-max">{{ t('app.book_btn') }}</Button>
             </div>
         </div>
     </div>
