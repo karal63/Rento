@@ -4,10 +4,11 @@
     import { useI18n } from 'vue-i18n';
     import { Button } from '../../shared/ui/button';
     import { languages } from '@/shared/config';
-    import { useThemeStore } from '@/shared/model';
+    import { useSidebarStore, useThemeStore } from '@/shared/model';
 
     const { t, locale } = useI18n();
     const themeStore = useThemeStore();
+    const sidebarStore = useSidebarStore();
 
     const open = ref(false);
     const isDarkTheme = ref(false);
@@ -79,7 +80,10 @@
                 </Button>
             </div>
 
-            <button class="block md:hidden cursor-pointer">
+            <button
+                @click="sidebarStore.setSidebarOpen(!sidebarStore.isOpen)"
+                class="block md:hidden cursor-pointer"
+            >
                 <Icon class="text-3xl" icon="mdi:menu" />
             </button>
         </div>
