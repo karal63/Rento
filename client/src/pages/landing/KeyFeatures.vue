@@ -7,16 +7,16 @@
 </script>
 
 <template>
-    <section class="max-w-[1500px] m-auto my-52">
-        <h1 class="text-6xl font-extrabold">
+    <section class="max-w-[1500px] m-auto my-52 px-5">
+        <h1 class="text-5xl sm:text-6xl font-extrabold">
             {{ t('app.key_features') }}
         </h1>
 
-        <p class="text-2xl my-13">
+        <p class="text-xl sm:text-2xl mt-5 mb-10 sm:my-13 text-main-gray">
             {{ t('app.key_features_desc') }}
         </p>
 
-        <div class="grid grid-cols-4 gap-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 lg:gap-10">
             <div
                 v-for="feat in keyFeatures"
                 :key="feat.id"
