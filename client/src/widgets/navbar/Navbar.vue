@@ -4,10 +4,11 @@
     import { useI18n } from 'vue-i18n';
     import { Button } from '../../shared/ui/button';
     import { languages } from '@/shared/config';
-    import { useThemeStore } from '@/shared/model';
+    import { useSidebarStore, useThemeStore } from '@/shared/model';
 
     const { t, locale } = useI18n();
     const themeStore = useThemeStore();
+    const sidebarStore = useSidebarStore();
 
     const open = ref(false);
     const isDarkTheme = ref(false);
@@ -21,12 +22,12 @@
 
 <template>
     <nav class="py-5 fixed top-0 w-full backdrop-blur-md bg-main-bg/30 z-20">
-        <div class="max-w-[1700px] m-auto flex items-center flex-between">
-            <h3 class="text-4xl font-semibold">
+        <div class="max-w-[1700px] m-auto flex items-center flex-between px-5 lg:px-10">
+            <h3 class="text-3xl md:text-4xl font-semibold">
                 <RouterLink to="/">Rento</RouterLink>
             </h3>
 
-            <ul class="flex divide-x divide-main-border">
+            <ul class="hidden md:flex divide-x divide-main-border">
                 <li class="text-lg px-6 font-semibold transition hover:text-primary">
                     <RouterLink to="/about">{{ t('app.about_us') }}</RouterLink>
                 </li>
@@ -39,7 +40,7 @@
             </ul>
 
             <div class="flex items-center gap-3">
-                <Button @click="toggleTheme" color="transparent" size="sm">
+                <Button @click="toggleTheme" color="transparent" size="sm" class="hidden lg:block">
                     <Icon v-if="isDarkTheme" icon="fontisto:day-sunny" class="text-2xl" />
                     <Icon
                         v-else
@@ -48,7 +49,7 @@
                     />
                 </Button>
 
-                <div class="relative inline-block text-left">
+                <div class="relative hidden lg:inline-block text-left">
                     <Button @click="open = !open" color="transparent" size="sm">
                         <div class="flex gap-2">
                             {{ locale }}
@@ -74,8 +75,17 @@
                     </transition>
                 </div>
 
-                <Button @click="console.log('log')" size="sm">{{ t('app.book_btn') }}</Button>
+                <Button @click="console.log('log')" size="sm" class="hidden md:block">
+                    {{ t('app.book_btn') }}
+                </Button>
             </div>
+
+            <button
+                @click="sidebarStore.setSidebarOpen(!sidebarStore.isOpen)"
+                class="block md:hidden cursor-pointer"
+            >
+                <Icon class="text-3xl" icon="mdi:menu" />
+            </button>
         </div>
     </nav>
 </template>

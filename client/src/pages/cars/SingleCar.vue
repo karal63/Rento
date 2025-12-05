@@ -27,12 +27,12 @@
 
 <template>
     <div>
-        <div class="max-w-[1700px] m-auto 0">
-            <div class="mt-40 font-extrabold text-8xl">
+        <div class="max-w-[1700px] m-auto 0 px-5">
+            <div class="mt-24 sm:mt-32 xl:mt-40 font-extrabold text-4xl md:text-6xl lg:text-8xl">
                 <div v-if="loading" class="skeleton h-[100px] w-2/3"></div>
                 <div v-else>{{ carStore.selectedCar?.name }}</div>
             </div>
-            <div class="flex xl:flex-row mt-20 gap-10">
+            <div class="xl:flex xl:flex-row mt-5 md:mt-16 xl:mt-20 gap-10">
                 <!-- Car Image Section -->
                 <div class="w-full xl:w-3/4">
                     <div v-if="loading" class="w-full h-[420px] skeleton rounded-xl"></div>
@@ -46,7 +46,7 @@
 
                 <!-- Booking Card -->
                 <div
-                    class="w-full xl:w-1/4 p-7 flex flex-col border border-main-border rounded-2xl sticky top-24 h-max"
+                    class="w-full xl:w-1/4 p-7 flex flex-col border border-main-border rounded-2xl sticky top-24 h-max mt-10 xl:mt-0"
                 >
                     <!-- Phone Number Input -->
                     <div class="mb-5">
