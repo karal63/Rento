@@ -46,39 +46,46 @@
 
                 <!-- Booking Card -->
                 <div
-                    class="w-full xl:w-1/4 p-7 flex flex-col border border-main-border rounded-2xl sticky top-24 h-max mt-10 xl:mt-0"
+                    class="w-full xl:w-1/4 flex flex-col rounded-2xl sticky top-24 h-max mt-10 xl:mt-0"
                 >
-                    <!-- Phone Number Input -->
-                    <div class="mb-5">
-                        <h3 class="text-xl mb-1 font-semibold">Your Phone</h3>
-                        <vue-tel-input
-                            v-model="phone"
-                            mode="international"
-                            :input-options="{ placeholder: 'Enter phone number' }"
-                            class="border-0 border-main-border px-1 w-full text-lg"
-                        />
-                    </div>
-
-                    <!-- Date Picker -->
-                    <div class="mb-10">
-                        <h3 class="text-xl mb-1 font-semibold">Choose Dates</h3>
-                        <VueDatePicker
-                            v-model="dateRange"
-                            range
-                            text-input
-                            :enable-time-picker="false"
-                            placeholder="Select rental dates"
-                            :dark="themeStore.isDark"
-                            :ui="{
-                                menu: 'rounded-xl shadow-lg',
-                                calendar: 'p-3',
-                            }"
-                        />
+                    <!-- Cars details highlighted -->
+                    <div class="mb-5 space-y-4 divide-y divide-main-border">
+                        <h3 class="flex items-end justify-between">
+                            <span class="text-lg font-semibold">{{ t('app.acceleration') }}</span>
+                            <span class="text-primary text-2xl">
+                                {{ carStore.selectedCar?.details.acceleration }}
+                            </span>
+                        </h3>
+                        <h3 class="flex items-end justify-between">
+                            <span class="text-lg font-semibold">{{ t('app.power') }}</span>
+                            <span class="text-primary text-2xl">
+                                {{ carStore.selectedCar?.details.power }}
+                            </span>
+                        </h3>
+                        <h3 class="flex items-end justify-between">
+                            <span class="text-lg font-semibold">{{ t('app.transmission') }}</span>
+                            <span class="text-primary text-2xl">
+                                {{ carStore.selectedCar?.details.transmission }}
+                            </span>
+                        </h3>
+                        <h3 class="flex items-end justify-between">
+                            <span class="text-lg font-semibold">
+                                {{ t('app.number_of_seats') }}
+                            </span>
+                            <span class="text-primary text-2xl">
+                                {{ carStore.selectedCar?.details.numberOfSeats }}
+                            </span>
+                        </h3>
                     </div>
 
                     <!-- Book Button -->
                     <Button class="font-semibold mb-10">
-                        {{ t('app.book_btn') }}
+                        <RouterLink
+                            :to="`/book/${carStore.selectedCar?._id}`"
+                            class="w-full h-full flex items-center justify-center"
+                        >
+                            {{ t('app.book_btn') }}
+                        </RouterLink>
                     </Button>
 
                     <!-- Pricing Table -->
@@ -102,6 +109,32 @@
                     </div>
                 </div>
             </div>
+
+            <!-- <div class="mb-5">
+                <h3 class="text-xl mb-1 font-semibold">Your Phone</h3>
+                <vue-tel-input
+                    v-model="phone"
+                    mode="international"
+                    :input-options="{ placeholder: 'Enter phone number' }"
+                    class="border-0 border-main-border px-1 w-full text-lg"
+                />
+            </div>
+
+            <div class="mb-10">
+                <h3 class="text-xl mb-1 font-semibold">Choose Dates</h3>
+                <VueDatePicker
+                    v-model="dateRange"
+                    range
+                    text-input
+                    :enable-time-picker="false"
+                    placeholder="Select rental dates"
+                    :dark="themeStore.isDark"
+                    :ui="{
+                        menu: 'rounded-xl shadow-lg',
+                        calendar: 'p-3',
+                    }"
+                />
+            </div> -->
         </div>
     </div>
 </template>
