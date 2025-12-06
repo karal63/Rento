@@ -6,6 +6,7 @@
     const props = defineProps<{
         size: 'small' | 'medium' | 'large';
         placeholder?: string;
+        type?: 'time' | 'date' | 'tel' | 'password' | 'email';
     }>();
 
     const getSizeClasses = computed(() => {
@@ -24,7 +25,7 @@
 
 <template>
     <input
-        type="text"
+        :type="type ? type : 'text'"
         v-model="modelValue"
         :placeholder="placeholder"
         class="border border-main-border rounded-md outline-0 focus:ring-1 transition ring-primary"

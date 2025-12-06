@@ -1,7 +1,32 @@
 <script setup lang="ts">
     import { useCarStore } from '@/entities/car';
+    import { useBookingStore } from '@/features/booking';
+    import { ref, watch } from 'vue';
 
     const carStore = useCarStore();
+    const bookingStore = useBookingStore();
+
+    const pricePerDay = ref<number>(0);
+
+    watch(
+        [() => bookingStore.daysCount],
+        ([daysCount]) => {
+            if (daysCount === 1) {
+                pricePerDay.value = carStore.selectedCar?.pricing[0]?.price ?? 0;
+            } else if (daysCount === 2 || daysCount === 3) {
+                pricePerDay.value = carStore.selectedCar?.pricing[1]?.price ?? 0;
+            } else if (daysCount >= 4 && daysCount <= 6) {
+                pricePerDay.value = carStore.selectedCar?.pricing[2]?.price ?? 0;
+            } else if (daysCount >= 7 && daysCount <= 13) {
+                pricePerDay.value = carStore.selectedCar?.pricing[3]?.price ?? 0;
+            } else if (daysCount >= 14 && daysCount <= 29) {
+                pricePerDay.value = carStore.selectedCar?.pricing[4]?.price ?? 0;
+            } else if (daysCount === 30) {
+                pricePerDay.value = carStore.selectedCar?.pricing[5]?.price ?? 0;
+            }
+        },
+        { immediate: true }
+    );
 </script>
 
 <template>
@@ -19,17 +44,16 @@
                     <h2 class="text-2xl font-semibold">
                         {{ carStore.selectedCar?.name }}
                     </h2>
-                    <!-- <p class="text-gray-500 text-sm mt-1">
-                                    {{ car.class }} • {{ car.type }}
-                                </p> -->
                 </div>
 
                 <!-- Pricing -->
                 <div class="mt-4">
-                    <p class="text-lg font-semibold">€1000/day</p>
+                    <p class="text-lg font-semibold">{{ pricePerDay }}zł/day</p>
                     <p class="text-main-gray text-sm mt-1">
-                        Total for 1 days:
-                        <span class="font-semibold">€5000</span>
+                        Total for {{ bookingStore.daysCount }} days:
+                        <span class="font-semibold">
+                            {{ bookingStore.daysCount * pricePerDay }}zł
+                        </span>
                     </p>
                 </div>
             </div>

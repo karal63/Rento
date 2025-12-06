@@ -1,20 +1,15 @@
 <script setup lang="ts">
     import { useCarStore } from '@/entities/car';
-    import { useThemeStore } from '@/shared/model';
     import { Button } from '@/shared/ui/button';
-    import { VueDatePicker } from '@vuepic/vue-datepicker';
     import { onMounted, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { useRoute } from 'vue-router';
 
     const carStore = useCarStore();
-    const themeStore = useThemeStore();
     const { t } = useI18n();
     const { params } = useRoute();
 
     const loading = ref(false);
-    const dateRange = ref<[Date | null, Date | null]>([null!, null!]);
-    const phone = ref('');
 
     onMounted(async () => {
         if (!carStore.selectedCar) {
@@ -109,32 +104,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="mb-5">
-                <h3 class="text-xl mb-1 font-semibold">Your Phone</h3>
-                <vue-tel-input
-                    v-model="phone"
-                    mode="international"
-                    :input-options="{ placeholder: 'Enter phone number' }"
-                    class="border-0 border-main-border px-1 w-full text-lg"
-                />
-            </div>
-
-            <div class="mb-10">
-                <h3 class="text-xl mb-1 font-semibold">Choose Dates</h3>
-                <VueDatePicker
-                    v-model="dateRange"
-                    range
-                    text-input
-                    :enable-time-picker="false"
-                    placeholder="Select rental dates"
-                    :dark="themeStore.isDark"
-                    :ui="{
-                        menu: 'rounded-xl shadow-lg',
-                        calendar: 'p-3',
-                    }"
-                />
-            </div> -->
         </div>
     </div>
 </template>
