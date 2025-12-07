@@ -28,7 +28,7 @@
         :type="type ? type : 'text'"
         v-model="modelValue"
         :placeholder="placeholder"
-        class="border border-main-border rounded-md outline-0 focus:ring-1 transition ring-primary"
+        class="border border-main-border rounded-md outline-0 focus:ring-1 transition ring-primary disabled:opacity-50"
         :class="getSizeClasses"
     />
 </template>
