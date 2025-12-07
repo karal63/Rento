@@ -30,7 +30,7 @@
 </script>
 
 <template>
-    <div class="w-1/3 bg-main-gray-bg shadow-lg rounded-2xl p-6 mb-10">
+    <div class="lg:w-1/3 bg-main-gray-bg shadow-lg rounded-2xl p-6 mb-10">
         <!-- Image + name -->
         <div class="flex flex-col md:flex-row gap-6">
             <img

@@ -15,7 +15,7 @@
 
 <template>
     <div>
-        <main class="max-w-[1000px] m-auto 0 px-5 mt-32 flex gap-10">
+        <main class="max-w-[1000px] m-auto 0 px-5 mt-32 lg:flex gap-10">
             <BookingSummary />
             <BookingForm />
         </main>
