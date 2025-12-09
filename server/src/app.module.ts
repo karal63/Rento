@@ -7,6 +7,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { RentController } from './http/rent/rent.controller';
 import { RentService } from './http/rent/rent.service';
 import { RentModule } from './http/rent/rent.module';
+import { AuthModule } from './http/auth/auth.module';
+import { UserModule } from './http/user/user.module';
 
 @Module({
     imports: [
@@ -16,6 +18,8 @@ import { RentModule } from './http/rent/rent.module';
         CarModule,
         MongooseModule.forRoot(process.env.MONGODB_URI!),
         RentModule,
+        AuthModule,
+        UserModule,
     ],
     controllers: [AppController, RentController],
     providers: [AppService, RentService],
