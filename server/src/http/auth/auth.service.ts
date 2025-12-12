@@ -15,7 +15,6 @@ export class AuthService {
         tokens: { accessToken: string; refreshToken: string };
     }> {
         const user = await this.userService.create(candidate);
-        console.log(user._id.toString());
         const { accessToken, refreshToken } = await this.generateTokens(
             user._id.toString(),
             user.email,
