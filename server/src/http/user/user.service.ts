@@ -7,6 +7,16 @@ import { User } from 'src/schemas/userSchema';
 export class UserService {
     constructor(@InjectModel(User.name) private userModel: Model<User>) {}
     async create() {
-        return await this.userModel.find();
+        const mongoUser = new this.userModel({
+            name: 'test',
+            secondName: 'test',
+            email: 'test@gmail.com',
+            phoneNumber: '1234',
+            password: 123,
+        });
+        await mongoUser.save();
+        const user = mongoUser.toObject();
+
+        return user;
     }
 }
