@@ -15,7 +15,7 @@ export class User {
     email: string;
 
     @Prop({ min: 4 })
-    password: string;
+    password?: string;
 
     @Prop()
     phoneNumber: string;
