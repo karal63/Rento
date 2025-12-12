@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { CarsList } from '@/features/car/carsList/ui';
+    import { CarsList } from '@/features/carsList';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();

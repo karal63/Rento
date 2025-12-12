@@ -34,7 +34,11 @@
 </script>
 
 <template>
-    <button @click="$emit('click')" class="uppercase" :class="buttonClass">
+    <button
+        @click="$emit('click')"
+        class="uppercase disabled:opacity-50 disabled:cursor-default"
+        :class="buttonClass"
+    >
         <slot />
     </button>
 </template>
