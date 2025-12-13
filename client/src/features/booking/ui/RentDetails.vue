@@ -4,15 +4,22 @@
     import { useThemeStore } from '@/shared/model';
     import { calculateDays } from '@/entities/date';
 
-    import { ref, watch } from 'vue';
+    import { computed, ref, watch } from 'vue';
     import { useBookingStore } from '../model/booking.store';
+    import { useUserStore } from '@/entities/user';
+    import Button from '@/shared/ui/button/Button.vue';
 
     const themeStore = useThemeStore();
     const bookingStore = useBookingStore();
+    const userStore = useUserStore();
 
     const pickupTime = ref('');
     const location = ref('');
     const dateRange = ref<Date[]>([]);
+
+    const isDisabled = computed(() => {
+        return !pickupTime.value || !location.value || !dateRange.value;
+    });
 
     watch(
         dateRange,
@@ -58,6 +65,10 @@
                     placeholder="Airport, Main Office, Hotel..."
                     class="w-full"
                 />
+            </div>
+
+            <div v-if="userStore.isAuthenticated" class="flex justify-end mt-5">
+                <Button size="sm" class="flex-center gap-3" :disabled="isDisabled">PROCEED</Button>
             </div>
         </div>
     </form>

@@ -1,7 +1,12 @@
 <script setup lang="ts">
-    import { Input, Button } from '@/shared/ui';
+    import { useUserStore } from '@/entities/user';
+    import { login, LoginForm } from '@/features/auth/login';
+    import { signup, SignupForm } from '@/features/auth/signup';
+    import { Button } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { computed, ref } from 'vue';
+
+    const userStore = useUserStore();
 
     const loginUser = ref({
         email: '',
@@ -19,14 +24,19 @@
     const isAuthLogin = ref(true);
     const passwordRepeat = ref('');
     const loading = ref(false);
-    const isAuthenticated = ref(false);
 
-    const submit = () => {
+    const submit = async () => {
         loading.value = true;
-        setTimeout(() => {
-            loading.value = false;
-            isAuthenticated.value = true;
-        }, 2000);
+
+        if (isAuthLogin.value) {
+            await login(loginUser.value);
+        } else {
+            if (signupUser.value.password === passwordRepeat.value) {
+                await signup(signupUser.value);
+            }
+        }
+
+        loading.value = false;
     };
 
     const isDisabled = computed(() => {
@@ -45,75 +55,15 @@
 
 <template>
     <form @submit.prevent>
-        <div v-if="!isAuthenticated" class="flex-col gap-2">
+        <div v-if="!userStore.isAuthenticated" class="flex-col gap-2">
             <h2 class="text-2xl mb-3">Login to continue</h2>
-            <div v-if="isAuthLogin" class="flex-col gap-2">
-                <Input
-                    v-model="loginUser.email"
-                    type="email"
-                    size="medium"
-                    placeholder="Name"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="loginUser.password"
-                    type="password"
-                    size="medium"
-                    placeholder="Password"
-                    :disabled="loading"
-                    class="w-full"
-                />
-            </div>
-
-            <div v-else class="flex-col gap-2">
-                <Input
-                    v-model="signupUser.name"
-                    size="medium"
-                    placeholder="Name"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="signupUser.secondName"
-                    size="medium"
-                    placeholder="Second name"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="signupUser.email"
-                    type="email"
-                    size="medium"
-                    placeholder="Email addres"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="signupUser.phoneNumber"
-                    type="tel"
-                    size="medium"
-                    placeholder="Phone number"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="signupUser.password"
-                    type="password"
-                    size="medium"
-                    placeholder="Password"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="passwordRepeat"
-                    type="password"
-                    size="medium"
-                    placeholder="Password (repeat)"
-                    :disabled="loading"
-                    class="w-full"
-                />
-            </div>
+            <LoginForm v-if="isAuthLogin" v-model:loginUser="loginUser" :loading="loading" />
+            <SignupForm
+                v-else
+                v-model:signupUser="signupUser"
+                v-model:repeatPass="passwordRepeat"
+                :loading="loading"
+            />
 
             <div v-if="isAuthLogin" class="flex gap-2">
                 <Button
@@ -122,7 +72,7 @@
                     :disabled="loading || isDisabled"
                     class="max-w-max"
                 >
-                    Login & proceed
+                    Login
                 </Button>
                 <Button
                     @click="isAuthLogin = false"
@@ -142,7 +92,7 @@
                     :disabled="loading || isDisabled"
                     class="max-w-max"
                 >
-                    CREATE & proceed
+                    CREATE
                 </Button>
                 <Button
                     @click="isAuthLogin = true"
@@ -163,11 +113,5 @@
                 </Button>
             </div>
         </div>
-
-        <div v-else class="flex justify-end">
-            <Button size="sm" class="flex-center gap-3">PROCEED</Button>
-        </div>
     </form>
 </template>
-
-<!-- learn more about stripe and create layer that is going to have summary widget in /book/:id and /book/:id/payment -->
