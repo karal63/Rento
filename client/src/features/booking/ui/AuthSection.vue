@@ -58,7 +58,6 @@
         <div v-if="!userStore.isAuthenticated" class="flex-col gap-2">
             <h2 class="text-2xl mb-3">Login to continue</h2>
             <LoginForm v-if="isAuthLogin" v-model:loginUser="loginUser" :loading="loading" />
-
             <SignupForm
                 v-else
                 v-model:signupUser="signupUser"
@@ -73,7 +72,7 @@
                     :disabled="loading || isDisabled"
                     class="max-w-max"
                 >
-                    Login & proceed
+                    Login
                 </Button>
                 <Button
                     @click="isAuthLogin = false"
@@ -93,7 +92,7 @@
                     :disabled="loading || isDisabled"
                     class="max-w-max"
                 >
-                    CREATE & proceed
+                    CREATE
                 </Button>
                 <Button
                     @click="isAuthLogin = true"
@@ -113,10 +112,6 @@
                     <Icon icon="ic:baseline-telegram" class="text-3xl" />
                 </Button>
             </div>
-        </div>
-
-        <div v-else class="flex justify-end">
-            <Button size="sm" class="flex-center gap-3">PROCEED</Button>
         </div>
     </form>
 </template>
