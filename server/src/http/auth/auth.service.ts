@@ -1,10 +1,15 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+    Injectable,
+    NotFoundException,
+    UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { User } from 'src/schemas/userSchema';
 import { SignupDto } from './dto/signup.dto';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import * as argon from '@node-rs/argon2';
+import { UserPayload } from 'src/common/types/user.type';
 
 @Injectable()
 export class AuthService {
@@ -28,7 +33,10 @@ export class AuthService {
     }
 
     async login(candidate: LoginDto) {
-        const user = await this.userService.find(candidate.email);
+        let user = await this.userService.find(candidate.email);
+        if (!user)
+            throw new NotFoundException('User with given email not found');
+        user = user.toObject() as User;
 
         const isValidPassword = await argon.verify(
             user.password!,
@@ -73,5 +81,23 @@ export class AuthService {
         ]);
 
         return { accessToken, refreshToken };
+    }
+
+    async refresh(userDto: UserPayload) {
+        let user = await this.userService.find(userDto.email);
+        if (!user) throw new NotFoundException('User not found');
+
+        const { accessToken, refreshToken } = await this.generateTokens(
+            user._id.toString(),
+            userDto.email,
+        );
+
+        user = user.toObject() as User;
+        delete user.password;
+
+        return {
+            user,
+            tokens: { accessToken, refreshToken },
+        };
     }
 }

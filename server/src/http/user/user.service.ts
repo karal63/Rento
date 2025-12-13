@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/schemas/userSchema';
@@ -9,6 +9,12 @@ import * as argon from '@node-rs/argon2';
 export class UserService {
     constructor(@InjectModel(User.name) private userModel: Model<User>) {}
     async create(candidate: SignupDto) {
+        const existingUser = await this.find(candidate.email);
+
+        if (existingUser) {
+            throw new ConflictException('User with this email already exists');
+        }
+
         const hashedPassword: string = await argon.hash(candidate.password);
         candidate.password = hashedPassword;
 
@@ -20,9 +26,7 @@ export class UserService {
         return user;
     }
 
-    async find(email: string): Promise<User> {
-        const user = await this.userModel.findOne({ email });
-        if (!user) throw new NotFoundException();
-        return user.toObject();
+    async find(email: string): Promise<User | null> {
+        return await this.userModel.findOne({ email });
     }
 }

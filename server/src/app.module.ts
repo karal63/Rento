@@ -9,6 +9,8 @@ import { RentService } from './http/rent/rent.service';
 import { RentModule } from './http/rent/rent.module';
 import { AuthModule } from './http/auth/auth.module';
 import { UserModule } from './http/user/user.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AtGuard } from './common/guards/at.guard';
 
 @Module({
     imports: [
@@ -22,6 +24,10 @@ import { UserModule } from './http/user/user.module';
         UserModule,
     ],
     controllers: [AppController, RentController],
-    providers: [AppService, RentService],
+    providers: [
+        AppService,
+        RentService,
+        { provide: APP_GUARD, useClass: AtGuard },
+    ],
 })
 export class AppModule {}
