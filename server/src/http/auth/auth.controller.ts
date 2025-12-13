@@ -14,48 +14,40 @@ export class AuthController {
     @ApiResponse({ status: 200, description: 'Creates a new user' })
     @Post('signup')
     async signup(@Res() res: Response, @Body() candidate: SignupDto) {
-        try {
-            const {
-                user,
-                tokens: { accessToken, refreshToken },
-            } = await this.authService.signup(candidate);
+        const {
+            user,
+            tokens: { accessToken, refreshToken },
+        } = await this.authService.signup(candidate);
 
-            res.cookie('accessToken', accessToken, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-            });
-            res.cookie('refreshToken', refreshToken, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-            });
-            res.status(200).json({ user });
-        } catch (error) {
-            console.log(error);
-        }
+        res.cookie('accessToken', accessToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+        });
+        res.cookie('refreshToken', refreshToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+        });
+        res.status(200).json({ user });
     }
 
     @ApiOperation({ summary: 'Log in' })
     @ApiResponse({ status: 200, description: 'Returns user object' })
     @Post('login')
     async login(@Res() res: Response, @Body() candidate: LoginDto) {
-        try {
-            const {
-                user,
-                tokens: { accessToken, refreshToken },
-            } = await this.authService.login(candidate);
+        const {
+            user,
+            tokens: { accessToken, refreshToken },
+        } = await this.authService.login(candidate);
 
-            res.cookie('accessToken', accessToken, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-            });
-            res.cookie('refreshToken', refreshToken, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-            });
-            res.status(200).json({ user });
-        } catch (error) {
-            console.log(error);
-        }
+        res.cookie('accessToken', accessToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+        });
+        res.cookie('refreshToken', refreshToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+        });
+        res.status(200).json({ user });
     }
 
     @ApiOperation({ summary: 'Log out' })
