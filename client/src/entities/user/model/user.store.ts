@@ -4,9 +4,9 @@ import type { User } from './types';
 
 export const useUserStore = defineStore('user', () => {
     const isAuthenticated = ref(false);
-    const user = ref<User>();
+    const user = ref<User | null>();
 
-    const authenticateUser = (value: boolean, authUser: User) => {
+    const authenticateUser = (value: boolean, authUser: User | null) => {
         isAuthenticated.value = value;
         user.value = authUser;
     };
