@@ -9,6 +9,7 @@ import { SignupDto } from './dto/signup.dto';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import * as argon from '@node-rs/argon2';
+import { UserPayload } from 'src/common/types/user.type';
 
 @Injectable()
 export class AuthService {
@@ -80,5 +81,23 @@ export class AuthService {
         ]);
 
         return { accessToken, refreshToken };
+    }
+
+    async refresh(userDto: UserPayload) {
+        let user = await this.userService.find(userDto.email);
+        if (!user) throw new NotFoundException('User not found');
+
+        const { accessToken, refreshToken } = await this.generateTokens(
+            user._id.toString(),
+            userDto.email,
+        );
+
+        user = user.toObject() as User;
+        delete user.password;
+
+        return {
+            user,
+            tokens: { accessToken, refreshToken },
+        };
     }
 }
