@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import { login, LoginForm } from '@/features/auth/login';
     import { Input, Button } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { computed, ref } from 'vue';
@@ -21,12 +22,17 @@
     const loading = ref(false);
     const isAuthenticated = ref(false);
 
-    const submit = () => {
+    const submit = async () => {
         loading.value = true;
-        setTimeout(() => {
-            loading.value = false;
+
+        if (isAuthLogin.value) {
+            const success = await login(loginUser.value);
+            if (success) isAuthenticated.value = true;
+        } else {
             isAuthenticated.value = true;
-        }, 2000);
+        }
+
+        loading.value = false;
     };
 
     const isDisabled = computed(() => {
@@ -47,24 +53,7 @@
     <form @submit.prevent>
         <div v-if="!isAuthenticated" class="flex-col gap-2">
             <h2 class="text-2xl mb-3">Login to continue</h2>
-            <div v-if="isAuthLogin" class="flex-col gap-2">
-                <Input
-                    v-model="loginUser.email"
-                    type="email"
-                    size="medium"
-                    placeholder="Name"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="loginUser.password"
-                    type="password"
-                    size="medium"
-                    placeholder="Password"
-                    :disabled="loading"
-                    class="w-full"
-                />
-            </div>
+            <LoginForm v-if="isAuthLogin" v-model:loginUser="loginUser" :loading="loading" />
 
             <div v-else class="flex-col gap-2">
                 <Input
@@ -169,5 +158,3 @@
         </div>
     </form>
 </template>
-
-<!-- learn more about stripe and create layer that is going to have summary widget in /book/:id and /book/:id/payment -->
