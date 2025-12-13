@@ -1,8 +1,12 @@
 <script setup lang="ts">
+    import { useUserStore } from '@/entities/user';
     import { login, LoginForm } from '@/features/auth/login';
-    import { Input, Button } from '@/shared/ui';
+    import { signup, SignupForm } from '@/features/auth/signup';
+    import { Button } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { computed, ref } from 'vue';
+
+    const userStore = useUserStore();
 
     const loginUser = ref({
         email: '',
@@ -20,16 +24,16 @@
     const isAuthLogin = ref(true);
     const passwordRepeat = ref('');
     const loading = ref(false);
-    const isAuthenticated = ref(false);
 
     const submit = async () => {
         loading.value = true;
 
         if (isAuthLogin.value) {
-            const success = await login(loginUser.value);
-            if (success) isAuthenticated.value = true;
+            await login(loginUser.value);
         } else {
-            isAuthenticated.value = true;
+            if (signupUser.value.password === passwordRepeat.value) {
+                await signup(signupUser.value);
+            }
         }
 
         loading.value = false;
@@ -51,58 +55,16 @@
 
 <template>
     <form @submit.prevent>
-        <div v-if="!isAuthenticated" class="flex-col gap-2">
+        <div v-if="!userStore.isAuthenticated" class="flex-col gap-2">
             <h2 class="text-2xl mb-3">Login to continue</h2>
             <LoginForm v-if="isAuthLogin" v-model:loginUser="loginUser" :loading="loading" />
 
-            <div v-else class="flex-col gap-2">
-                <Input
-                    v-model="signupUser.name"
-                    size="medium"
-                    placeholder="Name"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="signupUser.secondName"
-                    size="medium"
-                    placeholder="Second name"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="signupUser.email"
-                    type="email"
-                    size="medium"
-                    placeholder="Email addres"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="signupUser.phoneNumber"
-                    type="tel"
-                    size="medium"
-                    placeholder="Phone number"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="signupUser.password"
-                    type="password"
-                    size="medium"
-                    placeholder="Password"
-                    :disabled="loading"
-                    class="w-full"
-                />
-                <Input
-                    v-model="passwordRepeat"
-                    type="password"
-                    size="medium"
-                    placeholder="Password (repeat)"
-                    :disabled="loading"
-                    class="w-full"
-                />
-            </div>
+            <SignupForm
+                v-else
+                v-model:signupUser="signupUser"
+                v-model:repeatPass="passwordRepeat"
+                :loading="loading"
+            />
 
             <div v-if="isAuthLogin" class="flex gap-2">
                 <Button

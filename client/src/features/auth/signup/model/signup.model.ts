@@ -1,12 +1,12 @@
 import { useUserStore } from '@/entities/user';
-import { apiLogin } from '../api/user.api';
-import type { LoginDto } from './types';
+import { apiSignup } from '../api/signup.api';
+import type { SignupDto } from './types/types';
 
-export const login = async (loginDto: LoginDto) => {
+export const signup = async (signupDto: SignupDto) => {
     const userStore = useUserStore();
 
     try {
-        const res = await apiLogin(loginDto);
+        const res = await apiSignup(signupDto);
         userStore.authenticateUser(true, res.data.user);
 
         return true;
