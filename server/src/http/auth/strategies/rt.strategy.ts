@@ -18,6 +18,6 @@ export class RtStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
     }
 
     private static jwtFromCookie(this: void, req: Request): string | null {
-        return (req.cookies as { accessToken: string }).accessToken;
+        return (req.cookies as { refreshToken: string }).refreshToken;
     }
 }

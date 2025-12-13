@@ -7,12 +7,15 @@ import { LoginDto } from './dto/login.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/common/decorators/getUser.decorator';
 import type { UserPayload } from 'src/common/types/user.type';
+import { RtGuard } from 'src/common/guards/rt.guard';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+    @Public()
     @ApiOperation({ summary: 'Sign up' })
     @ApiResponse({ status: 200, description: 'Creates a new user' })
     @Post('signup')
@@ -33,6 +36,7 @@ export class AuthController {
         res.status(200).json({ user });
     }
 
+    @Public()
     @ApiOperation({ summary: 'Log in' })
     @ApiResponse({ status: 200, description: 'Returns user object' })
     @Post('login')
@@ -69,7 +73,8 @@ export class AuthController {
 
     @ApiOperation({ summary: 'Refresh tokens' })
     @ApiResponse({ status: 200, description: 'Refreshes auth token' })
-    @UseGuards(AuthGuard('jwt-refresh'))
+    @Public()
+    @UseGuards(RtGuard)
     @Post('refresh')
     async refresh(@Res() res: Response, @GetUser() userDto: UserPayload) {
         const { user, tokens } = await this.authService.refresh(userDto);
