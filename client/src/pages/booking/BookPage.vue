@@ -1,15 +1,15 @@
 <script setup lang="ts">
     import { useCarStore } from '@/entities/car';
     import { onMounted } from 'vue';
-    import { useRouter } from 'vue-router';
+    import { useRoute } from 'vue-router';
     import { BookingSummary } from '@/widgets';
     import { BookingForm } from '@/features/booking';
 
-    const router = useRouter();
+    const { params } = useRoute();
     const carStore = useCarStore();
 
-    onMounted(() => {
-        if (!carStore.selectedCar?._id) router.back();
+    onMounted(async () => {
+        if (!carStore.selectedCar?._id) await carStore.getCarById(params.id as string);
     });
 </script>
 

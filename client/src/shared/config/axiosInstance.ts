@@ -1,8 +1,10 @@
 import axios, { type AxiosError, type AxiosResponse } from 'axios';
 import { API_POST_TOKEN_REFRESH } from '../model';
 
+export const baseURL = 'http://localhost:3000/api/';
+
 export const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000/api/',
+    baseURL,
     withCredentials: true,
 });
 

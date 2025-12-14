@@ -2,11 +2,13 @@
     import { useUserStore } from '@/entities/user';
     import { login, LoginForm } from '@/features/auth/login';
     import { signup, SignupForm } from '@/features/auth/signup';
+    import { baseURL } from '@/shared/config';
     import { Button } from '@/shared/ui';
-    import { Icon } from '@iconify/vue';
-    import { computed, ref } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
+    import { useRoute } from 'vue-router';
 
     const userStore = useUserStore();
+    const { params } = useRoute();
 
     const loginUser = ref({
         email: '',
@@ -50,6 +52,19 @@
                 !signupUser.value.secondName ||
                 !passwordRepeat.value
             );
+    });
+
+    onMounted(() => {
+        const script = document.createElement('script');
+        script.src = 'https://telegram.org/js/telegram-widget.js?22';
+        script.async = true;
+        script.setAttribute('data-telegram-login', 'rento_cr_bot');
+        script.setAttribute('data-size', 'large');
+        script.setAttribute('data-userpic', 'false');
+        script.setAttribute('data-radius', '8');
+        script.setAttribute('data-auth-url', `${baseURL}auth/telegram?car_id=${params.id}`);
+
+        document.getElementById('telegram-login')?.appendChild(script);
     });
 </script>
 
@@ -108,9 +123,10 @@
             <div>
                 <p class="my-2 text-sm text-main-gray">———— or ————</p>
 
-                <Button size="sm" color="transparent" class="border border-main-border">
+                <!-- <Button size="sm" color="transparent" class="border border-main-border">
                     <Icon icon="ic:baseline-telegram" class="text-3xl" />
-                </Button>
+                </Button> -->
+                <div id="telegram-login"></div>
             </div>
         </div>
     </form>

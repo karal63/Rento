@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Post,
+    Query,
+    Res,
+    UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
@@ -9,6 +17,16 @@ import { GetUser } from 'src/common/decorators/getUser.decorator';
 import type { UserPayload } from 'src/common/types/user.type';
 import { RtGuard } from 'src/common/guards/rt.guard';
 import { Public } from 'src/common/decorators/public.decorator';
+
+export type TelegramLoginQuery = {
+    id: string;
+    first_name: string;
+    username: string;
+    photo_url: string;
+    auth_date: string;
+    hash: string;
+    car_id: string;
+};
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -90,4 +108,25 @@ export class AuthController {
 
         return res.status(200).json(user);
     }
+
+    @Public()
+    @ApiOperation({ summary: 'Log in with Telegram' })
+    @ApiResponse({ status: 200, description: 'Gets Telegram account data' })
+    @Get('telegram')
+    loginTelegram(@Query() query: TelegramLoginQuery, @Res() res: Response) {
+        // const { user, tokens } = await this.authService.loginTelegram(userDto);
+
+        // res.cookie('accessToken', tokens.accessToken, {
+        //     maxAge: 30 * 24 * 60 * 60 * 1000,
+        //     httpOnly: true,
+        // });
+        // res.cookie('refreshToken', tokens.refreshToken, {
+        //     maxAge: 30 * 24 * 60 * 60 * 1000,
+        //     httpOnly: true,
+        // });
+
+        return res.redirect(`${process.env.CORS_ORIGIN}/book/${query.car_id}`);
+    }
 }
+
+// naviagate to url with some flag, if flag exists as a param call method getMe, Access and refresh token present so you will get user object
