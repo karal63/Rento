@@ -17,16 +17,7 @@ import { GetUser } from 'src/common/decorators/getUser.decorator';
 import type { UserPayload } from 'src/common/types/user.type';
 import { RtGuard } from 'src/common/guards/rt.guard';
 import { Public } from 'src/common/decorators/public.decorator';
-
-export type TelegramLoginQuery = {
-    id: string;
-    first_name: string;
-    username: string;
-    photo_url: string;
-    auth_date: string;
-    hash: string;
-    car_id: string;
-};
+import type { TelegramLoginQuery } from './dto/telegramQuery.type';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -44,7 +35,7 @@ export class AuthController {
         } = await this.authService.signup(candidate);
 
         res.cookie('accessToken', accessToken, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+            maxAge: 15 * 60 * 1000,
             httpOnly: true,
         });
         res.cookie('refreshToken', refreshToken, {
@@ -65,11 +56,15 @@ export class AuthController {
         } = await this.authService.login(candidate);
 
         res.cookie('accessToken', accessToken, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+            maxAge: 15 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
             httpOnly: true,
         });
         res.cookie('refreshToken', refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
             httpOnly: true,
         });
         res.status(200).json({ user });
@@ -98,11 +93,15 @@ export class AuthController {
         const { user, tokens } = await this.authService.refresh(userDto);
 
         res.cookie('accessToken', tokens.accessToken, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+            maxAge: 15 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
             httpOnly: true,
         });
         res.cookie('refreshToken', tokens.refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
             httpOnly: true,
         });
 
@@ -113,20 +112,25 @@ export class AuthController {
     @ApiOperation({ summary: 'Log in with Telegram' })
     @ApiResponse({ status: 200, description: 'Gets Telegram account data' })
     @Get('telegram')
-    loginTelegram(@Query() query: TelegramLoginQuery, @Res() res: Response) {
-        // const { user, tokens } = await this.authService.loginTelegram(userDto);
+    async loginTelegram(
+        @Query() query: TelegramLoginQuery,
+        @Res() res: Response,
+    ) {
+        const { tokens } = await this.authService.loginTelegram(query);
 
-        // res.cookie('accessToken', tokens.accessToken, {
-        //     maxAge: 30 * 24 * 60 * 60 * 1000,
-        //     httpOnly: true,
-        // });
-        // res.cookie('refreshToken', tokens.refreshToken, {
-        //     maxAge: 30 * 24 * 60 * 60 * 1000,
-        //     httpOnly: true,
-        // });
+        res.cookie('accessToken', tokens.accessToken, {
+            maxAge: 15 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
+            httpOnly: true,
+        });
+        res.cookie('refreshToken', tokens.refreshToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
+            httpOnly: true,
+        });
 
         return res.redirect(`${process.env.CORS_ORIGIN}/book/${query.car_id}`);
     }
 }
-
-// naviagate to url with some flag, if flag exists as a param call method getMe, Access and refresh token present so you will get user object
