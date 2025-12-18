@@ -1,14 +1,17 @@
 <script setup lang="ts">
     import { useSidebarStore, useThemeStore } from '@/shared/model';
     import { useI18n } from 'vue-i18n';
-
-    const { t, locale } = useI18n();
-    const sidebarStore = useSidebarStore();
-    const themeStore = useThemeStore();
     import { languages } from '@/shared/config';
     import { ref } from 'vue';
     import { Button } from '@/shared/ui/button';
     import { Icon } from '@iconify/vue';
+    import { logout } from '@/features/auth/logout';
+    import { useUserStore } from '@/entities/user';
+
+    const { t, locale } = useI18n();
+    const sidebarStore = useSidebarStore();
+    const themeStore = useThemeStore();
+    const userStore = useUserStore();
 
     const open = ref(false);
     const isDarkTheme = ref(false);
@@ -17,6 +20,11 @@
         isDarkTheme.value = !isDarkTheme.value;
         themeStore.setTheme(isDarkTheme.value);
         document.documentElement.classList.toggle('dark', isDarkTheme.value);
+    };
+
+    const handleLogout = async () => {
+        await logout();
+        sidebarStore.setSidebarOpen(false);
     };
 </script>
 
@@ -91,6 +99,10 @@
                             </div>
                         </transition>
                     </div>
+
+                    <Button v-if="userStore.isAuthenticated" size="sm" @click="handleLogout">
+                        LOG OUT
+                    </Button>
                 </div>
             </div>
         </nav>

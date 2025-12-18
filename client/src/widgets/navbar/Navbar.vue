@@ -75,6 +75,10 @@
                     </transition>
                 </div>
 
+                <!-- <button>
+                    <Icon icon="ic:round-account-circle" class="text-3xl" />
+                </button> -->
+
                 <Button @click="console.log('log')" size="sm" class="hidden md:block">
                     {{ t('app.book_btn') }}
                 </Button>
