@@ -11,7 +11,7 @@ export const login = async (loginDto: LoginDto) => {
         userStore.authenticateUser(true, res.data.user);
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
-            console.log(error.response?.data);
+            return error.response?.data.message;
         }
     }
 };

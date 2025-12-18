@@ -1,10 +1,11 @@
 <script setup lang="ts">
     import Input from '@/shared/ui/input/Input.vue';
-    import { ref } from 'vue';
+    import { reactive, ref } from 'vue';
     import { email, minLength, required } from '@vuelidate/validators';
     import useVuelidate from '@vuelidate/core';
     import { login } from '../model/login.model';
     import Button from '@/shared/ui/button/Button.vue';
+    import { Icon } from '@iconify/vue';
 
     defineEmits<{
         (e: 'setIsLoginType', value: boolean): void;
@@ -15,20 +16,24 @@
         password: { required, length: minLength(4) },
     };
 
-    const loginUser = ref({
+    const loginUser = reactive({
         email: '',
         password: '',
     });
 
     const loading = ref(false);
+    const serverErrors = ref<string[]>([]);
 
     const loginV$ = useVuelidate(loginRules, loginUser);
 
     const handleSubmit = async () => {
-        const isValid = loginV$.value.$validate();
+        serverErrors.value = [];
+        const isValid = await loginV$.value.$validate();
         if (!isValid) return;
+
         loading.value = true;
-        await login(loginUser.value);
+        const res = await login(loginUser);
+        serverErrors.value = Array.isArray(res) ? res : res ? [res] : [];
         loading.value = false;
     };
 </script>
@@ -70,6 +75,17 @@
                 :disabled="loading"
                 class="w-full"
             />
+        </div>
+
+        <div v-if="serverErrors.length >= 1">
+            <div
+                v-for="error in serverErrors"
+                :key="error"
+                class="border border-red-400 bg-red-500/10 my-5 px-4 py-2 text-lg rounded-md flex-between"
+            >
+                <h2>{{ error }}</h2>
+                <Icon icon="ic:sharp-error" class="text-2xl text-red-400" />
+            </div>
         </div>
 
         <div class="flex gap-2">
