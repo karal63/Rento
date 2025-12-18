@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { computed } from 'vue';
+    import { computed, watchEffect } from 'vue';
 
     const modelValue = defineModel<string>('modelValue');
 
@@ -7,6 +7,7 @@
         size: 'small' | 'medium' | 'large';
         placeholder?: string;
         type?: 'time' | 'date' | 'tel' | 'password' | 'email';
+        isError?: boolean;
     }>();
 
     const getSizeClasses = computed(() => {
@@ -21,6 +22,18 @@
                 return '';
         }
     });
+
+    const getErrorClasses = computed(() => {
+        if (props.isError) {
+            return 'border-red-500';
+        }
+
+        return 'border-main-border';
+    });
+
+    const getClasses = computed(() => {
+        return `${getSizeClasses.value} ${getErrorClasses.value}`;
+    });
 </script>
 
 <template>
@@ -28,7 +41,7 @@
         :type="type ? type : 'text'"
         v-model="modelValue"
         :placeholder="placeholder"
-        class="border border-main-border rounded-md outline-0 focus:ring-1 transition ring-primary disabled:opacity-50"
-        :class="getSizeClasses"
+        class="border rounded-md outline-0 focus:ring-1 transition ring-primary disabled:opacity-50"
+        :class="getClasses"
     />
 </template>

@@ -1,82 +1,114 @@
 <script setup lang="ts">
     import Input from '@/shared/ui/input/Input.vue';
-    import { computed } from 'vue';
+    import { useVuelidate } from '@vuelidate/core';
+    import { ref } from 'vue';
+    import { email, minLength, required, sameAs } from '@vuelidate/validators';
+    import { signup } from '../model/signup.model';
+    import Button from '@/shared/ui/button/Button.vue';
 
-    const props = defineProps<{
-        signupUser: {
-            name: string;
-            secondName: string;
-            email: string;
-            phoneNumber: string;
-            password: string;
-        };
-        loading: boolean;
-        repeatPass: string;
+    defineEmits<{
+        (e: 'setIsLoginType', value: boolean): void;
     }>();
 
-    const emit = defineEmits<{
-        (e: 'update:signupUser', value: typeof props.signupUser): void;
-        (e: 'update:repeatPass', value: typeof props.repeatPass): void;
-    }>();
+    const signupRules = {
+        name: { required },
+        secondName: { required },
+        email: { required, email },
+        phoneNumber: { required, length: minLength(12) },
+        password: { required, minLength: minLength(4) },
+        passwordRepeat: {
+            required,
+            sameAsPassword: sameAs(() => signupUser.value.password),
+        },
+    };
 
-    const signupUserModel = computed({
-        get: () => props.signupUser,
-        set: value => emit('update:signupUser', value),
+    const signupUser = ref({
+        name: '',
+        secondName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        passwordRepeat: '',
     });
+    const loading = ref(false);
 
-    const repeatPassModel = computed({
-        get: () => props.repeatPass,
-        set: value => emit('update:repeatPass', value),
-    });
+    const signupV$ = useVuelidate(signupRules, signupUser);
+
+    const handleSubmit = async () => {
+        const isValid = signupV$.value.$validate();
+        if (!isValid) return;
+        loading.value = true;
+        await signup(signupUser.value);
+        loading.value = false;
+    };
 </script>
 
 <template>
-    <div class="flex-col gap-2">
+    <form @submit.prevent="handleSubmit" class="flex-col gap-2">
         <Input
-            v-model="signupUserModel.name"
+            v-model="signupUser.name"
             size="medium"
+            :isError="signupV$.name.$errors.length >= 1"
             placeholder="Name"
             :disabled="loading"
             class="w-full"
         />
         <Input
-            v-model="signupUserModel.secondName"
+            v-model="signupUser.secondName"
             size="medium"
+            :isError="signupV$.secondName.$errors.length >= 1"
             placeholder="Second name"
             :disabled="loading"
             class="w-full"
         />
         <Input
-            v-model="signupUserModel.email"
+            v-model="signupUser.email"
             type="email"
             size="medium"
+            :isError="signupV$.email.$errors.length >= 1"
             placeholder="Email addres"
             :disabled="loading"
             class="w-full"
         />
         <Input
-            v-model="signupUserModel.phoneNumber"
+            v-model="signupUser.phoneNumber"
             type="tel"
             size="medium"
+            :isError="signupV$.phoneNumber.$errors.length >= 1"
             placeholder="Phone number"
             :disabled="loading"
             class="w-full"
         />
         <Input
-            v-model="signupUserModel.password"
+            v-model="signupUser.password"
             type="password"
             size="medium"
+            :isError="signupV$.password.$errors.length >= 1"
             placeholder="Password"
             :disabled="loading"
             class="w-full"
         />
         <Input
-            v-model="repeatPassModel"
+            v-model="signupUser.passwordRepeat"
             type="password"
             size="medium"
+            :isError="signupV$.passwordRepeat.$errors.length >= 1"
             placeholder="Password (repeat)"
             :disabled="loading"
             class="w-full"
         />
-    </div>
+
+        <div class="flex gap-2">
+            <Button type="submit" size="sm" :disabled="loading" class="max-w-max">CREATE</Button>
+            <Button
+                @click="$emit('setIsLoginType', true)"
+                size="sm"
+                color="transparent"
+                :disabled="loading"
+                class="max-w-max border border-main-border"
+            >
+                already have an account
+            </Button>
+        </div>
+    </form>
 </template>
