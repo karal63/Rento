@@ -4,10 +4,12 @@
     import { SignupForm } from '@/features/auth/signup';
     import { baseURL } from '@/shared/config';
     import { onMounted, ref } from 'vue';
+    import { useI18n } from 'vue-i18n';
     import { useRoute } from 'vue-router';
 
     const userStore = useUserStore();
     const { params } = useRoute();
+    const { t } = useI18n();
 
     const isLoginType = ref(true);
 
@@ -28,12 +30,12 @@
 <template>
     <form @submit.prevent>
         <div v-if="!userStore.isAuthenticated" class="flex-col gap-2">
-            <h2 class="text-2xl mb-3">Login to continue</h2>
+            <h2 class="text-2xl mb-3">{{ t('app.auth.login_to_continue') }}</h2>
             <LoginForm @setIsLoginType="isLoginType = $event" v-if="isLoginType" />
             <SignupForm @setIsLoginType="isLoginType = $event" v-else />
 
             <div>
-                <p class="my-2 text-sm text-main-gray">———— or ————</p>
+                <p class="my-2 text-sm text-main-gray">———— {{ t('app.auth.or') }} ————</p>
                 <div id="telegram-login"></div>
             </div>
         </div>

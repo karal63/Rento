@@ -6,6 +6,9 @@
     import { login } from '../model/login.model';
     import Button from '@/shared/ui/button/Button.vue';
     import { Icon } from '@iconify/vue';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 
     defineEmits<{
         (e: 'setIsLoginType', value: boolean): void;
@@ -53,7 +56,7 @@
                 type="email"
                 size="medium"
                 :isError="loginV$.email.$errors.length >= 1"
-                placeholder="Name"
+                :placeholder="t('app.auth.email')"
                 :disabled="loading"
                 class="w-full"
             />
@@ -71,7 +74,7 @@
                 type="password"
                 size="medium"
                 :isError="loginV$.password.$errors.length >= 1"
-                placeholder="Password"
+                :placeholder="t('app.auth.password')"
                 :disabled="loading"
                 class="w-full"
             />
@@ -89,7 +92,9 @@
         </div>
 
         <div class="flex gap-2">
-            <Button type="submit" size="sm" :disabled="loading" class="max-w-max">Login</Button>
+            <Button type="submit" size="sm" :disabled="loading" class="max-w-max">
+                {{ t('app.auth.login') }}
+            </Button>
             <Button
                 @click="$emit('setIsLoginType', false)"
                 size="sm"
@@ -97,7 +102,7 @@
                 :disabled="loading"
                 class="max-w-max border border-main-border"
             >
-                Create an account
+                {{ t('app.auth.create_an_account') }}
             </Button>
         </div>
     </form>

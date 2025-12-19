@@ -5,6 +5,9 @@
     import { email, minLength, required, sameAs } from '@vuelidate/validators';
     import { signup } from '../model/signup.model';
     import Button from '@/shared/ui/button/Button.vue';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 
     defineEmits<{
         (e: 'setIsLoginType', value: boolean): void;
@@ -66,7 +69,7 @@
                 v-model="signupUser.name"
                 size="medium"
                 :isError="signupV$.name.$errors.length >= 1"
-                placeholder="Name"
+                :placeholder="t('app.auth.name')"
                 :disabled="loading"
                 class="w-full"
             />
@@ -83,7 +86,7 @@
                 v-model="signupUser.secondName"
                 size="medium"
                 :isError="signupV$.secondName.$errors.length >= 1"
-                placeholder="Second name"
+                :placeholder="t('app.auth.second_name')"
                 :disabled="loading"
                 class="w-full"
             />
@@ -101,7 +104,7 @@
                 type="email"
                 size="medium"
                 :isError="signupV$.email.$errors.length >= 1"
-                placeholder="Email addres"
+                :placeholder="t('app.auth.email')"
                 :disabled="loading"
                 class="w-full"
             />
@@ -119,7 +122,7 @@
                 type="tel"
                 size="medium"
                 :isError="signupV$.phoneNumber.$errors.length >= 1"
-                placeholder="Phone number"
+                :placeholder="t('app.auth.phone_number')"
                 :disabled="loading"
                 class="w-full"
             />
@@ -137,7 +140,7 @@
                 type="password"
                 size="medium"
                 :isError="signupV$.password.$errors.length >= 1"
-                placeholder="Password"
+                :placeholder="t('app.auth.password')"
                 :disabled="loading"
                 class="w-full"
             />
@@ -155,7 +158,7 @@
                 type="password"
                 size="medium"
                 :isError="signupV$.passwordRepeat.$errors.length >= 1"
-                placeholder="Password (repeat)"
+                :placeholder="t('app.auth.password_repeat')"
                 :disabled="loading"
                 class="w-full"
             />
@@ -173,7 +176,9 @@
         </div>
 
         <div class="flex gap-2">
-            <Button type="submit" size="sm" :disabled="loading" class="max-w-max">CREATE</Button>
+            <Button type="submit" size="sm" :disabled="loading" class="max-w-max">
+                {{ t('app.auth.create') }}
+            </Button>
             <Button
                 @click="$emit('setIsLoginType', true)"
                 size="sm"
@@ -181,7 +186,7 @@
                 :disabled="loading"
                 class="max-w-max border border-main-border"
             >
-                already have an account
+                {{ t('app.auth.already_have_an_account') }}
             </Button>
         </div>
     </form>

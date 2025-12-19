@@ -8,10 +8,12 @@
     import { useBookingStore } from '../model/booking.store';
     import { useUserStore } from '@/entities/user';
     import Button from '@/shared/ui/button/Button.vue';
+    import { useI18n } from 'vue-i18n';
 
     const themeStore = useThemeStore();
     const bookingStore = useBookingStore();
     const userStore = useUserStore();
+    const { t } = useI18n();
 
     const pickupTime = ref('');
     const location = ref('');
@@ -33,12 +35,14 @@
 
 <template>
     <form>
-        <h2 class="text-2xl mb-3">Rent details</h2>
+        <h2 class="text-2xl mb-3">{{ t('app.auth.rent_details') }}</h2>
 
         <div class="flex-col gap-2">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="">
-                    <label class="block text-sm font-medium text-main-gray mb-1">Pickup Date</label>
+                    <label class="block text-sm font-medium text-main-gray mb-1">
+                        {{ t('app.auth.pickup_date') }}
+                    </label>
 
                     <VueDatePicker
                         v-model="dateRange"
@@ -46,19 +50,23 @@
                         text-input
                         :time-config="{ enableTimePicker: false }"
                         :enable-time-picker="false"
-                        placeholder="Select rental dates"
+                        :placeholder="t('app.auth.select_rental_dates')"
                         :dark="themeStore.isDark"
                     />
                 </div>
 
                 <div class="">
-                    <label class="block text-sm font-medium text-main-gray mb-1">Pickup Time</label>
+                    <label class="block text-sm font-medium text-main-gray mb-1">
+                        {{ t('app.auth.pickup_time') }}
+                    </label>
                     <Input v-model="pickupTime" type="time" size="medium" class="w-full" />
                 </div>
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-main-gray mb-1">Pickup Location</label>
+                <label class="block text-sm font-medium text-main-gray mb-1">
+                    {{ t('app.auth.pickup_location') }}
+                </label>
                 <Input
                     v-model="location"
                     size="medium"
