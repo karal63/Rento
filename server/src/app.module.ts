@@ -11,11 +11,17 @@ import { AuthModule } from './http/auth/auth.module';
 import { UserModule } from './http/user/user.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './common/guards/at.guard';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             isGlobal: true,
+        }),
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', '..', '/client', 'dist'), // path to Vue build
+            exclude: ['/api', '/auth'], // simple string prefixes
         }),
         CarModule,
         MongooseModule.forRoot(process.env.MONGODB_URI!),

@@ -9,16 +9,28 @@ export class User extends Document {
     name: string;
 
     @Prop()
-    secondName: string;
+    secondName?: string;
 
     @Prop({ unique: true })
-    email: string;
+    email?: string;
 
     @Prop({ min: 4 })
     password?: string;
 
     @Prop()
-    phoneNumber: string;
+    phoneNumber?: string;
+
+    @Prop()
+    telegram_id?: string;
+
+    @Prop({
+        default: 'local',
+        enum: ['local', 'telegram'],
+    })
+    auth_provider: 'local' | 'telegram';
+
+    @Prop()
+    username?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

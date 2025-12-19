@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Post,
+    Query,
+    Res,
+    UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
@@ -9,6 +17,7 @@ import { GetUser } from 'src/common/decorators/getUser.decorator';
 import type { UserPayload } from 'src/common/types/user.type';
 import { RtGuard } from 'src/common/guards/rt.guard';
 import { Public } from 'src/common/decorators/public.decorator';
+import type { TelegramLoginQuery } from './dto/telegramQuery.type';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -26,7 +35,7 @@ export class AuthController {
         } = await this.authService.signup(candidate);
 
         res.cookie('accessToken', accessToken, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+            maxAge: 15 * 60 * 1000,
             httpOnly: true,
         });
         res.cookie('refreshToken', refreshToken, {
@@ -47,11 +56,15 @@ export class AuthController {
         } = await this.authService.login(candidate);
 
         res.cookie('accessToken', accessToken, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+            maxAge: 15 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
             httpOnly: true,
         });
         res.cookie('refreshToken', refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
             httpOnly: true,
         });
         res.status(200).json({ user });
@@ -80,14 +93,44 @@ export class AuthController {
         const { user, tokens } = await this.authService.refresh(userDto);
 
         res.cookie('accessToken', tokens.accessToken, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+            maxAge: 15 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
             httpOnly: true,
         });
         res.cookie('refreshToken', tokens.refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
             httpOnly: true,
         });
 
         return res.status(200).json(user);
+    }
+
+    @Public()
+    @ApiOperation({ summary: 'Log in with Telegram' })
+    @ApiResponse({ status: 200, description: 'Gets Telegram account data' })
+    @Get('telegram')
+    async loginTelegram(
+        @Query() query: TelegramLoginQuery,
+        @Res() res: Response,
+    ) {
+        const { tokens } = await this.authService.loginTelegram(query);
+
+        res.cookie('accessToken', tokens.accessToken, {
+            maxAge: 15 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
+            httpOnly: true,
+        });
+        res.cookie('refreshToken', tokens.refreshToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            secure: true,
+            sameSite: 'none',
+            httpOnly: true,
+        });
+
+        return res.redirect(`${process.env.CORS_ORIGIN}/book/${query.car_id}`);
     }
 }

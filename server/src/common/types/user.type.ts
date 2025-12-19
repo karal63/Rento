@@ -1,4 +1,5 @@
 export type UserPayload = {
-    userId: string;
-    email: string;
+    id: string;
+    email?: string;
+    username?: string;
 };

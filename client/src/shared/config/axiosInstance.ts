@@ -1,8 +1,10 @@
 import axios, { type AxiosError, type AxiosResponse } from 'axios';
 import { API_POST_TOKEN_REFRESH } from '../model';
 
+export const baseURL = 'https://maniacally-clodhopping-bernice.ngrok-free.dev/api/';
+
 export const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000/api/',
+    baseURL,
     withCredentials: true,
 });
 
@@ -26,5 +28,11 @@ axiosInstance.interceptors.response.use(
                 console.log(error);
             }
         }
+        throw error;
     }
 );
+
+// check Telegram hash
+// + one thing in comments
+// logout button
+// push branch

@@ -28,7 +28,6 @@
         "search": "Szukaj",
         "brand": "Marka",
         "browse_results": "Zobacz wyniki",
-
         "footer": {
             "app_desc": "Luksusowe samochody klasy premium dla tych, którzy oczekują czegoś więcej niż tylko transportu. Poczuj elegancję, osiągi i pełen komfort.",
             "quick_links": "Szybkie linki",
@@ -36,6 +35,29 @@
             "home": "Strona główna",
             "cars": "Lista samochodów"
         },
+        "auth": {
+            "rent_details": "Szczegóły wynajmu",
+            "pickup_date": "Data odbioru",
+            "pickup_time": "Godzina odbioru",
+            "select_rental_dates": "Wybierz daty wynajmu",
+            "pickup_location": "Miejsce odbioru",
+            "login_to_continue": "Zaloguj się, aby kontynuować",
+            "email": "E-mail",
+            "password": "Hasło",
+            "login": "Zaloguj się",
+            "name": "Imię",
+            "second_name": "Nazwisko",
+            "phone_number": "Numer telefonu",
+            "password_repeat": "Hasło (powtórz)",
+            "create_an_account": "Utwórz konto",
+            "or": "lub",
+            "create": "Utwórz",
+            "already_have_an_account": "Mam już konto"
+        },
+        "total_for": "Łącznie za",
+        "days": "Dni",
+        "day": "Dzień",
+        "zl": "zł",
 
         "prices": {
             "day": "Dzień",

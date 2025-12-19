@@ -28,7 +28,6 @@
         "search": "Search",
         "brand": "Brand",
         "browse_results": "Browse Results",
-
         "footer": {
             "app_desc": "Premium luxury cars for those who demand more than just transportation. Experience elegance, performance, and total comfort.",
             "quick_links": "Quick Links",
@@ -36,6 +35,29 @@
             "home": "Home",
             "cars": "Cars"
         },
+        "auth": {
+            "rent_details": "Rent details",
+            "pickup_date": "Pickup Date",
+            "pickup_time": "Pickup Time",
+            "select_rental_dates": "Select rental dates",
+            "pickup_location": "Pickup Location",
+            "login_to_continue": "Login to continue",
+            "email": "Email",
+            "password": "Password",
+            "login": "Login",
+            "name": "Name",
+            "second_name": "Second name",
+            "phone_number": "Phone number",
+            "password_repeat": "Password (repeat)",
+            "create_an_account": "Create an Account",
+            "or": "or",
+            "create": "Create",
+            "already_have_an_account": "Already have an account"
+        },
+        "total_for": "Total for",
+        "days": "Days",
+        "day": "Day",
+        "zl": "PLN",
 
         "prices": {
             "day": "Day",
