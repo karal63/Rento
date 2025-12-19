@@ -54,6 +54,10 @@
             "create": "Create",
             "already_have_an_account": "Already have an account"
         },
+        "total_for": "Total for",
+        "days": "Days",
+        "day": "Day",
+        "zl": "PLN",
 
         "prices": {
             "day": "Day",

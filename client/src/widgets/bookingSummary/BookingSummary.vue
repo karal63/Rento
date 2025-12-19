@@ -2,9 +2,11 @@
     import { useCarStore } from '@/entities/car';
     import { useBookingStore } from '@/features/booking';
     import { ref, watch } from 'vue';
+    import { useI18n } from 'vue-i18n';
 
     const carStore = useCarStore();
     const bookingStore = useBookingStore();
+    const { t } = useI18n();
 
     const pricePerDay = ref<number>(0);
 
@@ -48,11 +50,14 @@
 
                 <!-- Pricing -->
                 <div class="mt-4">
-                    <p class="text-lg font-semibold">{{ pricePerDay }}zł/day</p>
+                    <p class="text-lg font-semibold">
+                        {{ pricePerDay }}{{ t('app.zl') }}/{{ t('app.day') }}
+                    </p>
                     <p class="text-main-gray text-sm mt-1">
-                        Total for {{ bookingStore.daysCount }} days:
+                        {{ t('app.total_for') }} {{ bookingStore.daysCount }}
+                        {{ bookingStore.daysCount === 1 ? t('app.day') : t('app.days') }}:
                         <span class="font-semibold">
-                            {{ bookingStore.daysCount * pricePerDay }}zł
+                            {{ bookingStore.daysCount * pricePerDay }}{{ t('app.zl') }}
                         </span>
                     </p>
                 </div>

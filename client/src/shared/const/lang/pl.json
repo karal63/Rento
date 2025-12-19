@@ -46,7 +46,7 @@
             "password": "Hasło",
             "login": "Zaloguj się",
             "name": "Imię",
-            "secondName": "Nazwisko",
+            "second_name": "Nazwisko",
             "phone_number": "Numer telefonu",
             "password_repeat": "Hasło (powtórz)",
             "create_an_account": "Utwórz konto",
@@ -54,6 +54,10 @@
             "create": "Utwórz",
             "already_have_an_account": "Mam już konto"
         },
+        "total_for": "Łącznie za",
+        "days": "Dni",
+        "day": "Dzień",
+        "zl": "zł",
 
         "prices": {
             "day": "Dzień",
