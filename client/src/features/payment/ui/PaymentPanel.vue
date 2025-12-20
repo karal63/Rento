@@ -53,7 +53,7 @@
 
     onMounted(async () => {
         if (!carStore.selectedCar) return;
-        const res = await apiCreatePaymentIntent(getFullPrice.value * 100);
+        const res = await apiCreatePaymentIntent(carStore.selectedCar._id, bookingStore.daysCount);
         clientSecret.value = res.data.clientSecret;
     });
 

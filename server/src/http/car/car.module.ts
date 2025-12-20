@@ -10,5 +10,6 @@ import { Car, CarSchema } from 'src/schemas/carSchema';
     ],
     controllers: [CarController],
     providers: [CarService],
+    exports: [CarService],
 })
 export class CarModule {}
