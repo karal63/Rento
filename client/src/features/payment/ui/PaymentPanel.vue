@@ -14,14 +14,19 @@
     import { useCarStore } from '@/entities/car';
     import { useBookingStore } from '@/features/booking';
     import { useI18n } from 'vue-i18n';
+    import axios from 'axios';
+    import { useRouter } from 'vue-router';
+    import Message from '@/shared/ui/message/Message.vue';
     const carStore = useCarStore();
     const bookingStore = useBookingStore();
     const { t } = useI18n();
+    const router = useRouter();
 
     const publishableKey =
         'pk_test_51ScRd71aiYRGwgEigAXPwQNOXdaE1KmnXKsECMimAkOUOG3ARc4F62VaFUpySHCp5Z2pwaocyS0y6eCGOODeM3BE00SdO0aVU2';
     const clientSecret = ref('');
     const loading = ref(false);
+    const errorMessage = ref('');
 
     const stripeInstance = ref<Stripe | null>(null);
     const elementsInstance = ref<StripeElements | null>(null);
@@ -38,6 +43,7 @@
         if (!stripeInstance.value || !elementsInstance.value) return;
 
         loading.value = true;
+        errorMessage.value = '';
 
         const { error } = await stripeInstance.value.confirmPayment({
             elements: elementsInstance.value,
@@ -53,8 +59,19 @@
 
     onMounted(async () => {
         if (!carStore.selectedCar) return;
-        const res = await apiCreatePaymentIntent(carStore.selectedCar._id, bookingStore.daysCount);
-        clientSecret.value = res.data.clientSecret;
+        try {
+            const res = await apiCreatePaymentIntent(
+                carStore.selectedCar._id,
+                bookingStore.daysCount
+            );
+            clientSecret.value = res.data.clientSecret;
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                console.log(error);
+                errorMessage.value = error.response?.data.message[0];
+                loading.value = false;
+            }
+        }
     });
 
     const stripeOptions = computed(() => {
@@ -93,8 +110,11 @@
             </form>
         </VueStripeElements>
 
-        <div v-else class="spinner w-full flex-center">
+        <div v-else-if="loading" class="spinner w-full flex-center">
             <Icon icon="eos-icons:loading" class="text-7xl" />
         </div>
+
+        <Message type="warning" :message="errorMessage" />
+        <Button @click="router.back" size="sm" color="transparent" class="w-full">GO BACK</Button>
     </VueStripeProvider>
 </template>

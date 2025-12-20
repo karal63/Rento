@@ -1,15 +1,10 @@
-import {
-    BadRequestException,
-    Body,
-    Controller,
-    NotFoundException,
-    Post,
-} from '@nestjs/common';
+import { Body, Controller, NotFoundException, Post } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 import { StripeService } from '../stripe/stripe.service';
 import { Public } from 'src/common/decorators/public.decorator';
 import { CarService } from '../car/car.service';
 import { RentService } from '../rent/rent.service';
+import { CreateIntentDto } from './dto/createIntent.dto';
 
 @Controller('payment')
 export class PaymentController {
@@ -22,13 +17,7 @@ export class PaymentController {
     @Public()
     @ApiOperation({ summary: 'Create payment intent' })
     @Post('create-payment-intent')
-    async createPaymentIntent(
-        @Body() body: { carId: string; daysCount: number },
-    ) {
-        // replace with dto
-        if (body.daysCount <= 0)
-            throw new BadRequestException('Days amount must be greater than 0');
-
+    async createPaymentIntent(@Body() body: CreateIntentDto) {
         const car = await this.carService.find(body.carId);
         if (!car) throw new NotFoundException('Car not found');
 

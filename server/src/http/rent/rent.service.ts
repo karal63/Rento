@@ -14,8 +14,6 @@ export class RentService {
         else if (daysCount <= 29) pricePerDay = pricing[4]?.price ?? 0;
         else if (daysCount === 30) pricePerDay = pricing[5]?.price ?? 0;
 
-        console.log(pricePerDay, daysCount);
-
         return pricePerDay * daysCount;
     }
 }
