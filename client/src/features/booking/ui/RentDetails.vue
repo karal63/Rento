@@ -9,10 +9,12 @@
     import { useUserStore } from '@/entities/user';
     import Button from '@/shared/ui/button/Button.vue';
     import { useI18n } from 'vue-i18n';
+    import { useCarStore } from '@/entities/car';
 
     const themeStore = useThemeStore();
     const bookingStore = useBookingStore();
     const userStore = useUserStore();
+    const carStore = useCarStore();
     const { t } = useI18n();
 
     const pickupTime = ref('');
@@ -76,7 +78,11 @@
             </div>
 
             <div v-if="userStore.isAuthenticated" class="flex justify-end mt-5">
-                <Button size="sm" class="flex-center gap-3" :disabled="isDisabled">PROCEED</Button>
+                <RouterLink :to="`/book/${carStore.selectedCar?._id}/payment`">
+                    <Button size="sm" class="flex-center gap-3" :disabled="isDisabled">
+                        PROCEED
+                    </Button>
+                </RouterLink>
             </div>
         </div>
     </form>

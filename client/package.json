@@ -12,7 +12,9 @@
     },
     "dependencies": {
         "@iconify/vue": "^5.0.0",
+        "@stripe/stripe-js": "^8.6.0",
         "@tailwindcss/vite": "^4.1.17",
+        "@vue-stripe/vue-stripe": "^5.2.1",
         "@vuelidate/core": "^2.0.3",
         "@vuelidate/validators": "^2.0.4",
         "@vuepic/vue-datepicker": "^12.0.5",
