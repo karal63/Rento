@@ -1,30 +1,33 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-export type CarDocument = HydratedDocument<Rent>;
+export type RentDocument = HydratedDocument<Rent>;
 
 @Schema()
 export class Rent {
-    @Prop()
+    @Prop({ required: true })
     carId: string;
 
-    @Prop()
+    @Prop({ required: true })
     userId: string;
 
-    @Prop()
+    @Prop({ required: true })
     rentFrom: number;
 
-    @Prop()
+    @Prop({ required: true })
     rentTo: number;
 
-    @Prop()
+    @Prop({ required: true })
     totalPrice: number;
 
-    @Prop()
-    status: string;
+    @Prop({
+        enum: ['PENDING', 'CONFIRMED', 'CANCELLED'],
+        default: 'CONFIRMED',
+    })
+    status?: string;
 
-    @Prop()
-    createdAt: number;
+    @Prop({ required: true, default: () => Date.now() })
+    createdAt?: number;
 }
 
 export const RentSchema = SchemaFactory.createForClass(Rent);

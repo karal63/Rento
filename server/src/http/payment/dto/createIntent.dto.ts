@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, Min, Max } from 'class-validator';
 
 export class CreateIntentDto {
     @ApiProperty({
@@ -10,6 +10,28 @@ export class CreateIntentDto {
     @IsString()
     carId: string;
 
+    @ApiProperty({
+        example: '1766318160000',
+        description: 'Rental start timestamp',
+    })
+    @IsNotEmpty()
+    @IsNumber()
+    rentFrom: number;
+
+    @ApiProperty({
+        example: '1766922960000',
+        description: 'Rental end timestamp',
+    })
+    @IsNotEmpty()
+    @IsNumber()
+    rentTo: number;
+
+    @ApiProperty({ example: 'Airport', description: 'Pickup location' })
+    @IsNotEmpty()
+    @IsString()
+    pickupLocation: string;
+
+    @ApiProperty({ example: 5, description: 'Number of rental days' })
     @IsNotEmpty()
     @IsNumber()
     @Min(1)

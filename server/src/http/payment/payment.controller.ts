@@ -1,11 +1,13 @@
 import { Body, Controller, NotFoundException, Post } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { StripeService } from '../stripe/stripe.service';
-import { Public } from 'src/common/decorators/public.decorator';
 import { CarService } from '../car/car.service';
 import { RentService } from '../rent/rent.service';
 import { CreateIntentDto } from './dto/createIntent.dto';
+import { GetUser } from 'src/common/decorators/getUser.decorator';
+import type { UserPayload } from 'src/common/types/user.type';
 
+@ApiTags('Payments')
 @Controller('payment')
 export class PaymentController {
     constructor(
@@ -14,10 +16,16 @@ export class PaymentController {
         private readonly rentService: RentService,
     ) {}
 
-    @Public()
     @ApiOperation({ summary: 'Create payment intent' })
+    @ApiResponse({
+        status: 200,
+        description: 'Returns payment intent client secret',
+    })
     @Post('create-payment-intent')
-    async createPaymentIntent(@Body() body: CreateIntentDto) {
+    async createPaymentIntent(
+        @Body() body: CreateIntentDto,
+        @GetUser() user: UserPayload,
+    ) {
         const car = await this.carService.find(body.carId);
         if (!car) throw new NotFoundException('Car not found');
 
@@ -25,6 +33,8 @@ export class PaymentController {
 
         const paymentIntent = await this.stripeService.createPaymentIntent(
             total * 100,
+            user.id,
+            body,
         );
 
         return { clientSecret: paymentIntent.client_secret };

@@ -10,6 +10,6 @@ import { RentService } from './rent.service';
     ],
     controllers: [RentController],
     providers: [RentService],
-    exports: [RentService],
+    exports: [RentService, MongooseModule],
 })
 export class RentModule {}
