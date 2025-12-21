@@ -10,5 +10,6 @@ import { RentService } from './rent.service';
     ],
     controllers: [RentController],
     providers: [RentService],
+    exports: [RentService],
 })
 export class RentModule {}

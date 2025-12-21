@@ -13,6 +13,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './common/guards/at.guard';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { StripeModule } from './http/stripe/stripe.module';
+import { PaymentModule } from './http/payment/payment.module';
 
 @Module({
     imports: [
@@ -28,6 +30,8 @@ import { join } from 'path';
         RentModule,
         AuthModule,
         UserModule,
+        StripeModule,
+        PaymentModule,
     ],
     controllers: [AppController, RentController],
     providers: [
