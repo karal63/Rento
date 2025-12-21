@@ -4,7 +4,7 @@
     import { useThemeStore } from '@/shared/model';
     import { calculateDays } from '@/entities/date';
 
-    import { computed, ref, watch } from 'vue';
+    import { computed, watch } from 'vue';
     import { useBookingStore } from '../model/booking.store';
     import { useUserStore } from '@/entities/user';
     import Button from '@/shared/ui/button/Button.vue';
@@ -17,21 +17,27 @@
     const carStore = useCarStore();
     const { t } = useI18n();
 
-    const pickupTime = ref('');
-    const location = ref('');
-    const dateRange = ref<Date[]>([]);
-
     const isDisabled = computed(() => {
-        return !pickupTime.value || !location.value || !dateRange.value;
+        return !bookingStore.pickupTime || !bookingStore.location || !bookingStore.dateRange;
     });
 
     watch(
-        dateRange,
+        () => bookingStore.dateRange,
         () => {
-            if (!dateRange.value[0] || !dateRange.value[1]) return;
-            bookingStore.daysCount = calculateDays(dateRange.value[0], dateRange.value[1]);
+            if (!bookingStore.dateRange[0] || !bookingStore.dateRange[1]) return;
+            bookingStore.daysCount = calculateDays(
+                bookingStore.dateRange[0],
+                bookingStore.dateRange[1]
+            );
         },
         { deep: true }
+    );
+
+    watch(
+        () => bookingStore.dateRange,
+        () => {
+            console.log(bookingStore.dateRange);
+        }
     );
 </script>
 
@@ -47,7 +53,7 @@
                     </label>
 
                     <VueDatePicker
-                        v-model="dateRange"
+                        v-model="bookingStore.dateRange"
                         range
                         text-input
                         :time-config="{ enableTimePicker: false }"
@@ -61,7 +67,12 @@
                     <label class="block text-sm font-medium text-main-gray mb-1">
                         {{ t('app.auth.pickup_time') }}
                     </label>
-                    <Input v-model="pickupTime" type="time" size="medium" class="w-full" />
+                    <Input
+                        v-model="bookingStore.pickupTime"
+                        type="time"
+                        size="medium"
+                        class="w-full"
+                    />
                 </div>
             </div>
 
@@ -70,7 +81,7 @@
                     {{ t('app.auth.pickup_location') }}
                 </label>
                 <Input
-                    v-model="location"
+                    v-model="bookingStore.location"
                     size="medium"
                     placeholder="Airport, Main Office, Hotel..."
                     class="w-full"

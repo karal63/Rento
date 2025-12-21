@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -16,6 +17,13 @@ async function bootstrap() {
     app.setGlobalPrefix('api');
     app.useGlobalPipes(new ValidationPipe());
     app.use(cookieParser());
+    app.use(
+        bodyParser.json({
+            verify: (req: any, _res, buf) => {
+                req.rawBody = buf;
+            },
+        }),
+    );
 
     const config = new DocumentBuilder()
         .setTitle('API Documentation')

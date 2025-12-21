@@ -4,7 +4,16 @@ import type { AxiosResponse } from 'axios';
 
 export const apiCreatePaymentIntent = async (
     carId: string,
+    rentFrom: number,
+    rentTo: number,
+    pickupLocation: string,
     daysCount: number
 ): Promise<AxiosResponse<{ clientSecret: string }>> => {
-    return axiosInstance.post(API_POST_PAYMENT_CREATE, { carId, daysCount });
+    return axiosInstance.post(API_POST_PAYMENT_CREATE, {
+        carId,
+        rentFrom,
+        rentTo,
+        pickupLocation,
+        daysCount,
+    });
 };

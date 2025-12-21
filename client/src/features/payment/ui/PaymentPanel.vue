@@ -60,8 +60,13 @@
     onMounted(async () => {
         if (!carStore.selectedCar) return;
         try {
+            if (!bookingStore.dateRange[0] || !bookingStore.dateRange[1]) return;
+
             const res = await apiCreatePaymentIntent(
                 carStore.selectedCar._id,
+                bookingStore.dateRange[0].getTime(),
+                bookingStore.dateRange[1].getTime(),
+                bookingStore.location,
                 bookingStore.daysCount
             );
             clientSecret.value = res.data.clientSecret;
