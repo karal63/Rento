@@ -1,0 +1,12 @@
+export type Rental = {
+    _id: string;
+    carId: string;
+    userId: string;
+    rentFrom: number;
+    rentTo: number;
+    pickupLocation: string;
+    totalPrice: number;
+    status: string;
+    createdAt: number;
+    name: string;
+};

@@ -1,6 +1,12 @@
 import type { RouteRecordRaw } from 'vue-router';
-import { LandingPage, CarsPage, SingleCar, BookPage } from '@/pages';
-import PaymentPage from '@/pages/payment/PaymentPage.vue';
+import {
+    LandingPage,
+    CarsPage,
+    SingleCar,
+    BookPage,
+    PaymentPage,
+    PaymentSuccessPage,
+} from '@/pages';
 import BookingLayout from '../layouts/BookingLayout.vue';
 
 export const routes: RouteRecordRaw[] = [
@@ -29,5 +35,9 @@ export const routes: RouteRecordRaw[] = [
                 component: PaymentPage,
             },
         ],
+    },
+    {
+        path: '/payment-success',
+        component: PaymentSuccessPage,
     },
 ];

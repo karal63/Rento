@@ -48,7 +48,7 @@
         const { error } = await stripeInstance.value.confirmPayment({
             elements: elementsInstance.value,
             confirmParams: {
-                return_url: `${window.location.origin}/cars`,
+                return_url: `${window.location.origin}/payment-success`,
             },
         });
 
