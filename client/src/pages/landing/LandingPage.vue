@@ -34,12 +34,14 @@
                             {{ t('app.landing_desc') }}
                         </p>
 
-                        <Button>
-                            <div class="inline-flex gap-2 justify-center items-center text-lg">
-                                {{ t('app.browse_offers') }}
-                                <Icon icon="material-symbols:search-rounded" class="text-xl" />
-                            </div>
-                        </Button>
+                        <RouterLink to="/cars">
+                            <Button>
+                                <div class="inline-flex gap-2 justify-center items-center text-lg">
+                                    {{ t('app.browse_offers') }}
+                                    <Icon icon="material-symbols:search-rounded" class="text-xl" />
+                                </div>
+                            </Button>
+                        </RouterLink>
                     </div>
                 </div>
 

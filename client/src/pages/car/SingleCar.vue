@@ -97,7 +97,7 @@
                                     {{ t(`app.prices.${price.name}`) }}
                                 </td>
                                 <td class="border border-main-border px-4 py-2 text-lg font-medium">
-                                    {{ price.price }} zł
+                                    {{ price.price }} {{ t('app.zl') }}
                                 </td>
                             </tr>
                         </table>

@@ -20,7 +20,7 @@
 
 <template>
     <div
-        class="shadow-xl shadow-main-border hover:shadow-md transition rounded-bl-xl rounded-br-md cursor-pointer overflow-hidden"
+        class="shadow-xl shadow-main-border hover:shadow-md transition rounded-bl-xl rounded-br-md overflow-hidden"
     >
         <div @click="select" class="h-[300px] md:h-[400px]">
             <img
@@ -62,12 +62,14 @@
                                 (car.pricing[car.pricing.length - 1] as PriceRange).price / 30
                             ).toFixed(0)
                         }}
-                        zł
+                        {{ t('app.zl') }}
                     </p>
                     <p class="text-sm text-main-gray">{{ t('app.price_desc') }}</p>
                 </div>
 
-                <Button class="w-full mt-5 lg:max-w-max">{{ t('app.book_btn') }}</Button>
+                <Button @click="select" class="w-full mt-5 lg:max-w-max">
+                    {{ t('app.book_btn') }}
+                </Button>
             </div>
         </div>
     </div>
