@@ -74,6 +74,9 @@
         "wiev_my_bookings": "Wiev My Bookings",
         "back_to_home": "Back to Home",
 
+        "unknown_name": "Unknown name",
+        "rental": "Rental",
+
         "prices": {
             "day": "Day",
             "2_3_days": "2-3 days",

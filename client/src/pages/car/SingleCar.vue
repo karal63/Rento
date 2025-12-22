@@ -1,7 +1,8 @@
 <script setup lang="ts">
     import { useCarStore } from '@/entities/car';
+    import { Breadcrumbs } from '@/shared/ui';
     import { Button } from '@/shared/ui/button';
-    import { onMounted, ref } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { useRoute } from 'vue-router';
 
@@ -18,16 +19,22 @@
             loading.value = false;
         }
     });
+
+    const breadcrumbs = computed(() => [
+        { label: t('app.cars'), href: '/cars' },
+        { label: carStore.selectedCar?.name || t('app.unknown_name') },
+    ]);
 </script>
 
 <template>
     <div>
-        <div class="max-w-[1700px] m-auto 0 px-5">
-            <div class="mt-24 sm:mt-32 xl:mt-40 font-extrabold text-4xl md:text-6xl lg:text-8xl">
+        <div class="max-w-[1700px] m-auto 0 px-5 mt-24 sm:mt-32">
+            <Breadcrumbs :breadcrumbs="breadcrumbs" />
+            <div class="font-extrabold text-4xl md:text-6xl lg:text-8xl">
                 <div v-if="loading" class="skeleton h-[100px] w-2/3"></div>
                 <div v-else>{{ carStore.selectedCar?.name }}</div>
             </div>
-            <div class="xl:flex xl:flex-row mt-5 md:mt-16 xl:mt-20 gap-10">
+            <div class="xl:flex xl:gap-10 mt-5 md:mt-16">
                 <!-- Car Image Section -->
                 <div class="w-full xl:w-3/4">
                     <div v-if="loading" class="w-full h-[420px] skeleton rounded-xl"></div>
