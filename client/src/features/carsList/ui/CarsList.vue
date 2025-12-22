@@ -56,7 +56,7 @@
 <template>
     <div class="xl:flex xl:flex-row gap-8">
         <div
-            class="w-full mb-10 xl:mb-0 xl:w-[20%] border rounded-md border-main-border max-h-max p-5"
+            class="w-full mb-10 xl:mb-0 xl:w-[20%] xl:sticky xl:top-24 border rounded-md border-main-border max-h-max p-5"
         >
             <h1 class="text-3xl font-semibold mb-4">{{ t('app.filters') }}</h1>
 
@@ -97,7 +97,7 @@
                 </Button>
             </div>
         </div>
-        <div v-if="loading" class="w-[80%] grid grid-cols-2 gap-8">
+        <div v-if="loading" class="w-full lg:w-[80%] grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div v-for="(_, i) in 4" :key="i" class="h-[600px] skeleton rounded-md"></div>
         </div>
         <div v-else class="w-full xl:w-[80%]">

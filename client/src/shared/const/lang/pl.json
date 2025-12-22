@@ -74,6 +74,9 @@
         "wiev_my_bookings": "Zobacz moje rezerwacje",
         "back_to_home": "Wróć na stronę główną",
 
+        "unknown_name": "Nieznana nazwa",
+        "rental": "Wynajem",
+
         "prices": {
             "day": "Dzień",
             "2_3_days": "2-3 dni",
