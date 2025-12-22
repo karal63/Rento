@@ -11,3 +11,7 @@ export const API_POST_TOKEN_REFRESH = `/auth/refresh`;
 
 // PAYMENT
 export const API_POST_PAYMENT_CREATE = `/payment/create-payment-intent`;
+
+// RENTAL
+// in future make it shareble like API_GET_CAR_LIST
+export const API_GET_RENTAL_SINGLE = (sessionId: string) => `/rent/${sessionId}`;

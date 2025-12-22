@@ -1,5 +1,8 @@
 <script setup lang="ts">
     import { PaymentSuccess } from '@/features/paymentSuccess';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 </script>
 
 <template>
@@ -8,7 +11,7 @@
             <PaymentSuccess />
 
             <p class="text-center text-xs text-gray-500 mt-6">
-                Need help? Contact support at support@rento.com
+                {{ t('app.payment_success_subdesc') }} support@rento.com
             </p>
         </div>
     </div>

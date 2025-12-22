@@ -54,10 +54,25 @@
             "create": "Utwórz",
             "already_have_an_account": "Mam już konto"
         },
+
         "total_for": "Łącznie za",
         "days": "Dni",
         "day": "Dzień",
         "zl": "zł",
+        "go_back": "Wróć",
+        "processing": "Przetwarzanie",
+        "pay": "Zapłać",
+        "payment_success_title": "Płatność zakończona sukcesem",
+        "payment_success_desc": "Twój wynajem samochodu został potwierdzony. Wysłaliśmy potwierdzenie na Twój adres e-mail.",
+        "payment_success_subdesc": "Potrzebujesz pomocy? Skontaktuj się z nami na support@@rento.com",
+        "booking_summary": "Podsumowanie rezerwacji",
+        "car": "Samochód",
+        "pickup": "Odbiór",
+        "rental_starts": "Rozpoczęcie wynajmu",
+        "rental_ends": "Zakończenie wynajmu",
+        "total_paid": "Zapłacono łącznie",
+        "wiev_my_bookings": "Zobacz moje rezerwacje",
+        "back_to_home": "Wróć na stronę główną",
 
         "prices": {
             "day": "Dzień",

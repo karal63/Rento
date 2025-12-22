@@ -120,6 +120,8 @@
         </div>
 
         <Message type="warning" :message="errorMessage" />
-        <Button @click="router.back" size="sm" color="transparent" class="w-full">GO BACK</Button>
+        <Button @click="router.back" size="sm" color="transparent" class="w-full">
+            {{ t('app.go_back') }}
+        </Button>
     </VueStripeProvider>
 </template>
