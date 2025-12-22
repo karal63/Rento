@@ -54,10 +54,25 @@
             "create": "Create",
             "already_have_an_account": "Already have an account"
         },
+
         "total_for": "Total for",
         "days": "Days",
         "day": "Day",
         "zl": "PLN",
+        "go_back": "Go back",
+        "processing": "Processing",
+        "pay": "Pay",
+        "payment_success_title": "Payment Successful",
+        "payment_success_desc": "Your car rental has been confirmed. We’ve sent the receipt to your email.",
+        "payment_success_subdesc": "Need help? Contact support at",
+        "booking_summary": "Booking Summary",
+        "car": "Car",
+        "pickup": "Pickup",
+        "rental_starts": "Rental starts",
+        "rental_ends": "Rental ends",
+        "total_paid": "Total Paid",
+        "wiev_my_bookings": "Wiev My Bookings",
+        "back_to_home": "Back to Home",
 
         "prices": {
             "day": "Day",

@@ -20,6 +20,9 @@ export class Rent {
     @Prop({ required: true })
     totalPrice: number;
 
+    @Prop({ required: true })
+    pickupLocation: string;
+
     @Prop({
         enum: ['PENDING', 'CONFIRMED', 'CANCELLED'],
         default: 'CONFIRMED',
@@ -28,6 +31,9 @@ export class Rent {
 
     @Prop({ required: true, default: () => Date.now() })
     createdAt?: number;
+
+    @Prop({ required: true })
+    intentId: string;
 }
 
 export const RentSchema = SchemaFactory.createForClass(Rent);

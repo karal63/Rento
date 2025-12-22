@@ -26,4 +26,8 @@ export class RentService {
         const newRent = new this.rentModel(rent);
         await newRent.save();
     }
+
+    async findRentalBySessionId(sessionId: string, userId: string) {
+        return await this.rentModel.findOne({ intentId: sessionId, userId });
+    }
 }
