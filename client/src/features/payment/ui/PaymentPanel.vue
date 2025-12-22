@@ -61,6 +61,7 @@
         if (!carStore.selectedCar) return;
         try {
             if (!bookingStore.dateRange[0] || !bookingStore.dateRange[1]) return;
+            loading.value = true;
 
             const res = await apiCreatePaymentIntent(
                 carStore.selectedCar._id,
@@ -70,22 +71,14 @@
                 bookingStore.daysCount
             );
             clientSecret.value = res.data.clientSecret;
+            loading.value = false;
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 console.log(error);
                 errorMessage.value = error.response?.data.message[0];
-                loading.value = false;
             }
+            loading.value = false;
         }
-    });
-
-    const stripeOptions = computed(() => {
-        return {
-            appearance: {
-                loader: 'never',
-                theme: 'flat',
-            },
-        };
     });
 
     const getFullPrice = computed(() => {
@@ -103,24 +96,25 @@
         <VueStripeElements
             v-if="clientSecret"
             :client-secret="clientSecret"
-            :options="stripeOptions"
             @ready="onElementsReady"
         >
             <form @submit.prevent="handleSubmit">
                 <VueStripePaymentElement />
 
                 <Button size="md" type="submit" :disabled="loading" class="mt-10 w-full">
-                    {{ loading ? 'Processing...' : `Pay ${getFullPrice}${t('app.zl')}` }}
+                    {{
+                        loading ? t('app.processing') + '...' : `Pay ${getFullPrice}${t('app.zl')}`
+                    }}
                 </Button>
             </form>
         </VueStripeElements>
 
         <div v-else-if="loading" class="spinner w-full flex-center">
-            <Icon icon="eos-icons:loading" class="text-7xl" />
+            <Icon icon="eos-icons:loading" class="text-7xl text-main-gray" />
         </div>
 
-        <Message type="warning" :message="errorMessage" />
-        <Button @click="router.back" size="sm" color="transparent" class="w-full">
+        <Message v-if="errorMessage" type="error" :message="errorMessage" class="mt-3" />
+        <Button @click="router.back" size="sm" color="transparent" class="w-full mt-3">
             {{ t('app.go_back') }}
         </Button>
     </VueStripeProvider>
