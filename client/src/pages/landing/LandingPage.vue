@@ -16,13 +16,12 @@
 <template>
     <div>
         <div
-            class="bg-no-repeat bg-cover px-5"
+            class="bg-no-repeat bg-cover px-5 mt-24 bg-center"
             :style="{
                 backgroundImage: `url('${themeStore.isDark ? darkBg : lightBg}')`,
-                backgroundPositionY: 'center',
             }"
         >
-            <div class="max-w-[1500px] m-auto pt-44">
+            <div class="max-w-[1500px] m-auto pt-24">
                 <div class="flex gap-5 items-center">
                     <div class="w-full lg:w-1/2">
                         <h1 class="text-7xl sm:text-8xl font-extrabold multiline">

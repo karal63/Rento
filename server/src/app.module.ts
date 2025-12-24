@@ -19,10 +19,11 @@ import { PaymentModule } from './http/payment/payment.module';
 @Module({
     imports: [
         ConfigModule.forRoot({
+            envFilePath: `.env.${process.env.NODE_ENV}`,
             isGlobal: true,
         }),
         ServeStaticModule.forRoot({
-            rootPath: join(__dirname, '..', '..', '/client', 'dist'), // path to Vue build
+            rootPath: join(__dirname, '..', 'public'), // path to Vue build
             exclude: ['/api', '/auth'], // simple string prefixes
         }),
         CarModule,

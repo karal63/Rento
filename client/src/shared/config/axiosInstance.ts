@@ -1,7 +1,11 @@
 import axios, { type AxiosError, type AxiosResponse } from 'axios';
 import { API_POST_TOKEN_REFRESH } from '../model';
 
-export const baseURL = 'https://maniacally-clodhopping-bernice.ngrok-free.dev/api/';
+// export const baseURL = 'https://maniacally-clodhopping-bernice.ngrok-free.dev/api/';
+export const baseURL =
+    import.meta.env.MODE === 'development'
+        ? 'http://localhost:2000/api/'
+        : 'http://localhost:3000/api/';
 
 export const axiosInstance = axios.create({
     baseURL,
