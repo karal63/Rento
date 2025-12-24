@@ -30,4 +30,8 @@ export class RentService {
     async findRentalBySessionId(sessionId: string, userId: string) {
         return await this.rentModel.findOne({ intentId: sessionId, userId });
     }
+
+    async getRentsByCarId(carId: string) {
+        return await this.rentModel.find({ carId });
+    }
 }

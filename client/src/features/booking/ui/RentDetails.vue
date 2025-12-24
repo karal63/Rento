@@ -1,7 +1,5 @@
 <script setup lang="ts">
-    import { VueDatePicker } from '@vuepic/vue-datepicker';
     import { Input } from '@/shared/ui';
-    import { useThemeStore } from '@/shared/model';
     import { calculateDays } from '@/entities/date';
 
     import { computed, watch } from 'vue';
@@ -10,8 +8,8 @@
     import Button from '@/shared/ui/button/Button.vue';
     import { useI18n } from 'vue-i18n';
     import { useCarStore } from '@/entities/car';
+    import Calendar from './Calendar.vue';
 
-    const themeStore = useThemeStore();
     const bookingStore = useBookingStore();
     const userStore = useUserStore();
     const carStore = useCarStore();
@@ -32,48 +30,36 @@
         },
         { deep: true }
     );
-
-    watch(
-        () => bookingStore.dateRange,
-        () => {
-            console.log(bookingStore.dateRange);
-        }
-    );
 </script>
 
 <template>
-    <form>
+    <form @click.prevent>
         <h2 class="text-2xl mb-3">{{ t('app.auth.rent_details') }}</h2>
 
         <div class="flex-col gap-2">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="">
-                    <label class="block text-sm font-medium text-main-gray mb-1">
-                        {{ t('app.auth.pickup_date') }}
-                    </label>
+            <div>
+                <label class="block text-sm font-medium text-main-gray mb-1">
+                    {{ t('app.auth.pickup_date') }}
+                </label>
 
-                    <VueDatePicker
-                        v-model="bookingStore.dateRange"
-                        range
-                        text-input
-                        :time-config="{ enableTimePicker: false }"
-                        :enable-time-picker="false"
-                        :placeholder="t('app.auth.select_rental_dates')"
-                        :dark="themeStore.isDark"
-                    />
-                </div>
+                <Calendar />
 
-                <div class="">
-                    <label class="block text-sm font-medium text-main-gray mb-1">
-                        {{ t('app.auth.pickup_time') }}
-                    </label>
-                    <Input
-                        v-model="bookingStore.pickupTime"
-                        type="time"
-                        size="medium"
-                        class="w-full"
-                    />
-                </div>
+                <!-- <VueDatePicker
+                    v-model="bookingStore.dateRange"
+                    range
+                    text-input
+                    :time-config="{ enableTimePicker: false }"
+                    :enable-time-picker="false"
+                    :placeholder="t('app.auth.select_rental_dates')"
+                    :dark="themeStore.isDark"
+                /> -->
+            </div>
+
+            <div class="">
+                <label class="block text-sm font-medium text-main-gray mb-1">
+                    {{ t('app.auth.pickup_time') }}
+                </label>
+                <Input v-model="bookingStore.pickupTime" type="time" size="medium" class="w-full" />
             </div>
 
             <div>
