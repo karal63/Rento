@@ -1,2 +1,2 @@
-export type { Rental } from './model/rental.types';
-export { apiGetRentalDetails } from './api/rental.api';
+export type { Rental, CarAvailability } from './model/rental.types';
+export { apiGetRentalDetails, apiGetCarAvailability } from './api/rental.api';

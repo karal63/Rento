@@ -32,8 +32,8 @@ export class RentController {
     async getAvailability(@Param('carId') carId: string) {
         const rentals = await this.rentalService.getRentsByCarId(carId);
         const termins = rentals.map((rental) => ({
-            rentFrom: new Date(rental.rentFrom).toISOString(),
-            rentTo: new Date(rental.rentTo).toISOString(),
+            rentalFrom: new Date(rental.rentFrom).toISOString(),
+            rentalTo: new Date(rental.rentTo).toISOString(),
         }));
 
         return termins;

@@ -10,3 +10,8 @@ export type Rental = {
     createdAt: number;
     name: string;
 };
+
+export type CarAvailability = {
+    rentalFrom: string;
+    rentalTo: string;
+};

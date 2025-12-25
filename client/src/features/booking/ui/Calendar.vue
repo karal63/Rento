@@ -3,83 +3,92 @@
     import { useBookingStore } from '../model/booking.store';
     import { Button } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
+    import { getAvailability } from '../model/booking.model';
+    import { useCarStore } from '@/entities/car';
+    import type { CarAvailability } from '@/entities/rental';
 
     const bookingStore = useBookingStore();
+    const carStore = useCarStore();
 
     const isDateFromSelected = ref(false);
-    const now = ref(new Date());
-    const year = ref(now.value.getFullYear());
-    const month = ref(now.value.getMonth());
-
-    // Number of days in the current month
+    const now = new Date();
+    const year = ref(now.getFullYear());
+    const month = ref(now.getMonth());
     const daysInMonth = ref(new Date(year.value, month.value + 1, 0).getDate());
-    watch(month, () => {
-        daysInMonth.value = new Date(year.value, month.value + 1, 0).getDate();
-    });
-
-    // Create array of Date objects for each day
     const datesInCurrentMonth = ref(
         Array.from(
             { length: daysInMonth.value },
             (_, i) => new Date(year.value, month.value, i + 1)
         )
     );
+    const carAvailability = ref<CarAvailability[] | []>([]);
+
     watch(month, () => {
+        daysInMonth.value = new Date(year.value, month.value + 1, 0).getDate();
+
         datesInCurrentMonth.value = Array.from(
             { length: daysInMonth.value },
             (_, i) => new Date(year.value, month.value, i + 1)
         );
     });
 
+    const isSameDay = (a: Date, b: Date) => a.getTime() === b.getTime();
+
+    const isPastDate = (date: Date) => date < now;
+
+    const dateToISO = (date: Date) => date.toISOString();
+
     const selectDate = (day: Date) => {
-        if (day < now.value) return;
+        if (isPastDate(day) || !checkIfAvailableDate(day)) return;
 
-        if (!isDateFromSelected.value) {
-            bookingStore.dateRange = [];
-            bookingStore.dateRange[0] = day;
+        const [from] = bookingStore.dateRange;
+
+        // First click → select start date
+        if (!isDateFromSelected.value || !from) {
+            bookingStore.dateRange = [day];
             isDateFromSelected.value = true;
-        } else {
-            if (bookingStore.dateRange[0] && day === bookingStore.dateRange[0]) return;
-            bookingStore.dateRange[1] = day;
 
-            // switch dates if date[1] is newer
-            if (bookingStore.dateRange[0]! > day) {
-                const temp = bookingStore.dateRange[0]!;
-                bookingStore.dateRange[0] = bookingStore.dateRange[1];
-                bookingStore.dateRange[1] = temp;
-            }
-            isDateFromSelected.value = false;
+            return;
         }
+
+        // Prevent selecting the same date twice
+        if (isSameDay(day, from)) return;
+
+        // Normalize range
+        const start = day < from ? day : from;
+        const end = day < from ? from : day;
+
+        // Block overlapping rentals
+        if (hasRentalOverlap(start, end)) return;
+
+        bookingStore.dateRange = [start, end];
+        isDateFromSelected.value = false;
     };
 
-    const isBetweenDates = (date: Date) => {
-        if (date < now.value) {
+    const getClasses = (date: Date) => {
+        if (isPastDate(date)) {
             return 'bg-main-gray-bg text-gray-500';
         }
+
+        const [from, to] = bookingStore.dateRange;
+
         if (
-            (bookingStore.dateRange[0] &&
-                date >= bookingStore.dateRange[0] &&
-                bookingStore.dateRange[1] &&
-                date <= bookingStore.dateRange[1]) ||
-            date === bookingStore.dateRange[0] ||
-            date === bookingStore.dateRange[1]
+            (from &&
+                to &&
+                date?.getTime() >= from?.getTime() &&
+                date?.getTime() <= to?.getTime()) ||
+            (from && isSameDay(date, from))
         ) {
             return 'bg-primary hover:bg-primary/80 text-white';
         }
+
+        return '';
     };
 
     const getMonthName = (monthNumber: number, locale = 'en-US') => {
         return new Intl.DateTimeFormat(locale, { month: 'long' }).format(
-            new Date(2025, monthNumber, 1)
+            new Date(now.getFullYear(), monthNumber, 1)
         );
-    };
-
-    const next = () => {
-        month.value += 1;
-    };
-
-    const prev = () => {
-        month.value -= 1;
     };
 
     const getFormattedDates = computed(() => {
@@ -88,6 +97,32 @@
 
         return [rentalFrom, rentalTo];
     });
+
+    watch(
+        () => carStore.selectedCar,
+        async () => {
+            if (!carStore.selectedCar?._id) return;
+            carAvailability.value = await getAvailability(carStore.selectedCar._id);
+        },
+        { immediate: true }
+    );
+
+    const checkIfAvailableDate = (day: Date) => {
+        const iso = dateToISO(day);
+
+        return !carAvailability.value.some(
+            rental => rental.rentalFrom <= iso && iso <= rental.rentalTo
+        );
+    };
+
+    const hasRentalOverlap = (from: Date, to: Date) => {
+        const fromISO = dateToISO(from);
+        const toISO = dateToISO(to);
+
+        return carAvailability.value.some(
+            rental => rental.rentalFrom <= toISO && rental.rentalTo >= fromISO
+        );
+    };
 </script>
 
 <template>
@@ -103,11 +138,11 @@
         <p v-else></p>
 
         <div class="flex items-center justify-between">
-            <Button size="sm" color="transparent" @click="prev">
+            <Button size="sm" color="transparent" @click="month -= 1">
                 <Icon icon="weui:arrow-outlined" class="transform rotate-180 text-2xl" />
             </Button>
             <p class="px-2 w-24 text-center">{{ getMonthName(month) }}</p>
-            <Button size="sm" color="transparent" @click="next">
+            <Button size="sm" color="transparent" @click="month += 1">
                 <Icon icon="weui:arrow-outlined" class="text-2xl" />
             </Button>
         </div>
@@ -117,14 +152,19 @@
     >
         <button
             v-for="day in datesInCurrentMonth"
-            :key="day.getDate()"
+            :key="day.toISOString()"
             @click="selectDate(day)"
             class="py-2 text-center transition flex-col gap-2"
-            :class="`${isBetweenDates(day)} ${day > now && 'hover:bg-main-hover-bg cursor-pointer'}`"
+            :class="`${getClasses(day)} ${day > now ? 'hover:bg-main-hover-bg cursor-pointer' : ''}`"
         >
             <span>{{ day.getDate() }}</span>
+
             <div class="flex-center">
-                <div v-if="day > now" class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                <div
+                    v-if="day > now"
+                    class="w-1.5 h-1.5 rounded-full"
+                    :class="checkIfAvailableDate(day) ? 'bg-green-500' : 'bg-red-500'"
+                />
             </div>
         </button>
     </div>
