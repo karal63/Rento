@@ -34,4 +34,15 @@ export class RentService {
     async getRentsByCarId(carId: string) {
         return await this.rentModel.find({ carId });
     }
+
+    checkIfValidDates(
+        carRentals: Rent[],
+        rentalFrom: number,
+        rentalTo: number,
+    ) {
+        return !carRentals.some(
+            (rental) =>
+                rental.rentFrom >= rentalFrom && rental.rentTo <= rentalTo,
+        );
+    }
 }

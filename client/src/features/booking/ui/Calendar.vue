@@ -166,18 +166,17 @@
             v-for="day in datesInCurrentMonth"
             :key="day.toISOString()"
             @click="selectDate(day)"
-            class="py-2 text-center transition flex-col gap-2"
+            class="py-2 transition flex-col items-center justify-center gap-2"
             :class="`${getClasses(day)} ${day > now ? 'hover:bg-main-hover-bg cursor-pointer' : ''}`"
         >
             <span>{{ day.getDate() }}</span>
 
-            <div class="flex-center">
-                <div
-                    v-if="day > now"
-                    class="w-1.5 h-1.5 rounded-full"
-                    :class="checkIfAvailableDate(day) ? 'bg-green-500' : 'bg-red-500'"
-                />
-            </div>
+            <div
+                v-if="day > now"
+                class="w-1.5 h-1.5 rounded-full"
+                :class="checkIfAvailableDate(day) ? 'bg-green-500' : 'bg-red-500'"
+            />
+            <div v-else class="w-1.5 h-1.5 rounded-full bg-transparent" />
         </button>
     </div>
 </template>
