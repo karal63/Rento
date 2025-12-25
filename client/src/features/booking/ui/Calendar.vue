@@ -32,7 +32,13 @@
         );
     });
 
-    const isSameDay = (a: Date, b: Date) => a.getTime() === b.getTime();
+    const isSameDay = (a: Date, b: Date) => {
+        return (
+            a.getDate() === b.getDate() &&
+            a.getMonth() === b.getMonth() &&
+            a.getFullYear() === b.getFullYear()
+        );
+    };
 
     const isPastDate = (date: Date) => date < now;
 
@@ -92,10 +98,16 @@
     };
 
     const getFormattedDates = computed(() => {
-        const rentalFrom = bookingStore.dateRange[0]?.toLocaleString();
-        const rentalTo = bookingStore.dateRange[1]?.toLocaleString();
+        const rentalFrom = bookingStore.dateRange[0];
+        const rentalTo = bookingStore.dateRange[1];
+        const pickupTime = bookingStore.pickupTime;
 
-        return [rentalFrom, rentalTo];
+        if (!rentalFrom || !rentalTo) return false;
+
+        return {
+            rentalFrom: `${rentalFrom?.getFullYear()}/${rentalFrom?.getMonth() + 1}/${rentalFrom?.getDate()} ${pickupTime}`,
+            rentalTo: `${rentalTo?.getFullYear()}/${rentalTo?.getMonth() + 1}/${rentalTo?.getDate()} ${pickupTime}`,
+        };
     });
 
     watch(
@@ -128,12 +140,12 @@
 <template>
     <div class="md:flex md:flex-row items-center justify-between mb-5">
         <p
-            v-if="getFormattedDates[0]"
+            v-if="getFormattedDates"
             class="flex items-center gap-2 bg-primary/10 border border-primary/50 px-4 py-2 rounded-md text-sm flex-center mb-5 md:mb-0"
         >
             <Icon icon="mingcute:time-line" class="text-lg" />
-            {{ getFormattedDates[0] }} -
-            {{ getFormattedDates[1] }}
+            {{ getFormattedDates.rentalFrom }} -
+            {{ getFormattedDates.rentalTo }}
         </p>
         <p v-else></p>
 

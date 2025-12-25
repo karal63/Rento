@@ -19,16 +19,41 @@
         return !bookingStore.pickupTime || !bookingStore.location || !bookingStore.dateRange;
     });
 
+    const applyTimeToDate = (date: Date, time: string): Date => {
+        const [hours, minutes] = time.split(':').map(Number);
+
+        const result = new Date(date);
+        result.setHours(hours!, minutes, 0, 0);
+
+        return result;
+    };
+
     watch(
         () => bookingStore.dateRange,
         () => {
             if (!bookingStore.dateRange[0] || !bookingStore.dateRange[1]) return;
+
             bookingStore.daysCount = calculateDays(
                 bookingStore.dateRange[0],
                 bookingStore.dateRange[1]
             );
         },
         { deep: true }
+    );
+
+    watch(
+        () => bookingStore.pickupTime,
+        () => {
+            if (!bookingStore.dateRange[0] || !bookingStore.dateRange[1]) return;
+            bookingStore.dateRange[0] = applyTimeToDate(
+                bookingStore.dateRange[0],
+                bookingStore.pickupTime
+            );
+            bookingStore.dateRange[1] = applyTimeToDate(
+                bookingStore.dateRange[1],
+                bookingStore.pickupTime
+            );
+        }
     );
 </script>
 
@@ -59,7 +84,13 @@
                 <label class="block text-sm font-medium text-main-gray mb-1">
                     {{ t('app.auth.pickup_time') }}
                 </label>
-                <Input v-model="bookingStore.pickupTime" type="time" size="medium" class="w-full" />
+                <Input
+                    :disabled="!bookingStore.dateRange[0] || !bookingStore.dateRange[1]"
+                    v-model="bookingStore.pickupTime"
+                    type="time"
+                    size="medium"
+                    class="w-full"
+                />
             </div>
 
             <div>
