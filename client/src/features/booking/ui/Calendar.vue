@@ -123,7 +123,7 @@
         const iso = dateToISO(day);
 
         return !carAvailability.value.some(
-            rental => rental.rentalFrom <= iso && iso <= rental.rentalTo
+            rental => rental.rentalFrom <= iso && iso < rental.rentalTo
         );
     };
 
@@ -132,7 +132,7 @@
         const toISO = dateToISO(to);
 
         return carAvailability.value.some(
-            rental => rental.rentalFrom <= toISO && rental.rentalTo >= fromISO
+            rental => rental.rentalFrom <= toISO && rental.rentalTo > fromISO
         );
     };
 </script>

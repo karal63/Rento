@@ -26,6 +26,7 @@ export class StripeController {
                 rentFrom: Number(intent.metadata.rentFrom),
                 rentTo: Number(intent.metadata.rentTo),
                 pickupLocation: intent.metadata.pickupLocation,
+                pickupTime: intent.metadata.pickupTime,
                 totalPrice: Number(intent.metadata.totalPrice),
                 intentId: intent.id,
             });

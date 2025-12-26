@@ -5,6 +5,7 @@ export type Rental = {
     rentFrom: number;
     rentTo: number;
     pickupLocation: string;
+    pickupTime: string;
     totalPrice: number;
     status: string;
     createdAt: number;

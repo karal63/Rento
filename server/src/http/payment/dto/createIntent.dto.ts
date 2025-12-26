@@ -31,6 +31,11 @@ export class CreateIntentDto {
     @IsString()
     pickupLocation: string;
 
+    @ApiProperty({ example: '09:00', description: 'Pickup time' })
+    @IsNotEmpty()
+    @IsString()
+    pickupTime: string;
+
     @ApiProperty({ example: 5, description: 'Number of rental days' })
     @IsNotEmpty()
     @IsNumber()
