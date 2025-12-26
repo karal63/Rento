@@ -68,6 +68,7 @@
                 bookingStore.dateRange[0].getTime(),
                 bookingStore.dateRange[1].getTime(),
                 bookingStore.location,
+                bookingStore.pickupTime,
                 bookingStore.daysCount
             );
             clientSecret.value = res.data.clientSecret;

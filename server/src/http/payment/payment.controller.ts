@@ -1,4 +1,10 @@
-import { Body, Controller, NotFoundException, Post } from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    NotFoundException,
+    Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { StripeService } from '../stripe/stripe.service';
 import { CarService } from '../car/car.service';
@@ -28,6 +34,19 @@ export class PaymentController {
     ) {
         const car = await this.carService.find(body.carId);
         if (!car) throw new NotFoundException('Car not found');
+
+        const carRentals = await this.rentService.getRentsByCarId(body.carId);
+        const areValidDates = this.rentService.checkIfValidDates(
+            carRentals,
+            body.rentFrom,
+            body.rentTo,
+        );
+        if (!areValidDates)
+            throw new BadRequestException([
+                "Rental can't collide with other rental",
+            ]);
+        if (body.rentFrom === body.rentTo)
+            throw new BadRequestException(['Dates must be different']);
 
         const total = this.rentService.calculateTotal(car, body.daysCount);
 

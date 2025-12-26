@@ -7,6 +7,7 @@ export const apiCreatePaymentIntent = async (
     rentFrom: number,
     rentTo: number,
     pickupLocation: string,
+    pickupTime: string,
     daysCount: number
 ): Promise<AxiosResponse<{ clientSecret: string }>> => {
     return axiosInstance.post(API_POST_PAYMENT_CREATE, {
@@ -14,6 +15,7 @@ export const apiCreatePaymentIntent = async (
         rentFrom,
         rentTo,
         pickupLocation,
+        pickupTime,
         daysCount,
     });
 };

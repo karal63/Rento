@@ -22,10 +22,14 @@
 
     const getFormattedDates = computed(() => {
         if (!rental.value || !car.value) return [null, null];
-        const rentalFrom = new Date(rental.value.rentFrom).toLocaleString();
-        const rentalTo = new Date(rental.value.rentTo).toLocaleString();
 
-        return [rentalFrom, rentalTo];
+        const rentalFrom = new Date(rental.value.rentFrom);
+        const rentalTo = new Date(rental.value.rentTo);
+
+        const formattedFrom = `${(rentalFrom.getMonth() + 1).toString().padStart(2, '0')}-${rentalFrom.getDate().toString().padStart(2, '0')}-${rentalFrom.getFullYear()}`;
+        const formattedTo = `${(rentalTo.getMonth() + 1).toString().padStart(2, '0')}-${(rentalTo.getDate() - 1).toString().padStart(2, '0')}-${rentalTo.getFullYear()}`;
+
+        return [formattedFrom, formattedTo];
     });
 </script>
 
@@ -52,6 +56,10 @@
                 <div class="flex justify-between">
                     <span>{{ t('app.pickup') }}</span>
                     <span class="font-medium">{{ rental?.pickupLocation }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>{{ t('app.pickup_time') }}</span>
+                    <span class="font-medium">{{ rental?.pickupTime }}</span>
                 </div>
                 <div class="flex justify-between">
                     <span>{{ t('app.rental_starts') }}</span>

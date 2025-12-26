@@ -23,6 +23,9 @@ export class Rent {
     @Prop({ required: true })
     pickupLocation: string;
 
+    @Prop({ required: true })
+    pickupTime: string;
+
     @Prop({
         enum: ['PENDING', 'CONFIRMED', 'CANCELLED'],
         default: 'CONFIRMED',
