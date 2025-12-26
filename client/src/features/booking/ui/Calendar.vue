@@ -44,16 +44,21 @@
 
     const dateToISO = (date: Date) => date.toISOString();
 
+    const getValidEndDate = (day: Date) => {
+        const rentalEndDate = new Date(day);
+        rentalEndDate.setDate(rentalEndDate.getDate() + 1);
+
+        return rentalEndDate;
+    };
+
     const selectDate = (day: Date) => {
         if (isPastDate(day) || !checkIfAvailableDate(day)) return;
 
         const [from] = bookingStore.dateRange;
 
         if (!isDateFromSelected.value || !from) {
-            const rentalEndDate = new Date(day);
-            rentalEndDate.setDate(rentalEndDate.getDate() + 1);
+            const rentalEndDate = getValidEndDate(day);
             bookingStore.dateRange = [day, rentalEndDate];
-
             isDateFromSelected.value = true;
 
             return;
@@ -67,7 +72,13 @@
         const end = day < from ? from : day;
 
         // Block overlapping rentals
-        if (hasRentalOverlap(start, end)) return;
+        if (hasRentalOverlap(start, end)) {
+            const rentalEndDate = getValidEndDate(day);
+            bookingStore.dateRange = [day, rentalEndDate];
+            isDateFromSelected.value = true;
+
+            return;
+        }
 
         // add date
         const updatedDate = new Date(end);
