@@ -19,15 +19,6 @@
         return !bookingStore.pickupTime || !bookingStore.location || !bookingStore.dateRange;
     });
 
-    const applyTimeToDate = (date: Date, time: string): Date => {
-        const [hours, minutes] = time.split(':').map(Number);
-
-        const result = new Date(date);
-        result.setHours(hours!, minutes, 0, 0);
-
-        return result;
-    };
-
     watch(
         () => bookingStore.dateRange,
         () => {
@@ -39,21 +30,6 @@
             );
         },
         { deep: true }
-    );
-
-    watch(
-        () => bookingStore.pickupTime,
-        () => {
-            if (!bookingStore.dateRange[0] || !bookingStore.dateRange[1]) return;
-            bookingStore.dateRange[0] = applyTimeToDate(
-                bookingStore.dateRange[0],
-                bookingStore.pickupTime
-            );
-            bookingStore.dateRange[1] = applyTimeToDate(
-                bookingStore.dateRange[1],
-                bookingStore.pickupTime
-            );
-        }
     );
 </script>
 

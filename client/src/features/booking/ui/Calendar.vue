@@ -49,9 +49,11 @@
 
         const [from] = bookingStore.dateRange;
 
-        // First click → select start date
         if (!isDateFromSelected.value || !from) {
-            bookingStore.dateRange = [day];
+            const rentalEndDate = new Date(day);
+            rentalEndDate.setDate(rentalEndDate.getDate() + 1);
+            bookingStore.dateRange = [day, rentalEndDate];
+
             isDateFromSelected.value = true;
 
             return;
@@ -67,7 +69,12 @@
         // Block overlapping rentals
         if (hasRentalOverlap(start, end)) return;
 
-        bookingStore.dateRange = [start, end];
+        // add date
+        const updatedDate = new Date(end);
+        updatedDate.setDate(end.getDate() + 1);
+        updatedDate.setHours(0, 0, 0, 0);
+
+        bookingStore.dateRange = [start, updatedDate];
         isDateFromSelected.value = false;
     };
 
@@ -78,13 +85,7 @@
 
         const [from, to] = bookingStore.dateRange;
 
-        if (
-            (from &&
-                to &&
-                date?.getTime() >= from?.getTime() &&
-                date?.getTime() <= to?.getTime()) ||
-            (from && isSameDay(date, from))
-        ) {
+        if (from && to && date?.getTime() >= from?.getTime() && date?.getTime() < to?.getTime()) {
             return 'bg-primary hover:bg-primary/80 text-white';
         }
 
@@ -100,13 +101,12 @@
     const getFormattedDates = computed(() => {
         const rentalFrom = bookingStore.dateRange[0];
         const rentalTo = bookingStore.dateRange[1];
-        const pickupTime = bookingStore.pickupTime;
 
         if (!rentalFrom || !rentalTo) return false;
 
         return {
-            rentalFrom: `${rentalFrom?.getFullYear()}/${rentalFrom?.getMonth() + 1}/${rentalFrom?.getDate()} ${pickupTime}`,
-            rentalTo: `${rentalTo?.getFullYear()}/${rentalTo?.getMonth() + 1}/${rentalTo?.getDate()} ${pickupTime}`,
+            rentalFrom: `${rentalFrom?.getFullYear()}/${rentalFrom?.getMonth() + 1}/${rentalFrom?.getDate()} ${rentalFrom.getHours().toString().padEnd(2, '0')}:${rentalFrom.getMinutes().toString().padEnd(2, '0')}`,
+            rentalTo: `${rentalTo?.getFullYear()}/${rentalTo?.getMonth() + 1}/${rentalTo?.getDate()} ${rentalTo.getHours().toString().padEnd(2, '0')}:${rentalTo.getMinutes().toString().padEnd(2, '0')}`,
         };
     });
 
@@ -164,7 +164,7 @@
     >
         <button
             v-for="day in datesInCurrentMonth"
-            :key="day.toISOString()"
+            :key="day.getTime()"
             @click="selectDate(day)"
             class="py-2 transition flex-col items-center justify-center gap-2"
             :class="`${getClasses(day)} ${day > now ? 'hover:bg-main-hover-bg cursor-pointer' : ''}`"
