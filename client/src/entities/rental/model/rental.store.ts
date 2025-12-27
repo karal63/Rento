@@ -1,8 +1,9 @@
-import { apiGetRentals, type RentalWithCar } from '@/entities/rental';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import type { RentalWithCar } from './rental.types';
+import { apiGetRentals } from '../api/rental.api';
 
-export const useRentalsStore = defineStore('rentals', () => {
+export const useRentalStore = defineStore('rentals', () => {
     const rentals = ref<RentalWithCar[]>([]);
 
     const getRentals = async () => {

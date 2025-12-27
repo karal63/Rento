@@ -10,7 +10,15 @@
 //     }
 // }
 
-import { BadRequestException, Controller, Get, Param } from '@nestjs/common';
+import {
+    BadRequestException,
+    Controller,
+    Delete,
+    ForbiddenException,
+    Get,
+    NotFoundException,
+    Param,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/common/decorators/getUser.decorator';
 import type { UserPayload } from 'src/common/types/user.type';
@@ -45,6 +53,26 @@ export class RentController {
     async getRentals(@GetUser() user: UserPayload) {
         const rentals = await this.rentalService.getRentals(user.id);
         return rentals;
+    }
+
+    @ApiOperation({ summary: 'Cancel rental' })
+    @ApiResponse({
+        status: 200,
+        description: "Changes rental status to 'CANCELLED'",
+    })
+    @Delete('cancel/:id')
+    async cancelRental(
+        @Param('id') rentalId: string,
+        @GetUser() user: UserPayload,
+    ) {
+        const rental = await this.rentalService.findRentalById(rentalId);
+        if (!rental) throw new NotFoundException('Rental not found');
+
+        if (rental.userId !== user.id)
+            throw new ForbiddenException("You can't cancel this rental");
+
+        await this.rentalService.cancelRental(rentalId);
+        return;
     }
 
     @ApiOperation({ summary: 'Find a rental' })

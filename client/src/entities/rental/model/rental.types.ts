@@ -9,7 +9,7 @@ export type Rental = {
     pickupLocation: string;
     pickupTime: string;
     totalPrice: number;
-    status: string;
+    status: 'CONFIRMED' | 'CANCELLED';
     createdAt: number;
 };
 

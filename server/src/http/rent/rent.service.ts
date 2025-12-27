@@ -31,6 +31,10 @@ export class RentService {
         return await this.rentModel.findOne({ intentId: sessionId, userId });
     }
 
+    async findRentalById(id: string) {
+        return await this.rentModel.findById(id);
+    }
+
     async getRentsByCarId(carId: string) {
         return await this.rentModel.find({ carId });
     }
@@ -48,5 +52,11 @@ export class RentService {
             (rental) =>
                 rental.rentFrom >= rentalFrom && rental.rentTo <= rentalTo,
         );
+    }
+
+    async cancelRental(rentalId: string) {
+        await this.rentModel.findByIdAndUpdate(rentalId, {
+            $set: { status: 'CANCELLED' },
+        });
     }
 }
