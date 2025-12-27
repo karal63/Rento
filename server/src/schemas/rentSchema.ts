@@ -5,7 +5,7 @@ export type RentDocument = HydratedDocument<Rent>;
 
 @Schema()
 export class Rent {
-    @Prop({ required: true })
+    @Prop({ required: true, ref: 'Car' })
     carId: string;
 
     @Prop({ required: true })

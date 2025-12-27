@@ -35,6 +35,10 @@ export class RentService {
         return await this.rentModel.find({ carId });
     }
 
+    async getRentals(userId: string) {
+        return await this.rentModel.find({ userId }).populate('carId');
+    }
+
     checkIfValidDates(
         carRentals: Rent[],
         rentalFrom: number,

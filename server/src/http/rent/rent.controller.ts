@@ -39,6 +39,14 @@ export class RentController {
         return termins;
     }
 
+    @ApiOperation({ summary: 'Get all user rentals' })
+    @ApiResponse({ status: 200, description: 'Returns rentals list' })
+    @Get('list')
+    async getRentals(@GetUser() user: UserPayload) {
+        const rentals = await this.rentalService.getRentals(user.id);
+        return rentals;
+    }
+
     @ApiOperation({ summary: 'Find a rental' })
     @ApiResponse({ status: 200, description: 'Returns found rental' })
     @Get(':sessionId')
