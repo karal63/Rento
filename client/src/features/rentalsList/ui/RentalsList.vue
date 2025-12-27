@@ -14,7 +14,7 @@
 
     const getClasses = computed(() => {
         if (props.status === 'active') {
-            return 'border-green-500/20 bg-green-500/10 hover:border-green-500/40';
+            return 'border-green-500/20 bg-green-500/10 ';
         }
 
         return 'border-main-border bg-main-gray-bg';
@@ -53,9 +53,11 @@
     };
 
     const filteredRentals = computed(() => {
-        return rentalsStrore.rentals.filter(rental => {
-            return props.status === 'active' ? checkIfActive(rental) : !checkIfActive(rental);
-        });
+        return rentalsStrore.rentals
+            .filter(rental => {
+                return props.status === 'active' ? checkIfActive(rental) : !checkIfActive(rental);
+            })
+            .sort((a: RentalWithCar, b: RentalWithCar) => b.createdAt - a.createdAt);
     });
 </script>
 
