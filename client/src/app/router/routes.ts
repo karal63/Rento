@@ -6,8 +6,10 @@ import {
     BookPage,
     PaymentPage,
     PaymentSuccessPage,
+    AccountPage,
 } from '@/pages';
 import BookingLayout from '../layouts/BookingLayout.vue';
+import ProfileLayout from '../layouts/ProfileLayout.vue';
 
 export const routes: RouteRecordRaw[] = [
     {
@@ -39,5 +41,19 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/payment-success',
         component: PaymentSuccessPage,
+    },
+    {
+        path: '/profile',
+        component: ProfileLayout,
+        children: [
+            {
+                path: 'account',
+                component: AccountPage,
+            },
+            {
+                path: 'rentals',
+                component: AccountPage,
+            },
+        ],
     },
 ];

@@ -85,6 +85,10 @@
             "7_13_days": "7-13 days",
             "14_29_days": "14-29 days",
             "month": "Month"
-        }
+        },
+
+        "user_profile": "User profile",
+        "account": "Account",
+        "rentals": "Rentals"
     }
 }
