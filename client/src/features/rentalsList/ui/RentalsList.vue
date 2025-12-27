@@ -3,8 +3,10 @@
     import { computed, onMounted } from 'vue';
     import { cancelRental } from '@/features/cancelRental';
     import { useRentalStore, type RentalWithCar } from '@/entities/rental';
+    import { useAcceptanceModalStore } from '@/features/acceptanceModal';
 
     const rentalsStrore = useRentalStore();
+    const acceptanceModalStore = useAcceptanceModalStore();
 
     const props = defineProps<{
         status: 'active' | 'past';
@@ -25,7 +27,11 @@
     });
 
     const cancel = async (rental: RentalWithCar) => {
-        await cancelRental(rental);
+        acceptanceModalStore.open({
+            title: 'Confirm cancellation',
+            message: 'Are you sure you want to cancel this rental? This action cannot be undone.',
+            onConfirm: () => cancelRental(rental),
+        });
     };
 
     const checkIfActive = (rental: RentalWithCar) => {
