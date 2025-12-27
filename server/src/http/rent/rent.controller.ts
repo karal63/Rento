@@ -71,6 +71,14 @@ export class RentController {
         if (rental.userId !== user.id)
             throw new ForbiddenException("You can't cancel this rental");
 
+        const now = new Date();
+        const newStartDate = new Date(rental.rentFrom);
+        newStartDate.setDate(newStartDate.getDate() - 1);
+        if (now > newStartDate)
+            throw new BadRequestException(
+                "You can't cancel a rental that is in past or that will be active in 24h",
+            );
+
         await this.rentalService.cancelRental(rentalId);
         return;
     }

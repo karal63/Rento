@@ -10,6 +10,8 @@
         status: 'active' | 'past';
     }>();
 
+    const now = new Date();
+
     const getClasses = computed(() => {
         if (props.status === 'active') {
             return 'border-green-500/20 bg-green-500/10 hover:border-green-500/40';
@@ -22,16 +24,22 @@
         await rentalsStrore.getRentals();
     });
 
-    const cancel = async (rentalId: string) => {
-        await cancelRental(rentalId);
+    const cancel = async (rental: RentalWithCar) => {
+        await cancelRental(rental);
     };
 
     const checkIfActive = (rental: RentalWithCar) => {
-        const now = new Date();
         const newStart = new Date(rental.rentFrom);
         const newEnd = new Date(rental.rentTo);
 
         return now >= newStart && now <= newEnd && rental.status !== 'CANCELLED';
+    };
+
+    const canChange = (rental: RentalWithCar) => {
+        const newStart = new Date(rental.rentFrom);
+        newStart.setDate(newStart.getDate() - 1);
+
+        return now < newStart && rental.status !== 'CANCELLED';
     };
 
     const getFormattedDates = (start: number, end: number) => {
@@ -106,7 +114,7 @@
 
                 <!-- Actions -->
                 <div
-                    v-if="checkIfActive(rental)"
+                    v-if="!checkIfActive(rental) && canChange(rental)"
                     class="absolute right-5 top-1/2 -translate-y-1/2 flex gap-2 opacity-0 translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0"
                 >
                     <button
@@ -117,7 +125,7 @@
                     </button>
 
                     <button
-                        @click="cancel(rental._id)"
+                        @click="cancel(rental)"
                         class="p-2 rounded-md hover:bg-red-500/10 text-red-500 cursor-pointer"
                         title="Cancel rental"
                     >

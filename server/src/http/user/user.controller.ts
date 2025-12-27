@@ -1,17 +1,17 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { User } from 'src/schemas/userSchema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/common/decorators/getUser.decorator';
-import type { UserPayload } from 'src/common/types/user.type';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('user')
 export class UserController {
     constructor(@InjectModel(User.name) private userModel: Model<User>) {}
-    @UseGuards(AuthGuard('jwt'))
+
+    @Public()
+    // @UseGuards(AuthGuard('jwt'))
     @Get()
-    async getUsers(@GetUser() user: UserPayload) {
+    async getUsers() {
         return await this.userModel.find();
     }
 }
