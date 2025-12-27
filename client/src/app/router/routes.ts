@@ -7,6 +7,7 @@ import {
     PaymentPage,
     PaymentSuccessPage,
     AccountPage,
+    RentalsPage,
 } from '@/pages';
 import BookingLayout from '../layouts/BookingLayout.vue';
 import ProfileLayout from '../layouts/ProfileLayout.vue';
@@ -52,7 +53,7 @@ export const routes: RouteRecordRaw[] = [
             },
             {
                 path: 'rentals',
-                component: AccountPage,
+                component: RentalsPage,
             },
         ],
     },

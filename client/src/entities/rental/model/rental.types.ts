@@ -1,3 +1,5 @@
+import type { Car } from '@/entities/car';
+
 export type Rental = {
     _id: string;
     carId: string;
@@ -7,12 +9,15 @@ export type Rental = {
     pickupLocation: string;
     pickupTime: string;
     totalPrice: number;
-    status: string;
+    status: 'CONFIRMED' | 'CANCELLED';
     createdAt: number;
-    name: string;
 };
 
 export type CarAvailability = {
     rentalFrom: string;
     rentalTo: string;
+};
+
+export type RentalWithCar = Rental & {
+    carId: Car;
 };

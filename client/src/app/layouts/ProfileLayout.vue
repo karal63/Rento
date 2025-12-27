@@ -9,7 +9,7 @@
 
 <template>
     <section class="max-w-[1700px] m-auto 0 px-5 mt-24 sm:mt-32">
-        <h1 class="text-3xl font-bold">User profile</h1>
+        <h1 class="text-3xl font-bold">{{ t('app.user_profile') }}</h1>
 
         <ul class="flex items-center gap-5 mt-8 text-lg">
             <li>
