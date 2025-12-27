@@ -39,23 +39,17 @@
                 </li>
             </ul>
 
-            <div class="flex items-center gap-3">
-                <Button @click="toggleTheme" color="transparent" size="sm" class="hidden lg:block">
-                    <Icon v-if="isDarkTheme" icon="fontisto:day-sunny" class="text-2xl" />
-                    <Icon
-                        v-else
-                        icon="material-symbols-light:partly-cloudy-night-outline"
-                        class="text-2xl"
-                    />
-                </Button>
-
+            <div class="flex items-center gap-5">
                 <div class="relative hidden lg:inline-block text-left">
-                    <Button @click="open = !open" color="transparent" size="sm">
-                        <div class="flex gap-2">
+                    <button
+                        @click="open = !open"
+                        class="cursor-pointer hover:bg-main-hover-bg rounded-md px-2 py-1 transition"
+                    >
+                        <div class="flex gap-1 text-xl flex-center">
                             {{ locale }}
-                            <Icon class="text-xl" icon="iconamoon:arrow-down-2-light" />
+                            <Icon class="text-2xl" icon="iconamoon:arrow-down-2-light" />
                         </div>
-                    </Button>
+                    </button>
 
                     <transition name="fade">
                         <div
@@ -75,6 +69,19 @@
                     </transition>
                 </div>
 
+                <button @click="toggleTheme" class="hidden lg:block cursor-pointer">
+                    <Icon v-if="isDarkTheme" icon="fontisto:day-sunny" class="text-2xl" />
+                    <Icon
+                        v-else
+                        icon="material-symbols-light:partly-cloudy-night-outline"
+                        class="text-3xl"
+                    />
+                </button>
+
+                <RouterLink to="/profile/account">
+                    <Icon icon="ix:user-profile-filled" class="text-3xl text-main-gray" />
+                </RouterLink>
+
                 <RouterLink to="/cars">
                     <Button size="sm" class="hidden md:block">
                         {{ t('app.book_btn') }}
@@ -82,12 +89,14 @@
                 </RouterLink>
             </div>
 
-            <button
-                @click="sidebarStore.setSidebarOpen(!sidebarStore.isOpen)"
-                class="block md:hidden cursor-pointer"
-            >
-                <Icon class="text-3xl" icon="mdi:menu" />
-            </button>
+            <div class="flex items-center gap-4 md:hidden">
+                <RouterLink to="/profile/account">
+                    <Icon icon="ix:user-profile-filled" class="text-3xl text-main-gray" />
+                </RouterLink>
+                <button @click="sidebarStore.setSidebarOpen(!sidebarStore.isOpen)">
+                    <Icon class="text-3xl" icon="mdi:menu" />
+                </button>
+            </div>
         </div>
     </nav>
 </template>

@@ -4,3 +4,4 @@ export { default as SingleCar } from './car/SingleCar.vue';
 export { default as BookPage } from './booking/BookPage.vue';
 export { default as PaymentPage } from './payment/PaymentPage.vue';
 export { default as PaymentSuccessPage } from './paymentSuccess/PaymentSuccessPage.vue';
+export { default as AccountPage } from './account/AccountPage.vue';
