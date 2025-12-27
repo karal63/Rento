@@ -65,19 +65,27 @@
     <ul class="flex-col gap-3">
         <li v-for="rental in filteredRentals" :key="rental._id">
             <div
-                v-if="props.status === 'active' ? checkIfActive(rental) : !checkIfActive(rental)"
-                class="group relative border rounded-md p-5"
+                class="group relative border rounded-md p-3 md:p-5 flex flex-col gap-3"
                 :class="getClasses"
             >
-                <div class="flex items-center gap-5">
-                    <img :src="rental.carId.image" alt="" class="h-20 rounded-md" />
+                <!-- Main content -->
+                <div class="md:flex md:flex-row md:items-center gap-4">
+                    <!-- Image -->
+                    <img
+                        :src="rental.carId.image"
+                        alt=""
+                        class="w-full h-36 sm:h-52 object-cover rounded-md md:w-24 md:h-20"
+                    />
 
-                    <div>
-                        <h3 class="text-xl mb-2 font-bold">{{ rental.carId.name }}</h3>
+                    <!-- Details -->
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold mt-2 md:mt-0 mb-1">
+                            {{ rental.carId.name }}
+                        </h3>
 
-                        <div class="flex gap-8">
+                        <div class="md:flex md:flex-row md:gap-8 gap-2 text-sm md:text-base">
                             <div>
-                                <h3 class="flex gap-1">
+                                <p class="flex gap-1">
                                     <span class="text-main-gray">Status:</span>
                                     <span
                                         class="font-semibold"
@@ -89,26 +97,30 @@
                                     >
                                         {{ rental.status }}
                                     </span>
-                                </h3>
-                                <h3 class="flex gap-1">
-                                    <span class="text-main-gray">Rental Period:</span>
+                                </p>
+
+                                <p class="flex gap-1">
+                                    <span class="text-main-gray">Period:</span>
                                     <span>
                                         {{ getFormattedDates(rental.rentFrom, rental.rentTo) }}
                                     </span>
-                                </h3>
+                                </p>
                             </div>
 
                             <div>
-                                <h3 class="flex gap-1">
-                                    <span class="text-main-gray">Total price:</span>
-                                    <span>{{ (rental.totalPrice / 100).toFixed(2) }}PLN</span>
-                                </h3>
-                                <h3 class="flex gap-1">
+                                <p class="flex gap-1">
+                                    <span class="text-main-gray">Total:</span>
+                                    <span class="font-semibold">
+                                        {{ (rental.totalPrice / 100).toFixed(2) }} PLN
+                                    </span>
+                                </p>
+
+                                <p class="flex gap-1">
                                     <span class="text-main-gray">Pickup:</span>
                                     <span>
                                         {{ rental.pickupLocation }} at {{ rental.pickupTime }}
                                     </span>
-                                </h3>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -117,21 +129,21 @@
                 <!-- Actions -->
                 <div
                     v-if="!checkIfActive(rental) && canChange(rental)"
-                    class="absolute right-5 top-1/2 -translate-y-1/2 flex gap-2 opacity-0 translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0"
+                    class="flex gap-2 justify-end md:absolute md:right-5 md:top-1/2 md:-translate-y-1/2 md:opacity-0 md:translate-x-2 md:group-hover:opacity-100 md:group-hover:translate-x-0 transition-all duration-200"
                 >
                     <button
-                        class="p-2 rounded-md transition hover:bg-main-border text-main-gray hover:text-white cursor-pointer"
+                        class="p-3 md:p-2 rounded-md transition bg-main-border/40 md:bg-transparent hover:bg-main-border text-main-gray hover:text-white"
                         title="Edit rental"
                     >
-                        <Icon icon="iconoir:edit" class="text-2xl" />
+                        <Icon icon="iconoir:edit" class="text-xl md:text-2xl" />
                     </button>
 
                     <button
                         @click="cancel(rental)"
-                        class="p-2 rounded-md hover:bg-red-500/10 text-red-500 cursor-pointer"
+                        class="p-3 md:p-2 rounded-md bg-red-500/10 md:bg-transparent hover:bg-red-500/20 text-red-500"
                         title="Cancel rental"
                     >
-                        <Icon icon="iconoir:trash" class="text-2xl" />
+                        <Icon icon="iconoir:trash" class="text-xl md:text-2xl" />
                     </button>
                 </div>
             </div>
