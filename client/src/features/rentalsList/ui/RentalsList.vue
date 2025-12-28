@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import { computed, onMounted } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { cancelRental } from '@/features/cancelRental';
     import { useRentalStore, type RentalWithCar } from '@/entities/rental';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
@@ -13,6 +13,7 @@
     }>();
 
     const now = new Date();
+    const loading = ref(false);
 
     const getClasses = computed(() => {
         if (props.status === 'active') {
@@ -23,7 +24,9 @@
     });
 
     onMounted(async () => {
+        loading.value = true;
         await rentalsStrore.getRentals();
+        loading.value = false;
     });
 
     const cancel = async (rental: RentalWithCar) => {
@@ -69,7 +72,10 @@
 
 <template>
     <ul class="flex-col gap-3">
-        <li v-for="rental in filteredRentals" :key="rental._id">
+        <li v-if="loading" class="flex-col gap-3">
+            <div v-for="(_, i) in 4" :key="i" class="h-[100px] skeleton rounded-md"></div>
+        </li>
+        <li v-else v-for="rental in filteredRentals" :key="rental._id">
             <div
                 class="group relative border rounded-md p-3 md:p-5 flex flex-col gap-3"
                 :class="getClasses"
