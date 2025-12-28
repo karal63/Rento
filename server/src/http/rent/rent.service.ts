@@ -57,7 +57,7 @@ export class RentService {
 
     async cancelRental(rentalId: string) {
         await this.rentModel.findByIdAndUpdate(rentalId, {
-            $set: { status: 'CANCELLED' },
+            $set: { status: 'CANCELLED', cancelledAt: Date.now() },
         });
     }
 
@@ -69,6 +69,7 @@ export class RentService {
                     $set: {
                         pickupTime: body.time,
                         pickupLocation: body.location,
+                        updatedAt: Date.now(),
                     },
                 },
                 {
