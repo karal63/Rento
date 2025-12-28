@@ -60,7 +60,17 @@
         const newEnd = new Date(end);
 
         const formattedStart = `${(newStart.getMonth() + 1).toString().padStart(2, '0')}-${newStart.getDate().toString().padStart(2, '0')}-${newStart.getFullYear()}`;
-        const formattedEnd = `${(newEnd.getMonth() + 1).toString().padStart(2, '0')}-${(newEnd.getDate() - 1).toString().padStart(2, '0')}-${newEnd.getFullYear()}`;
+        let formattedEnd;
+        if (newEnd.getDate() - 1 === 0) {
+            const daysInPrevMonth = new Date(
+                newStart.getFullYear(),
+                newStart.getMonth() + 1,
+                0
+            ).getDate();
+            formattedEnd = `${(newEnd.getMonth() + 1).toString().padStart(2, '0')}-${daysInPrevMonth.toString().padStart(2, '0')}-${newEnd.getFullYear()}`;
+        } else {
+            formattedEnd = `${(newEnd.getMonth() + 1).toString().padStart(2, '0')}-${(newEnd.getDate() - 1).toString().padStart(2, '0')}-${newEnd.getFullYear()}`;
+        }
 
         return `${formattedStart} - ${formattedEnd}`;
     };

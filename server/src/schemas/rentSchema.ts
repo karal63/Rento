@@ -38,10 +38,10 @@ export class Rent {
     @Prop({ required: true })
     intentId: string;
 
-    @Prop({ default: null })
+    @Prop({ type: Number, default: null })
     updatedAt?: number | null;
 
-    @Prop({ default: null })
+    @Prop({ type: Number, default: null })
     cancelledAt?: number | null;
 }
 
