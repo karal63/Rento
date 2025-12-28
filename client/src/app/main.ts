@@ -12,15 +12,17 @@ const bootstrap = async () => {
     const pinia = createPinia();
     const userStore = useUserStore(pinia);
 
-    app.use(router);
-    app.use(i18n);
-    app.use(pinia);
-
     await refreshTokens();
 
     router.beforeEach(to => {
-        if (to.meta.requiresAuth && !userStore.isAuthenticated) return '/';
+        if (to.meta.requiresAuth && !userStore.isAuthenticated) {
+            return '/';
+        }
     });
+
+    app.use(router);
+    app.use(i18n);
+    app.use(pinia);
 
     app.mount('#app');
 };
