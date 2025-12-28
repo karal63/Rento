@@ -37,7 +37,10 @@ export class RentService {
     }
 
     async getRentsByCarId(carId: string) {
-        return await this.rentModel.find({ carId });
+        return await this.rentModel.find({
+            carId,
+            status: { $ne: 'CANCELLED' },
+        });
     }
 
     async getRentals(userId: string) {
