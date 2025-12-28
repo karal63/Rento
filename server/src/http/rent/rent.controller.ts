@@ -12,18 +12,21 @@
 
 import {
     BadRequestException,
+    Body,
     Controller,
     Delete,
     ForbiddenException,
     Get,
     NotFoundException,
     Param,
+    Patch,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/common/decorators/getUser.decorator';
 import type { UserPayload } from 'src/common/types/user.type';
 import { RentService } from './rent.service';
 import { Public } from 'src/common/decorators/public.decorator';
+import { UpdateDto } from './dto/update.dto';
 
 @ApiTags('Rentals')
 @Controller('rent')
@@ -81,6 +84,25 @@ export class RentController {
 
         await this.rentalService.cancelRental(rentalId);
         return;
+    }
+
+    @ApiOperation({ summary: 'Edit rental' })
+    @ApiResponse({
+        status: 200,
+        description: 'Updates pickup time and location',
+    })
+    @Patch('edit/:id')
+    async update(
+        @Param('id') rentalId: string,
+        @Body() body: UpdateDto,
+        @GetUser() user: UserPayload,
+    ) {
+        const updatedRental = await this.rentalService.updateRental(
+            rentalId,
+            user.id,
+            body,
+        );
+        return updatedRental;
     }
 
     @ApiOperation({ summary: 'Find a rental' })

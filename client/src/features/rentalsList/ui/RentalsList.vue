@@ -4,9 +4,11 @@
     import { cancelRental } from '@/features/cancelRental';
     import { useRentalStore, type RentalWithCar } from '@/entities/rental';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
+    import { useEditRentalStore } from '@/features/editRental';
 
     const rentalsStrore = useRentalStore();
     const acceptanceModalStore = useAcceptanceModalStore();
+    const editRentalStore = useEditRentalStore();
 
     const props = defineProps<{
         status: 'active' | 'past';
@@ -36,6 +38,8 @@
             onConfirm: () => cancelRental(rental),
         });
     };
+
+    const edit = async (rental: RentalWithCar) => editRentalStore.open(rental);
 
     const checkIfActive = (rental: RentalWithCar) => {
         const newStart = new Date(rental.rentFrom);
@@ -144,7 +148,8 @@
                     class="flex gap-2 justify-end md:absolute md:right-5 md:top-1/2 md:-translate-y-1/2 md:opacity-0 md:translate-x-2 md:group-hover:opacity-100 md:group-hover:translate-x-0 transition-all duration-200"
                 >
                     <button
-                        class="p-3 md:p-2 rounded-md transition bg-main-border/40 md:bg-transparent hover:bg-main-border text-main-gray hover:text-white"
+                        @click="edit(rental)"
+                        class="p-3 md:p-2 rounded-md transition bg-main-border/40 md:bg-transparent hover:bg-main-border text-main-gray cursor-pointer"
                         title="Edit rental"
                     >
                         <Icon icon="iconoir:edit" class="text-xl md:text-2xl" />
@@ -152,7 +157,7 @@
 
                     <button
                         @click="cancel(rental)"
-                        class="p-3 md:p-2 rounded-md bg-red-500/10 md:bg-transparent hover:bg-red-500/20 text-red-500"
+                        class="p-3 md:p-2 rounded-md bg-red-500/10 md:bg-transparent hover:bg-red-500/20 text-red-500 cursor-pointer"
                         title="Cancel rental"
                     >
                         <Icon icon="iconoir:trash" class="text-xl md:text-2xl" />

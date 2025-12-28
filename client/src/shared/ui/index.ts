@@ -4,3 +4,4 @@ export { default as Button } from './button/Button.vue';
 export { default as Message } from './message/Message.vue';
 export { default as Breadcrumbs } from './breadcrumbs/Breadcrumbs.vue';
 export { default as AcceptanceModal } from './acceptModal/AcceptanceModal.vue';
+export { default as ModalTransition } from './modalTransition/ModalTransition.vue';

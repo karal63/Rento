@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Car } from 'src/schemas/carSchema';
 import { Rent } from 'src/schemas/rentSchema';
+import { UpdateDto } from './dto/update.dto';
 
 @Injectable()
 export class RentService {
@@ -58,5 +59,29 @@ export class RentService {
         await this.rentModel.findByIdAndUpdate(rentalId, {
             $set: { status: 'CANCELLED' },
         });
+    }
+
+    async updateRental(rentalId: string, userId: string, body: UpdateDto) {
+        const updatedRental = await this.rentModel
+            .findOneAndUpdate(
+                { _id: rentalId, userId }, // ownership check
+                {
+                    $set: {
+                        pickupTime: body.time,
+                        pickupLocation: body.location,
+                    },
+                },
+                {
+                    new: true, // return updated document
+                    runValidators: true, // enforce schema validation
+                },
+            )
+            .populate('carId');
+
+        if (!updatedRental) {
+            throw new NotFoundException('Rental not found');
+        }
+
+        return updatedRental;
     }
 }
