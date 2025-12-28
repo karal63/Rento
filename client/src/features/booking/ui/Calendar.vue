@@ -116,8 +116,8 @@
         if (!rentalFrom || !rentalTo) return false;
 
         return {
-            rentalFrom: `${rentalFrom?.getFullYear()}/${rentalFrom?.getMonth() + 1}/${rentalFrom?.getDate()} ${rentalFrom.getHours().toString().padEnd(2, '0')}:${rentalFrom.getMinutes().toString().padEnd(2, '0')}`,
-            rentalTo: `${rentalTo?.getFullYear()}/${rentalTo?.getMonth() + 1}/${rentalTo?.getDate()} ${rentalTo.getHours().toString().padEnd(2, '0')}:${rentalTo.getMinutes().toString().padEnd(2, '0')}`,
+            rentalFrom: `${rentalFrom?.getFullYear()}-${(rentalFrom?.getMonth() + 1).toString().padStart(2, '0')}-${rentalFrom?.getDate().toString().padStart(2, '0')} ${rentalFrom.getHours().toString().padEnd(2, '0')}:${rentalFrom.getMinutes().toString().padEnd(2, '0')}`,
+            rentalTo: `${rentalTo?.getFullYear()}-${(rentalTo?.getMonth() + 1).toString().padStart(2, '0')}-${rentalTo?.getDate().toString().padStart(2, '0')} ${rentalTo.getHours().toString().padEnd(2, '0')}:${rentalTo.getMinutes().toString().padEnd(2, '0')}`,
         };
     });
 
@@ -155,7 +155,7 @@
             class="flex items-center gap-2 bg-primary/10 border border-primary/50 px-4 py-2 rounded-md text-sm flex-center mb-5 md:mb-0"
         >
             <Icon icon="mingcute:time-line" class="text-lg" />
-            {{ getFormattedDates.rentalFrom }} -
+            {{ getFormattedDates.rentalFrom }} —>
             {{ getFormattedDates.rentalTo }}
         </p>
         <p v-else></p>
