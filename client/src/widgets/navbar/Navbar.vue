@@ -78,7 +78,7 @@
                     />
                 </button>
 
-                <RouterLink to="/profile/account">
+                <RouterLink to="/profile/account" class="hidden md:block">
                     <Icon icon="ix:user-profile-filled" class="text-3xl text-main-gray" />
                 </RouterLink>
 
