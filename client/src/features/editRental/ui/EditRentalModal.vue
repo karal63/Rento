@@ -3,8 +3,10 @@
     import { useEditRentalStore } from '../model/editRentalStore';
     import { ref, watch } from 'vue';
     import { Icon } from '@iconify/vue';
+    import { useI18n } from 'vue-i18n';
 
     const editRentalStore = useEditRentalStore();
+    const { t } = useI18n();
 
     const time = ref('');
     const location = ref('');
@@ -23,20 +25,24 @@
 <template>
     <ModalTransition :isOpen="editRentalStore.isOpen" :onCancel="editRentalStore.close">
         <div class="relative bg-main-bg border-main-border p-8 rounded-md w-sm md:w-xl">
-            <h1 class="text-center text-xl md:text-2xl font-semibold mb-2">Edit rental</h1>
+            <h1 class="text-center text-xl md:text-2xl font-semibold mb-2">
+                {{ t('app.edit_rental') }}
+            </h1>
 
             <form @submit.prevent="editRentalStore.edit(time, location)" class="flex-col gap-3">
                 <label>
-                    <span class="text-main-gray text-sm mb-1">Pickup time</span>
+                    <span class="text-main-gray text-sm mb-1">{{ t('app.auth.pickup_time') }}</span>
                     <Input v-model="time" type="time" size="medium" class="w-full" />
                 </label>
 
                 <label>
-                    <span class="text-main-gray text-sm mb-1">Pickup location</span>
+                    <span class="text-main-gray text-sm mb-1">
+                        {{ t('app.auth.pickup_location') }}
+                    </span>
                     <Input v-model="location" size="medium" class="w-full" />
                 </label>
 
-                <Button type="submit" size="sm" class="w-full mt-5">Edit</Button>
+                <Button type="submit" size="sm" class="w-full mt-5">{{ t('app.edit') }}</Button>
             </form>
 
             <button

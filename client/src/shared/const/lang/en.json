@@ -59,6 +59,7 @@
         "days": "Days",
         "day": "Day",
         "zl": "PLN",
+        "proceed": "Proceed",
         "go_back": "Go back",
         "processing": "Processing",
         "pay": "Pay",
@@ -89,6 +90,25 @@
 
         "user_profile": "User profile",
         "account": "Account",
-        "rentals": "Rentals"
+        "rentals": "Rentals",
+        "logout": "Logout",
+        "edit": "Edit",
+        "edit_rental": "Edit rental",
+        "back": "Back",
+        "confirm": "Confirm",
+
+        "rentals_page": {
+            "active_title": "Active",
+            "history_title": "History",
+            "past": "past",
+            "active": "active",
+            "status": "Status",
+            "period": "Period",
+            "total": "Total",
+            "pickup": "Pickup",
+            "at": "at",
+            "no": "No",
+            "rentals": "rentals"
+        }
     }
 }

@@ -101,7 +101,7 @@
                     </div>
 
                     <Button v-if="userStore.isAuthenticated" size="sm" @click="handleLogout">
-                        LOG OUT
+                        {{ t('app.logout') }}
                     </Button>
                 </div>
             </div>

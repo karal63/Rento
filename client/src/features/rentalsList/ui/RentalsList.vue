@@ -5,10 +5,12 @@
     import { useRentalStore, type RentalWithCar } from '@/entities/rental';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { useEditRentalStore } from '@/features/editRental';
+    import { useI18n } from 'vue-i18n';
 
     const rentalsStrore = useRentalStore();
     const acceptanceModalStore = useAcceptanceModalStore();
     const editRentalStore = useEditRentalStore();
+    const { t } = useI18n();
 
     const props = defineProps<{
         status: 'active' | 'past';
@@ -112,7 +114,9 @@
                         <div class="md:flex md:flex-row md:gap-8 gap-2 text-sm md:text-base">
                             <div>
                                 <p class="flex gap-1">
-                                    <span class="text-main-gray">Status:</span>
+                                    <span class="text-main-gray">
+                                        {{ t('app.rentals_page.status') }}:
+                                    </span>
                                     <span
                                         class="font-semibold"
                                         :class="
@@ -126,7 +130,9 @@
                                 </p>
 
                                 <p class="flex gap-1">
-                                    <span class="text-main-gray">Period:</span>
+                                    <span class="text-main-gray">
+                                        {{ t('app.rentals_page.period') }}:
+                                    </span>
                                     <span>
                                         {{ getFormattedDates(rental.rentFrom, rental.rentTo) }}
                                     </span>
@@ -135,16 +141,21 @@
 
                             <div>
                                 <p class="flex gap-1">
-                                    <span class="text-main-gray">Total:</span>
+                                    <span class="text-main-gray">
+                                        {{ t('app.rentals_page.total') }}:
+                                    </span>
                                     <span class="font-semibold">
-                                        {{ (rental.totalPrice / 100).toFixed(2) }} PLN
+                                        {{ (rental.totalPrice / 100).toFixed(2) }} {{ t('app.zl') }}
                                     </span>
                                 </p>
 
                                 <p class="flex gap-1">
-                                    <span class="text-main-gray">Pickup:</span>
+                                    <span class="text-main-gray">
+                                        {{ t('app.rentals_page.pickup') }}:
+                                    </span>
                                     <span>
-                                        {{ rental.pickupLocation }} at {{ rental.pickupTime }}
+                                        {{ rental.pickupLocation }} {{ t('app.rentals_page.at') }}
+                                        {{ rental.pickupTime }}
                                     </span>
                                 </p>
                             </div>
@@ -176,6 +187,9 @@
             </div>
         </li>
 
-        <li v-if="filteredRentals.length === 0">No {{ status }} rentals</li>
+        <li v-if="filteredRentals.length === 0">
+            {{ t('app.rentals_page.no') }} {{ t(`app.rentals_page.${status}`) }}
+            {{ t('app.rentals_page.rentals') }}
+        </li>
     </ul>
 </template>

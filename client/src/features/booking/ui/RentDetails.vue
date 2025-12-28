@@ -56,7 +56,7 @@
                 /> -->
             </div>
 
-            <div class="">
+            <div>
                 <label class="block text-sm font-medium text-main-gray mb-1">
                     {{ t('app.auth.pickup_time') }}
                 </label>
@@ -84,7 +84,7 @@
             <div v-if="userStore.isAuthenticated" class="flex justify-end mt-5">
                 <RouterLink :to="`/book/${carStore.selectedCar?._id}/payment`">
                     <Button size="sm" class="flex-center gap-3" :disabled="isDisabled">
-                        PROCEED
+                        {{ t('app.proceed') }}
                     </Button>
                 </RouterLink>
             </div>

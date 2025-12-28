@@ -23,7 +23,7 @@
                 color="transparent"
                 class="border border-red-500 text-red-500 hover:text-red-700 hover:border-red-700 hover:bg-transparent"
             >
-                Log out
+                {{ t('app.logout') }}
             </Button>
         </div>
 

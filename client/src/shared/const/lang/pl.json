@@ -59,6 +59,7 @@
         "days": "Dni",
         "day": "Dzień",
         "zl": "zł",
+        "proceed": "Kontynuj",
         "go_back": "Wróć",
         "processing": "Przetwarzanie",
         "pay": "Zapłać",
@@ -89,6 +90,25 @@
 
         "user_profile": "Profil użytkownika",
         "account": "Konto",
-        "rentals": "Wynajmy"
+        "rentals": "Wynajmy",
+        "logout": "Wyloguj się",
+        "edit": "Edytuj",
+        "edit_rental": "Edytuj wynajem",
+        "back": "Wstecz",
+        "confirm": "Potwierdź",
+
+        "rentals_page": {
+            "active_title": "Aktywne",
+            "history_title": "Historia",
+            "past": "poprzednich",
+            "active": "aktywnych",
+            "status": "Status",
+            "period": "Okres",
+            "total": "Łącznie",
+            "pickup": "Odbiór",
+            "at": "o",
+            "no": "Brak",
+            "rentals": "wynajmów"
+        }
     }
 }

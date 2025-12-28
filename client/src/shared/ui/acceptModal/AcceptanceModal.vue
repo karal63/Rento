@@ -2,6 +2,9 @@
     import { Icon } from '@iconify/vue';
     import { Button } from '../button';
     import ModalTransition from '../modalTransition/ModalTransition.vue';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 
     defineProps<{
         isOpen: boolean;
@@ -31,10 +34,12 @@
                     color="transparent"
                     class="flex-1 border border-main-border"
                 >
-                    Back
+                    {{ t('app.back') }}
                 </Button>
 
-                <Button @click="onConfirm" size="md" color="red" class="flex-1">Confirm</Button>
+                <Button @click="onConfirm" size="md" color="red" class="flex-1">
+                    {{ t('app.confirm') }}
+                </Button>
             </div>
 
             <button
