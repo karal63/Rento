@@ -35,16 +35,19 @@ export const routes: RouteRecordRaw[] = [
             },
             {
                 path: ':id/payment',
+                meta: { requiresAuth: true },
                 component: PaymentPage,
             },
         ],
     },
     {
         path: '/payment-success',
+        meta: { requiresAuth: true },
         component: PaymentSuccessPage,
     },
     {
         path: '/profile',
+        meta: { requiresAuth: true },
         component: ProfileLayout,
         children: [
             {
