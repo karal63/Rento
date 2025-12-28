@@ -18,9 +18,9 @@
 
     const colorClasses = computed(() => {
         if (props.color === 'transparent') {
-            return 'bg-transparent hover:bg-main-hover-bg text-black';
-        } else if (props.color) {
-            return `bg-${props.color}-500 hover:bg-${props.color}-400 text-white`;
+            return 'bg-transparent hover:bg-main-hover-bg';
+        } else if (props.color === 'red') {
+            return `bg-red-500 hover:bg-red-600 text-white`;
         } else {
             return 'text-white bg-primary hover:bg-blue-400 text-white';
         }

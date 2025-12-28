@@ -1,32 +1,45 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import { computed, onMounted } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { cancelRental } from '@/features/cancelRental';
     import { useRentalStore, type RentalWithCar } from '@/entities/rental';
+    import { useAcceptanceModalStore } from '@/features/acceptanceModal';
+    import { useEditRentalStore } from '@/features/editRental';
 
     const rentalsStrore = useRentalStore();
+    const acceptanceModalStore = useAcceptanceModalStore();
+    const editRentalStore = useEditRentalStore();
 
     const props = defineProps<{
         status: 'active' | 'past';
     }>();
 
     const now = new Date();
+    const loading = ref(false);
 
     const getClasses = computed(() => {
         if (props.status === 'active') {
-            return 'border-green-500/20 bg-green-500/10 hover:border-green-500/40';
+            return 'border-green-500/20 bg-green-500/10 ';
         }
 
         return 'border-main-border bg-main-gray-bg';
     });
 
     onMounted(async () => {
+        loading.value = true;
         await rentalsStrore.getRentals();
+        loading.value = false;
     });
 
     const cancel = async (rental: RentalWithCar) => {
-        await cancelRental(rental);
+        acceptanceModalStore.open({
+            title: 'Confirm cancellation',
+            message: 'Are you sure you want to cancel this rental? This action cannot be undone.',
+            onConfirm: () => cancelRental(rental),
+        });
     };
+
+    const edit = async (rental: RentalWithCar) => editRentalStore.open(rental);
 
     const checkIfActive = (rental: RentalWithCar) => {
         const newStart = new Date(rental.rentFrom);
@@ -53,29 +66,42 @@
     };
 
     const filteredRentals = computed(() => {
-        return rentalsStrore.rentals.filter(rental => {
-            return props.status === 'active' ? checkIfActive(rental) : !checkIfActive(rental);
-        });
+        return rentalsStrore.rentals
+            .filter(rental => {
+                return props.status === 'active' ? checkIfActive(rental) : !checkIfActive(rental);
+            })
+            .sort((a: RentalWithCar, b: RentalWithCar) => b.createdAt - a.createdAt);
     });
 </script>
 
 <template>
     <ul class="flex-col gap-3">
-        <li v-for="rental in filteredRentals" :key="rental._id">
+        <li v-if="loading" class="flex-col gap-3">
+            <div v-for="(_, i) in 4" :key="i" class="h-[100px] skeleton rounded-md"></div>
+        </li>
+        <li v-else v-for="rental in filteredRentals" :key="rental._id">
             <div
-                v-if="props.status === 'active' ? checkIfActive(rental) : !checkIfActive(rental)"
-                class="group relative border rounded-md p-5"
+                class="group relative border rounded-md p-3 md:p-5 flex flex-col gap-3"
                 :class="getClasses"
             >
-                <div class="flex items-center gap-5">
-                    <img :src="rental.carId.image" alt="" class="h-20 rounded-md" />
+                <!-- Main content -->
+                <div class="md:flex md:flex-row md:items-center gap-4">
+                    <!-- Image -->
+                    <img
+                        :src="rental.carId.image"
+                        alt=""
+                        class="w-full h-36 sm:h-52 object-cover rounded-md md:w-24 md:h-20"
+                    />
 
-                    <div>
-                        <h3 class="text-xl mb-2 font-bold">{{ rental.carId.name }}</h3>
+                    <!-- Details -->
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold mt-2 md:mt-0 mb-1">
+                            {{ rental.carId.name }}
+                        </h3>
 
-                        <div class="flex gap-8">
+                        <div class="md:flex md:flex-row md:gap-8 gap-2 text-sm md:text-base">
                             <div>
-                                <h3 class="flex gap-1">
+                                <p class="flex gap-1">
                                     <span class="text-main-gray">Status:</span>
                                     <span
                                         class="font-semibold"
@@ -87,26 +113,30 @@
                                     >
                                         {{ rental.status }}
                                     </span>
-                                </h3>
-                                <h3 class="flex gap-1">
-                                    <span class="text-main-gray">Rental Period:</span>
+                                </p>
+
+                                <p class="flex gap-1">
+                                    <span class="text-main-gray">Period:</span>
                                     <span>
                                         {{ getFormattedDates(rental.rentFrom, rental.rentTo) }}
                                     </span>
-                                </h3>
+                                </p>
                             </div>
 
                             <div>
-                                <h3 class="flex gap-1">
-                                    <span class="text-main-gray">Total price:</span>
-                                    <span>{{ (rental.totalPrice / 100).toFixed(2) }}PLN</span>
-                                </h3>
-                                <h3 class="flex gap-1">
+                                <p class="flex gap-1">
+                                    <span class="text-main-gray">Total:</span>
+                                    <span class="font-semibold">
+                                        {{ (rental.totalPrice / 100).toFixed(2) }} PLN
+                                    </span>
+                                </p>
+
+                                <p class="flex gap-1">
                                     <span class="text-main-gray">Pickup:</span>
                                     <span>
                                         {{ rental.pickupLocation }} at {{ rental.pickupTime }}
                                     </span>
-                                </h3>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -115,21 +145,22 @@
                 <!-- Actions -->
                 <div
                     v-if="!checkIfActive(rental) && canChange(rental)"
-                    class="absolute right-5 top-1/2 -translate-y-1/2 flex gap-2 opacity-0 translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0"
+                    class="flex gap-2 justify-end md:absolute md:right-5 md:top-1/2 md:-translate-y-1/2 md:opacity-0 md:translate-x-2 md:group-hover:opacity-100 md:group-hover:translate-x-0 transition-all duration-200"
                 >
                     <button
-                        class="p-2 rounded-md transition hover:bg-main-border text-main-gray hover:text-white cursor-pointer"
+                        @click="edit(rental)"
+                        class="p-3 md:p-2 rounded-md transition bg-main-border/40 md:bg-transparent hover:bg-main-border text-main-gray cursor-pointer"
                         title="Edit rental"
                     >
-                        <Icon icon="iconoir:edit" class="text-2xl" />
+                        <Icon icon="iconoir:edit" class="text-xl md:text-2xl" />
                     </button>
 
                     <button
                         @click="cancel(rental)"
-                        class="p-2 rounded-md hover:bg-red-500/10 text-red-500 cursor-pointer"
+                        class="p-3 md:p-2 rounded-md bg-red-500/10 md:bg-transparent hover:bg-red-500/20 text-red-500 cursor-pointer"
                         title="Cancel rental"
                     >
-                        <Icon icon="iconoir:trash" class="text-2xl" />
+                        <Icon icon="iconoir:trash" class="text-xl md:text-2xl" />
                     </button>
                 </div>
             </div>

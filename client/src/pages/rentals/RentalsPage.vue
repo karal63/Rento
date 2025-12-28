@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import { EditRentalModal } from '@/features/editRental';
     import { RentalsList } from '@/features/rentalsList';
 </script>
 
@@ -9,5 +10,7 @@
 
         <h1 class="text-2xl mt-10 mb-5">History</h1>
         <RentalsList status="past" />
+
+        <EditRentalModal />
     </section>
 </template>
