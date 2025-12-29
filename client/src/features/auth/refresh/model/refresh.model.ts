@@ -6,7 +6,7 @@ export const refreshTokens = async () => {
 
     try {
         const res = await apiRefreshTokens();
-        userStore.authenticateUser(true, res.data.user);
+        userStore.authenticateUser(true, res.data);
     } catch (error) {
         console.log(error);
     }

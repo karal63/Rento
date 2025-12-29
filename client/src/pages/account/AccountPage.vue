@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    import { AccountSummary } from '@/widgets';
+</script>
 
 <template>
-    <section>Account page</section>
+    <AccountSummary />
 </template>

@@ -31,6 +31,9 @@ export class User extends Document {
 
     @Prop()
     username?: string;
+
+    @Prop({ required: true, default: Date.now() })
+    createdAt: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -4,4 +4,6 @@ export type User = {
     secondName: string;
     email: string;
     phoneNumber: string;
+    createdAt: number;
+    auth_provider: string;
 };
