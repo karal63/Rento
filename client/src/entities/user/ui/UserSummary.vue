@@ -1,8 +1,10 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
     import { useUserStore } from '../model/user.store';
+    import { useI18n } from 'vue-i18n';
 
     const userStore = useUserStore();
+    const { t } = useI18n();
 
     defineEmits<{
         (e: 'edit'): void;
@@ -21,9 +23,9 @@
 
         <div class="mt-5 grid grid-cols-2 gap-3">
             <div>
-                <span class="text-main-gray text-sm">Email adres</span>
+                <span class="text-main-gray text-sm">{{ t('app.account_page.email_addres') }}</span>
                 <div class="flex items-center gap-2">
-                    <p>{{ userStore.user?.email ?? 'Not provided' }}</p>
+                    <p>{{ userStore.user?.email ?? t('app.account_page.not_provided') }}</p>
                     <button @click="$emit('edit')">
                         <Icon
                             icon="iconoir:edit"
@@ -34,9 +36,9 @@
             </div>
 
             <div>
-                <span class="text-main-gray text-sm">Phone number</span>
+                <span class="text-main-gray text-sm">{{ t('app.account_page.phone_number') }}</span>
                 <div class="flex items-center gap-2">
-                    <p>{{ userStore.user?.phoneNumber ?? 'Not provided' }}</p>
+                    <p>{{ userStore.user?.phoneNumber ?? t('app.account_page.not_provided') }}</p>
                     <button @click="$emit('edit')">
                         <Icon
                             icon="iconoir:edit"
@@ -47,9 +49,9 @@
             </div>
 
             <div>
-                <span class="text-main-gray text-sm">Second name</span>
+                <span class="text-main-gray text-sm">{{ t('app.account_page.second_name') }}</span>
                 <div class="flex items-center gap-2">
-                    <p>{{ userStore.user?.secondName ?? 'Not provided' }}</p>
+                    <p>{{ userStore.user?.secondName ?? t('app.account_page.not_provided') }}</p>
                     <button @click="$emit('edit')">
                         <Icon
                             icon="iconoir:edit"
@@ -62,22 +64,22 @@
 
         <div class="mt-7 grid grid-cols-2">
             <div>
-                <span class="text-main-gray text-sm">User since</span>
+                <span class="text-main-gray text-sm">{{ t('app.account_page.user_since') }}</span>
                 <div class="flex items-center gap-2">
                     <p>
                         {{
-                            userStore.user
+                            userStore.user?.createdAt
                                 ? new Date(userStore.user?.createdAt).toLocaleString()
-                                : 'Date not found'
+                                : t('app.account_page.date_not_found')
                         }}
                     </p>
                 </div>
             </div>
 
             <div>
-                <span class="text-main-gray text-sm">Auth method</span>
+                <span class="text-main-gray text-sm">{{ t('app.account_page.auth_method') }}</span>
                 <div class="flex items-center gap-2">
-                    <p>{{ userStore.user?.auth_provider ?? 'Not provided' }}</p>
+                    <p>{{ userStore.user?.auth_provider }}</p>
                 </div>
             </div>
         </div>

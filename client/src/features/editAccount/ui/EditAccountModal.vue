@@ -57,11 +57,15 @@
 <template>
     <ModalTransition :isOpen="editAccountStore.isOpen" @cancel="editAccountStore.close">
         <div class="relative bg-main-bg border border-main-border p-8 rounded-md w-sm md:w-xl">
-            <h1 class="text-center text-xl md:text-2xl font-semibold mb-2">Edit account</h1>
+            <h1 class="text-center text-xl md:text-2xl font-semibold mb-2">
+                {{ t('app.account_page.edit_account') }}
+            </h1>
 
             <form @submit.prevent="handleSubmit" class="flex-col gap-3">
                 <label>
-                    <span class="text-main-gray text-sm mb-1">Email adres</span>
+                    <span class="text-main-gray text-sm mb-1">
+                        {{ t('app.account_page.email_addres') }}
+                    </span>
                     <div>
                         <p v-for="e in v$.email.$errors" :key="e.$uid" class="text-red-500 text-sm">
                             {{ e.$message }}
@@ -76,7 +80,9 @@
                 </label>
 
                 <label>
-                    <span class="text-main-gray text-sm mb-1">Phone number</span>
+                    <span class="text-main-gray text-sm mb-1">
+                        {{ t('app.account_page.phone_number') }}
+                    </span>
                     <div>
                         <p
                             v-for="e in v$.phoneNumber.$errors"
@@ -96,7 +102,9 @@
                 </label>
 
                 <label>
-                    <span class="text-main-gray text-sm mb-1">Second name</span>
+                    <span class="text-main-gray text-sm mb-1">
+                        {{ t('app.account_page.second_name') }}
+                    </span>
                     <div>
                         <p
                             v-for="e in v$.secondName.$errors"

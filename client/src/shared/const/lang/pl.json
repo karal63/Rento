@@ -109,6 +109,17 @@
             "at": "o",
             "no": "Brak",
             "rentals": "wynajmów"
+        },
+
+        "account_page": {
+            "email_addres": "Adres e-mail",
+            "phone_number": "Numer telefonu",
+            "second_name": "Nazwisko",
+            "user_since": "Użytkownik od",
+            "auth_method": "Metoda uwierzytelniania",
+            "not_provided": "Nie podano",
+            "date_not_found": "Nie znaleziono daty",
+            "edit_account": "Edytuj konto"
         }
     }
 }

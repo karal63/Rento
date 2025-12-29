@@ -109,6 +109,17 @@
             "at": "at",
             "no": "No",
             "rentals": "rentals"
+        },
+
+        "account_page": {
+            "email_addres": "Email addres",
+            "phone_number": "Phone number",
+            "second_name": "Second name",
+            "user_since": "User since",
+            "auth_method": "Authentication method",
+            "not_provided": "Not provided",
+            "date_not_found": "Date not found",
+            "edit_account": "Edit account"
         }
     }
 }
