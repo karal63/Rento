@@ -8,6 +8,7 @@ export const API_POST_USER_SIGNUP = `/auth/signup`;
 export const API_POST_USER_LOGIN = `/auth/login`;
 export const API_POST_USER_LOGOUT = `/auth/logout`;
 export const API_POST_TOKEN_REFRESH = `/auth/refresh`;
+export const API_PATCH_USER_EDIT = `/user/edit`;
 
 // PAYMENT
 export const API_POST_PAYMENT_CREATE = `/payment/create-payment-intent`;

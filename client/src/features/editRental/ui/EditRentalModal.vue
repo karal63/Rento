@@ -24,7 +24,7 @@
 
 <template>
     <ModalTransition :isOpen="editRentalStore.isOpen" :onCancel="editRentalStore.close">
-        <div class="relative bg-main-bg border-main-border p-8 rounded-md w-sm md:w-xl">
+        <div class="relative bg-main-bg border border-main-border p-8 rounded-md w-sm md:w-xl">
             <h1 class="text-center text-xl md:text-2xl font-semibold mb-2">
                 {{ t('app.edit_rental') }}
             </h1>
