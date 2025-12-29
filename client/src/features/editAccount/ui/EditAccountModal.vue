@@ -5,22 +5,50 @@
     import { Icon } from '@iconify/vue';
     import { useUserStore } from '@/entities/user';
     import { ref, watch } from 'vue';
+    import useVuelidate from '@vuelidate/core';
+    import { required, email, minLength } from '@vuelidate/validators';
 
     const editAccountStore = useEditAccountStore();
     const { t } = useI18n();
     const userStore = useUserStore();
 
-    const email = ref('');
-    const phoneNumber = ref('');
-    const secondName = ref('');
+    const rules = {
+        email: { required, email },
+        phoneNumber: { required, length: minLength(12) },
+        secondName: { required, length: minLength(3) },
+    };
+
+    const emailInput = ref('');
+    const phoneNumberInput = ref('');
+    const secondNameInput = ref('');
+
+    const v$ = useVuelidate(rules, {
+        email: emailInput,
+        phoneNumber: phoneNumberInput,
+        secondName: secondNameInput,
+    });
+
+    const handleSubmit = async () => {
+        const isValid = await v$.value.$validate();
+        if (!isValid) {
+            console.log(v$.value.$errors);
+
+            return;
+        }
+        await editAccountStore.edit(
+            emailInput.value,
+            phoneNumberInput.value,
+            secondNameInput.value
+        );
+    };
 
     watch(
         () => userStore.user,
         () => {
             if (!userStore.user) return;
-            email.value = userStore.user.email ?? '';
-            phoneNumber.value = userStore.user.phoneNumber ?? '';
-            secondName.value = userStore.user.secondName ?? '';
+            emailInput.value = userStore.user.email ?? '';
+            phoneNumberInput.value = userStore.user.phoneNumber ?? '';
+            secondNameInput.value = userStore.user.secondName ?? '';
         },
         { immediate: true }
     );
@@ -31,23 +59,59 @@
         <div class="relative bg-main-bg border border-main-border p-8 rounded-md w-sm md:w-xl">
             <h1 class="text-center text-xl md:text-2xl font-semibold mb-2">Edit account</h1>
 
-            <form
-                @submit.prevent="editAccountStore.edit(email, phoneNumber, secondName)"
-                class="flex-col gap-3"
-            >
+            <form @submit.prevent="handleSubmit" class="flex-col gap-3">
                 <label>
                     <span class="text-main-gray text-sm mb-1">Email adres</span>
-                    <Input v-model="email" size="medium" class="w-full" />
+                    <div>
+                        <p v-for="e in v$.email.$errors" :key="e.$uid" class="text-red-500 text-sm">
+                            {{ e.$message }}
+                        </p>
+                    </div>
+                    <Input
+                        v-model="emailInput"
+                        size="medium"
+                        :isError="v$.email.$errors.length >= 1"
+                        class="w-full"
+                    />
                 </label>
 
                 <label>
                     <span class="text-main-gray text-sm mb-1">Phone number</span>
-                    <Input v-model="phoneNumber" size="medium" class="w-full" />
+                    <div>
+                        <p
+                            v-for="e in v$.phoneNumber.$errors"
+                            :key="e.$uid"
+                            class="text-red-500 text-sm"
+                        >
+                            {{ e.$message }}
+                        </p>
+                    </div>
+
+                    <Input
+                        v-model="phoneNumberInput"
+                        size="medium"
+                        :isError="v$.phoneNumber.$errors.length >= 1"
+                        class="w-full"
+                    />
                 </label>
 
                 <label>
                     <span class="text-main-gray text-sm mb-1">Second name</span>
-                    <Input v-model="secondName" size="medium" class="w-full" />
+                    <div>
+                        <p
+                            v-for="e in v$.secondName.$errors"
+                            :key="e.$uid"
+                            class="text-red-500 text-sm"
+                        >
+                            {{ e.$message }}
+                        </p>
+                    </div>
+                    <Input
+                        v-model="secondNameInput"
+                        size="medium"
+                        :isError="v$.secondName.$errors.length >= 1"
+                        class="w-full"
+                    />
                 </label>
 
                 <Button type="submit" size="sm" class="w-full mt-5">{{ t('app.edit') }}</Button>
