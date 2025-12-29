@@ -5,6 +5,7 @@ import { User } from 'src/schemas/userSchema';
 import { SignupDto } from '../auth/dto/signup.dto';
 import * as argon from '@node-rs/argon2';
 import { TelegramLoginQuery } from '../auth/dto/telegramQuery.type';
+import { EditDto } from './dto/edit.dto';
 
 @Injectable()
 export class UserService {
@@ -55,6 +56,19 @@ export class UserService {
 
     async findById(id: string): Promise<User | null> {
         return await this.userModel.findById(id);
+    }
+
+    async update(userId: string, body: EditDto) {
+        return await this.userModel.findByIdAndUpdate(
+            userId,
+            {
+                $set: { ...body, updatedAt: Date.now() },
+            },
+            {
+                new: true, // return updated document
+                runValidators: true, // enforce schema validation
+            },
+        );
     }
 
     // LEARN HOW IT WORKS
