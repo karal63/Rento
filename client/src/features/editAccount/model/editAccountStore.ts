@@ -2,11 +2,13 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { apiEditAccount } from '../api/editAccount';
 import { useUserStore } from '@/entities/user';
+import { isAxiosError } from 'axios';
 
 export const useEditAccountStore = defineStore('editAccount', () => {
     const userStore = useUserStore();
 
     const isOpen = ref(false);
+    const error = ref('');
 
     const close = () => {
         isOpen.value = false;
@@ -22,11 +24,13 @@ export const useEditAccountStore = defineStore('editAccount', () => {
             userStore.authenticateUser(true, res.data);
 
             close();
-        } catch (error) {
-            console.log(error);
-            close();
+        } catch (e) {
+            console.log(e);
+            if (isAxiosError(e)) {
+                error.value = e.response?.data.message[0];
+            }
         }
     };
 
-    return { isOpen, close, open, edit };
+    return { isOpen, close, open, edit, error };
 });

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { Button, Input, ModalTransition } from '@/shared/ui';
+    import { Button, Input, Message, ModalTransition } from '@/shared/ui';
     import { useEditAccountStore } from '../model/editAccountStore';
     import { useI18n } from 'vue-i18n';
     import { Icon } from '@iconify/vue';
@@ -32,8 +32,6 @@
         const isValid = await v$.value.$validate();
         if (!isValid) {
             console.log(v$.value.$errors);
-
-            return;
         }
         await editAccountStore.edit(
             emailInput.value,
@@ -121,6 +119,12 @@
                         class="w-full"
                     />
                 </label>
+
+                <Message
+                    v-if="editAccountStore.error"
+                    type="error"
+                    :message="editAccountStore.error"
+                />
 
                 <Button type="submit" size="sm" class="w-full mt-5">{{ t('app.edit') }}</Button>
             </form>
