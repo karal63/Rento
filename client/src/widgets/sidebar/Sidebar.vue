@@ -30,8 +30,8 @@
 
 <template>
     <aside
-        class="w-full sm:w-64 h-full bg-main-bg border-r border-main-border fixed top-0 left-0 pt-36 shadow shadow-main-border transition"
-        :class="sidebarStore.isOpen ? 'translate-x-0' : '-translate-x-full '"
+        class="md:hidden w-full sm:w-[300px] h-full bg-main-bg border-r border-main-border fixed top-0 left-0 pt-36 shadow shadow-main-border transition"
+        :class="sidebarStore.isOpen ? 'translate-x-0' : '-translate-x-full overflow-hidden'"
     >
         <nav>
             <ul>
@@ -100,7 +100,13 @@
                         </transition>
                     </div>
 
-                    <Button v-if="userStore.isAuthenticated" size="sm" @click="handleLogout">
+                    <Button
+                        v-if="userStore.isAuthenticated"
+                        @click="handleLogout"
+                        size="sm"
+                        color="transparent"
+                        class="border border-red-500 text-red-500 hover:text-red-700 hover:border-red-700 hover:bg-transparent"
+                    >
                         {{ t('app.logout') }}
                     </Button>
                 </div>
