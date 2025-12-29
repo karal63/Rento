@@ -104,7 +104,10 @@
 
                 <Button size="md" type="submit" :disabled="loading" class="mt-10 w-full">
                     {{
-                        loading ? t('app.processing') + '...' : `Pay ${getFullPrice}${t('app.zl')}`
+                        loading
+                            ? t('app.processing') + '...'
+                            : `${t('app.pay')}
+                    ${getFullPrice}${t('app.zl')}`
                     }}
                 </Button>
             </form>

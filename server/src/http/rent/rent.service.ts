@@ -37,7 +37,10 @@ export class RentService {
     }
 
     async getRentsByCarId(carId: string) {
-        return await this.rentModel.find({ carId });
+        return await this.rentModel.find({
+            carId,
+            status: { $ne: 'CANCELLED' },
+        });
     }
 
     async getRentals(userId: string) {
@@ -57,7 +60,7 @@ export class RentService {
 
     async cancelRental(rentalId: string) {
         await this.rentModel.findByIdAndUpdate(rentalId, {
-            $set: { status: 'CANCELLED' },
+            $set: { status: 'CANCELLED', cancelledAt: Date.now() },
         });
     }
 
@@ -69,6 +72,7 @@ export class RentService {
                     $set: {
                         pickupTime: body.time,
                         pickupLocation: body.location,
+                        updatedAt: Date.now(),
                     },
                 },
                 {

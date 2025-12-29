@@ -79,7 +79,7 @@
         </div>
 
         <div class="flex flex-col sm:flex-row gap-3">
-            <RouterLink to="/">
+            <RouterLink to="/profile/rentals">
                 <Button size="sm" class="w-full">{{ t('app.wiev_my_bookings') }}</Button>
             </RouterLink>
             <RouterLink to="/">

@@ -1,14 +1,17 @@
 <script setup lang="ts">
     import { EditRentalModal } from '@/features/editRental';
     import { RentalsList } from '@/features/rentalsList';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 </script>
 
 <template>
     <section>
-        <h1 class="text-2xl mb-5">Active</h1>
+        <h1 class="text-2xl mb-5">{{ t('app.rentals_page.active_title') }}</h1>
         <RentalsList status="active" />
 
-        <h1 class="text-2xl mt-10 mb-5">History</h1>
+        <h1 class="text-2xl mt-10 mb-5">{{ t('app.rentals_page.history_title') }}</h1>
         <RentalsList status="past" />
 
         <EditRentalModal />

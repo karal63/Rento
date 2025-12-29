@@ -11,6 +11,8 @@ export type Rental = {
     totalPrice: number;
     status: 'CONFIRMED' | 'CANCELLED';
     createdAt: number;
+    updatedAt: number;
+    cancelledAt: number;
 };
 
 export type CarAvailability = {

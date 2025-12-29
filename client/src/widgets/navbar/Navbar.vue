@@ -5,10 +5,12 @@
     import { Button } from '../../shared/ui/button';
     import { languages } from '@/shared/config';
     import { useSidebarStore, useThemeStore } from '@/shared/model';
+    import { useUserStore } from '@/entities/user';
 
     const { t, locale } = useI18n();
     const themeStore = useThemeStore();
     const sidebarStore = useSidebarStore();
+    const userStore = useUserStore();
 
     const open = ref(false);
     const isDarkTheme = ref(false);
@@ -78,7 +80,11 @@
                     />
                 </button>
 
-                <RouterLink to="/profile/account">
+                <RouterLink
+                    v-if="userStore.isAuthenticated"
+                    to="/profile/account"
+                    class="hidden md:block"
+                >
                     <Icon icon="ix:user-profile-filled" class="text-3xl text-main-gray" />
                 </RouterLink>
 
@@ -90,7 +96,7 @@
             </div>
 
             <div class="flex items-center gap-4 md:hidden">
-                <RouterLink to="/profile/account">
+                <RouterLink v-if="userStore.isAuthenticated" to="/profile/account">
                     <Icon icon="ix:user-profile-filled" class="text-3xl text-main-gray" />
                 </RouterLink>
                 <button @click="sidebarStore.setSidebarOpen(!sidebarStore.isOpen)">

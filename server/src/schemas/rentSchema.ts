@@ -37,6 +37,12 @@ export class Rent {
 
     @Prop({ required: true })
     intentId: string;
+
+    @Prop({ type: Number, default: null })
+    updatedAt?: number | null;
+
+    @Prop({ type: Number, default: null })
+    cancelledAt?: number | null;
 }
 
 export const RentSchema = SchemaFactory.createForClass(Rent);
