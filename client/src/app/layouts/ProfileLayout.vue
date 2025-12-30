@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import { hasPermission } from '@/entities/auth';
     import { useUserStore } from '@/entities/user';
     import { logout } from '@/features/auth/logout';
     import { Button } from '@/shared/ui';
@@ -17,7 +18,10 @@
             <h1 class="text-3xl font-bold">{{ t('app.user_profile') }}</h1>
 
             <div class="flex gap-3">
-                <RouterLink to="/admin/dashboard">
+                <RouterLink
+                    v-if="hasPermission(userStore.user, 'view:admin-page')"
+                    to="/admin/dashboard"
+                >
                     <Button v-if="userStore.isAuthenticated" size="sm">ADMIN</Button>
                 </RouterLink>
 
