@@ -7,7 +7,7 @@
 </script>
 
 <template>
-    <div class="fixed top-0 left-0 bg-main-bg border-r border-main-border h-full w-60 my-5 px-5">
+    <nav class="fixed top-0 left-0 bg-main-bg border-r border-main-border h-full w-60 my-5 px-5">
         <h1 class="text-2xl font-semibold text-center pt-4 pb-6 border-b border-main-border">
             Rento
             <span class="text-primary">| Admin</span>
@@ -38,5 +38,5 @@
                 </RouterLink>
             </li>
         </ul>
-    </div>
+    </nav>
 </template>

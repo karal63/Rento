@@ -1,10 +1,18 @@
 <script setup lang="ts">
-    import { AdminSidebar } from '@/widgets';
+    import type { Breadcrumb } from '@/shared/ui';
+    import { AdminNavbar, AdminSidebar } from '@/widgets';
+    import { ref } from 'vue';
+
+    const breadcrumbs = ref<Breadcrumb[]>([]);
 </script>
 
 <template>
     <div class="p-5">
         <AdminSidebar />
-        <RouterView />
+
+        <div class="ml-64">
+            <AdminNavbar :breadcrumps="breadcrumbs" />
+            <RouterView @setBreadcrumbs="breadcrumbs = $event" />
+        </div>
     </div>
 </template>
