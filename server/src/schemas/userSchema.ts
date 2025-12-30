@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, HydratedDocument } from 'mongoose';
+import { Role } from 'src/enums/role.enum';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -20,6 +21,9 @@ export class User extends Document {
     @Prop()
     phoneNumber?: string;
 
+    @Prop({ default: Role.User, enum: Role })
+    role: Role;
+
     @Prop()
     telegram_id?: string;
 
@@ -35,8 +39,8 @@ export class User extends Document {
     @Prop({ required: true, default: Date.now() })
     createdAt: number;
 
-    @Prop({ required: true })
-    updatedAt?: number;
+    @Prop()
+    updatedAt: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

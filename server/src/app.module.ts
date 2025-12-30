@@ -15,6 +15,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { StripeModule } from './http/stripe/stripe.module';
 import { PaymentModule } from './http/payment/payment.module';
+import { RolesGuard } from './common/guards/roles.guard';
 
 @Module({
     imports: [
@@ -39,6 +40,7 @@ import { PaymentModule } from './http/payment/payment.module';
         AppService,
         RentService,
         { provide: APP_GUARD, useClass: AtGuard },
+        { provide: APP_GUARD, useClass: RolesGuard },
     ],
 })
 export class AppModule {}

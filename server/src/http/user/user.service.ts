@@ -71,6 +71,10 @@ export class UserService {
         );
     }
 
+    async get() {
+        return await this.userModel.find();
+    }
+
     // LEARN HOW IT WORKS
     // async findByAnyId(id: string): Promise<User | null> {
     //     const query: any[] = [{ telegram_id: id }];
