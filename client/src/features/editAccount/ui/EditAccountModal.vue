@@ -30,9 +30,8 @@
 
     const handleSubmit = async () => {
         const isValid = await v$.value.$validate();
-        if (!isValid) {
-            console.log(v$.value.$errors);
-        }
+        if (!isValid) return;
+
         await editAccountStore.edit(
             emailInput.value,
             phoneNumberInput.value,

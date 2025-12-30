@@ -13,6 +13,7 @@ import * as argon from '@node-rs/argon2';
 import { UserPayload } from 'src/common/types/user.type';
 import { TelegramLoginQuery } from './dto/telegramQuery.type';
 import * as crypto from 'crypto';
+import { Role } from 'src/enums/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -27,6 +28,7 @@ export class AuthService {
         const user = await this.userService.create(candidate);
         const { accessToken, refreshToken } = await this.generateTokens({
             id: user._id.toString(),
+            roles: user.roles,
             email: user.email,
         });
         return {
@@ -52,6 +54,7 @@ export class AuthService {
 
         const { accessToken, refreshToken } = await this.generateTokens({
             id: user._id.toString(),
+            roles: user.roles,
             email: candidate.email,
         });
 
@@ -71,6 +74,7 @@ export class AuthService {
 
         const { accessToken, refreshToken } = await this.generateTokens({
             id: existingUser._id.toString(),
+            roles: existingUser.roles,
             username: query.username,
         });
 
@@ -79,10 +83,12 @@ export class AuthService {
 
     async generateTokens({
         id,
+        roles = [Role.User],
         email,
         username,
     }: {
         id: string;
+        roles: Role[];
         email?: string;
         username?: string;
     }) {
@@ -90,6 +96,7 @@ export class AuthService {
             this.jwtService.signAsync(
                 {
                     id,
+                    roles,
                     email,
                     username,
                 },
@@ -101,6 +108,7 @@ export class AuthService {
             this.jwtService.signAsync(
                 {
                     id,
+                    roles,
                     email,
                     username,
                 },
@@ -120,6 +128,7 @@ export class AuthService {
 
         const { accessToken, refreshToken } = await this.generateTokens({
             id: user._id.toString(),
+            roles: user.roles,
             email: userDto.email,
             username: userDto.username,
         });
