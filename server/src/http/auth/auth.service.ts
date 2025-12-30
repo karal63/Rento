@@ -28,7 +28,7 @@ export class AuthService {
         const user = await this.userService.create(candidate);
         const { accessToken, refreshToken } = await this.generateTokens({
             id: user._id.toString(),
-            role: user.role,
+            roles: user.roles,
             email: user.email,
         });
         return {
@@ -54,7 +54,7 @@ export class AuthService {
 
         const { accessToken, refreshToken } = await this.generateTokens({
             id: user._id.toString(),
-            role: user.role,
+            roles: user.roles,
             email: candidate.email,
         });
 
@@ -74,7 +74,7 @@ export class AuthService {
 
         const { accessToken, refreshToken } = await this.generateTokens({
             id: existingUser._id.toString(),
-            role: existingUser.role,
+            roles: existingUser.roles,
             username: query.username,
         });
 
@@ -83,12 +83,12 @@ export class AuthService {
 
     async generateTokens({
         id,
-        role = Role.User,
+        roles = [Role.User],
         email,
         username,
     }: {
         id: string;
-        role: string;
+        roles: Role[];
         email?: string;
         username?: string;
     }) {
@@ -96,7 +96,7 @@ export class AuthService {
             this.jwtService.signAsync(
                 {
                     id,
-                    role,
+                    roles,
                     email,
                     username,
                 },
@@ -108,7 +108,7 @@ export class AuthService {
             this.jwtService.signAsync(
                 {
                     id,
-                    role,
+                    roles,
                     email,
                     username,
                 },
@@ -128,7 +128,7 @@ export class AuthService {
 
         const { accessToken, refreshToken } = await this.generateTokens({
             id: user._id.toString(),
-            role: user.role,
+            roles: user.roles,
             email: userDto.email,
             username: userDto.username,
         });

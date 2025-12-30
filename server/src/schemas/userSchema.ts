@@ -21,8 +21,12 @@ export class User extends Document {
     @Prop()
     phoneNumber?: string;
 
-    @Prop({ default: Role.User, enum: Role })
-    role: Role;
+    @Prop({
+        type: [String],
+        enum: Object.values(Role),
+        default: [Role.User],
+    })
+    roles: Role[];
 
     @Prop()
     telegram_id?: string;
