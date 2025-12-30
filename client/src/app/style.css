@@ -39,6 +39,7 @@
     --color-main-lightgray: #cacaca;
     --color-main-gray-bg: #e0e0e0;
     --color-main-theme: #242424;
+    --color-pure-theme: #fff;
 
     --color-primary: hsl(220 90% 66%);
 
@@ -62,6 +63,7 @@
         --color-main-lightgray: #343434;
         --color-main-gray-bg: #202020;
         --color-main-theme: #1d1d1d;
+        --color-pure-theme: #000000;
 
         --color-main-text: hsl(0 0% 96%);
     }

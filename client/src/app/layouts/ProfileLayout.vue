@@ -16,15 +16,21 @@
         <div class="flex-between">
             <h1 class="text-3xl font-bold">{{ t('app.user_profile') }}</h1>
 
-            <Button
-                v-if="userStore.isAuthenticated"
-                @click="logout"
-                size="sm"
-                color="transparent"
-                class="border border-red-500 text-red-500 hover:text-red-700 hover:border-red-700 hover:bg-transparent"
-            >
-                {{ t('app.logout') }}
-            </Button>
+            <div class="flex gap-3">
+                <RouterLink to="/admin/dashboard">
+                    <Button v-if="userStore.isAuthenticated" size="sm">ADMIN</Button>
+                </RouterLink>
+
+                <Button
+                    v-if="userStore.isAuthenticated"
+                    @click="logout"
+                    size="sm"
+                    color="transparent"
+                    class="border border-red-500 text-red-500 hover:text-red-700 hover:border-red-700 hover:bg-transparent"
+                >
+                    {{ t('app.logout') }}
+                </Button>
+            </div>
         </div>
 
         <ul class="flex items-center gap-5 mt-8 text-lg">
