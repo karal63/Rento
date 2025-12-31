@@ -8,7 +8,7 @@
 </script>
 
 <template>
-    <nav class="flex-between">
+    <nav class="flex-between mb-10">
         <Breadcrumbs :breadcrumbs="breadcrumps" />
         <Button size="sm" class="flex-center gap-3">
             Back to client view

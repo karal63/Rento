@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import type { Breadcrumb } from '@/shared/ui';
+    import { AdminDashboard } from '@/widgets';
     import { onMounted } from 'vue';
 
     const emit = defineEmits<{
@@ -15,4 +16,6 @@
     onMounted(() => emit('setBreadcrumbs', breadcrumbs));
 </script>
 
-<template></template>
+<template>
+    <AdminDashboard />
+</template>

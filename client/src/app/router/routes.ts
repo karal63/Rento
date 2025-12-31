@@ -8,8 +8,8 @@ import {
     PaymentSuccessPage,
     AccountPage,
     RentalsPage,
+    AdminDashboardPage,
 } from '@/pages';
-import { Dashboard } from '@/pages/admin';
 
 import BookingLayout from '../layouts/BookingLayout.vue';
 import ProfileLayout from '../layouts/ProfileLayout.vue';
@@ -78,7 +78,7 @@ export const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: 'dashboard',
-                component: Dashboard,
+                component: AdminDashboardPage,
             },
         ],
     },

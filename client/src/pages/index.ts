@@ -6,3 +6,4 @@ export { default as PaymentPage } from './payment/PaymentPage.vue';
 export { default as PaymentSuccessPage } from './paymentSuccess/PaymentSuccessPage.vue';
 export { default as AccountPage } from './account/AccountPage.vue';
 export { default as RentalsPage } from './rentals/RentalsPage.vue';
+export { default as AdminDashboardPage } from './adminDashboard/AdminDashboardPage.vue';
