@@ -7,7 +7,7 @@ import { Rent } from 'src/schemas/rentSchema';
 export class RentalRepo {
     constructor(@InjectModel(Rent.name) private rentalModel: Model<Rent>) {}
 
-    async getTotal() {
+    async getTotalRentals() {
         return await this.rentalModel.countDocuments();
     }
 
@@ -46,88 +46,27 @@ export class RentalRepo {
             .countDocuments();
     }
 
-    async getRentals() {
-        return await this.rentalModel
-            .find({ status: 'CANCELLED' })
-            .countDocuments();
-    }
-
-    async getAverageRentalPricePerCar() {
-        const result = await this.rentalModel.aggregate([
-            // Convert carId to ObjectId in case it's stored as string
-            {
-                $addFields: {
-                    carIdObj: {
-                        $cond: {
-                            if: { $eq: [{ $type: '$carId' }, 'string'] },
-                            then: { $toObjectId: '$carId' },
-                            else: '$carId',
-                        },
-                    },
-                },
-            },
-            // Group by carId
-            {
-                $group: {
-                    _id: '$carIdObj',
-                    avgPrice: { $avg: '$totalPrice' },
-                },
-            },
-            // Lookup car details
+    async getClientsTotal() {
+        const res: { count: number }[] = await this.rentalModel.aggregate([
             {
                 $lookup: {
-                    from: 'cars',
-                    localField: '_id',
+                    from: 'users', // MongoDB collection name (pluralized)
+                    localField: 'userId',
                     foreignField: '_id',
-                    as: 'car',
+                    as: 'user',
                 },
             },
-            { $unwind: '$car' },
-            // Project the final shape
             {
-                $project: {
-                    _id: 0,
-                    carId: '$_id',
-                    avgPrice: 1,
-                    car: 1,
-                },
+                $unwind: '$user', // Ensures only rents with a matching user
+            },
+            {
+                $group: { _id: '$user._id' },
+            },
+            {
+                $count: 'count',
             },
         ]);
 
-        return result;
+        return res[0].count;
     }
-
-    // async getAvgRentalDurations(): Promise<any> {
-    //     return await this.rentalModel.aggregate([
-    //         {
-    //             $group: {
-    //                 _id: '$carId',
-    //                 averageDuration: {
-    //                     $avg: {
-    //                         $dateDiff: {
-    //                             startDate: { $toDate: '$rentFrom' },
-    //                             endDate: { $toDate: '$rentTo' },
-    //                             unit: 'day',
-    //                         },
-    //                     },
-    //                 },
-    //             },
-    //         },
-
-    //         {
-    //             $lookup: {
-    //                 from: 'cars', // name of the car collection
-    //                 localField: '_id', // carId from rental
-    //                 foreignField: '_id', // car _id
-    //                 as: 'car',
-    //             },
-    //         },
-
-    //         // {
-    //         //     $unwind: '$car', // if you want a single object instead of array
-    //         // },
-    //     ]);
-    // }
-
-    // maybe i should focus on easier metrics, like avarage price, revenue
 }

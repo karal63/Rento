@@ -1,22 +1,38 @@
 <script setup lang="ts">
-    import { Icon } from '@iconify/vue';
+    import type { DashboardSummary } from '@/features/adminDashboard/model/types';
+    import { useAdminDashboard } from '@/features/adminDashboard/model/useAdminDashboard';
+    import { DashboardCard } from '@/shared/ui';
+    import { onMounted, ref } from 'vue';
 
-    // api call
+    const data = ref<DashboardSummary>();
+
+    onMounted(async () => {
+        data.value = await useAdminDashboard();
+    });
 </script>
 
 <template>
     <section>
         <div class="flex-between gap-5">
-            <div class="w-1/2 grid grid-cols-2">
-                <div class="bg-primary rounded-md p-4">
-                    <!-- icon -->
-                    <div class="w-12 h-12 rounded-full bg-white flex-center">
-                        <Icon icon="material-symbols-light:car-rental" class="text-2xl" />
-                    </div>
-
-                    <h3 class="text-white font-bold text-xl mt-2">10</h3>
-                    <p class="text-main-gray-bg">Acrive rentals</p>
-                </div>
+            <div class="w-1/2 grid grid-cols-2 gap-4">
+                <DashboardCard
+                    color="blue"
+                    icon="material-symbols-light:car-rental"
+                    :value="data?.rentals.totalRentals"
+                    text="Total rentals"
+                />
+                <DashboardCard
+                    color="theme"
+                    icon="basil:user-solid"
+                    :value="data?.users.totalUsers"
+                    text="Total users"
+                />
+                <DashboardCard
+                    color="theme"
+                    icon="material-symbols:star-rounded"
+                    :value="data?.rentals.totalActiveRentals"
+                    text="Total acrive rentals"
+                />
             </div>
             <div class="w-1/2"></div>
         </div>

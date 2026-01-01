@@ -7,7 +7,7 @@ import { User } from 'src/schemas/userSchema';
 export class UserRepo {
     constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-    async getTotal() {
+    async getTotalUsers() {
         return await this.userModel.countDocuments();
     }
 

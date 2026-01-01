@@ -6,3 +6,4 @@ export { default as Breadcrumbs } from './breadcrumbs/Breadcrumbs.vue';
 export type { Breadcrumb } from './breadcrumbs/model/breadcrumb.types';
 export { default as AcceptanceModal } from './acceptModal/AcceptanceModal.vue';
 export { default as ModalTransition } from './modalTransition/ModalTransition.vue';
+export { default as DashboardCard } from './dashboardCard/DashboardCard.vue';
