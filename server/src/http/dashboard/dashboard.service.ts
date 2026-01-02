@@ -24,11 +24,13 @@ export class DashboardService {
             newUsersThisMonth,
             activeUsersTotal,
             inactiveUsersTotal,
+            clientsPercentage,
         ] = await Promise.all([
             this.userRepo.getTotalUsers(),
             this.userRepo.getNewThisMonth(),
             this.getActiveUsersTotal(),
             this.getInactiveUsersTotal(),
+            this.getClientsPercentage(),
         ]);
 
         // rentals
@@ -40,14 +42,18 @@ export class DashboardService {
             totalCancelledRentals,
             clientsTotal,
             avgRentalsSummary,
+            repeatClients,
+            totalCompletedRentals,
         ] = await Promise.all([
             this.rentalRepo.getTotalRentals(),
             this.rentalRepo.getTotalThisMonth(),
             this.rentalRepo.getTotalActiveRentals(),
             this.rentalRepo.getTotalConfirmedRentals(),
             this.rentalRepo.getTotalCancelledRentals(),
-            this.rentalRepo.getClientsTotal(),
+            this.getClientsTotal(),
             this.avgSummaryPerCar(),
+            this.rentalRepo.getRepeatClients(),
+            this.rentalRepo.getTotalCompletedRentals(),
         ]);
 
         return {
@@ -57,6 +63,8 @@ export class DashboardService {
                 clientsTotal,
                 activeUsersTotal,
                 inactiveUsersTotal,
+                clientsPercentage,
+                repeatClients,
             },
             rentals: {
                 totalRentals,
@@ -64,6 +72,7 @@ export class DashboardService {
                 totalActiveRentals,
                 totalConfirmedRentals,
                 totalCancelledRentals,
+                totalCompletedRentals,
                 avgRentalsSummary,
             },
         };
@@ -133,5 +142,36 @@ export class DashboardService {
             },
             { $unwind: '$car' },
         ]);
+    }
+
+    async getClientsPercentage() {
+        const rentals = await this.rentalModel.distinct('userId');
+        const totalUser = await this.userRepo.getTotalUsers();
+
+        return ((rentals.length / totalUser) * 100).toFixed(1);
+    }
+
+    async getClientsTotal() {
+        const res: { count: number }[] = await this.rentalModel.aggregate([
+            {
+                $lookup: {
+                    from: 'users', // MongoDB collection name (pluralized)
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user',
+                },
+            },
+            {
+                $unwind: '$user', // Ensures only rents with a matching user
+            },
+            {
+                $group: { _id: '$user._id' },
+            },
+            {
+                $count: 'count',
+            },
+        ]);
+
+        return res[0].count;
     }
 }

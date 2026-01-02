@@ -10,9 +10,6 @@ export type DashboardSummary = {
         inactiveUsers: number; // churn signal
         repeatClients: number; // users with >1 rental
         clientPercentage: number; // clientsTotal / totalUsers
-
-        verifiedUsers: number; // KYC / email / phone verified
-        suspendedUsers: number; // operational risk
     };
 
     rentals: {

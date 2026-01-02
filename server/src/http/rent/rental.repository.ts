@@ -46,27 +46,32 @@ export class RentalRepo {
             .countDocuments();
     }
 
-    async getClientsTotal() {
-        const res: { count: number }[] = await this.rentalModel.aggregate([
+    async getRepeatClients() {
+        const repeatClients = await this.rentalModel.aggregate([
             {
-                $lookup: {
-                    from: 'users', // MongoDB collection name (pluralized)
-                    localField: 'userId',
-                    foreignField: '_id',
-                    as: 'user',
+                $group: {
+                    _id: '$userId',
+                    rentalsCount: { $sum: 1 },
                 },
             },
             {
-                $unwind: '$user', // Ensures only rents with a matching user
-            },
-            {
-                $group: { _id: '$user._id' },
-            },
-            {
-                $count: 'count',
+                $match: {
+                    rentalsCount: { $gt: 1 },
+                },
             },
         ]);
 
-        return res[0].count;
+        return repeatClients.length;
+    }
+
+    async getTotalCompletedRentals() {
+        return await this.rentalModel
+            .find({
+                $and: [
+                    { rentTo: { $lt: Date.now() } },
+                    { status: 'CONFIRMED' },
+                ],
+            })
+            .countDocuments();
     }
 }
