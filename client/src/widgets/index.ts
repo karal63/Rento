@@ -5,4 +5,5 @@ export { default as BookingSummary } from './bookingSummary/BookingSummary.vue';
 export { default as AccountSummary } from './accountSummary/AccountSummary.vue';
 export { default as AdminSidebar } from './adminSidebar/AdminSidebar.vue';
 export { default as AdminNavbar } from './adminNavbar/AdminNavbar.vue';
-export { default as TotalAdminCards } from './totalAdminCards/AdminDashboard.vue';
+export { default as TotalAdminCards } from './totalAdminCards/TotalAdminCards.vue';
+export { default as ActiveRentals } from './activeRentals/ActiveRentals.vue';

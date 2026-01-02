@@ -1,4 +1,5 @@
 import type { Car } from '@/entities/car';
+import type { RentalWithCar } from '@/entities/rental';
 
 export type DashboardSummary = {
     users: {
@@ -28,6 +29,8 @@ export type DashboardSummary = {
             avgDuration: number;
             car: Car;
         };
+
+        activeRentals: RentalWithCar[];
     };
 
     revenue: {

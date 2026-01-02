@@ -24,6 +24,16 @@ export class RentalRepo {
             .countDocuments();
     }
 
+    async getActiveRentals() {
+        const now = new Date().getTime();
+
+        return await this.rentalModel
+            .find({
+                $and: [{ rentFrom: { $lt: now } }, { rentTo: { $gt: now } }],
+            })
+            .populate('carId');
+    }
+
     async getTotalActiveRentals() {
         const now = new Date().getTime();
 

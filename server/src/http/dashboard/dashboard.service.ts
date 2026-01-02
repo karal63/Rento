@@ -45,6 +45,7 @@ export class DashboardService {
             repeatClients,
             totalCompletedRentals,
             totalOverdueRentals,
+            activeRentals,
         ] = await Promise.all([
             this.rentalRepo.getTotalRentals(),
             this.rentalRepo.getTotalThisMonth(),
@@ -56,6 +57,7 @@ export class DashboardService {
             this.rentalRepo.getRepeatClients(),
             this.rentalRepo.getTotalCompletedRentals(),
             this.rentalRepo.getTotalOverdueRentals(),
+            this.rentalRepo.getActiveRentals(),
         ]);
 
         return {
@@ -77,6 +79,7 @@ export class DashboardService {
                 totalCompletedRentals,
                 avgRentalsSummary,
                 totalOverdueRentals,
+                activeRentals,
             },
         };
     }
