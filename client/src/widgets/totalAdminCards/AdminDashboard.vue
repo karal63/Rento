@@ -22,6 +22,12 @@
                     text="Total rentals"
                 />
                 <DashboardCard
+                    color="blue"
+                    icon="material-symbols-light:calendar-month"
+                    :value="data?.rentals.totalRentalsThisMonth"
+                    text="Total rentals this month"
+                />
+                <DashboardCard
                     color="theme"
                     icon="basil:user-solid"
                     :value="data?.users.totalUsers"

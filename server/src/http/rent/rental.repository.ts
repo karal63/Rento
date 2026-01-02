@@ -74,4 +74,9 @@ export class RentalRepo {
             })
             .countDocuments();
     }
+
+    async getTotalOverdueRentals() {
+        // return await this.rentalModel.find({status: ''})
+        return 'not implemented';
+    }
 }

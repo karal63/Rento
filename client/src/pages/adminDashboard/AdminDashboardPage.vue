@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import type { Breadcrumb } from '@/shared/ui';
-    import { AdminDashboard } from '@/widgets';
+    import { TotalAdminCards } from '@/widgets';
     import { onMounted } from 'vue';
 
     const emit = defineEmits<{
@@ -17,5 +17,5 @@
 </script>
 
 <template>
-    <AdminDashboard />
+    <TotalAdminCards />
 </template>

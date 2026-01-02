@@ -13,25 +13,21 @@ export type DashboardSummary = {
     };
 
     rentals: {
-        totalRentals: number;
-        totalRentalsThisMonth: number;
+        totalRentals: number; // done
+        totalRentalsThisMonth: number; // done
 
-        totalActiveRentals: number;
-        totalConfirmedRentals: number;
-        totalCompletedRentals: number;
-        totalCancelledRentals: number;
-        totalOverdueRentals: number; // very important
+        totalActiveRentals: number; // done
+        totalConfirmedRentals: number; // done
+        totalCompletedRentals: number; // done
+        totalCancelledRentals: number; // done
+        totalOverdueRentals: number; // not implemented & very important
 
         avgRentalDuration: {
             _id: string;
             avgPrice: number;
             avgDuration: number;
             car: Car;
-        }; // days
-        // avgBookingLeadTime: number; // booking → pickup
-
-        cancellationRate: number; // cancelled / total
-        completionRate: number; // completed / total
+        };
     };
 
     revenue: {

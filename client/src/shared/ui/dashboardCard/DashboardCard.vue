@@ -23,15 +23,15 @@
                     container: 'bg-primary',
                     icon: 'bg-white text-primary',
                     value: 'text-white',
-                    text: 'text-main-gray-bg',
+                    text: 'text-white',
                 };
 
             case 'theme':
             default:
                 return {
                     container: 'bg-main-gray-bg',
-                    icon: 'bg-pure-theme text-main-gray',
-                    value: 'text-black',
+                    icon: 'bg-main-border',
+                    value: 'text-inherit',
                     text: 'text-main-gray',
                 };
         }
