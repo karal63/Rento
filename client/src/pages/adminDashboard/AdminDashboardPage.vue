@@ -24,9 +24,9 @@
 
 <template>
     <div class="flex">
-        <TotalAdminCards :data="data" class="w-1/2" />
+        <TotalAdminCards :data="data" class="w-full xl:w-1/2" />
     </div>
-    <div class="my-7">
-        <ActiveRentals :activeRentals="data?.rentals.activeRentals" class="w-2/3" />
+    <div class="mt-4 md:my-7">
+        <ActiveRentals :activeRentals="data?.rentals.activeRentals" class="w-full xl:w-2/3" />
     </div>
 </template>

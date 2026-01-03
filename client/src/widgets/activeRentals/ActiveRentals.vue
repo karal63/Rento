@@ -9,7 +9,7 @@
 </script>
 
 <template>
-    <section class="bg-main-gray-bg rounded-md p-5">
+    <section class="bg-main-gray-bg rounded-md p-5 shadow-md shadow-main-border">
         <div class="flex-between">
             <h2 class="font-semibold">Active rentals</h2>
             <RouterLink to="/admin/rentals">
