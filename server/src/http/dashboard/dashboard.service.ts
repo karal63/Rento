@@ -42,7 +42,7 @@ export class DashboardService {
             totalCancelledRentals,
             clientsTotal,
             avgRentalsSummary,
-            repeatClients,
+            repeatClientsTotal,
             totalCompletedRentals,
             totalOverdueRentals,
             activeRentals,
@@ -68,7 +68,7 @@ export class DashboardService {
                 activeUsersTotal,
                 inactiveUsersTotal,
                 clientsPercentage,
-                repeatClients,
+                repeatClientsTotal,
             },
             rentals: {
                 totalRentals,

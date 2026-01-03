@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import type { Breadcrumb } from '@/shared/ui';
-    import { ActiveRentals, TotalAdminCards } from '@/widgets';
+    import { ActiveRentals, TotalAdminCards, UsersStats } from '@/widgets';
     import { onMounted, ref } from 'vue';
     import type { DashboardSummary } from '@/features/adminDashboard/model/types';
     import { useAdminDashboard } from '@/features/adminDashboard/model/useAdminDashboard';
@@ -23,8 +23,9 @@
 </script>
 
 <template>
-    <div class="flex">
+    <div class="xl:flex xl:flex-row xl:gap-7">
         <TotalAdminCards :data="data" class="w-full xl:w-1/2" />
+        <UsersStats :data="data" class="w-full xl:w-1/2 mt-4 xl:mt-0" />
     </div>
     <div class="mt-4 md:my-7">
         <ActiveRentals :activeRentals="data?.rentals.activeRentals" class="w-full xl:w-2/3" />

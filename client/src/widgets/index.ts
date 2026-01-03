@@ -7,3 +7,4 @@ export { default as AdminSidebar } from './adminSidebar/AdminSidebar.vue';
 export { default as AdminNavbar } from './adminNavbar/AdminNavbar.vue';
 export { default as TotalAdminCards } from './totalAdminCards/TotalAdminCards.vue';
 export { default as ActiveRentals } from './activeRentals/ActiveRentals.vue';
+export { default as UsersStats } from './usersStats/UserStats.vue';

@@ -7,9 +7,9 @@ export type DashboardSummary = {
         newUsersThisMonth: number; // done
         clientsTotal: number; // done
 
-        activeUsers: number; // done
-        inactiveUsers: number; // churn signal
-        repeatClients: number; // users with >1 rental
+        activeUsersTotal: number; // done
+        inactiveUsersTotal: number; // churn signal
+        repeatClientsTotal: number; // users with >1 rental
         clientPercentage: number; // clientsTotal / totalUsers
     };
 
