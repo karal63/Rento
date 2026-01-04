@@ -1,5 +1,6 @@
 import type { Car } from '@/entities/car';
 import type { Rental, RentalWithCar } from '@/entities/rental';
+import type { MonthSummary } from '@/shared/ui/chart';
 
 export type DashboardSummary = {
     users: {
@@ -23,15 +24,16 @@ export type DashboardSummary = {
         totalCancelledRentals: number; // done
         totalOverdueRentals: number; // not implemented & very important
 
+        last6MonthsRentals: MonthSummary[];
+
+        activeRentals: RentalWithCar[];
+        lastPayments: Rental[];
         avgRentalDuration: {
             _id: string;
             avgPrice: number;
             avgDuration: number;
             car: Car;
         };
-
-        activeRentals: RentalWithCar[];
-        lastPayments: Rental[];
     };
 
     revenue: {

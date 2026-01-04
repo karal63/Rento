@@ -96,4 +96,52 @@ export class RentalRepo {
             .sort({ createdAt: 'desc' })
             .limit(8);
     }
+
+    async getLast6MonthsRentals() {
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+        const res = await this.rentalModel.aggregate([
+            {
+                $match: {
+                    createdAt: { $gte: sixMonthsAgo.getTime() }, // assuming timestamp
+                },
+            },
+            {
+                $group: {
+                    _id: {
+                        $dateToString: {
+                            format: '%Y-%m',
+                            date: { $toDate: '$createdAt' },
+                        },
+                    },
+                    confirmedCount: {
+                        $sum: {
+                            $cond: [{ $eq: ['$status', 'CONFIRMED'] }, 1, 0],
+                        },
+                    },
+                    cancelledCount: {
+                        $sum: {
+                            $cond: [{ $eq: ['$status', 'CANCELLED'] }, 1, 0],
+                        },
+                    },
+                },
+            },
+            {
+                $addFields: {
+                    isoDate: {
+                        $dateFromString: {
+                            dateString: {
+                                $concat: ['$_id', '-01T00:00:00.000Z'],
+                            },
+                        },
+                    },
+                },
+            },
+            { $sort: { _id: 1 } },
+            { $limit: 9 },
+        ]);
+
+        return res;
+    }
 }

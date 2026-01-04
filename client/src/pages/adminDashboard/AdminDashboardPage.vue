@@ -38,6 +38,6 @@
         <LastPayments :lastPayments="data?.rentals.lastPayments" class="w-full xl:w-1/3" />
     </div>
     <div class="mt-4 md:my-7 xl:flex xl:flex-row xl:gap-7">
-        <RentalsChart class="w-full xl:w-[60%]" />
+        <RentalsChart :rentalsStats="data?.rentals.last6MonthsRentals" class="w-full xl:w-[60%]" />
     </div>
 </template>
