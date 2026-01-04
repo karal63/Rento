@@ -48,6 +48,7 @@
                 borderColor: themeStore.isDark ? '#292929' : '#d5d5d5', // grid line color
             },
             stroke: {
+                width: 2,
                 curve: 'smooth',
             },
             xaxis: {
@@ -69,9 +70,48 @@
                 show: true,
             },
             tooltip: {
-                x: {
-                    format: 'dd/MM/yy',
+                custom: function ({
+                    series,
+                    dataPointIndex,
+                    w,
+                }: {
+                    series: number[][];
+                    dataPointIndex: number;
+                    w: any;
+                }): string {
+                    const timestamp = w.globals.seriesX[0][dataPointIndex];
+
+                    const dateLabel = new Date(timestamp).toLocaleDateString('en-US', {
+                        month: 'short',
+                        year: 'numeric',
+                    });
+
+                    const rows = series
+                        .map((s: number[], i: number) => {
+                            const value = s[dataPointIndex];
+                            const color = w.globals.colors[i];
+                            const name = w.globals.seriesNames[i];
+
+                            return `
+                                <div class="apex-tooltip-row">
+                                <span class="dot" style="background:${color}"></span>
+                                <span class="label">${name}: </span>
+                                <span class="apex-tooltip-value">${value}</span>
+                                </div>
+                            `;
+                        })
+                        .join('');
+
+                    return `
+                        <div class="apex-tooltip">
+                            <div class="apex-tooltip-title">${dateLabel}</div>
+                            <div class="apex-tooltip-body">${rows}</div>
+                        </div>
+                    `;
                 },
+                // x: {
+                //     format: 'dd/MM/yy',
+                // },
             },
         };
     });
@@ -101,3 +141,44 @@
 <template>
     <VueApexCharts type="area" height="350" :options="chartOptions" :series="series" />
 </template>
+
+<style>
+    .apex-tooltip {
+        border: none !important;
+        font-size: 13px;
+        border: 0;
+    }
+
+    .apex-tooltip-row {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .dot {
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--color-primary);
+        margin-right: 3px;
+    }
+
+    .apex-tooltip-value {
+        font-weight: 500;
+    }
+
+    .apex-tooltip-title {
+        padding: 3px 8px;
+        background-color: var(--color-main-border);
+        border-bottom: 1px solid var(--color-main-lightgray);
+    }
+
+    .apex-tooltip-body {
+        background-color: var(--color-main-bg);
+        padding: 12px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+</style>

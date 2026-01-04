@@ -4,30 +4,30 @@ import type { MonthSummary } from '@/shared/ui/chart';
 
 export type DashboardSummary = {
     users: {
-        totalUsers: number; // done
-        newUsersThisMonth: number; // done
-        clientsTotal: number; // done
+        totalUsers: number; // in use
+        newUsersThisMonth: number;
+        clientsTotal: number;
 
-        activeUsersTotal: number; // done
-        inactiveUsersTotal: number; // churn signal
-        repeatClientsTotal: number; // users with >1 rental
-        clientPercentage: number; // clientsTotal / totalUsers
+        activeUsersTotal: number; // in use
+        inactiveUsersTotal: number; // in use
+        repeatClientsTotal: number; // in use
+        clientPercentage: number;
     };
 
     rentals: {
-        totalRentals: number; // done
-        totalRentalsThisMonth: number; // done
+        totalRentals: number; // in use
+        totalRentalsThisMonth: number; // in use
 
-        totalActiveRentals: number; // done
-        totalConfirmedRentals: number; // done
-        totalCompletedRentals: number; // done
-        totalCancelledRentals: number; // done
+        totalActiveRentals: number; // in use
+        totalConfirmedRentals: number;
+        totalCompletedRentals: number;
+        totalCancelledRentals: number;
         totalOverdueRentals: number; // not implemented & very important
 
         last6MonthsRentals: MonthSummary[];
 
-        activeRentals: RentalWithCar[];
-        lastPayments: Rental[];
+        activeRentals: RentalWithCar[]; // in use
+        lastPayments: Rental[]; // in use
         avgRentalDuration: {
             _id: string;
             avgPrice: number;
