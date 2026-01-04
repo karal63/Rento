@@ -89,4 +89,11 @@ export class RentalRepo {
         // return await this.rentalModel.find({status: ''})
         return 'not implemented';
     }
+
+    async getLastPayments() {
+        return await this.rentalModel
+            .find()
+            .sort({ createdAt: 'desc' })
+            .limit(8);
+    }
 }
