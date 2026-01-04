@@ -9,3 +9,4 @@ export { default as TotalAdminCards } from './totalAdminCards/TotalAdminCards.vu
 export { default as ActiveRentals } from './activeRentals/ActiveRentals.vue';
 export { default as UsersStats } from './usersStats/UserStats.vue';
 export { default as LastPayments } from './lastPayments/LastPayments.vue';
+export { default as RentalsChart } from './rentalsChart/RentalsChart.vue';
