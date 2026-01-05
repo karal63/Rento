@@ -4,8 +4,10 @@
     import { computed, ref, watch, type ComputedRef } from 'vue';
     import VueApexCharts from 'vue3-apexcharts';
     import type { MonthSummary } from './model/types';
+    import { useI18n } from 'vue-i18n';
 
     const themeStore = useThemeStore();
+    const { t } = useI18n();
 
     const props = defineProps<{
         rentalsStats: MonthSummary[] | undefined;
@@ -126,11 +128,11 @@
 
             series.value = [
                 {
-                    name: 'Confirmed',
+                    name: t('app.admin_page.confirmed'),
                     data: props.rentalsStats?.map(rental => rental.confirmedCount),
                 },
                 {
-                    name: 'Cancelled',
+                    name: t('app.admin_page.cancelled'),
                     data: props.rentalsStats?.map(rental => rental.cancelledCount),
                 },
             ];

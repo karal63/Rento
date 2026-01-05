@@ -3,8 +3,10 @@
     import { Button, ToolTip } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { computed } from 'vue';
+    import { useI18n } from 'vue-i18n';
 
     const adminDashboard = useAdminDashboardStore();
+    const { t } = useI18n();
 
     const getPercent = (count = 0, total = 0): number => {
         if (!total) return 0;
@@ -14,19 +16,19 @@
 
     const userStats = computed(() => [
         {
-            label: 'Active users',
+            label: t('app.admin_page.active_users'),
             value: adminDashboard.data?.users.activeUsersTotal,
-            toolTip: 'Users who made a rental at least once in the last 30 days',
+            toolTip: t('app.admin_page.active_users_tooltip'),
         },
         {
-            label: 'Inactive users',
+            label: t('app.admin_page.inactive_users'),
             value: adminDashboard.data?.users.inactiveUsersTotal,
-            toolTip: "Users who didn't make a rental at least once in the last 30 days",
+            toolTip: t('app.admin_page.inactive_users_tooltip'),
         },
         {
-            label: 'Repeat clients',
+            label: t('app.admin_page.repeat_clients'),
             value: adminDashboard.data?.users.repeatClientsTotal,
-            toolTip: 'Users who made multiple rentals. Percentage calculation based on user total',
+            toolTip: t('app.admin_page.repeat_clients_tooltip'),
         },
     ]);
 </script>
@@ -34,7 +36,7 @@
 <template>
     <section v-if="adminDashboard.loading" class="rounded-md p-5 shadow-md skeleton"></section>
     <section v-else class="bg-main-gray-bg rounded-md p-5 shadow-md">
-        <h2 class="font-semibold">User statistics</h2>
+        <h2 class="font-semibold">{{ t('app.admin_page.user_statistics') }}</h2>
 
         <div class="mt-5">
             <div v-for="stat in userStats" :key="stat.label" class="flex-col gap-2 mb-4">
@@ -68,7 +70,7 @@
         <div class="mt-5 flex justify-end">
             <RouterLink to="/admin/users">
                 <Button size="sm" color="transparent" class="border border-main-lightgray">
-                    View all
+                    {{ t('app.admin_page.view_all') }}
                 </Button>
             </RouterLink>
         </div>

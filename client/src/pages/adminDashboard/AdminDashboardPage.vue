@@ -33,11 +33,11 @@
         <TotalAdminCards class="w-full xl:w-1/2" />
         <UsersStats class="w-full xl:w-1/2 mt-4 xl:mt-0" />
     </div>
-    <div class="mt-4 md:my-7 xl:flex xl:flex-row xl:gap-7">
+    <div class="mt-4 xl:my-7 xl:flex xl:flex-row xl:gap-7">
         <ActiveRentals class="w-full xl:w-2/3" />
-        <LastPayments class="w-full xl:w-1/3" />
+        <LastPayments class="w-full xl:w-1/3 mt-4 xl:mt-0" />
     </div>
-    <div class="mt-4 md:my-7 xl:flex xl:flex-row xl:gap-7">
+    <div class="mt-4 xl:my-7 xl:flex xl:flex-row xl:gap-7">
         <RentalsChart class="w-full xl:w-[60%]" />
     </div>
 </template>
