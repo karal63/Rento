@@ -1,10 +1,9 @@
 <script setup lang="ts">
     import type { Rental } from '@/entities/rental';
+    import { useAdminDashboardStore } from '@/features/adminDashboard';
     import { Icon } from '@iconify/vue';
 
-    defineProps<{
-        lastPayments: Rental[] | undefined;
-    }>();
+    const adminDashboard = useAdminDashboardStore();
 
     const getPaymentUI = (payment: Rental) => {
         const isConfirmed = payment.status === 'CONFIRMED';
@@ -21,11 +20,12 @@
 </script>
 
 <template>
-    <section class="bg-main-gray-bg rounded-md p-5 shadow-md">
+    <section v-if="adminDashboard.loading" class="skeleton rounded-md p-5 shadow-md"></section>
+    <section v-else class="bg-main-gray-bg rounded-md p-5 shadow-md">
         <h2 class="font-semibold">Last payments</h2>
 
         <ul class="mt-5 flex-col gap-2">
-            <li v-for="payment in lastPayments" :key="payment._id">
+            <li v-for="payment in adminDashboard.data?.rentals.lastPayments" :key="payment._id">
                 <div class="font-semibold flex items-center gap-2">
                     <Icon :icon="getPaymentUI(payment).icon" class="text-3xl" />
                     <div class="text-sm font-semibold">

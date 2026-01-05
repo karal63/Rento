@@ -101,7 +101,7 @@ body {
     background: linear-gradient(
         90deg,
         var(--color-main-hover-bg),
-        var(--color-main-gray-bg),
+        var(--color-main-bg),
         var(--color-main-hover-bg)
     );
     background-size: 200%;

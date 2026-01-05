@@ -1,12 +1,10 @@
 <script setup lang="ts">
-    import type { DashboardSummary } from '@/features/adminDashboard/model/types';
+    import { useAdminDashboardStore } from '@/features/adminDashboard';
     import { Button, ToolTip } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { computed } from 'vue';
 
-    const props = defineProps<{
-        data: DashboardSummary | undefined;
-    }>();
+    const adminDashboard = useAdminDashboardStore();
 
     const getPercent = (count = 0, total = 0): number => {
         if (!total) return 0;
@@ -17,24 +15,25 @@
     const userStats = computed(() => [
         {
             label: 'Active users',
-            value: props.data?.users.activeUsersTotal,
+            value: adminDashboard.data?.users.activeUsersTotal,
             toolTip: 'Users who made a rental at least once in the last 30 days',
         },
         {
             label: 'Inactive users',
-            value: props.data?.users.inactiveUsersTotal,
+            value: adminDashboard.data?.users.inactiveUsersTotal,
             toolTip: "Users who didn't make a rental at least once in the last 30 days",
         },
         {
             label: 'Repeat clients',
-            value: props.data?.users.repeatClientsTotal,
+            value: adminDashboard.data?.users.repeatClientsTotal,
             toolTip: 'Users who made multiple rentals. Percentage calculation based on user total',
         },
     ]);
 </script>
 
 <template>
-    <section class="bg-main-gray-bg rounded-md p-5 shadow-md">
+    <section v-if="adminDashboard.loading" class="rounded-md p-5 shadow-md skeleton"></section>
+    <section v-else class="bg-main-gray-bg rounded-md p-5 shadow-md">
         <h2 class="font-semibold">User statistics</h2>
 
         <div class="mt-5">
@@ -50,7 +49,7 @@
                         </ToolTip>
                     </h4>
                     <span class="text-main-gray font-semibold">
-                        {{ getPercent(stat.value, data?.users.totalUsers) }}%
+                        {{ getPercent(stat.value, adminDashboard.data?.users.totalUsers) }}%
                     </span>
                 </div>
 
@@ -59,7 +58,7 @@
                     <div
                         class="absolute left-0 top-0 h-2 bg-primary rounded-md transform -translate-0.5"
                         :style="{
-                            width: `${getPercent(stat.value, data?.users.totalUsers)}%`,
+                            width: `${getPercent(stat.value, adminDashboard.data?.users.totalUsers)}%`,
                         }"
                     ></div>
                 </div>

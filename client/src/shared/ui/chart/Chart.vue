@@ -134,7 +134,8 @@
                     data: props.rentalsStats?.map(rental => rental.cancelledCount),
                 },
             ];
-        }
+        },
+        { immediate: true }
     );
 </script>
 
@@ -144,9 +145,7 @@
 
 <style>
     .apex-tooltip {
-        border: none !important;
         font-size: 13px;
-        border: 0;
     }
 
     .apex-tooltip-row {

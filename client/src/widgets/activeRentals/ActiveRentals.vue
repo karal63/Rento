@@ -1,15 +1,14 @@
 <script setup lang="ts">
-    import type { RentalWithCar } from '@/entities/rental';
+    import { useAdminDashboardStore } from '@/features/adminDashboard';
     import { formatTimeLeft } from '@/shared/lib';
     import { Button } from '@/shared/ui';
 
-    defineProps<{
-        activeRentals: RentalWithCar[] | undefined;
-    }>();
+    const adminDashboard = useAdminDashboardStore();
 </script>
 
 <template>
-    <section class="bg-main-gray-bg rounded-md p-5 shadow-md">
+    <section v-if="adminDashboard.loading" class="skeleton rounded-md p-5 shadow-md h-96"></section>
+    <section v-else class="bg-main-gray-bg rounded-md p-5 shadow-md">
         <div class="flex-between">
             <h2 class="font-semibold">Active rentals</h2>
             <RouterLink to="/admin/rentals">
@@ -29,7 +28,7 @@
             </thead>
             <tbody>
                 <tr
-                    v-for="rental in activeRentals"
+                    v-for="rental in adminDashboard.data?.rentals.activeRentals"
                     :key="rental._id"
                     class="border-t border-main-border text-sm"
                 >

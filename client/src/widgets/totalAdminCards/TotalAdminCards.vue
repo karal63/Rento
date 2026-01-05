@@ -1,39 +1,40 @@
 <script setup lang="ts">
-    import type { DashboardSummary } from '@/features/adminDashboard/model/types';
-    import { DashboardCard } from '@/shared/ui';
+    import { useAdminDashboardStore } from '@/features/adminDashboard';
+    import { DashboardCard, SkeletonCard } from '@/shared/ui/dashboardCard';
 
-    defineProps<{
-        data: DashboardSummary | undefined;
-    }>();
+    const adminDashboard = useAdminDashboardStore();
 </script>
 
 <template>
-    <section class="grid grid-cols-2 gap-4 md:gap-7">
+    <section v-if="adminDashboard.loading" class="grid grid-cols-2 gap-4 md:gap-7">
+        <SkeletonCard v-for="(_, i) in 4" :key="i" />
+    </section>
+    <section v-else class="grid grid-cols-2 gap-4 md:gap-7">
         <DashboardCard
             color="blue"
             icon="material-symbols-light:car-rental"
-            :value="data?.rentals.totalRentals"
+            :value="adminDashboard.data?.rentals.totalRentals"
             text="Total rentals"
             class="shadow-md"
         />
         <DashboardCard
             color="blue"
             icon="material-symbols-light:calendar-month"
-            :value="data?.rentals.totalRentalsThisMonth"
+            :value="adminDashboard.data?.rentals.totalRentalsThisMonth"
             text="Total rentals this month"
             class="shadow-md"
         />
         <DashboardCard
             color="theme"
             icon="basil:user-solid"
-            :value="data?.users.totalUsers"
+            :value="adminDashboard.data?.users.totalUsers"
             text="Total users"
             class="shadow-md"
         />
         <DashboardCard
             color="theme"
             icon="material-symbols:star-rounded"
-            :value="data?.rentals.totalActiveRentals"
+            :value="adminDashboard.data?.rentals.totalActiveRentals"
             text="Total acrive rentals"
             class="shadow-md"
         />
