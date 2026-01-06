@@ -1,19 +1,25 @@
 <script setup lang="ts">
     import { useUserStore } from '@/entities/user';
     import { adminLinks } from '@/shared/config';
+    import { useClickOutside } from '@/shared/lib';
     import { useSidebarStore, useThemeStore } from '@/shared/model';
     import { Icon } from '@iconify/vue';
     import { onMounted, onUnmounted, ref } from 'vue';
+    import { useI18n } from 'vue-i18n';
     import { useRoute } from 'vue-router';
 
     const route = useRoute();
     const sidebarStore = useSidebarStore();
     const themeStore = useThemeStore();
     const userStore = useUserStore();
+    const { t } = useI18n();
 
     const isMobile = ref();
     const isMenuOpen = ref(false);
     const isThemeMenuOpen = ref(false);
+    const menuRef = ref<HTMLElement | null>(null);
+
+    useClickOutside(menuRef, () => handleMenu(), isMenuOpen);
 
     const checkScreen = () => {
         isMobile.value = window.innerWidth < 768; // Tailwind md breakpoint
@@ -21,7 +27,6 @@
 
     const setTheme = (isDarkTheme: boolean) => {
         themeStore.setTheme(isDarkTheme);
-        // isThemeMenuOpen.value = false;
     };
 
     const handleMenu = () => {
@@ -31,6 +36,12 @@
         } else {
             isMenuOpen.value = true;
         }
+    };
+
+    const closeSidebar = () => {
+        sidebarStore.isAdminOpen = false;
+        isMenuOpen.value = false;
+        isThemeMenuOpen.value = false;
     };
 
     onMounted(() => {
@@ -44,6 +55,11 @@
 </script>
 
 <template>
+    <div
+        v-if="sidebarStore.isAdminOpen && isMobile"
+        @click="closeSidebar"
+        class="fixed w-full h-full left-0 top-0 bg-black/20 z-10"
+    ></div>
     <nav
         class="fixed top-0 left-0 bg-main-bg border-r border-main-border h-full w-60 py-5 z-20 transform transition"
         :class="sidebarStore.isAdminOpen || !isMobile ? 'translate-x-0' : '-translate-x-full'"
@@ -80,35 +96,42 @@
         </ul>
 
         <div class="absolute bottom-0 mb-10 w-full flex-center">
-            <div class="w-full mx-5 relative">
+            <div ref="menuRef" class="w-full mx-5 relative">
                 <Transition name="menu">
-                    <ul v-if="isThemeMenuOpen" class="bg-main-gray-bg rounded-md mb-3">
+                    <ul
+                        v-if="isThemeMenuOpen"
+                        class="bg-main-gray-bg rounded-md mb-3 border border-main-border"
+                    >
                         <li
                             @click="setTheme(false)"
                             class="px-5 py-2 flex-between items-center gap-2 hover:bg-main-lightgray transition rounded-md cursor-pointer"
                         >
-                            Light
+                            {{ t('app.admin_page.light') }}
                             <Icon v-if="!themeStore.isDark" icon="proicons:checkmark" />
                         </li>
                         <li
                             @click="setTheme(true)"
                             class="px-5 py-2 flex-between items-center hover:bg-main-lightgray transition rounded-md cursor-pointer"
                         >
-                            Dark
+                            {{ t('app.admin_page.dark') }}
+
                             <Icon v-if="themeStore.isDark" icon="proicons:checkmark" />
                         </li>
                     </ul>
                 </Transition>
 
                 <Transition name="menu">
-                    <ul v-if="isMenuOpen" class="bg-main-gray-bg rounded-md mb-3">
+                    <ul
+                        v-if="isMenuOpen"
+                        class="bg-main-gray-bg rounded-md mb-3 border border-main-border"
+                    >
                         <li>
                             <RouterLink
                                 to="/profile/account"
                                 class="px-5 py-2 flex items-center gap-2 hover:bg-main-lightgray transition rounded-md cursor-pointer"
                             >
                                 <Icon icon="mdi-light:account" class="text-lg" />
-                                Profile
+                                {{ t('app.admin_page.profile') }}
                             </RouterLink>
                         </li>
                         <li
@@ -117,7 +140,7 @@
                         >
                             <div class="flex items-center gap-2">
                                 <Icon icon="fontisto:day-sunny" class="text-lg" />
-                                Switch theme
+                                {{ t('app.admin_page.switch_theme') }}
                             </div>
                             <Icon icon="weui:arrow-filled" class="text-lg" />
                         </li>

@@ -149,7 +149,12 @@
 
             "rentals_overview": "Rentals overview",
             "confirmed": "Confirmed",
-            "cancelled": "Cancelled"
+            "cancelled": "Cancelled",
+
+            "profile": "Profile",
+            "switch_theme": "Switch theme",
+            "dark": "Dark",
+            "light": "Light"
         }
     }
 }

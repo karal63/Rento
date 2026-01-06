@@ -26,7 +26,7 @@
 
             <button
                 @click="sidebarStore.setAdminSidebarOpen(!sidebarStore.isAdminOpen)"
-                class="md:hidden"
+                class="md:hidden cursor-pointer"
             >
                 <Icon icon="mdi:menu" class="text-3xl" />
             </button>
