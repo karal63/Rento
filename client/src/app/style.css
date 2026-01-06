@@ -39,6 +39,8 @@
     --color-main-lightgray: #cacaca;
     --color-main-gray-bg: #e0e0e0;
     --color-main-theme: #242424;
+    --color-pure-theme: #fff;
+    --color-opposite-theme: #141414;
 
     --color-primary: hsl(220 90% 66%);
 
@@ -62,6 +64,8 @@
         --color-main-lightgray: #343434;
         --color-main-gray-bg: #202020;
         --color-main-theme: #1d1d1d;
+        --color-pure-theme: #000000;
+        --color-opposite-theme: #efefef;
 
         --color-main-text: hsl(0 0% 96%);
     }
@@ -97,7 +101,7 @@ body {
     background: linear-gradient(
         90deg,
         var(--color-main-hover-bg),
-        var(--color-main-gray-bg),
+        var(--color-main-bg),
         var(--color-main-hover-bg)
     );
     background-size: 200%;

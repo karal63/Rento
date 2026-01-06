@@ -6,6 +6,7 @@ import { i18n } from '@/shared/config';
 import { createPinia } from 'pinia';
 import { useUserStore } from '@/entities/user';
 import { refreshTokens } from '@/features/auth/refresh';
+import { hasPermission } from '@/entities/auth';
 
 const bootstrap = async () => {
     const app = createApp(App);
@@ -15,7 +16,10 @@ const bootstrap = async () => {
     await refreshTokens();
 
     router.beforeEach(to => {
-        if (to.meta.requiresAuth && !userStore.isAuthenticated) {
+        if (
+            (to.meta.requiresAuth && !userStore.isAuthenticated) ||
+            (to.meta.requiresAdmin && !hasPermission(userStore.user, 'view:admin-page'))
+        ) {
             return '/';
         }
     });

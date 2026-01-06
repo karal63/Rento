@@ -19,3 +19,6 @@ export const API_GET_RENTALS_LIST = '/rent/list';
 export const API_GET_CAR_AVAILABILITY = (carId: string) => `/rent/get-availability/${carId}`;
 export const API_DELETE_RENTAL_CANCEL = (rentalId: string) => `/rent/cancel/${rentalId}`;
 export const API_PATCH_RENTAL_EDIT = (rentalId: string) => `/rent/edit/${rentalId}`;
+
+// ADMIN DASHBOARD
+export const API_GET_DASHBOARD_SUMMARY = '/admin/dashboard/summary';

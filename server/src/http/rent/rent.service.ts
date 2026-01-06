@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Car } from 'src/schemas/carSchema';
 import { Rent } from 'src/schemas/rentSchema';
 import { UpdateDto } from './dto/update.dto';
@@ -29,7 +29,10 @@ export class RentService {
     }
 
     async findRentalBySessionId(sessionId: string, userId: string) {
-        return await this.rentModel.findOne({ intentId: sessionId, userId });
+        return await this.rentModel.findOne({
+            intentId: sessionId,
+            userId: new Types.ObjectId(userId),
+        });
     }
 
     async findRentalById(id: string) {
@@ -44,7 +47,9 @@ export class RentService {
     }
 
     async getRentals(userId: string) {
-        return await this.rentModel.find({ userId }).populate('carId');
+        return await this.rentModel
+            .find({ userId: new Types.ObjectId(userId) })
+            .populate('carId');
     }
 
     checkIfValidDates(
@@ -67,7 +72,7 @@ export class RentService {
     async updateRental(rentalId: string, userId: string, body: UpdateDto) {
         const updatedRental = await this.rentModel
             .findOneAndUpdate(
-                { _id: rentalId, userId }, // ownership check
+                { _id: rentalId, userId: new Types.ObjectId(userId) }, // ownership check
                 {
                     $set: {
                         pickupTime: body.time,

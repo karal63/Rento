@@ -120,6 +120,36 @@
             "not_provided": "Nie podano",
             "date_not_found": "Nie znaleziono daty",
             "edit_account": "Edytuj konto"
+        },
+
+        "admin_page": {
+            "total_rentals": "Łączna liczba wynajmów",
+            "total_rentals_this_month": "Łączna liczba wynajmów w tym miesiącu",
+            "total_users": "Łączna liczba użytkowników",
+            "total_active_rentals": "Łączna liczba aktywnych wynajmów",
+
+            "user_statistics": "Statystyki użytkowników",
+            "active_users": "Aktywni użytkownicy",
+            "active_users_tooltip": "Użytkownicy, którzy dokonali co najmniej jednego wynajmu w ciągu ostatnich 30 dni",
+            "inactive_users": "Nieaktywni użytkownicy",
+            "inactive_users_tooltip": "Użytkownicy, którzy nie dokonali żadnego wynajmu w ciągu ostatnich 30 dni",
+            "repeat_clients": "Powracający klienci",
+            "repeat_clients_tooltip": "Użytkownicy, którzy dokonali wielu wynajmów. Procent obliczany na podstawie łącznej liczby użytkowników",
+            "view_all": "Zobacz wszystko",
+
+            "active_rentals": "Aktywne wynajmy",
+            "name": "Nazwa",
+            "ends_in": "Kończy się za",
+            "total_price": "Cena całkowita",
+            "status": "Status",
+
+            "last_payments": "Ostatnie płatności",
+            "new_rental": "Nowy wynajem",
+            "new_refund": "Nowy zwrot",
+
+            "rentals_overview": "Przegląd wynajmów",
+            "confirmed": "Potwierdzone",
+            "cancelled": "Anulowane"
         }
     }
 }

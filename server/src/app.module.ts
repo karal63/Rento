@@ -16,6 +16,7 @@ import { join } from 'path';
 import { StripeModule } from './http/stripe/stripe.module';
 import { PaymentModule } from './http/payment/payment.module';
 import { RolesGuard } from './common/guards/roles.guard';
+import { DashboardModule } from './http/dashboard/dashboard.module';
 
 @Module({
     imports: [
@@ -34,6 +35,7 @@ import { RolesGuard } from './common/guards/roles.guard';
         UserModule,
         StripeModule,
         PaymentModule,
+        DashboardModule,
     ],
     controllers: [AppController, RentController],
     providers: [

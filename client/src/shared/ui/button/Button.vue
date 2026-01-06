@@ -2,7 +2,7 @@
     import { computed } from 'vue';
 
     const props = defineProps<{
-        color?: 'red' | 'transparent';
+        color?: 'red' | 'transparent' | 'gray';
         size?: 'sm' | 'md';
     }>();
 
@@ -21,6 +21,8 @@
             return 'bg-transparent hover:bg-main-hover-bg';
         } else if (props.color === 'red') {
             return `bg-red-500 hover:bg-red-600 text-white`;
+        } else if (props.color === 'gray') {
+            return `bg-main-gray-bg hover:bg-transparent transition`;
         } else {
             return 'text-white bg-primary hover:bg-blue-400 text-white';
         }

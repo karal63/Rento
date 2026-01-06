@@ -120,6 +120,41 @@
             "not_provided": "Not provided",
             "date_not_found": "Date not found",
             "edit_account": "Edit account"
+        },
+
+        "admin_page": {
+            "total_rentals": "Total rentals",
+            "total_rentals_this_month": "Total rentals this month",
+            "total_users": "Total users",
+            "total_active_rentals": "Total active rentals",
+
+            "user_statistics": "User statistics",
+            "active_users": "Active users",
+            "active_users_tooltip": "Users who made a rental at least once in the last 30 days",
+            "inactive_users": "Inactive users",
+            "inactive_users_tooltip": "Users who didn't make a rental at least once in the last 30 days",
+            "repeat_clients": "Repeat clients",
+            "repeat_clients_tooltip": "Users who made multiple rentals. Percentage calculation based on user total",
+            "view_all": "View all",
+
+            "active_rentals": "Active rentals",
+            "name": "Name",
+            "ends_in": "Ends in",
+            "total_price": "Total price",
+            "status": "Status",
+
+            "last_payments": "Last payments",
+            "new_rental": "New rental",
+            "new_refund": "New refund",
+
+            "rentals_overview": "Rentals overview",
+            "confirmed": "Confirmed",
+            "cancelled": "Cancelled",
+
+            "profile": "Profile",
+            "switch_theme": "Switch theme",
+            "dark": "Dark",
+            "light": "Light"
         }
     }
 }

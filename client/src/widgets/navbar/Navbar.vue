@@ -13,13 +13,6 @@
     const userStore = useUserStore();
 
     const open = ref(false);
-    const isDarkTheme = ref(false);
-
-    const toggleTheme = () => {
-        isDarkTheme.value = !isDarkTheme.value;
-        themeStore.setTheme(isDarkTheme.value);
-        document.documentElement.classList.toggle('dark', isDarkTheme.value);
-    };
 </script>
 
 <template>
@@ -71,8 +64,8 @@
                     </transition>
                 </div>
 
-                <button @click="toggleTheme" class="hidden lg:block cursor-pointer">
-                    <Icon v-if="isDarkTheme" icon="fontisto:day-sunny" class="text-2xl" />
+                <button @click="themeStore.toggleTheme" class="hidden lg:block cursor-pointer">
+                    <Icon v-if="themeStore.isDark" icon="fontisto:day-sunny" class="text-2xl" />
                     <Icon
                         v-else
                         icon="material-symbols-light:partly-cloudy-night-outline"

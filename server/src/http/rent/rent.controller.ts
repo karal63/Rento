@@ -71,7 +71,7 @@ export class RentController {
         const rental = await this.rentalService.findRentalById(rentalId);
         if (!rental) throw new NotFoundException('Rental not found');
 
-        if (rental.userId !== user.id)
+        if (rental.userId.toString() !== user.id)
             throw new ForbiddenException("You can't cancel this rental");
 
         const now = new Date();

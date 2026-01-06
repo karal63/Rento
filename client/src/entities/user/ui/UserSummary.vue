@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="mt-5 grid grid-cols-2 gap-3">
+        <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
                 <span class="text-main-gray text-sm">{{ t('app.account_page.email_addres') }}</span>
                 <div class="flex items-center gap-2">
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="mt-7 grid grid-cols-2">
+        <div class="mt-7 grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
                 <span class="text-main-gray text-sm">{{ t('app.account_page.user_since') }}</span>
                 <div class="flex items-center gap-2">

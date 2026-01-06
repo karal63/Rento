@@ -1,15 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 export type RentDocument = HydratedDocument<Rent>;
 
 @Schema()
 export class Rent {
     @Prop({ required: true, ref: 'Car' })
-    carId: string;
+    carId: Types.ObjectId;
 
     @Prop({ required: true })
-    userId: string;
+    userId: Types.ObjectId;
 
     @Prop({ required: true })
     rentFrom: number;

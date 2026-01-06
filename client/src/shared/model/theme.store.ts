@@ -6,7 +6,13 @@ export const useThemeStore = defineStore('theme', () => {
 
     const setTheme = (isDarkTheme: boolean) => {
         isDark.value = isDarkTheme;
+        document.documentElement.classList.toggle('dark', isDark.value);
     };
 
-    return { isDark, setTheme };
+    const toggleTheme = () => {
+        isDark.value = !isDark.value;
+        document.documentElement.classList.toggle('dark', isDark.value);
+    };
+
+    return { isDark, setTheme, toggleTheme };
 });
