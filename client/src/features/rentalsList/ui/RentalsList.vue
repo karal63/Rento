@@ -159,7 +159,7 @@
                 <!-- Actions -->
                 <div
                     v-if="canChange(rental)"
-                    class="flex gap-2 justify-end absolute md:right-5 md:top-1/2 md:translate-x-2 transition-all"
+                    class="flex gap-2 justify-end absolute right-5 bottom-3 md:bottom-5 translate-x-2 transition-all"
                 >
                     <button
                         @click="edit(rental)"
