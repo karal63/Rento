@@ -11,8 +11,11 @@
         <h1 class="text-2xl mb-5">{{ t('app.rentals_page.active_title') }}</h1>
         <RentalsList status="active" />
 
-        <h1 class="text-2xl mt-10 mb-5">{{ t('app.rentals_page.history_title') }}</h1>
-        <RentalsList status="past" />
+        <h1 class="text-2xl mt-10 mb-5">{{ t('app.rentals_page.pending_title') }}</h1>
+        <RentalsList status="pending" />
+
+        <h1 class="text-2xl mt-10 mb-5">{{ t('app.rentals_page.complited_title') }}</h1>
+        <RentalsList status="complited" />
 
         <EditRentalModal />
     </section>
