@@ -34,7 +34,7 @@
 </script>
 
 <template>
-    <section v-if="adminDashboard.loading" class="rounded-md p-5 shadow-md skeleton"></section>
+    <section v-if="adminDashboard.loading" class="h-96 rounded-md p-5 shadow-md skeleton"></section>
     <section v-else class="bg-main-gray-bg rounded-md p-5 shadow-md">
         <h2 class="font-semibold">{{ t('app.admin_page.user_statistics') }}</h2>
 

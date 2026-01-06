@@ -22,7 +22,7 @@
 </script>
 
 <template>
-    <section v-if="adminDashboard.loading" class="skeleton rounded-md p-5 shadow-md"></section>
+    <section v-if="adminDashboard.loading" class="skeleton h-96 rounded-md p-5 shadow-md"></section>
     <section v-else class="bg-main-gray-bg rounded-md p-5 shadow-md">
         <h2 class="font-semibold">{{ t('app.admin_page.last_payments') }}</h2>
 

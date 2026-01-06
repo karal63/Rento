@@ -1,21 +1,59 @@
 <script setup lang="ts">
+    import { useUserStore } from '@/entities/user';
     import { adminLinks } from '@/shared/config';
+    import { useSidebarStore, useThemeStore } from '@/shared/model';
     import { Icon } from '@iconify/vue';
+    import { onMounted, onUnmounted, ref } from 'vue';
     import { useRoute } from 'vue-router';
 
     const route = useRoute();
+    const sidebarStore = useSidebarStore();
+    const themeStore = useThemeStore();
+    const userStore = useUserStore();
+
+    const isMobile = ref();
+    const isMenuOpen = ref(false);
+    const isThemeMenuOpen = ref(false);
+
+    const checkScreen = () => {
+        isMobile.value = window.innerWidth < 768; // Tailwind md breakpoint
+    };
+
+    const setTheme = (isDarkTheme: boolean) => {
+        themeStore.setTheme(isDarkTheme);
+        // isThemeMenuOpen.value = false;
+    };
+
+    const handleMenu = () => {
+        if (isMenuOpen.value) {
+            isMenuOpen.value = false;
+            isThemeMenuOpen.value = false;
+        } else {
+            isMenuOpen.value = true;
+        }
+    };
+
+    onMounted(() => {
+        checkScreen();
+        window.addEventListener('resize', checkScreen);
+    });
+
+    onUnmounted(() => {
+        window.removeEventListener('resize', checkScreen);
+    });
 </script>
 
 <template>
     <nav
-        class="hidden lg:block fixed top-0 left-0 bg-main-bg border-r border-main-border h-full w-60 my-5 px-5"
+        class="fixed top-0 left-0 bg-main-bg border-r border-main-border h-full w-60 py-5 z-20 transform transition"
+        :class="sidebarStore.isAdminOpen || !isMobile ? 'translate-x-0' : '-translate-x-full'"
     >
-        <h1 class="text-2xl font-semibold text-center pt-4 pb-6 border-b border-main-border">
+        <h1 class="text-2xl font-semibold text-center pt-4 pb-6 border-b border-main-border mx-5">
             Rento
             <span class="text-primary">| Admin</span>
         </h1>
 
-        <ul class="mt-4">
+        <ul class="mt-4 px-5">
             <li v-for="link in adminLinks" :key="link.path">
                 <RouterLink
                     :to="link.path"
@@ -40,5 +78,72 @@
                 </RouterLink>
             </li>
         </ul>
+
+        <div class="absolute bottom-0 mb-10 w-full flex-center">
+            <div class="w-full mx-5 relative">
+                <Transition name="menu">
+                    <ul v-if="isThemeMenuOpen" class="bg-main-gray-bg rounded-md mb-3">
+                        <li
+                            @click="setTheme(false)"
+                            class="px-5 py-2 flex-between items-center gap-2 hover:bg-main-lightgray transition rounded-md cursor-pointer"
+                        >
+                            Light
+                            <Icon v-if="!themeStore.isDark" icon="proicons:checkmark" />
+                        </li>
+                        <li
+                            @click="setTheme(true)"
+                            class="px-5 py-2 flex-between items-center hover:bg-main-lightgray transition rounded-md cursor-pointer"
+                        >
+                            Dark
+                            <Icon v-if="themeStore.isDark" icon="proicons:checkmark" />
+                        </li>
+                    </ul>
+                </Transition>
+
+                <Transition name="menu">
+                    <ul v-if="isMenuOpen" class="bg-main-gray-bg rounded-md mb-3">
+                        <li>
+                            <RouterLink
+                                to="/profile/account"
+                                class="px-5 py-2 flex items-center gap-2 hover:bg-main-lightgray transition rounded-md cursor-pointer"
+                            >
+                                <Icon icon="mdi-light:account" class="text-lg" />
+                                Profile
+                            </RouterLink>
+                        </li>
+                        <li
+                            @click="isThemeMenuOpen = !isThemeMenuOpen"
+                            class="px-5 py-2 flex-between hover:bg-main-lightgray transition rounded-md cursor-pointer"
+                        >
+                            <div class="flex items-center gap-2">
+                                <Icon icon="fontisto:day-sunny" class="text-lg" />
+                                Switch theme
+                            </div>
+                            <Icon icon="weui:arrow-filled" class="text-lg" />
+                        </li>
+                    </ul>
+                </Transition>
+
+                <button
+                    @click="handleMenu"
+                    class="bg-linear-to-br from-primary to-primary/50 text-white px-4 py-3 rounded-md w-full flex-between cursor-pointer"
+                >
+                    {{ userStore.user?.secondName }}
+                    <Icon icon="pepicons-pencil:dots-y" />
+                </button>
+            </div>
+        </div>
     </nav>
 </template>
+
+<style scoped>
+    .menu-enter-active {
+        transition: all 0.25s ease;
+    }
+
+    .menu-enter-from,
+    .menu-leave-to {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+</style>

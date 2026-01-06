@@ -10,7 +10,7 @@
     <div class="p-5">
         <AdminSidebar />
 
-        <div class="lg:ml-64">
+        <div class="md:ml-64">
             <AdminNavbar :breadcrumps="breadcrumbs" />
             <RouterView @setBreadcrumbs="breadcrumbs = $event" />
         </div>
