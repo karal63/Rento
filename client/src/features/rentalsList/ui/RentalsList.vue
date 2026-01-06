@@ -13,7 +13,7 @@
     const { t } = useI18n();
 
     const props = defineProps<{
-        status: 'active' | 'past';
+        status: 'active' | 'pending' | 'complited';
     }>();
 
     const now = new Date();
@@ -22,6 +22,8 @@
     const getClasses = computed(() => {
         if (props.status === 'active') {
             return 'border-green-500/20 bg-green-500/10 ';
+        } else if (props.status === 'pending') {
+            return 'border-yellow-500/20 bg-yellow-500/10';
         }
 
         return 'border-main-border bg-main-gray-bg';
@@ -50,6 +52,12 @@
         return now >= newStart && now <= newEnd && rental.status !== 'CANCELLED';
     };
 
+    const checkIfPending = (rental: RentalWithCar) => {
+        const newStart = new Date(rental.rentFrom);
+
+        return now < newStart && rental.status !== 'CANCELLED';
+    };
+
     const canChange = (rental: RentalWithCar) => {
         const newStart = new Date(rental.rentFrom);
         newStart.setDate(newStart.getDate() - 1);
@@ -57,30 +65,14 @@
         return now < newStart && rental.status !== 'CANCELLED';
     };
 
-    const getFormattedDates = (start: number, end: number) => {
-        const newStart = new Date(start);
-        const newEnd = new Date(end);
-
-        const formattedStart = `${(newStart.getMonth() + 1).toString().padStart(2, '0')}-${newStart.getDate().toString().padStart(2, '0')}-${newStart.getFullYear()}`;
-        let formattedEnd;
-        if (newEnd.getDate() - 1 === 0) {
-            const daysInPrevMonth = new Date(
-                newStart.getFullYear(),
-                newStart.getMonth() + 1,
-                0
-            ).getDate();
-            formattedEnd = `${(newEnd.getMonth() + 1).toString().padStart(2, '0')}-${daysInPrevMonth.toString().padStart(2, '0')}-${newEnd.getFullYear()}`;
-        } else {
-            formattedEnd = `${(newEnd.getMonth() + 1).toString().padStart(2, '0')}-${(newEnd.getDate() - 1).toString().padStart(2, '0')}-${newEnd.getFullYear()}`;
-        }
-
-        return `${formattedStart} - ${formattedEnd}`;
-    };
-
     const filteredRentals = computed(() => {
         return rentalsStrore.rentals
             .filter(rental => {
-                return props.status === 'active' ? checkIfActive(rental) : !checkIfActive(rental);
+                return props.status === 'active'
+                    ? checkIfActive(rental)
+                    : props.status === 'pending'
+                      ? checkIfPending(rental)
+                      : !checkIfActive(rental) && !checkIfPending(rental);
             })
             .sort((a: RentalWithCar, b: RentalWithCar) => b.createdAt - a.createdAt);
     });
@@ -134,7 +126,8 @@
                                         {{ t('app.rentals_page.period') }}:
                                     </span>
                                     <span>
-                                        {{ getFormattedDates(rental.rentFrom, rental.rentTo) }}
+                                        {{ new Date(rental.rentFrom).toLocaleDateString() }} -
+                                        {{ new Date(rental.rentTo).toLocaleDateString() }}
                                     </span>
                                 </p>
                             </div>
@@ -165,8 +158,8 @@
 
                 <!-- Actions -->
                 <div
-                    v-if="!checkIfActive(rental) && canChange(rental)"
-                    class="flex gap-2 justify-end md:absolute md:right-5 md:top-1/2 md:-translate-y-1/2 md:opacity-0 md:translate-x-2 md:group-hover:opacity-100 md:group-hover:translate-x-0 transition-all duration-200"
+                    v-if="canChange(rental)"
+                    class="flex gap-2 justify-end absolute md:right-5 md:top-1/2 md:translate-x-2 transition-all"
                 >
                     <button
                         @click="edit(rental)"

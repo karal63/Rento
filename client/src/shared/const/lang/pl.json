@@ -99,8 +99,9 @@
 
         "rentals_page": {
             "active_title": "Aktywne",
-            "history_title": "Historia",
-            "past": "poprzednich",
+            "pending_title": "Oczekujące",
+            "complited_title": "Ukończone",
+            "complited": "ukończonych",
             "active": "aktywnych",
             "status": "Status",
             "period": "Okres",
@@ -149,7 +150,12 @@
 
             "rentals_overview": "Przegląd wynajmów",
             "confirmed": "Potwierdzone",
-            "cancelled": "Anulowane"
+            "cancelled": "Anulowane",
+
+            "profile": "Profil",
+            "switch_theme": "Zmień motyw",
+            "dark": "Ciemny",
+            "light": "Jasny"
         }
     }
 }

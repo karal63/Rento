@@ -99,8 +99,9 @@
 
         "rentals_page": {
             "active_title": "Active",
-            "history_title": "History",
-            "past": "past",
+            "pending_title": "Pending",
+            "complited_title": "History",
+            "complited": "complited",
             "active": "active",
             "status": "Status",
             "period": "Period",
