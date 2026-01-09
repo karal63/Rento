@@ -4,10 +4,14 @@ import { Model, Types } from 'mongoose';
 import { Car } from 'src/schemas/carSchema';
 import { Rent } from 'src/schemas/rentSchema';
 import { UpdateDto } from './dto/update.dto';
+import { RentalRepo } from './rental.repository';
 
 @Injectable()
 export class RentService {
-    constructor(@InjectModel(Rent.name) private rentModel: Model<Rent>) {}
+    constructor(
+        @InjectModel(Rent.name) private rentModel: Model<Rent>,
+        private readonly rentalRepo: RentalRepo,
+    ) {}
 
     calculateTotal(car: Car, daysCount: number) {
         const pricing = car.pricing;
@@ -95,6 +99,6 @@ export class RentService {
     }
 
     async getRentals() {
-        return await this.rentModel.find();
+        return this.rentalRepo.getAllRentals();
     }
 }

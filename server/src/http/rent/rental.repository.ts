@@ -144,4 +144,8 @@ export class RentalRepo {
 
         return res;
     }
+
+    async getAllRentals() {
+        return await this.rentalModel.find().populate(['carId', 'userId']);
+    }
 }
