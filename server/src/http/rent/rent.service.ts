@@ -46,7 +46,7 @@ export class RentService {
         });
     }
 
-    async getRentals(userId: string) {
+    async getRentalsByUserId(userId: string) {
         return await this.rentModel
             .find({ userId: new Types.ObjectId(userId) })
             .populate('carId');
@@ -92,5 +92,9 @@ export class RentService {
         }
 
         return updatedRental;
+    }
+
+    async getRentals() {
+        return await this.rentModel.find();
     }
 }
