@@ -5,7 +5,25 @@
 
     const isStatusDropdownOpen = ref(false);
     const selectedStatus = ref('');
-    const statuses = ['all', 'completed', 'cancelled', 'active'];
+
+    const statuses = [
+        {
+            label: 'all',
+            callback: () => (selectedStatus.value = 'all'),
+        },
+        {
+            label: 'completed',
+            callback: () => (selectedStatus.value = 'completed'),
+        },
+        {
+            label: 'cancelled',
+            callback: () => (selectedStatus.value = 'cancelled'),
+        },
+        {
+            label: 'active',
+            callback: () => (selectedStatus.value = 'active'),
+        },
+    ];
 </script>
 
 <template>
@@ -24,6 +42,7 @@
                 :isOpen="isStatusDropdownOpen"
                 @setStatus="selectedStatus = $event"
                 :items="statuses"
+                @close="isStatusDropdownOpen = false"
             >
                 <Button
                     @click="isStatusDropdownOpen = !isStatusDropdownOpen"

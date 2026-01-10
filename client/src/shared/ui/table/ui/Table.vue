@@ -1,15 +1,12 @@
 <script setup lang="ts" generic="T">
-    import { Icon } from '@iconify/vue';
-    import type { TableColumn } from './types';
-    import { ref } from 'vue';
+    import type { TableColumn } from '../model/types';
+    import Record from './Record.vue';
 
     defineProps<{
         rows: T[];
         columns: TableColumn<T>[];
         loading?: boolean;
     }>();
-
-    const isOpen = ref(false);
 </script>
 
 <template>
@@ -39,21 +36,11 @@
                 :key="(row as any)._id"
                 class="border-b border-main-border text-sm"
             >
-                <td v-for="col in columns" :key="col.key" class="px-3 py-4">
-                    <!-- <slot :name="`cell-${col.key}`" :row="row"> -->
-                    {{ col.render ? col.render(row) : (row as any)[col.key] }}
-                    <!-- </slot> -->
-                </td>
-
-                <td>
-                    <!-- <slot name="actions" :rental="row" /> -->
-
-                    <div v-if="$slots.actions" class="flex-center">
-                        <button class="text-xl cursor-pointer">
-                            <Icon icon="pepicons-pencil:dots-y" />
-                        </button>
-                    </div>
-                </td>
+                <Record :columns="columns" :row="row">
+                    <template v-if="$slots.actions" #actions="slotProps">
+                        <slot name="actions" v-bind="slotProps" />
+                    </template>
+                </Record>
             </tr>
         </tbody>
     </table>

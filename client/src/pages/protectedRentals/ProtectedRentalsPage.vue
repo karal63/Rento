@@ -3,6 +3,7 @@
     import type { Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
     import { RentalsHeader, RentalsSort, RentalsTable } from '@/widgets';
+    import { Icon } from '@iconify/vue';
     import { onMounted } from 'vue';
 
     const emit = defineEmits<{
@@ -58,7 +59,21 @@
 
     <RentalsTable :rows="rentals" :columns="columns" :loading="loading">
         <template #actions="{ rental }">
-            <button>Edit</button>
+            <div class="w-[120px] bg-main-bg rounded-md">
+                <button
+                    class="px-3 py-2 w-full text-left hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
+                >
+                    <Icon icon="lucide:edit" class="text-xl" />
+                    Edit
+                </button>
+
+                <button
+                    class="px-3 py-2 w-full text-left hover:bg-red-600/10 cursor-pointer flex items-center gap-2 text-red-600 transition rounded-bl-md rounded-br-md"
+                >
+                    <Icon icon="material-symbols:delete-outline-rounded" class="text-xl" />
+                    Delete
+                </button>
+            </div>
         </template>
     </RentalsTable>
 </template>

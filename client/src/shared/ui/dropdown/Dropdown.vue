@@ -1,33 +1,66 @@
 <script setup lang="ts">
-    defineProps<{
+    import { useClickOutside } from '@/shared/lib';
+    import { computed, ref } from 'vue';
+
+    type Item = {
+        label: string;
+        callback: () => void;
+    };
+
+    const props = defineProps<{
         isOpen: boolean;
-        items: string[];
+        items?: Item[];
+        side?: 'left' | 'center' | 'right';
     }>();
 
-    defineEmits<{
-        (e: 'setStatus', value: string): void;
+    const emit = defineEmits<{
+        (e: 'close'): void;
     }>();
+
+    const ok = ref(true);
+    const dropdownRef = ref<HTMLElement | null>(null);
+    useClickOutside(dropdownRef, () => emit('close'), ok);
+
+    const handleClick = (item: Item) => {
+        item.callback();
+        emit('close');
+    };
+
+    const getClasses = computed(() => {
+        if (props.side === 'left') {
+            return 'right-0';
+        } else if (props.side === 'center') {
+            return 'left-0 w-full';
+        } else if (props.side === 'right') {
+            return 'left-full';
+        }
+
+        return 'left-0 w-full';
+    });
 </script>
 
 <template>
-    <div class="relative">
+    <div ref="dropdownRef" class="relative">
         <slot />
 
         <Transition name="dropdown">
             <div
                 v-if="isOpen"
-                class="absolute top-[110%] left-0 border border-main-border bg-main-bg shadow w-full rounded-md"
+                class="absolute z-20 top-[110%] border border-main-border bg-main-bg shadow rounded-md"
+                :class="getClasses"
             >
-                <ul class="divide-y divide-main-border">
-                    <li v-for="item in items" :key="item">
+                <ul v-if="!$slots.actions" class="divide-y divide-main-border">
+                    <li v-for="item in items" :key="item.label">
                         <button
-                            @click="$emit('setStatus', item)"
+                            @click="handleClick(item)"
                             class="w-full text-left py-2 px-3 text-sm cursor-pointer hover:bg-main-hover-bg transition capitalize"
                         >
-                            {{ item }}
+                            {{ item.label }}
                         </button>
                     </li>
                 </ul>
+
+                <slot v-else name="actions" />
             </div>
         </Transition>
     </div>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import type { RentalWithAllDetails } from '@/entities/rental';
-    import { Table } from '@/shared/ui';
-    import type { TableColumn } from '@/shared/ui/table';
+    import { Table, type TableColumn } from '@/shared/ui/table';
 
     defineProps<{
         rows: RentalWithAllDetails[];

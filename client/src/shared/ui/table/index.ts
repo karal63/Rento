@@ -1,2 +1,2 @@
-export type { TableColumn } from './types';
-export { default as Table } from './Table.vue';
+export type { TableColumn } from './model/types';
+export { default as Table } from './ui/Table.vue';
