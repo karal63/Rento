@@ -4,10 +4,14 @@ import { Model } from 'mongoose';
 import { Rent } from 'src/schemas/rentSchema';
 import { GetAllDto } from './dto/getAll.dto';
 import { Status } from 'src/enums/status.enum';
+import { Car } from 'src/schemas/carSchema';
 
 @Injectable()
 export class RentalRepo {
-    constructor(@InjectModel(Rent.name) private rentalModel: Model<Rent>) {}
+    constructor(
+        @InjectModel(Rent.name) private rentalModel: Model<Rent>,
+        @InjectModel(Car.name) private carModel: Model<Car>,
+    ) {}
 
     async getTotalRentals() {
         return await this.rentalModel.countDocuments();
@@ -155,12 +159,25 @@ export class RentalRepo {
     }
 
     async getAllRentals(query: GetAllDto) {
-        let res = this.rentalModel.find().populate(['carId', 'userId']);
+        let res = this.rentalModel.find();
 
         if (query.status) {
             res = res.find({ status: query.status });
         }
 
-        return await res.exec();
+        if (query.search) {
+            const cars = await this.carModel
+                .find({
+                    name: { $regex: query.search, $options: 'i' },
+                })
+                .select('_id');
+
+            res = res.or([
+                { carId: { $in: cars.map((c) => c._id) } },
+                { status: { $regex: query.search, $options: 'i' } },
+            ]);
+        }
+
+        return res.populate(['carId', 'userId']).sort({ createdAt: -1 }).exec();
     }
 }

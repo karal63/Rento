@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
-    import { useFilterRentals } from '@/features/sortRentals';
+    import { useFilterRentals } from '@/features/filterRentals';
     import type { Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
     import { RentalsFilter, RentalsHeader, RentalsTable } from '@/widgets';
@@ -62,7 +62,12 @@
 
 <template>
     <RentalsHeader />
-    <RentalsFilter @setStatus="filters.status = $event" :status="filters.status" />
+    <RentalsFilter
+        @setStatus="filters.status = $event"
+        @setSearch="filters.search = $event"
+        :status="filters.status"
+        :search="filters.search"
+    />
 
     <RentalsTable :rows="rentals" :columns="columns" :loading="loading">
         <template #actions="{ rental }">

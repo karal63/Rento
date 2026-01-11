@@ -6,9 +6,11 @@
 
     const emit = defineEmits<{
         (e: 'setStatus', status: RentalStatus | ''): void;
+        (e: 'setSearch', status: string): void;
     }>();
     defineProps<{
         status: RentalStatus | '';
+        search: string;
     }>();
 
     const isStatusDropdownOpen = ref(false);
@@ -44,6 +46,7 @@
         <div class="mt-5 flex gap-5">
             <Input
                 type="search"
+                @input="$emit('setSearch', $event.target.value)"
                 size="medium"
                 placeholder="Search"
                 icon="icon-park-outline:search"
@@ -59,9 +62,9 @@
                     size="sm"
                     color="transparent"
                     :disableUppercase="true"
-                    class="h-full border border-main-border flex-between gap-2 w-36"
+                    class="h-full border border-main-border flex-between gap-2 w-40"
                 >
-                    {{ status ? status : 'Status' }}
+                    {{ status ? status : 'Select status' }}
                     <Icon
                         icon="weui:arrow-filled"
                         class="transform rotate-90 text-xl text-main-gray"

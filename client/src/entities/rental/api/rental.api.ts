@@ -31,8 +31,10 @@ export const apiGetCarAvailability = async (
 
 export const apiGetAllRentals = async ({
     status,
+    search,
 }: {
     status: RentalStatus | '';
+    search: string;
 }): Promise<AxiosResponse<RentalWithAllDetails[]>> => {
-    return await axiosInstance.get(API_GET_RENTALS(status));
+    return await axiosInstance.get(API_GET_RENTALS(status, search));
 };
