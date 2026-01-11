@@ -14,10 +14,11 @@
         <thead>
             <tr>
                 <td
-                    v-for="col in columns"
+                    v-for="(col, i) in columns"
                     :key="col.key"
                     :style="{ width: col.width }"
-                    class="bg-main-gray-bg px-3 py-3 text-left text-sm font-semibold text-main-gray border-l border-main-border"
+                    class="bg-main-gray-bg px-3 py-3 text-left text-sm font-semibold text-main-gray"
+                    :class="i === 0 ? 'rounded-tl-md rounded-bl-md' : 'border-l border-main-border'"
                 >
                     {{ col.header }}
                 </td>
@@ -37,8 +38,8 @@
                 class="border-b border-main-border text-sm"
             >
                 <Record :columns="columns" :row="row">
-                    <template v-if="$slots.actions" #actions="slotProps">
-                        <slot name="actions" v-bind="slotProps" />
+                    <template v-for="(_, name) in $slots" #[name]="slotProps">
+                        <slot :name="name" v-bind="slotProps" />
                     </template>
                 </Record>
             </tr>

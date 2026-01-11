@@ -14,9 +14,9 @@
 
 <template>
     <td v-for="col in columns" :key="col.key" class="px-3 py-4">
-        <!-- <slot :name="`cell-${col.key}`" :row="row"> -->
-        {{ col.render ? col.render(row) : (row as any)[col.key] }}
-        <!-- </slot> -->
+        <slot :name="`cell-${col.key}`" :row="row">
+            {{ col.render ? col.render(row) : (row as any)[col.key] }}
+        </slot>
     </td>
 
     <td>
