@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Rent } from 'src/schemas/rentSchema';
 import { GetAllDto } from './dto/getAll.dto';
+import { Status } from 'src/enums/status.enum';
 
 @Injectable()
 export class RentalRepo {
@@ -118,12 +119,26 @@ export class RentalRepo {
                     },
                     confirmedCount: {
                         $sum: {
-                            $cond: [{ $eq: ['$status', 'CONFIRMED'] }, 1, 0],
+                            $cond: [
+                                {
+                                    $or: [
+                                        { $eq: ['$status', Status.Pending] },
+                                        { $eq: ['$status', Status.Completed] },
+                                        { $eq: ['$status', Status.Active] },
+                                    ],
+                                },
+                                1,
+                                0,
+                            ],
                         },
                     },
                     cancelledCount: {
                         $sum: {
-                            $cond: [{ $eq: ['$status', 'CANCELLED'] }, 1, 0],
+                            $cond: [
+                                { $eq: ['$status', Status.Cancelled] },
+                                1,
+                                0,
+                            ],
                         },
                     },
                 },
