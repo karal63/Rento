@@ -1,14 +1,14 @@
-import { ref, watchEffect } from 'vue';
+import { ref, watchEffect, type ComputedRef } from 'vue';
 import { apiGetAllRentals } from '../api/rental.api';
-import type { RentalWithAllDetails } from './rental.types';
+import type { RentalStatus, RentalWithAllDetails } from './rental.types';
 
-export function useRentalsQuery() {
+export function useRentalsQuery(queryParams: ComputedRef<{ status: RentalStatus | '' }>) {
     const rentals = ref<RentalWithAllDetails[]>([]);
     const loading = ref(false);
 
     watchEffect(async () => {
         loading.value = true;
-        rentals.value = (await apiGetAllRentals()).data;
+        rentals.value = (await apiGetAllRentals({ ...queryParams.value })).data;
         loading.value = false;
     });
 

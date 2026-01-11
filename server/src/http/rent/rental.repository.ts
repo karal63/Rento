@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Rent } from 'src/schemas/rentSchema';
+import { GetAllDto } from './dto/getAll.dto';
 
 @Injectable()
 export class RentalRepo {
@@ -145,7 +146,13 @@ export class RentalRepo {
         return res;
     }
 
-    async getAllRentals() {
-        return await this.rentalModel.find().populate(['carId', 'userId']);
+    async getAllRentals(query: GetAllDto) {
+        let res = this.rentalModel.find().populate(['carId', 'userId']);
+
+        if (query.status) {
+            res = res.find({ status: query.status });
+        }
+
+        return await res.exec();
     }
 }

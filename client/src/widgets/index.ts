@@ -12,4 +12,4 @@ export { default as LastPayments } from './lastPayments/LastPayments.vue';
 export { default as RentalsChart } from './rentalsChart/RentalsChart.vue';
 export { default as RentalsTable } from './rentalsTable/RentalsTable.vue';
 export { default as RentalsHeader } from './rentalsHeader/RentalsHeader.vue';
-export { default as RentalsSort } from './rentalsSort/RentalsSort.vue';
+export { default as RentalsFilter } from './rentalsFilter/RentalsFilter.vue';

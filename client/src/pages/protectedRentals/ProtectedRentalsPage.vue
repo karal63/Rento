@@ -1,10 +1,11 @@
 <script setup lang="ts">
     import { useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
+    import { useFilterRentals } from '@/features/sortRentals';
     import type { Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
-    import { RentalsHeader, RentalsSort, RentalsTable } from '@/widgets';
+    import { RentalsFilter, RentalsHeader, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
-    import { onMounted } from 'vue';
+    import { computed, onMounted } from 'vue';
 
     const emit = defineEmits<{
         (e: 'setBreadcrumbs', data: Breadcrumb[]): void;
@@ -16,7 +17,13 @@
         },
     ];
 
-    const { loading, rentals } = useRentalsQuery();
+    const filters = useFilterRentals();
+
+    const queryParams = computed(() => ({
+        ...filters,
+    }));
+
+    const { loading, rentals } = useRentalsQuery(queryParams);
 
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
@@ -55,7 +62,7 @@
 
 <template>
     <RentalsHeader />
-    <RentalsSort />
+    <RentalsFilter @setStatus="filters.status = $event" :status="filters.status" />
 
     <RentalsTable :rows="rentals" :columns="columns" :loading="loading">
         <template #actions="{ rental }">

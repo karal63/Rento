@@ -1,27 +1,38 @@
 <script setup lang="ts">
+    import { RENTAL_STATUS, type RentalStatus } from '@/entities/rental';
     import { Button, Dropdown, Input } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
 
+    const emit = defineEmits<{
+        (e: 'setStatus', status: RentalStatus | ''): void;
+    }>();
+    defineProps<{
+        status: RentalStatus | '';
+    }>();
+
     const isStatusDropdownOpen = ref(false);
-    const selectedStatus = ref('');
 
     const statuses = [
         {
-            label: 'all',
-            callback: () => (selectedStatus.value = 'all'),
+            label: 'All',
+            callback: () => emit('setStatus', ''),
         },
         {
-            label: 'completed',
-            callback: () => (selectedStatus.value = 'completed'),
+            label: RENTAL_STATUS.Completed,
+            callback: () => emit('setStatus', RENTAL_STATUS.Completed),
         },
         {
-            label: 'cancelled',
-            callback: () => (selectedStatus.value = 'cancelled'),
+            label: RENTAL_STATUS.Cancelled,
+            callback: () => emit('setStatus', RENTAL_STATUS.Cancelled),
         },
         {
-            label: 'active',
-            callback: () => (selectedStatus.value = 'active'),
+            label: RENTAL_STATUS.Active,
+            callback: () => emit('setStatus', RENTAL_STATUS.Active),
+        },
+        {
+            label: RENTAL_STATUS.Pending,
+            callback: () => emit('setStatus', RENTAL_STATUS.Pending),
         },
     ];
 </script>
@@ -40,7 +51,6 @@
 
             <Dropdown
                 :isOpen="isStatusDropdownOpen"
-                @setStatus="selectedStatus = $event"
                 :items="statuses"
                 @close="isStatusDropdownOpen = false"
             >
@@ -51,7 +61,7 @@
                     :disableUppercase="true"
                     class="h-full border border-main-border flex-between gap-2 w-36"
                 >
-                    {{ selectedStatus ? selectedStatus : 'Status' }}
+                    {{ status ? status : 'Status' }}
                     <Icon
                         icon="weui:arrow-filled"
                         class="transform rotate-90 text-xl text-main-gray"

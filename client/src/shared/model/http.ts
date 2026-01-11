@@ -1,3 +1,5 @@
+import type { RentalStatus } from '@/entities/rental';
+
 // CAR
 export const API_GET_CAR_SINGLE = (id: string) => `/cars/${id}`;
 export const API_GET_CAR_LIST = (page: number, brands: string[], search: string) =>
@@ -19,7 +21,7 @@ export const API_GET_RENTALS_LIST = '/rent/list'; // user rentals
 export const API_GET_CAR_AVAILABILITY = (carId: string) => `/rent/get-availability/${carId}`;
 export const API_DELETE_RENTAL_CANCEL = (rentalId: string) => `/rent/cancel/${rentalId}`;
 export const API_PATCH_RENTAL_EDIT = (rentalId: string) => `/rent/edit/${rentalId}`;
-export const API_GET_RENTALS = '/rent/all';
+export const API_GET_RENTALS = (status: RentalStatus | '') => `/rent/all?status=${status}`;
 
 // ADMIN DASHBOARD
 export const API_GET_DASHBOARD_SUMMARY = '/admin/dashboard/summary';

@@ -20,6 +20,7 @@ import {
     NotFoundException,
     Param,
     Patch,
+    Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/common/decorators/getUser.decorator';
@@ -29,6 +30,7 @@ import { Public } from 'src/common/decorators/public.decorator';
 import { UpdateDto } from './dto/update.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
+import { GetAllDto } from './dto/getAll.dto';
 
 @ApiTags('Rentals')
 @Controller('rent')
@@ -40,8 +42,8 @@ export class RentController {
     @ApiResponse({ status: 200, description: 'Get all service rentals' })
     @Roles(Role.Admin, Role.Employee)
     @Get('all')
-    async getAll() {
-        const rentals = await this.rentalService.getRentals();
+    async getAll(@Query() query: GetAllDto) {
+        const rentals = await this.rentalService.getRentals(query);
         return rentals;
     }
 

@@ -33,10 +33,10 @@ export type RentalWithAllDetails = Rental & {
 };
 
 export const RENTAL_STATUS = {
-    Completed: 'Completed',
-    Active: 'Active',
-    Pending: 'Pending',
-    Cancelled: 'Cancelled',
+    Completed: 'COMPLETED',
+    Active: 'ACTIVE',
+    Pending: 'PENDING',
+    Cancelled: 'CANCELLED',
 } as const;
 
 export type RentalStatus = (typeof RENTAL_STATUS)[keyof typeof RENTAL_STATUS];
