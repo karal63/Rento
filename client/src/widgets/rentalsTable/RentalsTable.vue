@@ -1,5 +1,6 @@
 <script setup lang="ts">
-    import type { RentalWithAllDetails } from '@/entities/rental';
+    import { RENTAL_STATUS, type RentalStatus, type RentalWithAllDetails } from '@/entities/rental';
+    import { getStatus } from '@/shared/lib';
     import { Table, type TableColumn } from '@/shared/ui/table';
     import { Icon } from '@iconify/vue';
 
@@ -9,11 +10,28 @@
         loading: boolean;
     }>();
 
-    const getIcon = (status: 'CONFIRMED' | 'CANCELLED') => {
-        if (status === 'CONFIRMED') return 'icon-park-outline:folder-success';
-        if (status === 'CANCELLED') return 'material-symbols:chat-error-outline-rounded';
+    const getIcon = (status: RentalStatus | null) => {
+        if (status === RENTAL_STATUS.Active)
+            return 'grommet-icons:time'; //fontisto:checkbox-active
+        else if (status === RENTAL_STATUS.Cancelled) return 'material-symbols:chat-error-outline';
+        else if (status === RENTAL_STATUS.Pending) return 'wi:time-7';
+        else if (status === RENTAL_STATUS.Completed) return 'material-symbols:draft-outline';
 
         return 'material-symbols:draft-outline';
+    };
+
+    const getClasses = (status: RentalStatus | null) => {
+        if (status === RENTAL_STATUS.Active) {
+            return 'bg-green-400/20 text-green-600';
+        } else if (status === RENTAL_STATUS.Cancelled) {
+            return 'bg-red-400/20 text-red-600';
+        } else if (status === RENTAL_STATUS.Pending) {
+            return 'bg-yellow-400/20 text-yellow-600';
+        } else if (status === RENTAL_STATUS.Completed) {
+            return 'bg-main-gray-bg text-opposite-theme/20';
+        }
+
+        return 'bg-main-gray-bg text-pure-theme/50';
     };
 </script>
 
@@ -27,15 +45,10 @@
             <template #cell-status="{ row }">
                 <span
                     class="font-semibold px-2 py-1 rounded-md flex items-center max-w-max gap-2"
-                    :class="
-                        row.status === 'CONFIRMED'
-                            ? 'bg-green-400/20 text-green-600'
-                            : 'bg-red-400/20 text-red-600'
-                    "
+                    :class="getClasses(getStatus(row))"
                 >
-                    <!--  -->
-                    <Icon :icon="getIcon(row.status)" class="text-xl" />
-                    {{ row.status }}
+                    <Icon :icon="getIcon(getStatus(row))" class="text-xl" />
+                    {{ getStatus(row) }}
                 </span>
             </template>
         </Table>

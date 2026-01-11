@@ -3,7 +3,9 @@ export type {
     CarAvailability,
     RentalWithCar,
     RentalWithAllDetails,
+    RentalStatus,
 } from './model/rental.types';
+export { RENTAL_STATUS } from './model/rental.types';
 export {
     apiGetRentalDetails,
     apiGetCarAvailability,
