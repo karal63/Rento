@@ -27,34 +27,32 @@ export class RentalRepo {
     }
 
     async getActiveRentals() {
-        const now = new Date().getTime();
-
         return await this.rentalModel
-            .find({
-                $and: [{ rentFrom: { $lt: now } }, { rentTo: { $gt: now } }],
-            })
+            .find({ status: Status.Active })
             .populate('carId');
     }
 
     async getTotalActiveRentals() {
-        const now = new Date().getTime();
-
         return await this.rentalModel
-            .find({
-                $and: [{ rentFrom: { $lt: now } }, { rentTo: { $gt: now } }],
-            })
+            .find({ status: Status.Active })
             .countDocuments();
     }
 
     async getTotalConfirmedRentals() {
         return await this.rentalModel
-            .find({ status: 'CONFIRMED' })
+            .find({
+                $or: [
+                    { status: Status.Active },
+                    { status: Status.Pending },
+                    { status: Status.Completed },
+                ],
+            })
             .countDocuments();
     }
 
     async getTotalCancelledRentals() {
         return await this.rentalModel
-            .find({ status: 'CANCELLED' })
+            .find({ status: Status.Cancelled })
             .countDocuments();
     }
 
@@ -78,12 +76,7 @@ export class RentalRepo {
 
     async getTotalCompletedRentals() {
         return await this.rentalModel
-            .find({
-                $and: [
-                    { rentTo: { $lt: Date.now() } },
-                    { status: 'CONFIRMED' },
-                ],
-            })
+            .find({ status: Status.Completed })
             .countDocuments();
     }
 
