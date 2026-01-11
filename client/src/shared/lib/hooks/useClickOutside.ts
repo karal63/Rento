@@ -13,6 +13,7 @@ export const useClickOutside = (
 
     const handleClick = (e: Event) => {
         if (!isAllowed?.value || !elRef.value) return;
+
         if (!elRef.value.contains(e.target as HTMLElement)) {
             callback();
         }

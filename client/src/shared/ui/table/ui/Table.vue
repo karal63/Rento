@@ -1,0 +1,48 @@
+<script setup lang="ts" generic="T">
+    import type { TableColumn } from '../model/types';
+    import Record from './Record.vue';
+
+    defineProps<{
+        rows: T[];
+        columns: TableColumn<T>[];
+        loading?: boolean;
+    }>();
+</script>
+
+<template>
+    <table class="w-full">
+        <thead>
+            <tr>
+                <td
+                    v-for="(col, i) in columns"
+                    :key="col.key"
+                    :style="{ width: col.width }"
+                    class="bg-main-gray-bg px-3 py-3 text-left text-sm font-semibold text-main-gray"
+                    :class="i === 0 ? 'rounded-tl-md rounded-bl-md' : 'border-l border-main-border'"
+                >
+                    {{ col.header }}
+                </td>
+
+                <td class="w-[5%] bg-main-gray-bg rounded-tr-md rounded-br-md"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-if="loading">
+                <td :colspan="columns.length + 1">Loading...</td>
+            </tr>
+
+            <tr
+                v-else
+                v-for="row in rows"
+                :key="(row as any)._id"
+                class="border-b border-main-border text-sm"
+            >
+                <Record :columns="columns" :row="row">
+                    <template v-for="(_, name) in $slots" #[name]="slotProps">
+                        <slot :name="name" v-bind="slotProps" />
+                    </template>
+                </Record>
+            </tr>
+        </tbody>
+    </table>
+</template>

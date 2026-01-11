@@ -4,6 +4,7 @@
     const props = defineProps<{
         color?: 'red' | 'transparent' | 'gray';
         size?: 'sm' | 'md';
+        disableUppercase?: boolean;
     }>();
 
     defineEmits<{
@@ -31,14 +32,14 @@
     const buttonClass = computed(() => {
         const sizeClass = (props.size && sizeClasses[props.size]) || sizeClasses.md;
 
-        return `${colorClasses.value} ${sizeClass} px-5 h-10 rounded-md transition cursor-pointer tracking-widest`;
+        return `${colorClasses.value} ${sizeClass} ${props.disableUppercase ? 'normal-case' : 'uppercase tracking-widest'} px-5 h-10 rounded-md transition cursor-pointer `;
     });
 </script>
 
 <template>
     <button
         @click="$emit('click')"
-        class="uppercase disabled:opacity-50 disabled:cursor-default"
+        class="disabled:opacity-50 disabled:cursor-default"
         :class="buttonClass"
     >
         <slot />

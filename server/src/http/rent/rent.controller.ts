@@ -27,11 +27,23 @@ import type { UserPayload } from 'src/common/types/user.type';
 import { RentService } from './rent.service';
 import { Public } from 'src/common/decorators/public.decorator';
 import { UpdateDto } from './dto/update.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/enums/role.enum';
 
 @ApiTags('Rentals')
 @Controller('rent')
 export class RentController {
     constructor(private readonly rentalService: RentService) {}
+    // cant put routes under routes with query param
+
+    @ApiOperation({ summary: 'Get all rentals' })
+    @ApiResponse({ status: 200, description: 'Get all service rentals' })
+    @Roles(Role.Admin, Role.Employee)
+    @Get('all')
+    async getAll() {
+        const rentals = await this.rentalService.getRentals();
+        return rentals;
+    }
 
     @Public()
     @ApiOperation({ summary: 'Get car availability' })
@@ -54,8 +66,8 @@ export class RentController {
     @ApiOperation({ summary: 'Get all user rentals' })
     @ApiResponse({ status: 200, description: 'Returns rentals list' })
     @Get('list')
-    async getRentals(@GetUser() user: UserPayload) {
-        const rentals = await this.rentalService.getRentals(user.id);
+    async getUserRentals(@GetUser() user: UserPayload) {
+        const rentals = await this.rentalService.getRentalsByUserId(user.id);
         return rentals;
     }
 

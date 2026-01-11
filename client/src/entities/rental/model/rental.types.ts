@@ -1,4 +1,5 @@
 import type { Car } from '@/entities/car';
+import type { User } from '@/entities/user';
 
 export type Rental = {
     _id: string;
@@ -22,4 +23,9 @@ export type CarAvailability = {
 
 export type RentalWithCar = Rental & {
     carId: Car;
+};
+
+export type RentalWithAllDetails = Rental & {
+    carId: Car;
+    userId: User;
 };
