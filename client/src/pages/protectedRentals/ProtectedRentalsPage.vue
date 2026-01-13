@@ -34,9 +34,10 @@
 
     const columns: TableColumn<RentalWithAllDetails>[] = [
         {
-            key: 'name',
-            header: 'Name',
-            render: rental => rental.carId.name,
+            key: 'rentalPeriod',
+            header: 'Period',
+            render: rental =>
+                `${new Date(rental.rentFrom).toLocaleString()} - ${new Date(rental.rentTo).toLocaleString()}`,
             width: '35%',
         },
         {
@@ -46,14 +47,14 @@
             width: '15%',
         },
         {
+            key: 'name',
+            header: 'Car name',
+            render: rental => rental.carId.name,
+        },
+        {
             key: 'createdAt',
             header: 'Created At',
             render: rental => new Date(rental.createdAt).toLocaleString(),
-        },
-        {
-            key: 'updatedAt',
-            header: 'Updated At',
-            render: rental => new Date(rental.updatedAt).toLocaleString(),
         },
         {
             key: 'createdBy',
