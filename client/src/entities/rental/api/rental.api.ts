@@ -6,6 +6,7 @@ import type {
     RentalStatus,
     RentalWithAllDetails,
     RentalWithCar,
+    SortMethod,
 } from '../model/rental.types';
 import {
     API_GET_CAR_AVAILABILITY,
@@ -32,9 +33,11 @@ export const apiGetCarAvailability = async (
 export const apiGetAllRentals = async ({
     status,
     search,
+    sort,
 }: {
     status: RentalStatus | '';
     search: string;
+    sort: SortMethod | null;
 }): Promise<AxiosResponse<RentalWithAllDetails[]>> => {
-    return await axiosInstance.get(API_GET_RENTALS(status, search));
+    return await axiosInstance.get(API_GET_RENTALS(status, search, sort));
 };

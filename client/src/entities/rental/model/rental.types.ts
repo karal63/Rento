@@ -40,3 +40,9 @@ export const RENTAL_STATUS = {
 } as const;
 
 export type RentalStatus = (typeof RENTAL_STATUS)[keyof typeof RENTAL_STATUS];
+
+export type SortMethod = {
+    field: string;
+    order: 'asc' | 'desc';
+    label: string;
+};

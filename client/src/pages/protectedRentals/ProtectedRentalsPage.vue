@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
     import { useFilterRentals } from '@/features/filterRentals';
+    import { useSortRentals } from '@/features/sortRentals';
     import type { Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
     import { RentalsFilter, RentalsHeader, RentalsTable } from '@/widgets';
@@ -18,9 +19,11 @@
     ];
 
     const filters = useFilterRentals();
+    const sorting = useSortRentals();
 
     const queryParams = computed(() => ({
         ...filters,
+        ...sorting,
     }));
 
     const { loading, rentals } = useRentalsQuery(queryParams);
@@ -65,8 +68,10 @@
     <RentalsFilter
         @setStatus="filters.status = $event"
         @setSearch="filters.search = $event"
+        @setSort="sorting.sort = $event"
         :status="filters.status"
         :search="filters.search"
+        :sort="sorting.sort"
     />
 
     <RentalsTable :rows="rentals" :columns="columns" :loading="loading">

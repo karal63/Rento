@@ -178,6 +178,16 @@ export class RentalRepo {
             ]);
         }
 
-        return res.populate(['carId', 'userId']).sort({ createdAt: -1 }).exec();
+        if (query.sort) {
+            const sortMethod = query.sort.split(':');
+            const field = sortMethod[0];
+            const order = sortMethod[1] as 'asc' | 'desc';
+
+            res = res.sort({ [field]: order === 'desc' ? -1 : 1 });
+        } else {
+            res = res.sort({ createdAt: -1 });
+        }
+
+        return res.populate(['carId', 'userId']).exec();
     }
 }

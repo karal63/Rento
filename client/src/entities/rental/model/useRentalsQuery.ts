@@ -1,8 +1,14 @@
 import { ref, watchEffect, type ComputedRef } from 'vue';
 import { apiGetAllRentals } from '../api/rental.api';
-import type { RentalStatus, RentalWithAllDetails } from './rental.types';
+import type { RentalStatus, RentalWithAllDetails, SortMethod } from './rental.types';
 
-export function useRentalsQuery(queryParams: ComputedRef<{ status: RentalStatus | '' }>) {
+export function useRentalsQuery(
+    queryParams: ComputedRef<{
+        status: RentalStatus | '';
+        search: string;
+        sort: SortMethod | null;
+    }>
+) {
     const rentals = ref<RentalWithAllDetails[]>([]);
     const loading = ref(false);
 

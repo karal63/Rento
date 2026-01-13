@@ -4,6 +4,7 @@ export type {
     RentalWithCar,
     RentalWithAllDetails,
     RentalStatus,
+    SortMethod,
 } from './model/rental.types';
 export { RENTAL_STATUS } from './model/rental.types';
 export {
