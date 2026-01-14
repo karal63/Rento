@@ -2,10 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Rent } from 'src/schemas/rentSchema';
+import { GetAllDto } from './dto/getAll.dto';
+import { Status } from 'src/enums/status.enum';
+import { Car } from 'src/schemas/carSchema';
 
 @Injectable()
 export class RentalRepo {
-    constructor(@InjectModel(Rent.name) private rentalModel: Model<Rent>) {}
+    constructor(
+        @InjectModel(Rent.name) private rentalModel: Model<Rent>,
+        @InjectModel(Car.name) private carModel: Model<Car>,
+    ) {}
 
     async getTotalRentals() {
         return await this.rentalModel.countDocuments();
@@ -25,34 +31,32 @@ export class RentalRepo {
     }
 
     async getActiveRentals() {
-        const now = new Date().getTime();
-
         return await this.rentalModel
-            .find({
-                $and: [{ rentFrom: { $lt: now } }, { rentTo: { $gt: now } }],
-            })
+            .find({ status: Status.Active })
             .populate('carId');
     }
 
     async getTotalActiveRentals() {
-        const now = new Date().getTime();
-
         return await this.rentalModel
-            .find({
-                $and: [{ rentFrom: { $lt: now } }, { rentTo: { $gt: now } }],
-            })
+            .find({ status: Status.Active })
             .countDocuments();
     }
 
     async getTotalConfirmedRentals() {
         return await this.rentalModel
-            .find({ status: 'CONFIRMED' })
+            .find({
+                $or: [
+                    { status: Status.Active },
+                    { status: Status.Pending },
+                    { status: Status.Completed },
+                ],
+            })
             .countDocuments();
     }
 
     async getTotalCancelledRentals() {
         return await this.rentalModel
-            .find({ status: 'CANCELLED' })
+            .find({ status: Status.Cancelled })
             .countDocuments();
     }
 
@@ -76,12 +80,7 @@ export class RentalRepo {
 
     async getTotalCompletedRentals() {
         return await this.rentalModel
-            .find({
-                $and: [
-                    { rentTo: { $lt: Date.now() } },
-                    { status: 'CONFIRMED' },
-                ],
-            })
+            .find({ status: Status.Completed })
             .countDocuments();
     }
 
@@ -117,12 +116,26 @@ export class RentalRepo {
                     },
                     confirmedCount: {
                         $sum: {
-                            $cond: [{ $eq: ['$status', 'CONFIRMED'] }, 1, 0],
+                            $cond: [
+                                {
+                                    $or: [
+                                        { $eq: ['$status', Status.Pending] },
+                                        { $eq: ['$status', Status.Completed] },
+                                        { $eq: ['$status', Status.Active] },
+                                    ],
+                                },
+                                1,
+                                0,
+                            ],
                         },
                     },
                     cancelledCount: {
                         $sum: {
-                            $cond: [{ $eq: ['$status', 'CANCELLED'] }, 1, 0],
+                            $cond: [
+                                { $eq: ['$status', Status.Cancelled] },
+                                1,
+                                0,
+                            ],
                         },
                     },
                 },
@@ -145,7 +158,36 @@ export class RentalRepo {
         return res;
     }
 
-    async getAllRentals() {
-        return await this.rentalModel.find().populate(['carId', 'userId']);
+    async getAllRentals(query: GetAllDto) {
+        let res = this.rentalModel.find();
+
+        if (query.status) {
+            res = res.find({ status: query.status });
+        }
+
+        if (query.search) {
+            const cars = await this.carModel
+                .find({
+                    name: { $regex: query.search, $options: 'i' },
+                })
+                .select('_id');
+
+            res = res.or([
+                { carId: { $in: cars.map((c) => c._id) } },
+                { status: { $regex: query.search, $options: 'i' } },
+            ]);
+        }
+
+        if (query.sort) {
+            const sortMethod = query.sort.split(':');
+            const field = sortMethod[0];
+            const order = sortMethod[1] as 'asc' | 'desc';
+
+            res = res.sort({ [field]: order === 'desc' ? -1 : 1 });
+        } else {
+            res = res.sort({ createdAt: -1 });
+        }
+
+        return res.populate(['carId', 'userId']).exec();
     }
 }

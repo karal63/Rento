@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { Status } from 'src/enums/status.enum';
 
 export type RentDocument = HydratedDocument<Rent>;
 
@@ -27,10 +28,9 @@ export class Rent {
     pickupTime: string;
 
     @Prop({
-        enum: ['PENDING', 'CONFIRMED', 'CANCELLED'],
-        default: 'CONFIRMED',
+        enum: Object.keys(Status),
     })
-    status?: string;
+    status?: Status;
 
     @Prop({ required: true, default: () => Date.now() })
     createdAt?: number;

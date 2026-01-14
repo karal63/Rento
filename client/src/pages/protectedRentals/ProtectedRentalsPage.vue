@@ -1,10 +1,12 @@
 <script setup lang="ts">
     import { useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
+    import { useFilterRentals } from '@/features/filterRentals';
+    import { useSortRentals } from '@/features/sortRentals';
     import type { Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
-    import { RentalsHeader, RentalsSort, RentalsTable } from '@/widgets';
+    import { RentalsFilter, RentalsHeader, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
-    import { onMounted } from 'vue';
+    import { computed, onMounted } from 'vue';
 
     const emit = defineEmits<{
         (e: 'setBreadcrumbs', data: Breadcrumb[]): void;
@@ -16,7 +18,15 @@
         },
     ];
 
-    const { loading, rentals } = useRentalsQuery();
+    const filters = useFilterRentals();
+    const sorting = useSortRentals();
+
+    const queryParams = computed(() => ({
+        ...filters,
+        ...sorting,
+    }));
+
+    const { loading, rentals } = useRentalsQuery(queryParams);
 
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
@@ -24,9 +34,10 @@
 
     const columns: TableColumn<RentalWithAllDetails>[] = [
         {
-            key: 'name',
-            header: 'Name',
-            render: rental => rental.carId.name,
+            key: 'rentalPeriod',
+            header: 'Period',
+            render: rental =>
+                `${new Date(rental.rentFrom).toLocaleString()} - ${new Date(rental.rentTo).toLocaleString()}`,
             width: '35%',
         },
         {
@@ -36,14 +47,14 @@
             width: '15%',
         },
         {
+            key: 'name',
+            header: 'Car name',
+            render: rental => rental.carId.name,
+        },
+        {
             key: 'createdAt',
             header: 'Created At',
             render: rental => new Date(rental.createdAt).toLocaleString(),
-        },
-        {
-            key: 'updatedAt',
-            header: 'Updated At',
-            render: rental => new Date(rental.updatedAt).toLocaleString(),
         },
         {
             key: 'createdBy',
@@ -55,7 +66,14 @@
 
 <template>
     <RentalsHeader />
-    <RentalsSort />
+    <RentalsFilter
+        @setStatus="filters.status = $event"
+        @setSearch="filters.search = $event"
+        @setSort="sorting.sort = $event"
+        :status="filters.status"
+        :search="filters.search"
+        :sort="sorting.sort"
+    />
 
     <RentalsTable :rows="rentals" :columns="columns" :loading="loading">
         <template #actions="{ rental }">

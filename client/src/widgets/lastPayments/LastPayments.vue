@@ -3,12 +3,13 @@
     import { useAdminDashboardStore } from '@/features/adminDashboard';
     import { Icon } from '@iconify/vue';
     import { useI18n } from 'vue-i18n';
+    import { RENTAL_STATUS } from '@/entities/rental';
 
     const adminDashboard = useAdminDashboardStore();
     const { t } = useI18n();
 
     const getPaymentUI = (payment: Rental) => {
-        const isConfirmed = payment.status === 'CONFIRMED';
+        const isConfirmed = payment.status !== RENTAL_STATUS.Cancelled;
 
         return {
             sign: isConfirmed ? '+' : '-',

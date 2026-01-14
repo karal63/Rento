@@ -28,7 +28,24 @@
         </thead>
         <tbody>
             <tr v-if="loading">
-                <td :colspan="columns.length + 1">Loading...</td>
+                <td :colspan="columns.length + 1">
+                    <table v-for="(_, i) in 6" :key="i" class="w-full">
+                        <tbody>
+                            <tr>
+                                <td
+                                    v-for="col in columns"
+                                    :key="col.key"
+                                    :style="{ width: col.width }"
+                                    class="px-3 py-3"
+                                >
+                                    <div class="bg-main-gray-bg h-10 skeleton"></div>
+                                </td>
+
+                                <td class="w-[5%]"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
             </tr>
 
             <tr

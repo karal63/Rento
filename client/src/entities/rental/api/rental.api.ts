@@ -3,8 +3,10 @@ import type { AxiosResponse } from 'axios';
 import type {
     CarAvailability,
     Rental,
+    RentalStatus,
     RentalWithAllDetails,
     RentalWithCar,
+    SortMethod,
 } from '../model/rental.types';
 import {
     API_GET_CAR_AVAILABILITY,
@@ -28,6 +30,14 @@ export const apiGetCarAvailability = async (
     return await axiosInstance.get(API_GET_CAR_AVAILABILITY(carId));
 };
 
-export const apiGetAllRentals = async (): Promise<AxiosResponse<RentalWithAllDetails[]>> => {
-    return await axiosInstance.get(API_GET_RENTALS);
+export const apiGetAllRentals = async ({
+    status,
+    search,
+    sort,
+}: {
+    status: RentalStatus | '';
+    search: string;
+    sort: SortMethod | null;
+}): Promise<AxiosResponse<RentalWithAllDetails[]>> => {
+    return await axiosInstance.get(API_GET_RENTALS(status, search, sort));
 };

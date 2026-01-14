@@ -5,6 +5,7 @@ import { Car } from 'src/schemas/carSchema';
 import { Rent } from 'src/schemas/rentSchema';
 import { UpdateDto } from './dto/update.dto';
 import { RentalRepo } from './rental.repository';
+import { GetAllDto } from './dto/getAll.dto';
 
 @Injectable()
 export class RentService {
@@ -98,7 +99,7 @@ export class RentService {
         return updatedRental;
     }
 
-    async getRentals() {
-        return this.rentalRepo.getAllRentals();
+    async getRentals(query: GetAllDto) {
+        return this.rentalRepo.getAllRentals(query);
     }
 }
