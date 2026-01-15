@@ -11,7 +11,7 @@ import { Role } from 'src/enums/role.enum';
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
-    @Roles(Role.Admin, Role.User)
+    @Roles(Role.Admin)
     @Get('all')
     async get() {
         return await this.userService.get();

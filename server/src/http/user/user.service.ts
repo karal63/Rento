@@ -72,7 +72,13 @@ export class UserService {
     }
 
     async get() {
-        return await this.userModel.find();
+        const users = await this.userModel.find();
+        const readyUsers = users.map((u) => {
+            const newUser = u.toObject();
+            delete newUser.password;
+            return newUser;
+        });
+        return readyUsers;
     }
 
     // LEARN HOW IT WORKS
