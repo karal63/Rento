@@ -29,6 +29,7 @@ export class Rent {
 
     @Prop({
         enum: Object.keys(Status),
+        default: Status.Pending,
     })
     status?: Status;
 
