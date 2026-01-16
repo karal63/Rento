@@ -8,7 +8,7 @@
 </script>
 
 <template>
-    <section v-if="adminDashboard.loading" class="grid grid-cols-2 gap-4 md:gap-7">
+    <section v-if="adminDashboard.loading" class="grid grid-cols-2 gap-4 xl:gap-7">
         <SkeletonCard v-for="(_, i) in 4" :key="i" />
     </section>
     <section v-else class="grid grid-cols-2 gap-4 xl:gap-7">
