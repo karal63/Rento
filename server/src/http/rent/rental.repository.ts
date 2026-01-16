@@ -100,7 +100,12 @@ export class RentalRepo {
         const sixMonthsAgo = new Date();
         sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
 
-        const res = await this.rentalModel.aggregate([
+        const res: {
+            _id: string;
+            confirmedCount: number;
+            cancelledCount: number;
+            isoDate: string;
+        }[] = await this.rentalModel.aggregate([
             {
                 $match: {
                     createdAt: { $gte: sixMonthsAgo.getTime() }, // assuming timestamp

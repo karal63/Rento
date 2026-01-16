@@ -6,6 +6,7 @@ import { SignupDto } from '../auth/dto/signup.dto';
 import * as argon from '@node-rs/argon2';
 import { TelegramLoginQuery } from '../auth/dto/telegramQuery.type';
 import { EditDto } from './dto/edit.dto';
+import { GetUsersDto } from './dto/getUsers.dto';
 
 @Injectable()
 export class UserService {
@@ -71,24 +72,36 @@ export class UserService {
         );
     }
 
-    async get() {
-        const users = await this.userModel.find();
-        const readyUsers = users.map((u) => {
+    async get(query: GetUsersDto) {
+        let res = this.userModel.find();
+
+        if (query.search) {
+            res = res.find({
+                $or: [
+                    { name: { $regex: query.search, $options: 'i' } },
+                    { secondName: { $regex: query.search, $options: 'i' } },
+                    { email: { $regex: query.search, $options: 'i' } },
+                    { phoneNumber: { $regex: query.search, $options: 'i' } },
+                ],
+            });
+        }
+
+        if (query.sort) {
+            const sortMethod = query.sort.split(':');
+            const field = sortMethod[0];
+            const order = sortMethod[1] as 'asc' | 'desc';
+
+            res = res.sort({ [field]: order === 'desc' ? -1 : 1 });
+        } else {
+            res = res.sort({ createdAt: -1 });
+        }
+
+        const readyUsers = (await res.exec()).map((u) => {
             const newUser = u.toObject();
             delete newUser.password;
             return newUser;
         });
+
         return readyUsers;
     }
-
-    // LEARN HOW IT WORKS
-    // async findByAnyId(id: string): Promise<User | null> {
-    //     const query: any[] = [{ telegram_id: id }];
-
-    //     if (Types.ObjectId.isValid(id)) {
-    //         query.push({ _id: id });
-    //     }
-
-    //     return this.userModel.findOne({ $or: query });
-    // }
 }
