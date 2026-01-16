@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Patch, Query } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Query,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { EditDto } from './dto/edit.dto';
 import { GetUser } from 'src/common/decorators/getUser.decorator';
@@ -23,5 +31,14 @@ export class UserController {
     @Patch('edit')
     async edit(@Body() body: EditDto, @GetUser() user: UserPayload) {
         return await this.userService.update(user.id, body);
+    }
+
+    @Roles(Role.Admin)
+    @ApiOperation({ summary: 'Delete user' })
+    @ApiResponse({ status: 200, description: 'Returns success message' })
+    @Delete('delete/:id')
+    async delete(@Param('id') userId: string) {
+        await this.userService.delete(userId);
+        return { success: true };
     }
 }

@@ -82,10 +82,10 @@
     />
 
     <RentalsTable :rows="rentals" :columns="columns" :loading="loading">
-        <template #actions="{ rental }">
+        <template #actions="{ row }">
             <div class="w-[120px] bg-main-bg rounded-md">
                 <button
-                    @click="console.log(rental._id)"
+                    @click="console.log(row._id)"
                     class="px-3 py-2 w-full text-left hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
                 >
                     <Icon icon="lucide:edit" class="text-xl" />

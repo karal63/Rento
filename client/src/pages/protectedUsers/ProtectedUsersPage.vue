@@ -17,6 +17,10 @@
     }));
 
     const { users, loading } = useUsersQuery(queryParams);
+
+    function onUserDeleted(userId: string) {
+        users.value = users.value.filter(user => user._id !== userId);
+    }
 </script>
 
 <template>
@@ -34,5 +38,5 @@
         :sort="sorting.sort"
     />
 
-    <UsersTable :users="users" :loading="loading" />
+    <UsersTable :users="users" :loading="loading" @deleteUser="onUserDeleted($event)" />
 </template>

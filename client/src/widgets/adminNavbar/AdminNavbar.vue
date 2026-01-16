@@ -15,7 +15,11 @@
         <Breadcrumbs :breadcrumbs="breadcrumps" />
         <div class="flex items-center gap-5">
             <RouterLink to="/" class="flex-center">
-                <Button size="sm" class="hidden md:flex items-center justify-between gap-3">
+                <Button
+                    size="sm"
+                    color="transparent"
+                    class="hidden md:flex items-center justify-between gap-3 border border-main-border"
+                >
                     Back to client view
                     <Icon icon="streamline-cyber:door-exit" class="text-2xl" />
                 </Button>
