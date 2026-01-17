@@ -127,6 +127,7 @@
         },
 
         "admin_page": {
+            "back_to_client_view": "Powrót do widoku klienta",
             "total_rentals": "Łączna liczba wynajmów",
             "total_rentals_this_month": "Łączna liczba wynajmów w tym miesiącu",
             "total_users": "Łączna liczba użytkowników",
@@ -165,7 +166,54 @@
             "ACTIVE": "Aktywny",
             "CANCELLED": "Anulowany",
             "COMPLETED": "Zakończony",
-            "PENDING": "Oczekujący"
+            "PENDING": "Oczekujący",
+            "ALL": "Wszystkie"
+        },
+
+        "acceptance_modal": {
+            "cancellation_title": "Potwierdź anulowanie",
+            "cancellation_desc": "Czy na pewno chcesz anulować ten wynajem? Tej operacji nie można cofnąć.",
+            "deletion_title": "Potwierdź usunięcie",
+            "deletion_desc": "Czy na pewno chcesz usunąć"
+        },
+
+        "protected_rentals_page": {
+            "rentals": "Wynajmy",
+            "all_rentals": "Wszystkie wynajmy",
+            "period": "Okres",
+            "status": "Status",
+            "car_name": "Nazwa samochodu",
+            "new_rental": "Nowy wynajem",
+            "edit": "Edytuj",
+            "cancel": "Anuluj"
+        },
+
+        "table": {
+            "created_at": "Utworzono",
+            "created_by": "Utworzone przez",
+            "name": "Nazwa"
+        },
+
+        "sort": {
+            "by_date_latest": "Według daty (od najnowszych)",
+            "by_date_oldest": "Według daty (od najstarszych)",
+            "search": "Szukaj"
+        },
+
+        "protected_users_page": {
+            "users": "Użytkownicy",
+            "all_users": "Wszyscy użytkownicy",
+
+            "auth_provider": "Dostawca uwierzytelniania",
+            "email": "E-mail",
+            "phone_number": "Numer telefonu",
+            "roles": "Role",
+
+            "new_user": "Nowy użytkownik",
+            "edit": "Edytuj",
+            "delete": "Usuń",
+
+            "select_status": "Wybierz status"
         }
     }
 }

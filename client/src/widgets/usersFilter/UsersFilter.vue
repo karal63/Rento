@@ -63,7 +63,7 @@
                     size="sm"
                     color="transparent"
                     :disableUppercase="true"
-                    class="h-full border border-main-border flex-between gap-2 w-56"
+                    class="h-full border border-main-border flex-between gap-2 w-72"
                 >
                     {{ sort ? sort.label : t('app.sort.by_date_latest') }}
                     <Icon

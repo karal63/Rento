@@ -127,6 +127,7 @@
         },
 
         "admin_page": {
+            "back_to_client_view": "Back to client view",
             "total_rentals": "Total rentals",
             "total_rentals_this_month": "Total rentals this month",
             "total_users": "Total users",
@@ -165,7 +166,8 @@
             "ACTIVE": "Active",
             "CANCELLED": "Cancelled",
             "COMPLETED": "Completed",
-            "PENDING": "Pending"
+            "PENDING": "Pending",
+            "ALL": "All"
         },
 
         "acceptance_modal": {
@@ -181,7 +183,6 @@
             "period": "Period",
             "status": "Status",
             "car_name": "Car name",
-
             "new_rental": "New rental",
             "edit": "Edit",
             "cancel": "Cancel"
@@ -210,7 +211,9 @@
 
             "new_user": "New user",
             "edit": "Edit",
-            "delete": "Delete"
+            "delete": "Delete",
+
+            "select_status": "Select status"
         }
     }
 }

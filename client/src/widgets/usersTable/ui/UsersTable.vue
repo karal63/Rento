@@ -21,37 +21,37 @@
     const columns: TableColumn<User>[] = [
         {
             key: 'name',
-            header: 'Name',
+            header: t('app.table.name'),
             render: user => user.name,
             width: '15%',
         },
         {
             key: 'authProvider',
-            header: 'Auth provider',
+            header: t('app.protected_users_page.auth_provider'),
             render: user => user.auth_provider,
             width: '10%',
         },
         {
             key: 'email',
-            header: 'Email',
+            header: t('app.protected_users_page.email'),
             render: user => user.email ?? '-',
             width: '15%',
         },
         {
             key: 'phoneNumber',
-            header: 'Phone number',
+            header: t('app.protected_users_page.phone_number'),
             render: user => user.phoneNumber ?? '-',
             width: '15%',
         },
         {
             key: 'createdAt',
-            header: 'Created At',
+            header: t('app.table.created_at'),
             render: user => new Date(user.createdAt).toLocaleString(),
             width: '15%',
         },
         {
             key: 'roles',
-            header: 'Roles',
+            header: t('app.protected_users_page.roles'),
             render: user => user.roles.join(', '),
             width: '10%',
         },
