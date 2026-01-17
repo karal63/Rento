@@ -1,19 +1,19 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
     import { computed, onMounted, ref } from 'vue';
-    import { cancelRental } from '@/features/cancelRental';
-    import { useRentalStore, type RentalWithCar } from '@/entities/rental';
+    import { RENTAL_STATUS, useRentalStore, type RentalWithCar } from '@/entities/rental';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { useEditRentalStore } from '@/features/editRental';
     import { useI18n } from 'vue-i18n';
+    import { cancelRental } from '@/features/cancelRental';
 
-    const rentalsStrore = useRentalStore();
+    const rentalsStore = useRentalStore();
     const acceptanceModalStore = useAcceptanceModalStore();
     const editRentalStore = useEditRentalStore();
     const { t } = useI18n();
 
     const props = defineProps<{
-        status: 'active' | 'pending' | 'complited';
+        status: 'active' | 'pending' | 'completed';
     }>();
 
     const now = new Date();
@@ -31,15 +31,27 @@
 
     onMounted(async () => {
         loading.value = true;
-        await rentalsStrore.getRentals();
+        await rentalsStore.getRentals();
         loading.value = false;
     });
 
-    const cancel = async (rental: RentalWithCar) => {
+    const cancel = async (id: string) => {
         acceptanceModalStore.open({
             title: 'Confirm cancellation',
             message: 'Are you sure you want to cancel this rental? This action cannot be undone.',
-            onConfirm: () => cancelRental(rental),
+            onConfirm: async () => {
+                await cancelRental(id);
+                rentalsStore.rentals = rentalsStore.rentals.map((rental: RentalWithCar) => {
+                    if (rental._id === id) {
+                        return {
+                            ...rental,
+                            status: RENTAL_STATUS.Cancelled,
+                        };
+                    }
+
+                    return rental;
+                });
+            },
         });
     };
 
@@ -66,7 +78,7 @@
     };
 
     const filteredRentals = computed(() => {
-        return rentalsStrore.rentals
+        return rentalsStore.rentals
             .filter(rental => {
                 return props.status === 'active'
                     ? checkIfActive(rental)
@@ -170,7 +182,7 @@
                     </button>
 
                     <button
-                        @click="cancel(rental)"
+                        @click="cancel(rental._id)"
                         class="p-3 md:p-2 rounded-md bg-red-500/10 md:bg-transparent hover:bg-red-500/20 text-red-500 cursor-pointer"
                         title="Cancel rental"
                     >

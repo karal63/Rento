@@ -2,7 +2,6 @@
     import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { cancelRental } from '@/features/cancelRental';
-    import { deleteRental } from '@/features/deleteRental';
     import { useFilterRentals } from '@/features/filterRentals';
     import { useSortRentals } from '@/features/sortRentals';
     import { Button, type Breadcrumb } from '@/shared/ui';
@@ -82,8 +81,8 @@
 
     const handleDelete = (rental: RentalWithAllDetails) => {
         acceptanceModalStore.open({
-            title: 'Confirm canceling',
-            message: `Are you sure you want to cancel this rental?`,
+            title: 'Confirm cancellation',
+            message: `Are you sure you want to cancel this rental? This action cannot be undone.`,
             async onConfirm() {
                 await cancelRental(rental._id);
                 onRentalCancelled(rental._id);

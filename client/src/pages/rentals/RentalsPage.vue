@@ -15,7 +15,7 @@
         <RentalsList status="pending" />
 
         <h1 class="text-2xl mt-10 mb-5">{{ t('app.rentals_page.complited_title') }}</h1>
-        <RentalsList status="complited" />
+        <RentalsList status="completed" />
 
         <EditRentalModal />
     </section>
