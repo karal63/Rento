@@ -3,6 +3,9 @@
     import { Button, Dropdown, Input } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 
     const emit = defineEmits<{
         (e: 'setSearch', status: string): void;
@@ -17,21 +20,21 @@
 
     const sortByList = [
         {
-            label: 'By date (latest first)',
+            label: t('app.sort.by_date_latest'),
             callback: () =>
                 emit('setSort', {
                     field: 'createdAt',
                     order: 'desc',
-                    label: 'By date (latest first)',
+                    label: t('app.sort.by_date_latest'),
                 }),
         },
         {
-            label: 'By date (oldest first)',
+            label: t('app.sort.by_date_oldest'),
             callback: () =>
                 emit('setSort', {
                     field: 'createdAt',
                     order: 'asc',
-                    label: 'By date (oldest first)',
+                    label: t('app.sort.by_date_oldest'),
                 }),
         },
     ];
@@ -46,7 +49,7 @@
                 type="search"
                 @input="$emit('setSearch', $event.target.value)"
                 size="medium"
-                placeholder="Search"
+                :placeholder="t('app.sort.search')"
                 icon="icon-park-outline:search"
             />
 
@@ -62,7 +65,7 @@
                     :disableUppercase="true"
                     class="h-full border border-main-border flex-between gap-2 w-56"
                 >
-                    {{ sort ? sort.label : 'By date (latest first)' }}
+                    {{ sort ? sort.label : t('app.sort.by_date_latest') }}
                     <Icon
                         icon="weui:arrow-filled"
                         class="transform rotate-90 text-xl text-main-gray"

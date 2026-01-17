@@ -170,11 +170,14 @@
 
         "acceptance_modal": {
             "cancellation_title": "Confirm cancellation",
-            "cancellation_desc": "Are you sure you want to cancel this rental? This action cannot be undone."
+            "cancellation_desc": "Are you sure you want to cancel this rental? This action cannot be undone.",
+            "deletion_title": "Confirm deletion",
+            "deletion_desc": "Are you sure you want to delete"
         },
 
         "protected_rentals_page": {
             "rentals": "Rentals",
+            "all_rentals": "All rentals",
             "period": "Period",
             "status": "Status",
             "car_name": "Car name",
@@ -186,7 +189,28 @@
 
         "table": {
             "created_at": "Created At",
-            "created_by": "Created By"
+            "created_by": "Created By",
+            "name": "Name"
+        },
+
+        "sort": {
+            "by_date_latest": "By date (latest first)",
+            "by_date_oldest": "By date (oldest first)",
+            "search": "Search"
+        },
+
+        "protected_users_page": {
+            "users": "Users",
+            "all_users": "All users",
+
+            "auth_provider": "Auth provider",
+            "email": "Email",
+            "phone_number": "Phone number",
+            "roles": "Roles",
+
+            "new_user": "New user",
+            "edit": "Edit",
+            "delete": "Delete"
         }
     }
 }
