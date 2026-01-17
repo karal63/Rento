@@ -9,6 +9,7 @@
     import { ProtectedHeader, RentalsFilter, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
     import { computed, onMounted } from 'vue';
+    import { useI18n } from 'vue-i18n';
 
     const emit = defineEmits<{
         (e: 'setBreadcrumbs', data: Breadcrumb[]): void;
@@ -21,6 +22,7 @@
     ];
 
     const acceptanceModalStore = useAcceptanceModalStore();
+    const { t } = useI18n();
     const filters = useFilterRentals();
     const sorting = useSortRentals();
 
@@ -81,8 +83,8 @@
 
     const handleDelete = (rental: RentalWithAllDetails) => {
         acceptanceModalStore.open({
-            title: 'Confirm cancellation',
-            message: `Are you sure you want to cancel this rental? This action cannot be undone.`,
+            title: t('app.acceptance_modal.cancellation_title'),
+            message: t('app.acceptance_modal.cancellation_desc'),
             async onConfirm() {
                 await cancelRental(rental._id);
                 onRentalCancelled(rental._id);

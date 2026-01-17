@@ -166,6 +166,11 @@
             "CANCELLED": "Cancelled",
             "COMPLETED": "Completed",
             "PENDING": "Pending"
+        },
+
+        "acceptance_modal": {
+            "cancellation_title": "Confirm cancellation",
+            "cancellation_desc": "Are you sure you want to cancel this rental? This action cannot be undone."
         }
     }
 }
