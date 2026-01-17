@@ -1,78 +1,95 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
     import { computed, onMounted, ref } from 'vue';
-    import { cancelRental } from '@/features/cancelRental';
-    import { useRentalStore, type RentalWithCar } from '@/entities/rental';
+    import { RENTAL_STATUS, useRentalStore, type RentalWithCar } from '@/entities/rental';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { useEditRentalStore } from '@/features/editRental';
     import { useI18n } from 'vue-i18n';
+    import { cancelRental } from '@/features/cancelRental';
 
-    const rentalsStrore = useRentalStore();
+    type RentalClass = {
+        container: string;
+        statusText: string;
+    };
+
+    const rentalsStore = useRentalStore();
     const acceptanceModalStore = useAcceptanceModalStore();
     const editRentalStore = useEditRentalStore();
     const { t } = useI18n();
 
     const props = defineProps<{
-        status: 'active' | 'pending' | 'complited';
+        status: 'active' | 'pending' | 'completed' | 'cancelled';
     }>();
 
     const now = new Date();
     const loading = ref(false);
 
-    const getClasses = computed(() => {
+    const getClasses = computed<RentalClass>(() => {
         if (props.status === 'active') {
-            return 'border-green-500/20 bg-green-500/10 ';
+            return {
+                container: 'border-green-500/20 bg-green-500/10',
+                statusText: 'text-green-500',
+            };
         } else if (props.status === 'pending') {
-            return 'border-yellow-500/20 bg-yellow-500/10';
+            return {
+                container: 'border-yellow-500/20 bg-yellow-500/10',
+                statusText: 'text-yellow-500',
+            };
+        } else if (props.status === 'cancelled') {
+            return {
+                container: 'border-red-500/20 bg-red-500/10',
+                statusText: 'text-red-500',
+            };
         }
 
-        return 'border-main-border bg-main-gray-bg';
+        return {
+            container: 'border-main-border bg-main-gray-bg',
+            statusText: 'text-main-gray',
+        };
     });
 
     onMounted(async () => {
         loading.value = true;
-        await rentalsStrore.getRentals();
+        await rentalsStore.getRentals();
         loading.value = false;
     });
 
-    const cancel = async (rental: RentalWithCar) => {
+    const cancel = async (id: string) => {
         acceptanceModalStore.open({
             title: 'Confirm cancellation',
             message: 'Are you sure you want to cancel this rental? This action cannot be undone.',
-            onConfirm: () => cancelRental(rental),
+            onConfirm: async () => {
+                await cancelRental(id);
+                rentalsStore.rentals = rentalsStore.rentals.map((rental: RentalWithCar) => {
+                    if (rental._id === id) {
+                        return {
+                            ...rental,
+                            status: RENTAL_STATUS.Cancelled,
+                        };
+                    }
+
+                    return rental;
+                });
+            },
         });
     };
 
     const edit = async (rental: RentalWithCar) => editRentalStore.open(rental);
 
-    const checkIfActive = (rental: RentalWithCar) => {
-        const newStart = new Date(rental.rentFrom);
-        const newEnd = new Date(rental.rentTo);
-
-        return now >= newStart && now <= newEnd && rental.status !== 'CANCELLED';
-    };
-
-    const checkIfPending = (rental: RentalWithCar) => {
-        const newStart = new Date(rental.rentFrom);
-
-        return now < newStart && rental.status !== 'CANCELLED';
-    };
-
     const canChange = (rental: RentalWithCar) => {
         const newStart = new Date(rental.rentFrom);
         newStart.setDate(newStart.getDate() - 1);
 
-        return now < newStart && rental.status !== 'CANCELLED';
+        return now < newStart && rental.status === RENTAL_STATUS.Pending;
     };
 
     const filteredRentals = computed(() => {
-        return rentalsStrore.rentals
+        return rentalsStore.rentals
             .filter(rental => {
-                return props.status === 'active'
-                    ? checkIfActive(rental)
-                    : props.status === 'pending'
-                      ? checkIfPending(rental)
-                      : !checkIfActive(rental) && !checkIfPending(rental);
+                if (props.status === 'active') return rental.status === RENTAL_STATUS.Active;
+                if (props.status === 'pending') return rental.status === RENTAL_STATUS.Pending;
+                if (props.status === 'completed') return rental.status === RENTAL_STATUS.Completed;
+                if (props.status === 'cancelled') return rental.status === RENTAL_STATUS.Cancelled;
             })
             .sort((a: RentalWithCar, b: RentalWithCar) => b.createdAt - a.createdAt);
     });
@@ -86,7 +103,7 @@
         <li v-else v-for="rental in filteredRentals" :key="rental._id">
             <div
                 class="group relative border rounded-md p-3 md:p-5 flex flex-col gap-3"
-                :class="getClasses"
+                :class="getClasses.container"
             >
                 <!-- Main content -->
                 <div class="md:flex md:flex-row md:items-center gap-4">
@@ -109,14 +126,7 @@
                                     <span class="text-main-gray">
                                         {{ t('app.rentals_page.status') }}:
                                     </span>
-                                    <span
-                                        class="font-semibold"
-                                        :class="
-                                            rental.status === 'CANCELLED'
-                                                ? 'text-red-500'
-                                                : 'text-green-500'
-                                        "
-                                    >
+                                    <span class="font-semibold" :class="getClasses.statusText">
                                         {{ rental.status }}
                                     </span>
                                 </p>
@@ -170,7 +180,7 @@
                     </button>
 
                     <button
-                        @click="cancel(rental)"
+                        @click="cancel(rental._id)"
                         class="p-3 md:p-2 rounded-md bg-red-500/10 md:bg-transparent hover:bg-red-500/20 text-red-500 cursor-pointer"
                         title="Cancel rental"
                     >

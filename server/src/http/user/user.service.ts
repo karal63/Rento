@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+    ConflictException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/schemas/userSchema';
@@ -7,10 +11,14 @@ import * as argon from '@node-rs/argon2';
 import { TelegramLoginQuery } from '../auth/dto/telegramQuery.type';
 import { EditDto } from './dto/edit.dto';
 import { GetUsersDto } from './dto/getUsers.dto';
+import { UserRepo } from './user.repository';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+    constructor(
+        @InjectModel(User.name) private userModel: Model<User>,
+        private readonly userRepo: UserRepo,
+    ) {}
     async create(candidate: SignupDto) {
         const existingUser = await this.findByEmail(candidate.email);
 
@@ -103,5 +111,11 @@ export class UserService {
         });
 
         return readyUsers;
+    }
+
+    async delete(id: string) {
+        const existingUser = await this.userRepo.findById(id);
+        if (!existingUser) throw new NotFoundException('User not found');
+        await this.userRepo.delete(id);
     }
 }

@@ -23,4 +23,12 @@ export class UserRepo {
             .find({ createdAt: { $gt: firstDate } })
             .countDocuments();
     }
+
+    async findById(id: string) {
+        return await this.userModel.findById(id);
+    }
+
+    async delete(id: string) {
+        await this.userModel.findByIdAndDelete(id);
+    }
 }

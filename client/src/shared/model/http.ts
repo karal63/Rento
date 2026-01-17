@@ -13,6 +13,7 @@ export const API_POST_TOKEN_REFRESH = `/auth/refresh`;
 export const API_PATCH_USER_EDIT = `/user/edit`;
 export const API_GET_USERS_LIST = (search: string, sort: SortMethod | null) =>
     `/user/all?search=${search}&sort=${sort?.field}:${sort?.order}`;
+export const API_DELETE_USER = (id: string) => `/user/delete/${id}`;
 
 // PAYMENT
 export const API_POST_PAYMENT_CREATE = `/payment/create-payment-intent`;
@@ -29,6 +30,7 @@ export const API_GET_RENTALS = (
     sort: SortMethod | null
 ) =>
     `/rent/all?status=${status}&search=${search}&sort=${sort ? sort.field + ':' + sort.order : ''}`;
+export const API_DELETE_RENTAL = (id: string) => `/rent/delete/${id}`;
 
 // ADMIN DASHBOARD
 export const API_GET_DASHBOARD_SUMMARY = '/admin/dashboard/summary';

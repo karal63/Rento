@@ -26,8 +26,8 @@
                     <Icon icon="pepicons-pencil:dots-y" />
                 </button>
 
-                <template #actions="slotProps">
-                    <slot name="actions" v-bind="slotProps" />
+                <template #actions>
+                    <slot name="actions" v-bind="{ row }" />
                 </template>
             </Dropdown>
         </div>

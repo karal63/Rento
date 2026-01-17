@@ -28,7 +28,7 @@ export class Rent {
     pickupTime: string;
 
     @Prop({
-        enum: Object.keys(Status),
+        enum: Object.values(Status),
         default: Status.Pending,
     })
     status?: Status;

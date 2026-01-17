@@ -2,14 +2,24 @@
     import { useUsersQuery } from '@/entities/user';
     import { useFilterUsers } from '@/features/filterUsers';
     import { useSortUsers } from '@/features/sortUsers';
-    import { Button } from '@/shared/ui';
+    import { Button, type Breadcrumb } from '@/shared/ui';
     import { ProtectedHeader, UsersFilter } from '@/widgets';
     import { UsersTable } from '@/widgets/usersTable';
     import { Icon } from '@iconify/vue';
-    import { computed } from 'vue';
+    import { computed, onMounted } from 'vue';
 
     const filters = useFilterUsers();
     const sorting = useSortUsers();
+
+    const emit = defineEmits<{
+        (e: 'setBreadcrumbs', data: Breadcrumb[]): void;
+    }>();
+
+    const breadcrumbs = [
+        {
+            label: 'Users',
+        },
+    ];
 
     const queryParams = computed(() => ({
         ...filters,
@@ -17,6 +27,14 @@
     }));
 
     const { users, loading } = useUsersQuery(queryParams);
+
+    function onUserDeleted(userId: string) {
+        users.value = users.value.filter(user => user._id !== userId);
+    }
+
+    onMounted(async () => {
+        emit('setBreadcrumbs', breadcrumbs);
+    });
 </script>
 
 <template>
@@ -34,5 +52,5 @@
         :sort="sorting.sort"
     />
 
-    <UsersTable :users="users" :loading="loading" />
+    <UsersTable :users="users" :loading="loading" @deleteUser="onUserDeleted($event)" />
 </template>

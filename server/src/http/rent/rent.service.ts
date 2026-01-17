@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    ForbiddenException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Car } from 'src/schemas/carSchema';
@@ -6,6 +11,8 @@ import { Rent } from 'src/schemas/rentSchema';
 import { UpdateDto } from './dto/update.dto';
 import { RentalRepo } from './rental.repository';
 import { GetAllDto } from './dto/getAll.dto';
+import { Role } from 'src/enums/role.enum';
+import { UserPayload } from 'src/common/types/user.type';
 
 @Injectable()
 export class RentService {
@@ -40,10 +47,6 @@ export class RentService {
         });
     }
 
-    async findRentalById(id: string) {
-        return await this.rentModel.findById(id);
-    }
-
     async getRentsByCarId(carId: string) {
         return await this.rentModel.find({
             carId: new Types.ObjectId(carId),
@@ -66,12 +69,6 @@ export class RentService {
             (rental) =>
                 rental.rentFrom >= rentalFrom && rental.rentTo <= rentalTo,
         );
-    }
-
-    async cancelRental(rentalId: string) {
-        await this.rentModel.findByIdAndUpdate(rentalId, {
-            $set: { status: 'CANCELLED', cancelledAt: Date.now() },
-        });
     }
 
     async updateRental(rentalId: string, userId: string, body: UpdateDto) {
@@ -101,5 +98,31 @@ export class RentService {
 
     async getRentals(query: GetAllDto) {
         return this.rentalRepo.getAllRentals(query);
+    }
+
+    async cancelRental(id: string, user: UserPayload) {
+        const rental = await this.rentalRepo.findRentalById(id);
+        if (!rental) throw new NotFoundException('Rental not found');
+
+        const isPrivileged =
+            user.roles.includes(Role.Admin) ||
+            user.roles.includes(Role.Employee);
+
+        if (!isPrivileged) {
+            if (rental.userId.toString() !== user.id) {
+                throw new ForbiddenException("You can't cancel this rental");
+            }
+
+            const cancelDeadline = new Date(rental.rentFrom);
+            cancelDeadline.setDate(cancelDeadline.getDate() - 1);
+
+            if (new Date() > cancelDeadline) {
+                throw new BadRequestException(
+                    "You can't cancel a rental that is in past or that will be active in 24h",
+                );
+            }
+        }
+
+        await this.rentalRepo.cancel(id);
     }
 }
