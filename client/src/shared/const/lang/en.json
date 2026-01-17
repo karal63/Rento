@@ -100,9 +100,12 @@
         "rentals_page": {
             "active_title": "Active",
             "pending_title": "Pending",
-            "complited_title": "History",
-            "complited": "complited",
+            "completed_title": "History",
+            "cancelled_title": "Cancelled",
+            "completed": "complited",
             "active": "active",
+            "pending": "pending",
+            "cancelled": "cancelled",
             "status": "Status",
             "period": "Period",
             "total": "Total",
@@ -156,6 +159,13 @@
             "switch_theme": "Switch theme",
             "dark": "Dark",
             "light": "Light"
+        },
+
+        "status": {
+            "ACTIVE": "Active",
+            "CANCELLED": "Cancelled",
+            "COMPLETED": "Completed",
+            "PENDING": "Pending"
         }
     }
 }
