@@ -1,8 +1,6 @@
 import type { Car } from '@/entities/car';
 import type { User } from '@/entities/user';
 
-type RentalDBStatus = 'CONFIRMED' | 'CANCELLED';
-
 export type Rental = {
     _id: string;
     carId: string;
@@ -12,7 +10,7 @@ export type Rental = {
     pickupLocation: string;
     pickupTime: string;
     totalPrice: number;
-    status: RentalDBStatus;
+    status: RentalStatus;
     createdAt: number;
     updatedAt: number;
     cancelledAt: number;

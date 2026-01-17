@@ -7,26 +7,45 @@
     import { useI18n } from 'vue-i18n';
     import { cancelRental } from '@/features/cancelRental';
 
+    type RentalClass = {
+        container: string;
+        statusText: string;
+    };
+
     const rentalsStore = useRentalStore();
     const acceptanceModalStore = useAcceptanceModalStore();
     const editRentalStore = useEditRentalStore();
     const { t } = useI18n();
 
     const props = defineProps<{
-        status: 'active' | 'pending' | 'completed';
+        status: 'active' | 'pending' | 'completed' | 'cancelled';
     }>();
 
     const now = new Date();
     const loading = ref(false);
 
-    const getClasses = computed(() => {
+    const getClasses = computed<RentalClass>(() => {
         if (props.status === 'active') {
-            return 'border-green-500/20 bg-green-500/10 ';
+            return {
+                container: 'border-green-500/20 bg-green-500/10',
+                statusText: 'text-green-500',
+            };
         } else if (props.status === 'pending') {
-            return 'border-yellow-500/20 bg-yellow-500/10';
+            return {
+                container: 'border-yellow-500/20 bg-yellow-500/10',
+                statusText: 'text-yellow-500',
+            };
+        } else if (props.status === 'cancelled') {
+            return {
+                container: 'border-red-500/20 bg-red-500/10',
+                statusText: 'text-red-500',
+            };
         }
 
-        return 'border-main-border bg-main-gray-bg';
+        return {
+            container: 'border-main-border bg-main-gray-bg',
+            statusText: 'text-main-gray',
+        };
     });
 
     onMounted(async () => {
@@ -57,34 +76,20 @@
 
     const edit = async (rental: RentalWithCar) => editRentalStore.open(rental);
 
-    const checkIfActive = (rental: RentalWithCar) => {
-        const newStart = new Date(rental.rentFrom);
-        const newEnd = new Date(rental.rentTo);
-
-        return now >= newStart && now <= newEnd && rental.status !== 'CANCELLED';
-    };
-
-    const checkIfPending = (rental: RentalWithCar) => {
-        const newStart = new Date(rental.rentFrom);
-
-        return now < newStart && rental.status !== 'CANCELLED';
-    };
-
     const canChange = (rental: RentalWithCar) => {
         const newStart = new Date(rental.rentFrom);
         newStart.setDate(newStart.getDate() - 1);
 
-        return now < newStart && rental.status !== 'CANCELLED';
+        return now < newStart && rental.status === RENTAL_STATUS.Pending;
     };
 
     const filteredRentals = computed(() => {
         return rentalsStore.rentals
             .filter(rental => {
-                return props.status === 'active'
-                    ? checkIfActive(rental)
-                    : props.status === 'pending'
-                      ? checkIfPending(rental)
-                      : !checkIfActive(rental) && !checkIfPending(rental);
+                if (props.status === 'active') return rental.status === RENTAL_STATUS.Active;
+                if (props.status === 'pending') return rental.status === RENTAL_STATUS.Pending;
+                if (props.status === 'completed') return rental.status === RENTAL_STATUS.Completed;
+                if (props.status === 'cancelled') return rental.status === RENTAL_STATUS.Cancelled;
             })
             .sort((a: RentalWithCar, b: RentalWithCar) => b.createdAt - a.createdAt);
     });
@@ -98,7 +103,7 @@
         <li v-else v-for="rental in filteredRentals" :key="rental._id">
             <div
                 class="group relative border rounded-md p-3 md:p-5 flex flex-col gap-3"
-                :class="getClasses"
+                :class="getClasses.container"
             >
                 <!-- Main content -->
                 <div class="md:flex md:flex-row md:items-center gap-4">
@@ -121,14 +126,7 @@
                                     <span class="text-main-gray">
                                         {{ t('app.rentals_page.status') }}:
                                     </span>
-                                    <span
-                                        class="font-semibold"
-                                        :class="
-                                            rental.status === 'CANCELLED'
-                                                ? 'text-red-500'
-                                                : 'text-green-500'
-                                        "
-                                    >
+                                    <span class="font-semibold" :class="getClasses.statusText">
                                         {{ rental.status }}
                                     </span>
                                 </p>
