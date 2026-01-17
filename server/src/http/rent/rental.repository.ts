@@ -195,4 +195,22 @@ export class RentalRepo {
 
         return res.populate(['carId', 'userId']).exec();
     }
+
+    async find(id: string) {
+        return await this.rentalModel.findById(id);
+    }
+
+    async delete(id: string) {
+        await this.rentalModel.findByIdAndDelete(id);
+    }
+
+    async cancel(id: string) {
+        await this.rentalModel.findByIdAndUpdate(id, {
+            $set: { status: Status.Cancelled, cancelledAt: Date.now() },
+        });
+    }
+
+    async findRentalById(id: string) {
+        return await this.rentalModel.findById(id);
+    }
 }

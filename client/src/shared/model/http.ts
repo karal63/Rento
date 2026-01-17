@@ -30,6 +30,7 @@ export const API_GET_RENTALS = (
     sort: SortMethod | null
 ) =>
     `/rent/all?status=${status}&search=${search}&sort=${sort ? sort.field + ':' + sort.order : ''}`;
+export const API_DELETE_RENTAL = (id: string) => `/rent/delete/${id}`;
 
 // ADMIN DASHBOARD
 export const API_GET_DASHBOARD_SUMMARY = '/admin/dashboard/summary';

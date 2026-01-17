@@ -1,21 +1,18 @@
-import { useRentalStore, type RentalWithCar } from '@/entities/rental';
 import { apiCancelRental } from '../api/cancelRental';
 
-export const cancelRental = async (selectedRental: RentalWithCar) => {
-    const rentalsStore = useRentalStore();
-
+export const cancelRental = async (id: string) => {
     try {
-        await apiCancelRental(selectedRental._id);
-        rentalsStore.rentals = rentalsStore.rentals.map((rental: RentalWithCar) => {
-            if (selectedRental._id === rental._id) {
-                return {
-                    ...rental,
-                    status: 'CANCELLED',
-                };
-            }
+        await apiCancelRental(id);
+        // rentalsStore.rentals = rentalsStore.rentals.map((rental: RentalWithCar) => {
+        //     if (id === rental._id) {
+        //         return {
+        //             ...rental,
+        //             status: 'CANCELLED',
+        //         };
+        //     }
 
-            return rental;
-        });
+        //     return rental;
+        // });
     } catch (error) {
         console.log(error);
     }
