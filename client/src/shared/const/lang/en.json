@@ -171,6 +171,22 @@
         "acceptance_modal": {
             "cancellation_title": "Confirm cancellation",
             "cancellation_desc": "Are you sure you want to cancel this rental? This action cannot be undone."
+        },
+
+        "protected_rentals_page": {
+            "rentals": "Rentals",
+            "period": "Period",
+            "status": "Status",
+            "car_name": "Car name",
+
+            "new_rental": "New rental",
+            "edit": "Edit",
+            "cancel": "Cancel"
+        },
+
+        "table": {
+            "created_at": "Created At",
+            "created_by": "Created By"
         }
     }
 }
