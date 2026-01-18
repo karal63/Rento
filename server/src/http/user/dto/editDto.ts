@@ -64,5 +64,6 @@ export class EditDto {
     })
     @IsNotEmpty()
     @IsOptional()
+    @Length(1)
     roles: Role[];
 }

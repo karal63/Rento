@@ -58,7 +58,7 @@
                 >
                     Cancel
                 </Button>
-                <Button type="submit" size="sm">Save</Button>
+                <Button type="submit" size="sm" :disabled="newUser.roles.length <= 0">Save</Button>
             </div>
         </template>
     </UserForm>
