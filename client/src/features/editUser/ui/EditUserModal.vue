@@ -3,8 +3,10 @@
     import { watch } from 'vue';
     import { Button, Message } from '@/shared/ui';
     import { UserForm } from '@/shared/ui/userForm';
+    import { useI18n } from 'vue-i18n';
 
     const editUserStore = useEditUserStore();
+    const { t } = useI18n();
 
     watch(
         () => editUserStore.user,
@@ -55,14 +57,14 @@
                         color="transparent"
                         class="border border-main-border"
                     >
-                        Cancel
+                        {{ t('app.protected_users_page.cancel') }}
                     </Button>
                     <Button
                         type="submit"
                         size="sm"
                         :disabled="editUserStore.newUser.roles.length <= 0 || editUserStore.loading"
                     >
-                        Save
+                        {{ t('app.protected_users_page.save') }}
                     </Button>
                 </div>
             </div>

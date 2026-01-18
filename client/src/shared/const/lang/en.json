@@ -170,6 +170,12 @@
             "ALL": "All"
         },
 
+        "role": {
+            "user": "User",
+            "employee": "Employee",
+            "admin": "Admin"
+        },
+
         "acceptance_modal": {
             "cancellation_title": "Confirm cancellation",
             "cancellation_desc": "Are you sure you want to cancel this rental? This action cannot be undone.",
@@ -213,7 +219,11 @@
             "edit": "Edit",
             "delete": "Delete",
 
-            "select_status": "Select status"
+            "select_status": "Select status",
+            "cancel": "Cancel",
+            "save": "Save",
+            "select_role": "Select role",
+            "add": "Add"
         }
     }
 }

@@ -9,7 +9,9 @@
     import { Icon } from '@iconify/vue';
     import { email, minLength, required } from '@vuelidate/validators';
     import useVuelidate from '@vuelidate/core';
+    import { useI18n } from 'vue-i18n';
 
+    const { t } = useI18n();
     const isRoleDropdownOpen = ref(false);
     const selectedRole = ref<UserRole | ''>('');
 
@@ -41,21 +43,21 @@
 
     const roles = [
         {
-            label: USER_ROLE.User,
+            label: t(`app.role.${USER_ROLE.User}`),
             callback: () => {
                 selectedRole.value = USER_ROLE.User;
                 isRoleDropdownOpen.value = false;
             },
         },
         {
-            label: USER_ROLE.Employee,
+            label: t(`app.role.${USER_ROLE.Employee}`),
             callback: () => {
                 selectedRole.value = USER_ROLE.Employee;
                 isRoleDropdownOpen.value = false;
             },
         },
         {
-            label: USER_ROLE.Admin,
+            label: t(`app.role.${USER_ROLE.Admin}`),
             callback: () => {
                 selectedRole.value = USER_ROLE.Admin;
                 isRoleDropdownOpen.value = false;
@@ -92,14 +94,14 @@
             <form @submit.prevent="handleSubmit" class="mt-5">
                 <div class="grid grid-cols-2 gap-x-7 gap-y-4">
                     <label>
-                        <p class="text-sm text-main-gray">Name</p>
+                        <p class="text-sm text-main-gray">{{ t('app.auth.name') }}</p>
                         <p v-if="v$.name.$error" class="text-sm text-red-500">
                             {{ v$.name.$errors[0]?.$message }}
                         </p>
                         <Input size="medium" v-model="newUser.name" :is-error="v$.name.$error" />
                     </label>
                     <label>
-                        <p class="text-sm text-main-gray">Second name</p>
+                        <p class="text-sm text-main-gray">{{ t('app.auth.second_name') }}</p>
                         <p v-if="v$.secondName.$error" class="text-sm text-red-500">
                             {{ v$.secondName.$errors[0]?.$message }}
                         </p>
@@ -110,14 +112,14 @@
                         />
                     </label>
                     <label>
-                        <p class="text-sm text-main-gray">Email</p>
+                        <p class="text-sm text-main-gray">{{ t('app.auth.email') }}</p>
                         <p v-if="v$.email.$error" class="text-sm text-red-500">
                             {{ v$.email.$errors[0]?.$message }}
                         </p>
                         <Input size="medium" v-model="newUser.email" :is-error="v$.email.$error" />
                     </label>
                     <label>
-                        <p class="text-sm text-main-gray">Phone number</p>
+                        <p class="text-sm text-main-gray">{{ t('app.auth.phone_number') }}</p>
                         <p v-if="v$.phoneNumber.$error" class="text-sm text-red-500">
                             {{ v$.phoneNumber.$errors[0]?.$message }}
                         </p>
@@ -128,7 +130,7 @@
                         />
                     </label>
                     <label>
-                        <p class="text-sm text-main-gray">Password</p>
+                        <p class="text-sm text-main-gray">{{ t('app.auth.password') }}</p>
                         <p v-if="v$.password.$error" class="text-sm text-red-500">
                             {{ v$.password.$errors[0]?.$message }}
                         </p>
@@ -144,7 +146,9 @@
 
                 <div class="flex gap-7">
                     <div class="w-1/2">
-                        <p class="text-xl font-semibold mb-2">Roles</p>
+                        <p class="text-xl font-semibold mb-2">
+                            {{ t('app.protected_users_page.roles') }}
+                        </p>
 
                         <ul class="flex gap-3 mb-4">
                             <li v-for="role in newUser.roles" :key="role" class="max-w-max">
@@ -154,7 +158,7 @@
                                     color="transparent"
                                     class="max-w-max px-5 text-sm py-2 border border-main-border rounded-md flex gap-3 items-center"
                                 >
-                                    {{ role }}
+                                    {{ t(`app.role.${role}`) }}
                                     <Icon icon="material-symbols-light:close" />
                                 </Button>
                             </li>
@@ -173,7 +177,11 @@
                                     @click="isRoleDropdownOpen = !isRoleDropdownOpen"
                                     class="border border-main-border w-full flex-between"
                                 >
-                                    {{ selectedRole ? selectedRole : 'Select role' }}
+                                    {{
+                                        selectedRole
+                                            ? selectedRole
+                                            : t('app.protected_users_page.select_role')
+                                    }}
                                     <Icon
                                         icon="weui:arrow-filled"
                                         class="transform rotate-90 text-xl text-main-gray"
@@ -187,7 +195,7 @@
                                 class="w-[20%] flex-between"
                             >
                                 <Icon icon="material-symbols:add-rounded" class="text-xl" />
-                                Add
+                                {{ t('app.protected_users_page.add') }}
                             </Button>
                         </div>
                     </div>
