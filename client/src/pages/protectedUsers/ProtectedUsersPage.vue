@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { useUsersQuery } from '@/entities/user';
+    import { EditUserModal } from '@/features/editUser';
     import { useFilterUsers } from '@/features/filterUsers';
     import { useSortUsers } from '@/features/sortUsers';
     import { Button, type Breadcrumb } from '@/shared/ui';
@@ -56,4 +57,6 @@
     />
 
     <UsersTable :users="users" :loading="loading" @deleteUser="onUserDeleted($event)" />
+
+    <EditUserModal />
 </template>
