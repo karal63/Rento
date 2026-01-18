@@ -14,7 +14,7 @@
         <h1 class="text-2xl mt-10 mb-5">{{ t('app.rentals_page.pending_title') }}</h1>
         <RentalsList status="pending" />
 
-        <h1 class="text-2xl mt-10 mb-5">{{ t('app.rentals_page.complited_title') }}</h1>
+        <h1 class="text-2xl mt-10 mb-5">{{ t('app.rentals_page.completed_title') }}</h1>
         <RentalsList status="completed" />
 
         <h1 class="text-2xl mt-10 mb-5">{{ t('app.rentals_page.cancelled_title') }}</h1>

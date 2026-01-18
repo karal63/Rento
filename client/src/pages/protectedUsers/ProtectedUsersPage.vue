@@ -7,6 +7,9 @@
     import { UsersTable } from '@/widgets/usersTable';
     import { Icon } from '@iconify/vue';
     import { computed, onMounted } from 'vue';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 
     const filters = useFilterUsers();
     const sorting = useSortUsers();
@@ -17,7 +20,7 @@
 
     const breadcrumbs = [
         {
-            label: 'Users',
+            label: t('app.protected_users_page.users'),
         },
     ];
 
@@ -38,10 +41,10 @@
 </script>
 
 <template>
-    <ProtectedHeader title="All rentals">
+    <ProtectedHeader :title="t('app.protected_users_page.all_users')">
         <Button size="sm" class="flex items-center gap-3">
             <Icon icon="material-symbols:add-rounded" class="text-xl" />
-            New User
+            {{ t('app.protected_users_page.new_user') }}
         </Button>
     </ProtectedHeader>
 

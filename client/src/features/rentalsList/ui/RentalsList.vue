@@ -56,8 +56,8 @@
 
     const cancel = async (id: string) => {
         acceptanceModalStore.open({
-            title: 'Confirm cancellation',
-            message: 'Are you sure you want to cancel this rental? This action cannot be undone.',
+            title: t('app.acceptance_modal.cancellation_title'),
+            message: t('app.acceptance_modal.cancellation_desc'),
             onConfirm: async () => {
                 await cancelRental(id);
                 rentalsStore.rentals = rentalsStore.rentals.map((rental: RentalWithCar) => {
@@ -127,7 +127,7 @@
                                         {{ t('app.rentals_page.status') }}:
                                     </span>
                                     <span class="font-semibold" :class="getClasses.statusText">
-                                        {{ rental.status }}
+                                        {{ t(`app.status.${rental.status}`) }}
                                     </span>
                                 </p>
 
@@ -190,7 +190,7 @@
             </div>
         </li>
 
-        <li v-if="filteredRentals.length === 0">
+        <li v-if="filteredRentals.length === 0" class="text-main-gray">
             {{ t('app.rentals_page.no') }} {{ t(`app.rentals_page.${status}`) }}
             {{ t('app.rentals_page.rentals') }}
         </li>

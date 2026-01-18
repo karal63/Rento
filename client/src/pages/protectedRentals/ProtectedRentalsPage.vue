@@ -9,6 +9,9 @@
     import { ProtectedHeader, RentalsFilter, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
     import { computed, onMounted } from 'vue';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 
     const emit = defineEmits<{
         (e: 'setBreadcrumbs', data: Breadcrumb[]): void;
@@ -16,7 +19,7 @@
 
     const breadcrumbs = [
         {
-            label: 'Rentals',
+            label: t('app.protected_rentals_page.rentals'),
         },
     ];
 
@@ -38,30 +41,30 @@
     const columns: TableColumn<RentalWithAllDetails>[] = [
         {
             key: 'rentalPeriod',
-            header: 'Period',
+            header: t('app.protected_rentals_page.period'),
             render: rental =>
                 `${new Date(rental.rentFrom).toLocaleString()} - ${new Date(rental.rentTo).toLocaleString()}`,
             width: '35%',
         },
         {
             key: 'status',
-            header: 'Status',
+            header: t('app.protected_rentals_page.status'),
             render: rental => rental.status,
             width: '15%',
         },
         {
             key: 'name',
-            header: 'Car name',
+            header: t('app.protected_rentals_page.car_name'),
             render: rental => rental.carId.name,
         },
         {
             key: 'createdAt',
-            header: 'Created At',
+            header: t('app.table.created_at'),
             render: rental => new Date(rental.createdAt).toLocaleString(),
         },
         {
             key: 'createdBy',
-            header: 'Created By',
+            header: t('app.table.created_by'),
             render: rental => rental.userId.name,
         },
     ];
@@ -81,8 +84,8 @@
 
     const handleDelete = (rental: RentalWithAllDetails) => {
         acceptanceModalStore.open({
-            title: 'Confirm cancellation',
-            message: `Are you sure you want to cancel this rental? This action cannot be undone.`,
+            title: t('app.acceptance_modal.cancellation_title'),
+            message: t('app.acceptance_modal.cancellation_desc'),
             async onConfirm() {
                 await cancelRental(rental._id);
                 onRentalCancelled(rental._id);
@@ -92,10 +95,10 @@
 </script>
 
 <template>
-    <ProtectedHeader title="All rentals">
+    <ProtectedHeader :title="t('app.protected_rentals_page.new_rental')">
         <Button size="sm" class="flex items-center gap-3">
             <Icon icon="material-symbols:add-rounded" class="text-xl" />
-            New Rental
+            {{ t('app.protected_rentals_page.new_rental') }}
         </Button>
     </ProtectedHeader>
 
@@ -116,7 +119,7 @@
                     class="px-3 py-2 w-full text-left hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
                 >
                     <Icon icon="lucide:edit" class="text-xl" />
-                    Edit
+                    {{ t('app.protected_rentals_page.edit') }}
                 </button>
 
                 <button
@@ -124,7 +127,7 @@
                     class="px-3 py-2 w-full text-left hover:bg-red-600/10 cursor-pointer flex items-center gap-2 text-red-600 transition rounded-bl-md rounded-br-md"
                 >
                     <Icon icon="material-symbols:cancel-outline-rounded" class="text-xl" />
-                    Cancel
+                    {{ t('app.protected_rentals_page.cancel') }}
                 </button>
             </div>
         </template>

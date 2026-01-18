@@ -3,6 +3,9 @@
     import { Button, Dropdown, Input } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 
     const emit = defineEmits<{
         (e: 'setStatus', status: RentalStatus | ''): void;
@@ -18,46 +21,47 @@
     const isStatusDropdownOpen = ref(false);
     const isSortByDropdownOpen = ref(false);
 
+    // translate it
     const statuses = [
         {
-            label: 'All',
+            label: t(`app.status.ALL`),
             callback: () => emit('setStatus', ''),
         },
         {
-            label: RENTAL_STATUS.Completed,
+            label: t(`app.status.${RENTAL_STATUS.Completed}`),
             callback: () => emit('setStatus', RENTAL_STATUS.Completed),
         },
         {
-            label: RENTAL_STATUS.Cancelled,
+            label: t(`app.status.${RENTAL_STATUS.Cancelled}`),
             callback: () => emit('setStatus', RENTAL_STATUS.Cancelled),
         },
         {
-            label: RENTAL_STATUS.Active,
+            label: t(`app.status.${RENTAL_STATUS.Active}`),
             callback: () => emit('setStatus', RENTAL_STATUS.Active),
         },
         {
-            label: RENTAL_STATUS.Pending,
+            label: t(`app.status.${RENTAL_STATUS.Pending}`),
             callback: () => emit('setStatus', RENTAL_STATUS.Pending),
         },
     ];
 
     const sortByList = [
         {
-            label: 'By date (latest first)',
+            label: t('app.sort.by_date_latest'),
             callback: () =>
                 emit('setSort', {
                     field: 'createdAt',
                     order: 'desc',
-                    label: 'By date (latest first)',
+                    label: t('app.sort.by_date_latest'),
                 }),
         },
         {
-            label: 'By date (oldest first)',
+            label: t('app.sort.by_date_oldest'),
             callback: () =>
                 emit('setSort', {
                     field: 'createdAt',
                     order: 'asc',
-                    label: 'By date (oldest first)',
+                    label: t('app.sort.by_date_oldest'),
                 }),
         },
     ];
@@ -72,7 +76,7 @@
                 type="search"
                 @input="$emit('setSearch', $event.target.value)"
                 size="medium"
-                placeholder="Search"
+                :placeholder="t('app.sort.search')"
                 icon="icon-park-outline:search"
             />
 
@@ -86,9 +90,9 @@
                     size="sm"
                     color="transparent"
                     :disableUppercase="true"
-                    class="h-full border border-main-border flex-between gap-2 w-40"
+                    class="h-full border border-main-border flex-between gap-2 w-44"
                 >
-                    {{ status ? status : 'Select status' }}
+                    {{ status ? status : t('app.protected_users_page.select_status') }}
                     <Icon
                         icon="weui:arrow-filled"
                         class="transform rotate-90 text-xl text-main-gray"
@@ -106,9 +110,9 @@
                     size="sm"
                     color="transparent"
                     :disableUppercase="true"
-                    class="h-full border border-main-border flex-between gap-2 w-56"
+                    class="h-full border border-main-border flex-between gap-2 w-72"
                 >
-                    {{ sort ? sort.label : 'By date (latest first)' }}
+                    {{ sort ? sort.label : t('app.sort.by_date_latest') }}
                     <Icon
                         icon="weui:arrow-filled"
                         class="transform rotate-90 text-xl text-main-gray"

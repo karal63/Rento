@@ -2,6 +2,9 @@
     import { RENTAL_STATUS, type RentalStatus, type RentalWithAllDetails } from '@/entities/rental';
     import { Table, type TableColumn } from '@/shared/ui/table';
     import { Icon } from '@iconify/vue';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 
     defineProps<{
         rows: RentalWithAllDetails[];
@@ -47,7 +50,7 @@
                     :class="getClasses(row.status)"
                 >
                     <Icon :icon="getIcon(row.status)" class="text-xl" />
-                    {{ row.status }}
+                    {{ t(`app.status.${row.status}`) }}
                 </span>
             </template>
         </Table>
