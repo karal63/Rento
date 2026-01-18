@@ -52,6 +52,7 @@
                 <ul v-if="!$slots.actions" class="divide-y divide-main-border">
                     <li v-for="item in items" :key="item.label">
                         <button
+                            type="button"
                             @click="handleClick(item)"
                             class="w-full text-left py-2 px-3 text-sm cursor-pointer hover:bg-main-hover-bg transition capitalize"
                         >

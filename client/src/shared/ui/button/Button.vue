@@ -5,6 +5,7 @@
         color?: 'red' | 'transparent' | 'gray';
         size?: 'sm' | 'md';
         disableUppercase?: boolean;
+        type?: 'submit' | 'button';
     }>();
 
     defineEmits<{
@@ -41,6 +42,7 @@
         @click="$emit('click')"
         class="disabled:opacity-50 disabled:cursor-default"
         :class="buttonClass"
+        :type="type ? type : 'button'"
     >
         <slot />
     </button>

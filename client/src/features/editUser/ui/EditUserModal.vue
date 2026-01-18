@@ -1,26 +1,27 @@
 <script setup lang="ts">
-    import { Button, Input, ModalTransition } from '@/shared/ui';
+    import { Button, Dropdown, Input, ModalTransition } from '@/shared/ui';
     import { useEditUserStore } from '../model/editUser.store';
     import { Icon } from '@iconify/vue';
     import { ref, watch } from 'vue';
-
-    type NewUser = {
-        name: string;
-        secondName: string;
-        email: string;
-        phoneNumber: string;
-        password: string;
-    };
+    import { USER_ROLE, type UserRole } from '@/entities/user/model/types';
+    import type { UserPayload } from '../model/types';
+    // import { useClickOutside } from '@/shared/lib';
 
     const editUserStore = useEditUserStore();
+    const isRoleDropdownOpen = ref(false);
+    // const dropdownRef = ref<HTMLElement | null>(null);
 
-    const newUser = ref<NewUser>({
+    // useClickOutside(dropdownRef, () => (isRoleDropdownOpen.value = false));
+
+    const newUser = ref<UserPayload>({
         name: '',
         secondName: '',
         email: '',
         phoneNumber: '',
         password: '',
+        roles: [],
     });
+    const selectedRole = ref<UserRole | ''>('');
 
     watch(
         () => editUserStore.user,
@@ -31,12 +32,37 @@
             newUser.value.secondName = editUserStore.user.secondName ?? '';
             newUser.value.email = editUserStore.user.email ?? '';
             newUser.value.phoneNumber = editUserStore.user.phoneNumber ?? '';
+            newUser.value.roles = [...editUserStore.user.roles];
         }
     );
 
     const handleEdit = async () => {
         if (!editUserStore.user) return;
         await editUserStore.edit(editUserStore.user?._id, newUser.value);
+    };
+
+    const roles = [
+        {
+            label: USER_ROLE.User,
+            callback: () => (selectedRole.value = USER_ROLE.User),
+        },
+        {
+            label: USER_ROLE.Employee,
+            callback: () => (selectedRole.value = USER_ROLE.Employee),
+        },
+        {
+            label: USER_ROLE.Admin,
+            callback: () => (selectedRole.value = USER_ROLE.Admin),
+        },
+    ];
+
+    const addRole = () => {
+        if (selectedRole.value && !newUser.value.roles.includes(selectedRole.value))
+            newUser.value.roles.push(selectedRole.value);
+    };
+
+    const removeRole = (role: UserRole) => {
+        newUser.value.roles = newUser.value.roles.filter(r => r !== role);
     };
 </script>
 
@@ -69,14 +95,61 @@
                         <p class="text-sm text-main-gray">Password</p>
                         <Input size="medium" v-model="newUser.password" />
                     </label>
-                    <label>
+                </div>
+
+                <div class="mt-5 flex gap-7">
+                    <div class="w-1/2">
                         <p class="text-sm text-main-gray">Roles</p>
-                        <Input size="medium" disabled />
-                    </label>
+
+                        <ul class="flex gap-3 mb-2">
+                            <li v-for="role in newUser.roles" :key="role" class="max-w-max">
+                                <Button
+                                    @click="removeRole(role)"
+                                    size="sm"
+                                    color="transparent"
+                                    class="max-w-max px-5 text-sm py-2 border border-main-border rounded-md flex gap-3 items-center"
+                                >
+                                    {{ role }}
+                                    <Icon icon="material-symbols-light:close" />
+                                </Button>
+                            </li>
+                        </ul>
+
+                        <div class="flex gap-3">
+                            <Dropdown
+                                ref="dropdownRef"
+                                :is-open="isRoleDropdownOpen"
+                                :items="roles"
+                                class="w-[80%]"
+                            >
+                                <Button
+                                    size="sm"
+                                    color="transparent"
+                                    @click="isRoleDropdownOpen = !isRoleDropdownOpen"
+                                    class="border border-main-border w-full flex-between"
+                                >
+                                    {{ selectedRole ? selectedRole : 'Select role' }}
+                                    <Icon
+                                        icon="weui:arrow-filled"
+                                        class="transform rotate-90 text-xl text-main-gray"
+                                    />
+                                </Button>
+                            </Dropdown>
+
+                            <Button @click="addRole" size="sm" class="w-[20%]">Add</Button>
+                        </div>
+                    </div>
+
+                    <div class="w-1/2"></div>
                 </div>
 
                 <div class="mt-5 flex justify-end gap-3">
-                    <Button size="sm" color="transparent" class="border border-main-border">
+                    <Button
+                        @click="editUserStore.close"
+                        size="sm"
+                        color="transparent"
+                        class="border border-main-border"
+                    >
                         Cancel
                     </Button>
                     <Button type="submit" size="sm">Save</Button>

@@ -8,6 +8,7 @@ import {
     IsStrongPassword,
     Length,
 } from 'class-validator';
+import { Role } from 'src/enums/role.enum';
 
 export class EditDto {
     @ApiProperty({
@@ -56,4 +57,12 @@ export class EditDto {
     @IsStrongPassword()
     @IsOptional()
     password: string;
+
+    @ApiProperty({
+        example: ['admin'],
+        description: "Can't be empty",
+    })
+    @IsNotEmpty()
+    @IsOptional()
+    roles: Role[];
 }

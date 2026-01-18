@@ -1,21 +1,28 @@
-import { onMounted, onUnmounted, type Ref } from 'vue';
+import { isRef, onMounted, onUnmounted, type Ref } from 'vue';
 
 export const useClickOutside = (
     elRef: Ref<HTMLElement | null>,
     callback: () => void,
-    isAllowed?: Ref<boolean>
+    isAllowed?: Ref<boolean> | boolean
 ) => {
-    onMounted(() => {
-        document.addEventListener('click', e => handleClick(e));
-    });
+    const handleClick = (e: MouseEvent) => {
+        const el = elRef.value;
+        if (!el) return;
 
-    onUnmounted(() => removeEventListener('click', e => handleClick(e)));
+        const allowed = isRef(isAllowed) ? isAllowed.value : (isAllowed ?? true);
 
-    const handleClick = (e: Event) => {
-        if (!isAllowed?.value || !elRef.value) return;
+        if (!allowed) return;
 
-        if (!elRef.value.contains(e.target as HTMLElement)) {
+        if (!el.contains(e.target as Node)) {
             callback();
         }
     };
+
+    onMounted(() => {
+        document.addEventListener('click', handleClick);
+    });
+
+    onUnmounted(() => {
+        document.removeEventListener('click', handleClick);
+    });
 };

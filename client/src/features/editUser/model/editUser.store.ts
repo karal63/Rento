@@ -3,14 +3,7 @@ import { ref } from 'vue';
 import { apiEditUser } from '../api/editUser.api';
 import { isAxiosError } from 'axios';
 import type { User } from '@/entities/user';
-
-type UserPayload = {
-    name: string;
-    email: string;
-    phoneNumber: string;
-    secondName: string;
-    password: string;
-};
+import type { UserPayload } from './types';
 
 export const useEditUserStore = defineStore('editUser', () => {
     const isOpen = ref(false);
@@ -28,8 +21,6 @@ export const useEditUserStore = defineStore('editUser', () => {
 
     const edit = async (id: string, payload: UserPayload) => {
         try {
-            console.log(payload);
-
             await apiEditUser(id, buildPatchPayload(payload));
             close();
         } catch (e) {
@@ -50,8 +41,6 @@ export const useEditUserStore = defineStore('editUser', () => {
         }
 
         for (const key of Object.keys(newUser) as (keyof UserPayload)[]) {
-            console.log(key);
-
             if (key === 'password') {
                 if (newUser[key] !== '') {
                     payload[key] = newUser[key];
@@ -62,8 +51,6 @@ export const useEditUserStore = defineStore('editUser', () => {
                 payload[key] = newUser[key];
             }
         }
-
-        console.log(payload);
 
         return payload;
     };
