@@ -7,13 +7,27 @@
     import { Button } from '../button';
     import { Dropdown } from '..';
     import { Icon } from '@iconify/vue';
+    import { email, minLength, required } from '@vuelidate/validators';
+    import useVuelidate from '@vuelidate/core';
 
     const isRoleDropdownOpen = ref(false);
     const selectedRole = ref<UserRole | ''>('');
 
-    defineProps<{
+    const userRules = {
+        name: { required, length: minLength(3) },
+        secondName: { required, length: minLength(3) },
+        email: { required, email },
+        phoneNumber: { required, length: minLength(12) },
+        password: { length: minLength(6) },
+        roles: { required, length: minLength(1) },
+    };
+
+    const props = defineProps<{
         isOpen: boolean;
+        selectedUser: UserPayload;
     }>();
+
+    const v$ = useVuelidate(userRules, props.selectedUser);
 
     const emit = defineEmits<{
         (e: 'addRole', role: UserRole): void;
@@ -61,6 +75,13 @@
     const removeRole = (role: UserRole) => {
         newUser.value.roles = newUser.value.roles.filter(r => r !== role);
     };
+
+    const handleSubmit = async () => {
+        const isValid = await v$.value.$validate();
+        if (!isValid) return;
+
+        emit('handleSubmit');
+    };
 </script>
 
 <template>
@@ -68,27 +89,54 @@
         <div class="relative w-2/3 bg-main-bg rounded-md p-7">
             <slot name="header" />
 
-            <form @submit.prevent="$emit('handleSubmit')" class="mt-5">
+            <form @submit.prevent="handleSubmit" class="mt-5">
                 <div class="grid grid-cols-2 gap-x-7 gap-y-4">
                     <label>
                         <p class="text-sm text-main-gray">Name</p>
-                        <Input size="medium" v-model="newUser.name" />
+                        <p v-if="v$.name.$error" class="text-sm text-red-500">
+                            {{ v$.name.$errors[0]?.$message }}
+                        </p>
+                        <Input size="medium" v-model="newUser.name" :is-error="v$.name.$error" />
                     </label>
                     <label>
                         <p class="text-sm text-main-gray">Second name</p>
-                        <Input size="medium" v-model="newUser.secondName" />
+                        <p v-if="v$.secondName.$error" class="text-sm text-red-500">
+                            {{ v$.secondName.$errors[0]?.$message }}
+                        </p>
+                        <Input
+                            size="medium"
+                            v-model="newUser.secondName"
+                            :is-error="v$.secondName.$error"
+                        />
                     </label>
                     <label>
                         <p class="text-sm text-main-gray">Email</p>
-                        <Input size="medium" v-model="newUser.email" />
+                        <p v-if="v$.email.$error" class="text-sm text-red-500">
+                            {{ v$.email.$errors[0]?.$message }}
+                        </p>
+                        <Input size="medium" v-model="newUser.email" :is-error="v$.email.$error" />
                     </label>
                     <label>
                         <p class="text-sm text-main-gray">Phone number</p>
-                        <Input size="medium" v-model="newUser.phoneNumber" />
+                        <p v-if="v$.phoneNumber.$error" class="text-sm text-red-500">
+                            {{ v$.phoneNumber.$errors[0]?.$message }}
+                        </p>
+                        <Input
+                            size="medium"
+                            v-model="newUser.phoneNumber"
+                            :is-error="v$.phoneNumber.$error"
+                        />
                     </label>
                     <label>
                         <p class="text-sm text-main-gray">Password</p>
-                        <Input size="medium" v-model="newUser.password" />
+                        <p v-if="v$.password.$error" class="text-sm text-red-500">
+                            {{ v$.password.$errors[0]?.$message }}
+                        </p>
+                        <Input
+                            size="medium"
+                            v-model="newUser.password"
+                            :is-error="v$.password.$error"
+                        />
                     </label>
                 </div>
 

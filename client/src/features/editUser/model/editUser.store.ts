@@ -9,7 +9,7 @@ export const useEditUserStore = defineStore('editUser', () => {
     const isOpen = ref(false);
     const error = ref('');
     const user = ref<User | null>(null);
-
+    const loading = ref(false);
     const newUser = ref<UserPayload>({
         name: '',
         secondName: '',
@@ -32,6 +32,7 @@ export const useEditUserStore = defineStore('editUser', () => {
 
     const edit = async (id: string, payload: UserPayload) => {
         try {
+            loading.value = true;
             await apiEditUser(id, buildPatchPayload(payload));
             close();
         } catch (e) {
@@ -39,6 +40,8 @@ export const useEditUserStore = defineStore('editUser', () => {
             if (isAxiosError(e)) {
                 error.value = e.response?.data.message[0];
             }
+        } finally {
+            loading.value = false;
         }
     };
 
@@ -74,5 +77,5 @@ export const useEditUserStore = defineStore('editUser', () => {
         };
     };
 
-    return { isOpen, close, open, edit, error, user, newUser };
+    return { isOpen, close, open, edit, error, user, newUser, loading };
 });
