@@ -1,7 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+    ArrayMinSize,
+    IsArray,
     IsEmail,
-    IsNotEmpty,
+    IsEnum,
     IsOptional,
     IsPhoneNumber,
     IsString,
@@ -15,7 +17,6 @@ export class EditDto {
         example: 'Leo',
         description: 'First name',
     })
-    @IsNotEmpty()
     @IsString()
     @Length(3)
     @IsOptional()
@@ -25,7 +26,6 @@ export class EditDto {
         example: 'Your second name',
         description: "Can't be empty",
     })
-    @IsNotEmpty()
     @IsString()
     @IsOptional()
     secondName: string;
@@ -34,7 +34,6 @@ export class EditDto {
         example: 'leo@gmail.com',
         description: 'Email addres',
     })
-    @IsNotEmpty()
     @IsEmail()
     @IsOptional()
     email: string;
@@ -43,7 +42,6 @@ export class EditDto {
         example: '+12345678910',
         description: "Can't be empty",
     })
-    @IsNotEmpty()
     @IsPhoneNumber()
     @IsOptional()
     phoneNumber: string;
@@ -52,18 +50,20 @@ export class EditDto {
         example: '1._Aqq@/2',
         description: "Can't be empty",
     })
-    @IsNotEmpty()
     @IsString()
     @IsStrongPassword()
     @IsOptional()
     password: string;
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         example: ['admin'],
-        description: "Can't be empty",
+        description: 'Must contain at least one role if provided',
+        enum: Role,
+        isArray: true,
     })
-    @IsNotEmpty()
     @IsOptional()
-    @Length(1)
+    @IsArray()
+    @ArrayMinSize(1)
+    @IsEnum(Role, { each: true })
     roles: Role[];
 }

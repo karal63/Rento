@@ -10,8 +10,19 @@ export const useEditUserStore = defineStore('editUser', () => {
     const error = ref('');
     const user = ref<User | null>(null);
 
+    const newUser = ref<UserPayload>({
+        name: '',
+        secondName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        roles: [],
+    });
+
     const close = () => {
         isOpen.value = false;
+        resetUser();
+        error.value = '';
     };
 
     const open = (selectedUser: User) => {
@@ -51,5 +62,17 @@ export const useEditUserStore = defineStore('editUser', () => {
         return payload;
     };
 
-    return { isOpen, close, open, edit, error, user };
+    const resetUser = () => {
+        user.value = null;
+        newUser.value = {
+            name: '',
+            secondName: '',
+            email: '',
+            phoneNumber: '',
+            password: '',
+            roles: [],
+        };
+    };
+
+    return { isOpen, close, open, edit, error, user, newUser };
 });

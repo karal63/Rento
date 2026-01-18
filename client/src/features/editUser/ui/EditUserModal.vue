@@ -1,37 +1,27 @@
 <script setup lang="ts">
     import { useEditUserStore } from '../model/editUser.store';
-    import { ref, watch } from 'vue';
-    import type { UserPayload } from '../../../shared/ui/userForm/types';
+    import { watch } from 'vue';
     import { Button } from '@/shared/ui';
     import { UserForm } from '@/shared/ui/userForm';
 
     const editUserStore = useEditUserStore();
-
-    const newUser = ref<UserPayload>({
-        name: '',
-        secondName: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
-        roles: [],
-    });
 
     watch(
         () => editUserStore.user,
         () => {
             if (!editUserStore.user) return;
 
-            newUser.value.name = editUserStore.user.name;
-            newUser.value.secondName = editUserStore.user.secondName ?? '';
-            newUser.value.email = editUserStore.user.email ?? '';
-            newUser.value.phoneNumber = editUserStore.user.phoneNumber ?? '';
-            newUser.value.roles = [...editUserStore.user.roles];
+            editUserStore.newUser.name = editUserStore.user.name;
+            editUserStore.newUser.secondName = editUserStore.user.secondName ?? '';
+            editUserStore.newUser.email = editUserStore.user.email ?? '';
+            editUserStore.newUser.phoneNumber = editUserStore.user.phoneNumber ?? '';
+            editUserStore.newUser.roles = [...editUserStore.user.roles];
         }
     );
 
     const handleEdit = async () => {
         if (!editUserStore.user) return;
-        await editUserStore.edit(editUserStore.user?._id, newUser.value);
+        await editUserStore.edit(editUserStore.user?._id, editUserStore.newUser);
     };
 </script>
 
@@ -41,7 +31,7 @@
         :selectedUser="editUserStore.user"
         @handle-submit="handleEdit"
         @close-modal="editUserStore.close"
-        v-model="newUser"
+        v-model="editUserStore.newUser"
     >
         <template #header>
             <div>
@@ -58,7 +48,9 @@
                 >
                     Cancel
                 </Button>
-                <Button type="submit" size="sm" :disabled="newUser.roles.length <= 0">Save</Button>
+                <Button type="submit" size="sm" :disabled="editUserStore.newUser.roles.length <= 0">
+                    Save
+                </Button>
             </div>
         </template>
     </UserForm>
