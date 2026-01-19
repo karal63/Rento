@@ -170,6 +170,12 @@
             "ALL": "Wszystkie"
         },
 
+        "role": {
+            "user": "Użytkownik",
+            "employee": "Pracownik",
+            "admin": "Administrator"
+        },
+
         "acceptance_modal": {
             "cancellation_title": "Potwierdź anulowanie",
             "cancellation_desc": "Czy na pewno chcesz anulować ten wynajem? Tej operacji nie można cofnąć.",
@@ -213,7 +219,11 @@
             "edit": "Edytuj",
             "delete": "Usuń",
 
-            "select_status": "Wybierz status"
+            "select_status": "Wybierz status",
+            "cancel": "Anuluj",
+            "save": "Zapisz",
+            "select_role": "Wybierz rolę",
+            "add": "Dodaj"
         }
     }
 }

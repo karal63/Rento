@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { apiEditAccount } from '../api/editAccount';
+import { apiEditAccount } from '../api/editAccount.api';
 import { useUserStore } from '@/entities/user';
 import { isAxiosError } from 'axios';
 

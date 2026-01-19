@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/schemas/userSchema';
+import { EditOwnDto } from './dto/editOwn.dto';
+import { EditDto } from './dto/editDto';
 
 @Injectable()
 export class UserRepo {
@@ -30,5 +32,22 @@ export class UserRepo {
 
     async delete(id: string) {
         await this.userModel.findByIdAndDelete(id);
+    }
+
+    async edit(id: string, body: EditOwnDto | EditDto) {
+        const updatedUser = await this.userModel.findByIdAndUpdate(
+            id,
+            {
+                $set: { ...body, updatedAt: Date.now() },
+            },
+            {
+                new: true, // return updated document
+                runValidators: true, // enforce schema validation
+            },
+        );
+
+        const user = updatedUser?.toObject();
+        delete user?.password;
+        return user;
     }
 }

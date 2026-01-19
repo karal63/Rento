@@ -9,9 +9,10 @@ import { User } from 'src/schemas/userSchema';
 import { SignupDto } from '../auth/dto/signup.dto';
 import * as argon from '@node-rs/argon2';
 import { TelegramLoginQuery } from '../auth/dto/telegramQuery.type';
-import { EditDto } from './dto/edit.dto';
+import { EditOwnDto } from './dto/editOwn.dto';
 import { GetUsersDto } from './dto/getUsers.dto';
 import { UserRepo } from './user.repository';
+import { EditDto } from './dto/editDto';
 
 @Injectable()
 export class UserService {
@@ -67,17 +68,23 @@ export class UserService {
         return await this.userModel.findById(id);
     }
 
-    async update(userId: string, body: EditDto) {
-        return await this.userModel.findByIdAndUpdate(
-            userId,
-            {
-                $set: { ...body, updatedAt: Date.now() },
-            },
-            {
-                new: true, // return updated document
-                runValidators: true, // enforce schema validation
-            },
-        );
+    async editOwn(userId: string, body: EditOwnDto) {
+        return await this.userRepo.edit(userId, body);
+    }
+
+    async edit(userId: string, body: EditDto) {
+        const hashedPassword: string = body.password
+            ? await argon.hash(body.password)
+            : '';
+
+        if (hashedPassword) {
+            return await this.userRepo.edit(userId, {
+                ...body,
+                password: hashedPassword,
+            });
+        } else {
+            return await this.userRepo.edit(userId, body);
+        }
     }
 
     async get(query: GetUsersDto) {

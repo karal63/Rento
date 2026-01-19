@@ -1,5 +1,6 @@
 <script setup lang="ts">
-    import { useUsersQuery } from '@/entities/user';
+    import { useUsersQuery, type User } from '@/entities/user';
+    import { EditUserModal } from '@/features/editUser';
     import { useFilterUsers } from '@/features/filterUsers';
     import { useSortUsers } from '@/features/sortUsers';
     import { Button, type Breadcrumb } from '@/shared/ui';
@@ -38,6 +39,17 @@
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
     });
+
+    const onEdit = (user: User | undefined) => {
+        if (!user) return;
+        users.value = users.value.map(u => {
+            if (u._id === user._id) {
+                return user;
+            }
+
+            return u;
+        });
+    };
 </script>
 
 <template>
@@ -56,4 +68,6 @@
     />
 
     <UsersTable :users="users" :loading="loading" @deleteUser="onUserDeleted($event)" />
+
+    <EditUserModal @onEdit="onEdit($event)" />
 </template>

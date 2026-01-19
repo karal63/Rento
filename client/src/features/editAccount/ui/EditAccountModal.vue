@@ -32,7 +32,7 @@
         const isValid = await v$.value.$validate();
         if (!isValid) return;
 
-        await editAccountStore.edit(
+        await editAccountStore.editOwn(
             emailInput.value,
             phoneNumberInput.value,
             secondNameInput.value

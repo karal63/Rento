@@ -2,12 +2,14 @@
     import type { User } from '@/entities/user';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { deleteUser } from '@/features/deleteUser';
+    import { useEditUserStore } from '@/features/editUser';
     import { Table, type TableColumn } from '@/shared/ui/table';
     import { Icon } from '@iconify/vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
     const acceptanceModalStore = useAcceptanceModalStore();
+    const editUserStore = useEditUserStore();
 
     defineProps<{
         users: User[];
@@ -67,6 +69,10 @@
             },
         });
     };
+
+    const handleEdit = (user: User) => {
+        editUserStore.open(user);
+    };
 </script>
 
 <template>
@@ -75,7 +81,7 @@
             <template #actions="{ row }">
                 <div class="w-[120px] bg-main-bg rounded-md">
                     <button
-                        @click="console.log(row._id)"
+                        @click="handleEdit(row)"
                         class="px-3 py-2 w-full text-left hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
                     >
                         <Icon icon="lucide:edit" class="text-xl" />

@@ -8,13 +8,14 @@ import {
     Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { EditDto } from './dto/edit.dto';
+import { EditOwnDto } from './dto/editOwn.dto';
 import { GetUser } from 'src/common/decorators/getUser.decorator';
 import type { UserPayload } from 'src/common/types/user.type';
 import { UserService } from './user.service';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { GetUsersDto } from './dto/getUsers.dto';
+import { EditDto } from './dto/editDto';
 
 @Controller('user')
 export class UserController {
@@ -26,11 +27,19 @@ export class UserController {
         return await this.userService.get(query);
     }
 
-    @ApiOperation({ summary: 'Update user details' })
+    @ApiOperation({ summary: 'Update requesting user details' })
     @ApiResponse({ status: 200, description: 'Returns updated user' })
     @Patch('edit')
-    async edit(@Body() body: EditDto, @GetUser() user: UserPayload) {
-        return await this.userService.update(user.id, body);
+    async editOwn(@Body() body: EditOwnDto, @GetUser() user: UserPayload) {
+        return await this.userService.editOwn(user.id, body);
+    }
+
+    @ApiOperation({ summary: 'Update user details' })
+    @ApiResponse({ status: 200, description: 'Returns updated user' })
+    @Roles(Role.Admin, Role.Employee)
+    @Patch('edit/:id')
+    async edit(@Body() body: EditDto, @Param('id') id: string) {
+        return await this.userService.edit(id, body);
     }
 
     @Roles(Role.Admin)

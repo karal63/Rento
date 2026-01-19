@@ -10,6 +10,7 @@
         type?: 'time' | 'date' | 'tel' | 'password' | 'email' | 'search';
         isError?: boolean;
         icon?: string;
+        disabled?: boolean;
     }>();
 
     const getSizeClasses = computed(() => {
@@ -44,7 +45,8 @@
             :type="type ? type : 'text'"
             v-model="modelValue"
             :placeholder="placeholder"
-            class="border rounded-md outline-0 focus:ring-1 transition ring-primary disabled:opacity-50"
+            :disabled="disabled"
+            class="border rounded-md outline-0 focus:ring-1 transition ring-primary disabled:opacity-50 w-full"
             :class="getClasses"
         />
 
