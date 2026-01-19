@@ -88,7 +88,7 @@
 
 <template>
     <ModalTransition :is-open="isOpen" :onCancel="handleCloseModal">
-        <div class="relative w-2/3 bg-main-bg rounded-md p-7">
+        <div class="relative w-2/3 bg-main-bg rounded-md p-7 border border-main-border">
             <slot name="header" />
 
             <form @submit.prevent="handleSubmit" class="mt-5">

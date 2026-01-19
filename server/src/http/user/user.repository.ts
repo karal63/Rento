@@ -35,7 +35,7 @@ export class UserRepo {
     }
 
     async edit(id: string, body: EditOwnDto | EditDto) {
-        return await this.userModel.findByIdAndUpdate(
+        const updatedUser = await this.userModel.findByIdAndUpdate(
             id,
             {
                 $set: { ...body, updatedAt: Date.now() },
@@ -45,5 +45,9 @@ export class UserRepo {
                 runValidators: true, // enforce schema validation
             },
         );
+
+        const user = updatedUser?.toObject();
+        delete user?.password;
+        return user;
     }
 }

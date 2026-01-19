@@ -4,9 +4,14 @@
     import { Button, Message } from '@/shared/ui';
     import { UserForm } from '@/shared/ui/userForm';
     import { useI18n } from 'vue-i18n';
+    import type { User } from '@/entities/user';
 
     const editUserStore = useEditUserStore();
     const { t } = useI18n();
+
+    const emit = defineEmits<{
+        (e: 'onEdit', user: User | undefined): void;
+    }>();
 
     watch(
         () => editUserStore.user,
@@ -23,7 +28,9 @@
 
     const handleEdit = async () => {
         if (!editUserStore.user) return;
-        await editUserStore.edit(editUserStore.user?._id, editUserStore.newUser);
+        const newUser = await editUserStore.edit(editUserStore.user?._id, editUserStore.newUser);
+
+        emit('onEdit', newUser);
     };
 </script>
 

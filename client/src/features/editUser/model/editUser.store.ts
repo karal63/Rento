@@ -4,6 +4,7 @@ import { apiEditUser } from '../api/editUser.api';
 import { isAxiosError } from 'axios';
 import type { User } from '@/entities/user';
 import type { UserPayload } from '../../../shared/ui/userForm/types';
+import type { UserRole } from '@/entities/user/model/types';
 
 export const useEditUserStore = defineStore('editUser', () => {
     const isOpen = ref(false);
@@ -33,8 +34,10 @@ export const useEditUserStore = defineStore('editUser', () => {
     const edit = async (id: string, payload: UserPayload) => {
         try {
             loading.value = true;
-            await apiEditUser(id, buildPatchPayload(payload));
+            const res = await apiEditUser(id, buildPatchPayload(payload));
             close();
+
+            return res.data;
         } catch (e) {
             console.log(e);
             if (isAxiosError(e)) {
@@ -50,20 +53,41 @@ export const useEditUserStore = defineStore('editUser', () => {
 
         const payload: Partial<UserPayload> = {};
 
-        for (const key of Object.keys(newUser) as (keyof UserPayload)[]) {
-            if (key === 'password') {
-                if (newUser[key] !== '') {
-                    payload[key] = newUser[key];
-                } else {
-                    continue;
-                }
-            } else if (newUser[key] !== user.value[key]) {
-                payload[key] = newUser[key];
-            }
+        if (newUser.name !== user.value.name) {
+            payload.name = newUser.name;
+        }
+
+        if (newUser.secondName !== user.value.secondName) {
+            payload.secondName = newUser.secondName;
+        }
+
+        if (newUser.email !== user.value.email) {
+            payload.email = newUser.email;
+        }
+
+        if (newUser.phoneNumber !== user.value.phoneNumber) {
+            payload.phoneNumber = newUser.phoneNumber;
+        }
+
+        if (newUser.password !== '') {
+            payload.password = newUser.password;
+        }
+
+        if (!arraysHaveSameRoles(newUser.roles, user.value.roles)) {
+            payload.roles = newUser.roles;
         }
 
         return payload;
     };
+
+    function arraysHaveSameRoles(a: UserRole[], b: UserRole[]) {
+        if (a.length !== b.length) return false;
+
+        const sortedA = [...a].sort();
+        const sortedB = [...b].sort();
+
+        return sortedA.every((val, index) => val === sortedB[index]);
+    }
 
     const resetUser = () => {
         user.value = null;
