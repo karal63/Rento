@@ -3,11 +3,11 @@ import { ref } from 'vue';
 import { apiCreateUser } from '../api/api';
 import { isAxiosError } from 'axios';
 import type { UserPayload } from '@/shared/ui/userForm';
+import { showDialog } from '@/features/dialog/@x';
 
 export const useCreateUserStore = defineStore('createUser', () => {
     const isModalOpen = ref(false);
     const loading = ref(false);
-    const error = ref('');
 
     const openModal = () => {
         isModalOpen.value = true;
@@ -20,19 +20,19 @@ export const useCreateUserStore = defineStore('createUser', () => {
     const create = async (user: UserPayload) => {
         try {
             loading.value = true;
-            closeModal();
             const res = await apiCreateUser(user);
+            closeModal();
 
             return res.data;
         } catch (e) {
             console.log(e);
             if (isAxiosError(e)) {
-                error.value = e.response?.data.message[0];
+                showDialog('error', 'Validation failed', e.response?.data.message);
             }
         } finally {
             loading.value = false;
         }
     };
 
-    return { isModalOpen, closeModal, openModal, loading, error, create };
+    return { isModalOpen, closeModal, openModal, loading, create };
 });

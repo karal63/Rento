@@ -1,0 +1,151 @@
+<script setup lang="ts">
+    import { computed, onUnmounted, ref, watch } from 'vue';
+    import { DIALOG_TYPE } from '../model/types';
+    import { useDialogStore } from '../model/dialog.store';
+
+    import {
+        TransitionRoot,
+        TransitionChild,
+        Dialog,
+        DialogPanel,
+        DialogTitle,
+        Popover,
+        PopoverButton,
+        PopoverPanel,
+    } from '@headlessui/vue';
+    import { Icon } from '@iconify/vue';
+
+    const dialogStore = useDialogStore();
+    const timeout = ref<number | null>(null);
+
+    const getDialog = computed(() => {
+        switch (dialogStore.dialog.type) {
+            case DIALOG_TYPE.Error:
+                return {
+                    icon: {
+                        value: 'ic:sharp-error',
+                        class: 'text-red-500',
+                    },
+                    button: 'bg-red-500/20 text-red-500 hover:bg-red-500/30 focus-visible:ring-red-500',
+                };
+            case DIALOG_TYPE.Warning:
+                return {
+                    icon: {
+                        value: 'mingcute:warning-fill',
+                        class: 'text-yellow-500',
+                    },
+                    button: 'bg-yellow-500/20 text-yellow-500 hover:bg-yellow-500/30 focus-visible:ring-yellow-500',
+                };
+            case DIALOG_TYPE.Success:
+                return {
+                    icon: {
+                        value: 'ix:success-filled',
+                        class: 'text-green-500',
+                    },
+                    button: 'bg-green-500/20 text-green-500 hover:bg-green-500/30 focus-visible:ring-green-500',
+                };
+            case DIALOG_TYPE.Info:
+                return {
+                    icon: {
+                        value: 'material-symbols:info-rounded',
+                        class: 'text-blue-500',
+                    },
+                    button: 'bg-blue-500/20 text-blue-500 hover:bg-blue-500/30 focus-visible:ring-blue-500',
+                };
+        }
+
+        return {
+            icon: {
+                value: 'material-symbols:info-rounded',
+                class: 'text-blue-500',
+            },
+            button: 'bg-blue-500/20 text-blue-500 hover:bg-blue-500/30 focus-visible:ring-blue-500',
+        };
+    });
+
+    watch(
+        () => dialogStore.dialog.isOpen,
+        () => {
+            if (timeout.value !== null) {
+                clearTimeout(timeout.value);
+                timeout.value = null;
+            }
+            timeout.value = setTimeout(() => {
+                dialogStore.hide();
+            }, 6000);
+        }
+    );
+
+    onUnmounted(() => {
+        if (timeout.value !== null) {
+            clearTimeout(timeout.value);
+            timeout.value = null;
+        }
+    });
+
+    const handleCloseDialog = () => {
+        if (timeout.value !== null) {
+            clearTimeout(timeout.value);
+            timeout.value = null;
+        }
+        dialogStore.hide();
+    };
+</script>
+
+<template>
+    <Popover class="relative z-20">
+        <PopoverButton class="hidden" />
+
+        <TransitionRoot appear :show="dialogStore.dialog.isOpen" as="template">
+            <TransitionChild
+                as="template"
+                enter="duration-300 ease-out"
+                enter-from="opacity-0 scale-95"
+                enter-to="opacity-100 scale-100"
+                leave="duration-200 ease-in"
+                leave-from="opacity-100 scale-100"
+                leave-to="opacity-0 scale-95"
+            >
+                <PopoverPanel
+                    static
+                    class="fixed top-5 left-1/2 transform -translate-x-1/2 w-full max-w-md rounded-md bg-pure-theme p-4 text-left shadow-xl flex gap-3"
+                >
+                    <div>
+                        <Icon
+                            :icon="getDialog.icon.value"
+                            class="text-2xl"
+                            :class="getDialog.icon.class"
+                        />
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium leading-6">
+                            {{ dialogStore.dialog.message }}
+                        </h3>
+
+                        <div class="mt-2">
+                            <p
+                                v-for="detail in dialogStore.dialog.description"
+                                :key="detail"
+                                class="text-sm text-main-gray"
+                            >
+                                {{ detail }}
+                            </p>
+                        </div>
+
+                        <div class="mt-4">
+                            <button
+                                type="button"
+                                class="cursor-pointer inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                                :class="getDialog.button"
+                                @click="handleCloseDialog"
+                            >
+                                Got it, thanks!
+                            </button>
+                        </div>
+                    </div>
+                </PopoverPanel>
+            </TransitionChild>
+        </TransitionRoot>
+    </Popover>
+</template>

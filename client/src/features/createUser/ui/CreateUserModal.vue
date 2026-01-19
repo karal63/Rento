@@ -1,10 +1,11 @@
 <script setup lang="ts">
-    import { Button, Message } from '@/shared/ui';
+    import { Button } from '@/shared/ui';
     import { UserForm, type UserPayload } from '@/shared/ui/userForm';
     import { useI18n } from 'vue-i18n';
     import { useCreateUserStore } from '../model/createUser.store';
     import type { User } from '@/entities/user';
     import { ref } from 'vue';
+    import { showDialog } from '@/features/dialog/@x';
 
     const { t } = useI18n();
     const createUserStore = useCreateUserStore();
@@ -26,6 +27,9 @@
         const newUser = await createUserStore.create(user.value);
         if (!newUser) return;
         emit('onCreate', newUser);
+        showDialog('success', 'User created', [
+            'You successfully created a new user. You can edit it at anytime.',
+        ]);
     };
 
     const handleClose = () => {
@@ -51,31 +55,21 @@
     >
         <template #header>
             <div>
-                <h2 class="text-2xl font-bold">New user</h2>
+                <h2 class="text-2xl font-bold">{{ t('app.protected_users_page.new_user') }}</h2>
             </div>
         </template>
         <template #footer>
-            <div class="flex-between mt-5">
-                <div class="w-1/2">
-                    <Message
-                        v-if="createUserStore.error"
-                        type="error"
-                        :message="createUserStore.error"
-                        class="mb-0 mt-0"
-                    />
-                </div>
-                <div class="flex justify-end gap-3">
-                    <Button size="sm" color="transparent" class="border border-main-border">
-                        {{ t('app.protected_users_page.cancel') }}
-                    </Button>
-                    <Button
-                        type="submit"
-                        size="sm"
-                        :disabled="user.roles.length <= 0 || createUserStore.loading"
-                    >
-                        {{ t('app.protected_users_page.save') }}
-                    </Button>
-                </div>
+            <div class="flex justify-end gap-3">
+                <Button size="sm" color="transparent" class="border border-main-border">
+                    {{ t('app.protected_users_page.cancel') }}
+                </Button>
+                <Button
+                    type="submit"
+                    size="sm"
+                    :disabled="user.roles.length <= 0 || createUserStore.loading"
+                >
+                    {{ t('app.protected_users_page.save') }}
+                </Button>
             </div>
         </template>
     </UserForm>
