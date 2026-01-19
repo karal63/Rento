@@ -37,7 +37,7 @@
 <template>
     <UserForm
         :is-open="editUserStore.isOpen"
-        :selectedUser="editUserStore.newUser"
+        :user="editUserStore.newUser"
         @handle-submit="handleEdit"
         @close-modal="editUserStore.close"
         v-model="editUserStore.newUser"

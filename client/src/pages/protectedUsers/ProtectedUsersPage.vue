@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { useUsersQuery, type User } from '@/entities/user';
+    import { CreateUserModal, useCreateUserStore } from '@/features/createUser';
     import { EditUserModal } from '@/features/editUser';
     import { useFilterUsers } from '@/features/filterUsers';
     import { useSortUsers } from '@/features/sortUsers';
@@ -11,6 +12,7 @@
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
+    const createUserStore = useCreateUserStore();
 
     const filters = useFilterUsers();
     const sorting = useSortUsers();
@@ -50,11 +52,16 @@
             return u;
         });
     };
+
+    const onCreate = (user: User | undefined) => {
+        if (!user) return;
+        users.value.push(user);
+    };
 </script>
 
 <template>
     <ProtectedHeader :title="t('app.protected_users_page.all_users')">
-        <Button size="sm" class="flex items-center gap-3">
+        <Button @click="createUserStore.openModal" size="sm" class="flex items-center gap-3">
             <Icon icon="material-symbols:add-rounded" class="text-xl" />
             {{ t('app.protected_users_page.new_user') }}
         </Button>
@@ -70,4 +77,5 @@
     <UsersTable :users="users" :loading="loading" @deleteUser="onUserDeleted($event)" />
 
     <EditUserModal @onEdit="onEdit($event)" />
+    <CreateUserModal @onCreate="onCreate($event)" />
 </template>

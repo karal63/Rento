@@ -26,17 +26,14 @@
 
     const props = defineProps<{
         isOpen: boolean;
-        selectedUser: UserPayload;
+        user: UserPayload;
     }>();
 
-    const v$ = useVuelidate(userRules, props.selectedUser);
+    const v$ = useVuelidate(userRules, props.user);
 
     const emit = defineEmits<{
-        (e: 'addRole', role: UserRole): void;
-        (e: 'removeRole', role: UserRole): void;
         (e: 'closeModal'): void;
         (e: 'handleSubmit'): void;
-        (e: 'addRole', selectedRole: UserRole | ''): void;
     }>();
 
     const newUser = defineModel<UserPayload>({ required: true });

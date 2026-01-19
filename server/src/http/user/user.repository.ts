@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { User } from 'src/schemas/userSchema';
 import { EditOwnDto } from './dto/editOwn.dto';
 import { EditDto } from './dto/editDto';
+import { CreateDto } from './dto/createDto';
 
 @Injectable()
 export class UserRepo {
@@ -48,6 +49,15 @@ export class UserRepo {
 
         const user = updatedUser?.toObject();
         delete user?.password;
+        return user;
+    }
+
+    async create(body: CreateDto) {
+        const dbUser = new this.userModel(body);
+        await dbUser.save();
+
+        const user = dbUser.toObject();
+        delete user.password;
         return user;
     }
 }
