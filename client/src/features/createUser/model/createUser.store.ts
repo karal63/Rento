@@ -32,7 +32,7 @@ export const useCreateUserStore = defineStore('createUser', () => {
         } catch (e) {
             console.log(e);
             if (isAxiosError(e)) {
-                showDialog('error', 'Validation failed', e.response?.data.message);
+                showDialog('error', 'Operation failed', e.response?.data.message);
             }
         } finally {
             loading.value = false;
