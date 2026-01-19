@@ -13,7 +13,7 @@ export const API_POST_TOKEN_REFRESH = `/auth/refresh`;
 export const API_PATCH_USER_EDIT = `/user/edit`;
 export const API_PATCH_USER_EDIT_ID = (id: string) => `/user/edit/${id}`;
 export const API_GET_USERS_LIST = (search: string, sort: SortMethod | null) =>
-    `/user/all?search=${search}&sort=${sort?.field}:${sort?.order}`;
+    `/user/all?search=${search}&sort=${sort ? sort?.field + ':' + sort?.order : ''}`;
 export const API_DELETE_USER = (id: string) => `/user/delete/${id}`;
 export const API_POST_USER_CREATE = '/user/create';
 

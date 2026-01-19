@@ -89,36 +89,7 @@ export class UserService {
     }
 
     async get(query: GetUsersDto) {
-        let res = this.userModel.find();
-
-        if (query.search) {
-            res = res.find({
-                $or: [
-                    { name: { $regex: query.search, $options: 'i' } },
-                    { secondName: { $regex: query.search, $options: 'i' } },
-                    { email: { $regex: query.search, $options: 'i' } },
-                    { phoneNumber: { $regex: query.search, $options: 'i' } },
-                ],
-            });
-        }
-
-        if (query.sort) {
-            const sortMethod = query.sort.split(':');
-            const field = sortMethod[0];
-            const order = sortMethod[1] as 'asc' | 'desc';
-
-            res = res.sort({ [field]: order === 'desc' ? -1 : 1 });
-        } else {
-            res = res.sort({ createdAt: -1 });
-        }
-
-        const readyUsers = (await res.exec()).map((u) => {
-            const newUser = u.toObject();
-            delete newUser.password;
-            return newUser;
-        });
-
-        return readyUsers;
+        return await this.userRepo.get(query);
     }
 
     async delete(id: string) {
@@ -128,6 +99,10 @@ export class UserService {
     }
 
     async add(body: CreateDto) {
-        return await this.userRepo.create(body);
+        const hashedPassword = await argon.hash(body.password);
+        return await this.userRepo.create({
+            ...body,
+            password: hashedPassword,
+        });
     }
 }
