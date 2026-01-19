@@ -3,16 +3,10 @@
     import { UserForm, type UserPayload } from '@/shared/ui/userForm';
     import { useI18n } from 'vue-i18n';
     import { useCreateUserStore } from '../model/createUser.store';
-    import type { User } from '@/entities/user';
     import { ref } from 'vue';
-    import { showDialog } from '@/features/dialog/@x';
 
     const { t } = useI18n();
     const createUserStore = useCreateUserStore();
-
-    const emit = defineEmits<{
-        (e: 'onCreate', user: User): void;
-    }>();
 
     const user = ref<UserPayload>({
         name: '',
@@ -26,10 +20,6 @@
     const handleCreate = async () => {
         const newUser = await createUserStore.create(user.value);
         if (!newUser) return;
-        emit('onCreate', newUser);
-        showDialog('success', 'User created', [
-            'You successfully created a new user. You can edit it at anytime.',
-        ]);
     };
 
     const handleClose = () => {

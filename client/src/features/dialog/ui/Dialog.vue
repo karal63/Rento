@@ -6,9 +6,6 @@
     import {
         TransitionRoot,
         TransitionChild,
-        Dialog,
-        DialogPanel,
-        DialogTitle,
         Popover,
         PopoverButton,
         PopoverPanel,

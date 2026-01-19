@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { apiEditUser } from '../api/editUser.api';
 import { isAxiosError } from 'axios';
-import type { User } from '@/entities/user';
+import { invalidateUsersQuery, type User } from '@/entities/user';
 import type { UserPayload } from '../../../shared/ui/userForm/types';
 import type { UserRole } from '@/entities/user/model/types';
 
@@ -35,6 +35,7 @@ export const useEditUserStore = defineStore('editUser', () => {
         try {
             loading.value = true;
             const res = await apiEditUser(id, buildPatchPayload(payload));
+            invalidateUsersQuery();
             close();
 
             return res.data;

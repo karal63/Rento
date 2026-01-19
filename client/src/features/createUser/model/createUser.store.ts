@@ -4,6 +4,7 @@ import { apiCreateUser } from '../api/api';
 import { isAxiosError } from 'axios';
 import type { UserPayload } from '@/shared/ui/userForm';
 import { showDialog } from '@/features/dialog/@x';
+import { invalidateUsersQuery } from '@/entities/user';
 
 export const useCreateUserStore = defineStore('createUser', () => {
     const isModalOpen = ref(false);
@@ -21,6 +22,10 @@ export const useCreateUserStore = defineStore('createUser', () => {
         try {
             loading.value = true;
             const res = await apiCreateUser(user);
+            showDialog('success', 'User created', [
+                'You successfully created a new user. You can edit it at anytime.',
+            ]);
+            invalidateUsersQuery();
             closeModal();
 
             return res.data;
