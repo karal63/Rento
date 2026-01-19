@@ -5,6 +5,7 @@ import {
     Get,
     Param,
     Patch,
+    Post,
     Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -16,6 +17,7 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { GetUsersDto } from './dto/getUsers.dto';
 import { EditDto } from './dto/editDto';
+import { CreateDto } from './dto/createDto';
 
 @Controller('user')
 export class UserController {
@@ -49,5 +51,13 @@ export class UserController {
     async delete(@Param('id') userId: string) {
         await this.userService.delete(userId);
         return { success: true };
+    }
+
+    @ApiOperation({ summary: 'Create a new user' })
+    @ApiResponse({ status: '2XX', description: 'Returns a new user' })
+    @Roles(Role.Admin)
+    @Post('create')
+    async create(@Body() body: CreateDto) {
+        return await this.userService.add(body);
     }
 }

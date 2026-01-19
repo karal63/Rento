@@ -13,6 +13,7 @@ import { EditOwnDto } from './dto/editOwn.dto';
 import { GetUsersDto } from './dto/getUsers.dto';
 import { UserRepo } from './user.repository';
 import { EditDto } from './dto/editDto';
+import { CreateDto } from './dto/createDto';
 
 @Injectable()
 export class UserService {
@@ -124,5 +125,9 @@ export class UserService {
         const existingUser = await this.userRepo.findById(id);
         if (!existingUser) throw new NotFoundException('User not found');
         await this.userRepo.delete(id);
+    }
+
+    async add(body: CreateDto) {
+        return await this.userRepo.create(body);
     }
 }
