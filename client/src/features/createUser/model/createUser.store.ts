@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { apiCreateUser } from '../api/api';
-import { isAxiosError } from 'axios';
 import type { UserPayload } from '@/shared/ui/userForm';
-import { showDialog } from '@/features/dialog/@x';
+import { showDialog, showErrorDialog } from '@/features/dialog/@x';
 import { invalidateUsersQuery } from '@/entities/user';
+import type { AppError } from '@/shared/model';
+import { useI18n } from 'vue-i18n';
 
 export const useCreateUserStore = defineStore('createUser', () => {
+    const { t } = useI18n();
     const isModalOpen = ref(false);
     const loading = ref(false);
 
@@ -22,18 +24,18 @@ export const useCreateUserStore = defineStore('createUser', () => {
         try {
             loading.value = true;
             const res = await apiCreateUser(user);
-            showDialog('success', 'User created', [
-                'You successfully created a new user. You can edit it at anytime.',
-            ]);
+            showDialog(
+                'success',
+                t('app.message.user_created'),
+                t('app.message.user_created_desc')
+            );
             invalidateUsersQuery();
             closeModal();
 
             return res.data;
         } catch (e) {
             console.log(e);
-            if (isAxiosError(e)) {
-                showDialog('error', 'Operation failed', e.response?.data.message);
-            }
+            showErrorDialog(e as AppError);
         } finally {
             loading.value = false;
         }

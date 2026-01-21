@@ -11,8 +11,10 @@
         PopoverPanel,
     } from '@headlessui/vue';
     import { Icon } from '@iconify/vue';
+    import { useI18n } from 'vue-i18n';
 
     const dialogStore = useDialogStore();
+    const { t } = useI18n();
     const timeout = ref<number | null>(null);
 
     const getDialog = computed(() => {
@@ -121,16 +123,24 @@
                         </h3>
 
                         <div class="mt-2">
-                            <p
-                                v-for="detail in dialogStore.dialog.description"
-                                :key="detail"
-                                class="text-sm text-main-gray"
-                            >
-                                {{ detail }}
+                            <p class="text-sm text-main-gray">
+                                {{ dialogStore.dialog.description }}
                             </p>
+                            <ul v-if="dialogStore.dialog.context" class="text-sm text-red-500 mt-2">
+                                <li v-for="ctx in dialogStore.dialog.context" :key="ctx.field">
+                                    <p class="font-medium">
+                                        {{ t(`app.fields_validation.${ctx.field}`) }}
+                                    </p>
+                                    <ul class="text-xs pl-2">
+                                        <li v-for="constraint in ctx.constraints" :key="constraint">
+                                            - {{ t(`app.fields_validation.${constraint}`) }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
 
-                        <div class="mt-4">
+                        <div v-if="!dialogStore.dialog.context" class="mt-4">
                             <button
                                 type="button"
                                 class="cursor-pointer inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"

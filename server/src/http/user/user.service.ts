@@ -14,6 +14,7 @@ import { GetUsersDto } from './dto/getUsers.dto';
 import { UserRepo } from './user.repository';
 import { EditDto } from './dto/editDto';
 import { CreateDto } from './dto/createDto';
+import { LogCode } from 'src/enums';
 
 @Injectable()
 export class UserService {
@@ -100,10 +101,7 @@ export class UserService {
 
     async add(body: CreateDto) {
         const existingUser = await this.findByEmail(body.email);
-        if (existingUser)
-            throw new ConflictException([
-                'User with this email already exists',
-            ]);
+        if (existingUser) throw new ConflictException(LogCode.CODE_U009);
 
         const hashedPassword = await argon.hash(body.password);
         return await this.userRepo.create({

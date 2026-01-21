@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { useEditUserStore } from '../model/editUser.store';
     import { watch } from 'vue';
-    import { Button, Message } from '@/shared/ui';
+    import { Button } from '@/shared/ui';
     import { UserForm } from '@/shared/ui/userForm';
     import { useI18n } from 'vue-i18n';
 
@@ -41,32 +41,22 @@
             </div>
         </template>
         <template #footer>
-            <div class="flex-between mt-5">
-                <div class="w-1/2">
-                    <Message
-                        v-if="editUserStore.error"
-                        type="error"
-                        :message="editUserStore.error"
-                        class="mb-0 mt-0"
-                    />
-                </div>
-                <div class="flex justify-end gap-3">
-                    <Button
-                        @click="editUserStore.close"
-                        size="sm"
-                        color="transparent"
-                        class="border border-main-border"
-                    >
-                        {{ t('app.protected_users_page.cancel') }}
-                    </Button>
-                    <Button
-                        type="submit"
-                        size="sm"
-                        :disabled="editUserStore.newUser.roles.length <= 0 || editUserStore.loading"
-                    >
-                        {{ t('app.protected_users_page.save') }}
-                    </Button>
-                </div>
+            <div class="flex justify-end gap-3">
+                <Button
+                    @click="editUserStore.close"
+                    size="sm"
+                    color="transparent"
+                    class="border border-main-border"
+                >
+                    {{ t('app.protected_users_page.cancel') }}
+                </Button>
+                <Button
+                    type="submit"
+                    size="sm"
+                    :disabled="editUserStore.newUser.roles.length <= 0 || editUserStore.loading"
+                >
+                    {{ t('app.protected_users_page.save') }}
+                </Button>
             </div>
         </template>
     </UserForm>
