@@ -27,6 +27,7 @@
     const props = defineProps<{
         isOpen: boolean;
         user: UserPayload;
+        errorFields: string[];
     }>();
 
     const v$ = useVuelidate(userRules, props.user);
@@ -34,6 +35,7 @@
     const emit = defineEmits<{
         (e: 'closeModal'): void;
         (e: 'handleSubmit'): void;
+        (e: 'clearError', field: string): void;
     }>();
 
     const newUser = defineModel<UserPayload>({ required: true });
@@ -95,7 +97,12 @@
                         <p v-if="v$.name.$error" class="text-sm text-red-500">
                             {{ v$.name.$errors[0]?.$message }}
                         </p>
-                        <Input size="medium" v-model="newUser.name" :is-error="v$.name.$error" />
+                        <Input
+                            size="medium"
+                            v-model="newUser.name"
+                            :is-error="v$.name.$error || errorFields.includes('name')"
+                            @onUpdate="$emit('clearError', 'name')"
+                        />
                     </label>
                     <label>
                         <p class="text-sm text-main-gray">{{ t('app.auth.second_name') }}</p>
@@ -105,7 +112,8 @@
                         <Input
                             size="medium"
                             v-model="newUser.secondName"
-                            :is-error="v$.secondName.$error"
+                            :is-error="v$.secondName.$error || errorFields.includes('secondName')"
+                            @onUpdate="$emit('clearError', 'secondName')"
                         />
                     </label>
                     <label>
@@ -113,7 +121,12 @@
                         <p v-if="v$.email.$error" class="text-sm text-red-500">
                             {{ v$.email.$errors[0]?.$message }}
                         </p>
-                        <Input size="medium" v-model="newUser.email" :is-error="v$.email.$error" />
+                        <Input
+                            size="medium"
+                            v-model="newUser.email"
+                            :is-error="v$.email.$error || errorFields.includes('email')"
+                            @onUpdate="$emit('clearError', 'email')"
+                        />
                     </label>
                     <label>
                         <p class="text-sm text-main-gray">{{ t('app.auth.phone_number') }}</p>
@@ -123,7 +136,8 @@
                         <Input
                             size="medium"
                             v-model="newUser.phoneNumber"
-                            :is-error="v$.phoneNumber.$error"
+                            :is-error="v$.phoneNumber.$error || errorFields.includes('phoneNumber')"
+                            @onUpdate="$emit('clearError', 'phoneNumber')"
                         />
                     </label>
                     <label>
@@ -134,7 +148,8 @@
                         <Input
                             size="medium"
                             v-model="newUser.password"
-                            :is-error="v$.password.$error"
+                            :is-error="v$.password.$error || errorFields.includes('password')"
+                            @onUpdate="$emit('clearError', 'password')"
                         />
                     </label>
                 </div>

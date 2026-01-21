@@ -223,7 +223,8 @@
             "cancel": "Cancel",
             "save": "Save",
             "select_role": "Select role",
-            "add": "Add"
+            "add": "Add",
+            "close_dialog_btn": "Got it, thanks!"
         },
 
         "errors": {
@@ -245,7 +246,8 @@
             "phoneNumber": "Phone number",
             "isPhoneNumber": "Phone number must be a valid phone number",
 
-            "password": "Password"
+            "password": "Password",
+            "isStrongPassword": "Password is not strong enough"
         }
     }
 }

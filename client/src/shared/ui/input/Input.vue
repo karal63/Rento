@@ -13,6 +13,10 @@
         disabled?: boolean;
     }>();
 
+    defineEmits<{
+        (e: 'onUpdate'): void;
+    }>();
+
     const getSizeClasses = computed(() => {
         switch (props.size) {
             case 'small':
@@ -44,8 +48,9 @@
         <input
             :type="type ? type : 'text'"
             v-model="modelValue"
-            :placeholder="placeholder"
+            @input="$emit('onUpdate')"
             :disabled="disabled"
+            :placeholder="placeholder"
             class="border rounded-md outline-0 focus:ring-1 transition ring-primary disabled:opacity-50 w-full"
             :class="getClasses"
         />

@@ -4,8 +4,7 @@ import { apiEditUser } from '../api/editUser.api';
 import { invalidateUsersQuery, type User } from '@/entities/user';
 import type { UserPayload } from '../../../shared/ui/userForm/types';
 import type { UserRole } from '@/entities/user/model/types';
-import { showDialog, showErrorDialog } from '@/features/dialog/@x';
-import type { AppError } from '@/shared/model';
+import { showDialog } from '@/features/dialog/@x';
 import { useI18n } from 'vue-i18n';
 
 export const useEditUserStore = defineStore('editUser', () => {
@@ -38,15 +37,13 @@ export const useEditUserStore = defineStore('editUser', () => {
     const edit = async (id: string, payload: UserPayload) => {
         try {
             loading.value = true;
-            const res = await apiEditUser(id, buildPatchPayload(payload));
+            await apiEditUser(id, buildPatchPayload(payload));
             invalidateUsersQuery();
             showDialog('success', t('app.message.user_edited'), t('app.message.user_edited_desc'));
             close();
-
-            return res.data;
         } catch (e) {
             console.log(e);
-            showErrorDialog(e as AppError);
+            throw e;
         } finally {
             loading.value = false;
         }

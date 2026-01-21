@@ -147,7 +147,7 @@
                                 :class="getDialog.button"
                                 @click="handleCloseDialog"
                             >
-                                Got it, thanks!
+                                {{ t('app.protected_users_page.close_dialog_btn') }}
                             </button>
                         </div>
                     </div>

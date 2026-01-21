@@ -4,9 +4,13 @@
     import { useI18n } from 'vue-i18n';
     import { useCreateUserStore } from '../model/createUser.store';
     import { ref } from 'vue';
+    import { showErrorDialog } from '@/features/dialog/@x';
+    import type { AppError } from '@/shared/model';
 
     const { t } = useI18n();
     const createUserStore = useCreateUserStore();
+
+    const errorFields = ref<string[]>([]);
 
     const user = ref<UserPayload>({
         name: '',
@@ -18,8 +22,17 @@
     });
 
     const handleCreate = async () => {
-        const newUser = await createUserStore.create(user.value);
-        if (!newUser) return;
+        try {
+            await createUserStore.create(user.value);
+        } catch (e) {
+            const error = e as AppError;
+            showErrorDialog(e as AppError);
+            if (error.code === 'VALIDATION_ERROR' && error.context) {
+                errorFields.value = error.context?.map(c => c.field);
+
+                return;
+            }
+        }
     };
 
     const handleClose = () => {
@@ -33,6 +46,10 @@
         };
         createUserStore.closeModal();
     };
+
+    const clearError = (field: string) => {
+        errorFields.value = errorFields.value.filter(f => f !== field);
+    };
 </script>
 
 <template>
@@ -42,6 +59,8 @@
         @handle-submit="handleCreate"
         @close-modal="handleClose"
         v-model="user"
+        @clear-error="clearError"
+        :error-fields="errorFields"
     >
         <template #header>
             <div>

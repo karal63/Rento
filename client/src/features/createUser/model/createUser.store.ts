@@ -23,7 +23,7 @@ export const useCreateUserStore = defineStore('createUser', () => {
     const create = async (user: UserPayload) => {
         try {
             loading.value = true;
-            const res = await apiCreateUser(user);
+            await apiCreateUser(user);
             showDialog(
                 'success',
                 t('app.message.user_created'),
@@ -31,11 +31,9 @@ export const useCreateUserStore = defineStore('createUser', () => {
             );
             invalidateUsersQuery();
             closeModal();
-
-            return res.data;
         } catch (e) {
             console.log(e);
-            showErrorDialog(e as AppError);
+            throw e;
         } finally {
             loading.value = false;
         }

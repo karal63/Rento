@@ -84,9 +84,14 @@ export class UserService {
                 ...body,
                 password: hashedPassword,
             });
-        } else {
-            return await this.userRepo.edit(userId, body);
         }
+
+        if (body.email) {
+            const existingUser = await this.findByEmail(body.email);
+            if (existingUser) throw new ConflictException(LogCode.CODE_U009);
+        }
+
+        return await this.userRepo.edit(userId, body);
     }
 
     async get(query: GetUsersDto) {

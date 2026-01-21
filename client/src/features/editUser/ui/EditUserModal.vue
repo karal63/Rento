@@ -1,12 +1,16 @@
 <script setup lang="ts">
     import { useEditUserStore } from '../model/editUser.store';
-    import { watch } from 'vue';
+    import { ref, watch } from 'vue';
     import { Button } from '@/shared/ui';
     import { UserForm } from '@/shared/ui/userForm';
     import { useI18n } from 'vue-i18n';
+    import type { AppError } from '@/shared/model';
+    import { showErrorDialog } from '@/features/dialog/@x';
 
     const editUserStore = useEditUserStore();
     const { t } = useI18n();
+
+    const errorFields = ref<string[]>([]);
 
     watch(
         () => editUserStore.user,
@@ -23,7 +27,22 @@
 
     const handleEdit = async () => {
         if (!editUserStore.user) return;
-        await editUserStore.edit(editUserStore.user?._id, editUserStore.newUser);
+
+        try {
+            await editUserStore.edit(editUserStore.user?._id, editUserStore.newUser);
+        } catch (e) {
+            const error = e as AppError;
+            showErrorDialog(error);
+            if (error.code === 'VALIDATION_ERROR' && error.context) {
+                errorFields.value = error.context?.map(c => c.field);
+
+                return;
+            }
+        }
+    };
+
+    const clearError = (field: string) => {
+        errorFields.value = errorFields.value.filter(f => f !== field);
     };
 </script>
 
@@ -34,6 +53,8 @@
         @handle-submit="handleEdit"
         @close-modal="editUserStore.close"
         v-model="editUserStore.newUser"
+        :errorFields="errorFields"
+        @clearError="clearError"
     >
         <template #header>
             <div>

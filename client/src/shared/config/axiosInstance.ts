@@ -1,5 +1,5 @@
 import axios, { type AxiosError, type AxiosResponse } from 'axios';
-import { API_POST_TOKEN_REFRESH, type AppError } from '../model';
+import { API_POST_TOKEN_REFRESH, type AppError, type ErrorContext } from '../model';
 
 // export const baseURL = 'http://localhost:3000/api/';
 export const baseURL =
@@ -38,10 +38,22 @@ axiosInstance.interceptors.response.use(
             throw error;
         }
 
+        const data = error.response?.data as {
+            code?: string;
+            message?: string;
+            context?: ErrorContext;
+        };
+
         const appError: AppError = {
             status: error.response?.status ?? 0,
-            code: (error.response?.data as { code: string }).code ?? 'UNKNOWN',
-            context: (error.response?.data as { context: Record<string, unknown> }).context,
+            code:
+                typeof data?.code === 'string'
+                    ? data.code
+                    : typeof data?.message === 'string'
+                      ? data.message
+                      : 'UNKNOWN',
+
+            context: typeof data?.context === 'object' ? data.context : undefined,
             original: error,
         };
 
