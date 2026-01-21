@@ -223,7 +223,31 @@
             "cancel": "Anuluj",
             "save": "Zapisz",
             "select_role": "Wybierz rolę",
-            "add": "Dodaj"
+            "add": "Dodaj",
+            "close_dialog_btn": "Rozumiem, dzięki!"
+        },
+
+        "errors": {
+            "CODE_U009": "Użytkownik z tym adresem e-mail już istnieje",
+            "UNKNOWN": "Nieznany błąd",
+            "VALIDATION_ERROR": "Niektóre pola są wypełnione nieprawidłowo: {field}"
+        },
+
+        "message": {
+            "error": "Błąd",
+            "operation_failed": "Operacja nie powiodła się",
+            "user_edited": "Użytkownik edytowany",
+            "user_edited_desc": "Pomyślnie edytowano użytkownika.",
+            "user_created": "Użytkownik utworzony",
+            "user_created_desc": "Pomyślnie utworzono nowego użytkownika. Możesz go edytować w dowolnym momencie."
+        },
+
+        "fields_validation": {
+            "phoneNumber": "Numer telefonu",
+            "isPhoneNumber": "Numer telefonu musi być prawidłowym numerem telefonu",
+
+            "password": "Hasło",
+            "isStrongPassword": "Hasło nie jest wystarczająco silne"
         }
     }
 }

@@ -151,7 +151,7 @@
                     @click="handleMenu"
                     class="bg-linear-to-br from-primary to-primary/50 text-white px-4 py-3 rounded-md w-full flex-between cursor-pointer"
                 >
-                    {{ userStore.user?.secondName }}
+                    {{ userStore.user?.name }}
                     <Icon icon="pepicons-pencil:dots-y" />
                 </button>
             </div>

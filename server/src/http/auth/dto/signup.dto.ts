@@ -4,6 +4,7 @@ import {
     IsNotEmpty,
     IsPhoneNumber,
     IsString,
+    IsStrongPassword,
     Length,
 } from 'class-validator';
 
@@ -47,5 +48,6 @@ export class SignupDto {
     @IsNotEmpty()
     @IsString()
     @Length(4)
+    @IsStrongPassword()
     password: string;
 }

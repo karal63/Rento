@@ -1,12 +1,15 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { apiEditUser } from '../api/editUser.api';
-import { isAxiosError } from 'axios';
-import type { User } from '@/entities/user';
+import { invalidateUsersQuery, type User } from '@/entities/user';
 import type { UserPayload } from '../../../shared/ui/userForm/types';
 import type { UserRole } from '@/entities/user/model/types';
+import { showDialog } from '@/features/dialog/@x';
+import { useI18n } from 'vue-i18n';
 
 export const useEditUserStore = defineStore('editUser', () => {
+    const { t } = useI18n();
+
     const isOpen = ref(false);
     const error = ref('');
     const user = ref<User | null>(null);
@@ -34,15 +37,13 @@ export const useEditUserStore = defineStore('editUser', () => {
     const edit = async (id: string, payload: UserPayload) => {
         try {
             loading.value = true;
-            const res = await apiEditUser(id, buildPatchPayload(payload));
+            await apiEditUser(id, buildPatchPayload(payload));
+            invalidateUsersQuery();
+            showDialog('success', t('app.message.user_edited'), t('app.message.user_edited_desc'));
             close();
-
-            return res.data;
         } catch (e) {
             console.log(e);
-            if (isAxiosError(e)) {
-                error.value = e.response?.data.message[0];
-            }
+            throw e;
         } finally {
             loading.value = false;
         }

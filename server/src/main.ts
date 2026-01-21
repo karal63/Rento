@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 
@@ -15,7 +15,19 @@ async function bootstrap() {
     });
 
     app.setGlobalPrefix('api');
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(
+        new ValidationPipe({
+            exceptionFactory: (errors) => {
+                return new BadRequestException({
+                    code: 'VALIDATION_ERROR',
+                    context: errors.map((err) => ({
+                        field: err.property,
+                        constraints: Object.keys(err.constraints ?? {}),
+                    })),
+                });
+            },
+        }),
+    );
     app.use(cookieParser());
     app.use(
         bodyParser.json({

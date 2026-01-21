@@ -223,7 +223,31 @@
             "cancel": "Cancel",
             "save": "Save",
             "select_role": "Select role",
-            "add": "Add"
+            "add": "Add",
+            "close_dialog_btn": "Got it, thanks!"
+        },
+
+        "errors": {
+            "CODE_U009": "User with this email already exists",
+            "UNKNOWN": "Unknown error",
+            "VALIDATION_ERROR": "Some fields are filled in incorrectly: {field}"
+        },
+
+        "message": {
+            "error": "Error",
+            "operation_failed": "Operation failed",
+            "user_edited": "User edited",
+            "user_edited_desc": "You successfully edited the user.",
+            "user_created": "User created",
+            "user_created_desc": "You successfully created a new user. You can edit it at any time."
+        },
+
+        "fields_validation": {
+            "phoneNumber": "Phone number",
+            "isPhoneNumber": "Phone number must be a valid phone number",
+
+            "password": "Password",
+            "isStrongPassword": "Password is not strong enough"
         }
     }
 }

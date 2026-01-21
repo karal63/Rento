@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { useUsersQuery, type User } from '@/entities/user';
+    import { useUsersQuery } from '@/entities/user';
     import { CreateUserModal, useCreateUserStore } from '@/features/createUser';
     import { EditUserModal } from '@/features/editUser';
     import { useFilterUsers } from '@/features/filterUsers';
@@ -34,29 +34,9 @@
 
     const { users, loading } = useUsersQuery(queryParams);
 
-    function onUserDeleted(userId: string) {
-        users.value = users.value.filter(user => user._id !== userId);
-    }
-
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
     });
-
-    const onEdit = (user: User | undefined) => {
-        if (!user) return;
-        users.value = users.value.map(u => {
-            if (u._id === user._id) {
-                return user;
-            }
-
-            return u;
-        });
-    };
-
-    const onCreate = (user: User | undefined) => {
-        if (!user) return;
-        users.value.push(user);
-    };
 </script>
 
 <template>
@@ -74,8 +54,8 @@
         :sort="sorting.sort"
     />
 
-    <UsersTable :users="users" :loading="loading" @deleteUser="onUserDeleted($event)" />
+    <UsersTable :users="users" :loading="loading" />
 
-    <EditUserModal @onEdit="onEdit($event)" />
-    <CreateUserModal @onCreate="onCreate($event)" />
+    <EditUserModal />
+    <CreateUserModal />
 </template>

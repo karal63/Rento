@@ -16,10 +16,6 @@
         loading: boolean;
     }>();
 
-    const emit = defineEmits<{
-        (e: 'deleteUser', userId: string): void;
-    }>();
-
     const columns: TableColumn<User>[] = [
         {
             key: 'name',
@@ -65,7 +61,6 @@
             message: `${t('app.acceptance_modal.deletion_desc')} ${user.name}?`,
             async onConfirm() {
                 await deleteUser(user._id);
-                emit('deleteUser', user._id);
             },
         });
     };

@@ -14,6 +14,7 @@ import { GetUsersDto } from './dto/getUsers.dto';
 import { UserRepo } from './user.repository';
 import { EditDto } from './dto/editDto';
 import { CreateDto } from './dto/createDto';
+import { LogCode } from 'src/enums';
 
 @Injectable()
 export class UserService {
@@ -83,42 +84,18 @@ export class UserService {
                 ...body,
                 password: hashedPassword,
             });
-        } else {
-            return await this.userRepo.edit(userId, body);
         }
+
+        if (body.email) {
+            const existingUser = await this.findByEmail(body.email);
+            if (existingUser) throw new ConflictException(LogCode.CODE_U009);
+        }
+
+        return await this.userRepo.edit(userId, body);
     }
 
     async get(query: GetUsersDto) {
-        let res = this.userModel.find();
-
-        if (query.search) {
-            res = res.find({
-                $or: [
-                    { name: { $regex: query.search, $options: 'i' } },
-                    { secondName: { $regex: query.search, $options: 'i' } },
-                    { email: { $regex: query.search, $options: 'i' } },
-                    { phoneNumber: { $regex: query.search, $options: 'i' } },
-                ],
-            });
-        }
-
-        if (query.sort) {
-            const sortMethod = query.sort.split(':');
-            const field = sortMethod[0];
-            const order = sortMethod[1] as 'asc' | 'desc';
-
-            res = res.sort({ [field]: order === 'desc' ? -1 : 1 });
-        } else {
-            res = res.sort({ createdAt: -1 });
-        }
-
-        const readyUsers = (await res.exec()).map((u) => {
-            const newUser = u.toObject();
-            delete newUser.password;
-            return newUser;
-        });
-
-        return readyUsers;
+        return await this.userRepo.get(query);
     }
 
     async delete(id: string) {
@@ -128,6 +105,13 @@ export class UserService {
     }
 
     async add(body: CreateDto) {
-        return await this.userRepo.create(body);
+        const existingUser = await this.findByEmail(body.email);
+        if (existingUser) throw new ConflictException(LogCode.CODE_U009);
+
+        const hashedPassword = await argon.hash(body.password);
+        return await this.userRepo.create({
+            ...body,
+            password: hashedPassword,
+        });
     }
 }

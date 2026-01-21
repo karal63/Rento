@@ -1,17 +1,16 @@
 <script setup lang="ts">
-    import { Button, Message } from '@/shared/ui';
+    import { Button } from '@/shared/ui';
     import { UserForm, type UserPayload } from '@/shared/ui/userForm';
     import { useI18n } from 'vue-i18n';
     import { useCreateUserStore } from '../model/createUser.store';
-    import type { User } from '@/entities/user';
     import { ref } from 'vue';
+    import { showErrorDialog } from '@/features/dialog/@x';
+    import type { AppError } from '@/shared/model';
 
     const { t } = useI18n();
     const createUserStore = useCreateUserStore();
 
-    const emit = defineEmits<{
-        (e: 'onCreate', user: User): void;
-    }>();
+    const errorFields = ref<string[]>([]);
 
     const user = ref<UserPayload>({
         name: '',
@@ -23,9 +22,17 @@
     });
 
     const handleCreate = async () => {
-        const newUser = await createUserStore.create(user.value);
-        if (!newUser) return;
-        emit('onCreate', newUser);
+        try {
+            await createUserStore.create(user.value);
+        } catch (e) {
+            const error = e as AppError;
+            showErrorDialog(e as AppError);
+            if (error.code === 'VALIDATION_ERROR' && error.context) {
+                errorFields.value = error.context?.map(c => c.field);
+
+                return;
+            }
+        }
     };
 
     const handleClose = () => {
@@ -39,6 +46,10 @@
         };
         createUserStore.closeModal();
     };
+
+    const clearError = (field: string) => {
+        errorFields.value = errorFields.value.filter(f => f !== field);
+    };
 </script>
 
 <template>
@@ -48,34 +59,26 @@
         @handle-submit="handleCreate"
         @close-modal="handleClose"
         v-model="user"
+        @clear-error="clearError"
+        :error-fields="errorFields"
     >
         <template #header>
             <div>
-                <h2 class="text-2xl font-bold">New user</h2>
+                <h2 class="text-2xl font-bold">{{ t('app.protected_users_page.new_user') }}</h2>
             </div>
         </template>
         <template #footer>
-            <div class="flex-between mt-5">
-                <div class="w-1/2">
-                    <Message
-                        v-if="createUserStore.error"
-                        type="error"
-                        :message="createUserStore.error"
-                        class="mb-0 mt-0"
-                    />
-                </div>
-                <div class="flex justify-end gap-3">
-                    <Button size="sm" color="transparent" class="border border-main-border">
-                        {{ t('app.protected_users_page.cancel') }}
-                    </Button>
-                    <Button
-                        type="submit"
-                        size="sm"
-                        :disabled="user.roles.length <= 0 || createUserStore.loading"
-                    >
-                        {{ t('app.protected_users_page.save') }}
-                    </Button>
-                </div>
+            <div class="flex justify-end gap-3">
+                <Button size="sm" color="transparent" class="border border-main-border">
+                    {{ t('app.protected_users_page.cancel') }}
+                </Button>
+                <Button
+                    type="submit"
+                    size="sm"
+                    :disabled="user.roles.length <= 0 || createUserStore.loading"
+                >
+                    {{ t('app.protected_users_page.save') }}
+                </Button>
             </div>
         </template>
     </UserForm>
