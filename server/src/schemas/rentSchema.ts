@@ -36,8 +36,8 @@ export class Rent {
     @Prop({ required: true, default: () => Date.now() })
     createdAt?: number;
 
-    @Prop({ required: true })
-    intentId: string;
+    @Prop()
+    intentId?: string;
 
     @Prop({ type: Number, default: null })
     updatedAt?: number | null;
