@@ -9,3 +9,4 @@ export { default as RentalsPage } from './rentals/RentalsPage.vue';
 export { default as AdminDashboardPage } from './adminDashboard/AdminDashboardPage.vue';
 export { default as ProtectedRentalsPage } from './protectedRentals/ProtectedRentalsPage.vue';
 export { default as ProtectedUsersPage } from './protectedUsers/ProtectedUsersPage.vue';
+export { default as AdminCreateRentalPage } from './adminCreateRental/AdminCreateRentalPage.vue';

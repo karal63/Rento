@@ -11,6 +11,7 @@ import {
     AdminDashboardPage,
     ProtectedRentalsPage,
     ProtectedUsersPage,
+    AdminCreateRentalPage,
 } from '@/pages';
 
 import BookingLayout from '../layouts/BookingLayout.vue';
@@ -85,6 +86,10 @@ export const routes: RouteRecordRaw[] = [
             {
                 path: 'rentals',
                 component: ProtectedRentalsPage,
+            },
+            {
+                path: 'rentals/create',
+                component: AdminCreateRentalPage,
             },
             {
                 path: 'users',

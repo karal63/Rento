@@ -4,6 +4,7 @@ import type { RentalStatus, SortMethod } from '@/entities/rental';
 export const API_GET_CAR_SINGLE = (id: string) => `/cars/${id}`;
 export const API_GET_CAR_LIST = (page: number, brands: string[], search: string) =>
     `/cars/?page=${page}${brands ? brands.map(b => `&brand=${b}`).join('') : ''}${search ? `&search=${search}` : ''}`;
+export const API_GET_CARS_FOUND = (search: string) => `/cars/found?search=${search}`;
 
 // USER
 export const API_POST_USER_SIGNUP = `/auth/signup`;
@@ -33,6 +34,7 @@ export const API_GET_RENTALS = (
 ) =>
     `/rent/all?status=${status}&search=${search}&sort=${sort ? sort.field + ':' + sort.order : ''}`;
 export const API_DELETE_RENTAL = (id: string) => `/rent/delete/${id}`;
+export const API_POST_RENTAL_CREATE = '/rent/create';
 
 // ADMIN DASHBOARD
 export const API_GET_DASHBOARD_SUMMARY = '/admin/dashboard/summary';

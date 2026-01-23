@@ -7,6 +7,8 @@ import { createPinia } from 'pinia';
 import { useUserStore } from '@/entities/user';
 import { refreshTokens } from '@/features/auth/refresh';
 import { hasPermission } from '@/entities/auth';
+import { VueQueryPlugin } from '@tanstack/vue-query';
+import { queryClient } from './providers/queryClient/queryClient';
 
 const bootstrap = async () => {
     const app = createApp(App);
@@ -27,6 +29,8 @@ const bootstrap = async () => {
     app.use(router);
     app.use(i18n);
     app.use(pinia);
+
+    app.use(VueQueryPlugin, { queryClient });
 
     app.mount('#app');
 };
