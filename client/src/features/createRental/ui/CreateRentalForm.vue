@@ -6,6 +6,8 @@
     import { useCreateRentalOptions } from '../model/useCreateRentalOptions';
 
     const { cars, carSearch, isLoading } = useCreateRentalOptions();
+    const isUsersOpen = ref(false);
+    const isCarsOpen = ref(false);
 
     // const rental = ref<CreateUser>({
     //     userId: '',
@@ -17,17 +19,14 @@
     //     pickupLocation: '',
     //     pickupTime: '',
     // });
-
-    const isUsersOpen = ref(false);
-    const isCarsOpen = ref(false);
 </script>
 
 <template>
     <section class="w-[40%]">
         <h1 class="text-4xl font-medium mb-10">Create a new rental</h1>
 
-        <div class="flex items-center gap-3 mb-4 text-xl">
-            <div class="rounded-full w-8 h-8 bg-primary flex-center text-white">1</div>
+        <div class="flex items-center gap-2 mb-4 text-xl">
+            <div class="rounded-full w-6 h-6 bg-primary flex-center text-white">1</div>
             <p class="text-xl">Select the user to whom the rent will be registered</p>
         </div>
         <Dropdown :is-open="isUsersOpen" class="w-full">
@@ -67,8 +66,8 @@
             </template>
         </Dropdown>
 
-        <div class="flex items-center gap-3 mt-8 mb-4 text-xl">
-            <div class="rounded-full w-8 h-8 bg-primary flex-center text-white">2</div>
+        <div class="flex items-center gap-2 mt-8 mb-4 text-xl">
+            <div class="rounded-full w-6 h-6 bg-primary flex-center text-white">2</div>
             <p class="text-xl">Select car</p>
         </div>
 
