@@ -4,7 +4,7 @@ import { ref } from 'vue';
 
 export const useCreateRentalOptions = () => {
     const carSearch = ref('');
-    const debouncedSearch = refDebounced(carSearch, 1000);
+    const debouncedSearch = refDebounced(carSearch, 700);
 
     const carsQuery = useCarsQuery(debouncedSearch);
 

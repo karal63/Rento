@@ -1,6 +1,9 @@
+import type { Car } from '@/entities/car';
+import type { User } from '@/entities/user';
+
 export type CreateUser = {
-    userId: string;
-    carId: string;
+    user: User | null;
+    car: Car | null;
     period: {
         from: Date | '';
         to: Date | '';
