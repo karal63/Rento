@@ -28,98 +28,152 @@
 </script>
 
 <template>
-    <section class="w-[40%]">
+    <section class="w-[50%]">
         <h1 class="text-4xl font-medium mb-10">Create a new rental</h1>
 
-        <div class="flex items-center gap-2 mb-4 text-xl">
-            <div class="rounded-full w-7 h-7 bg-primary flex-center text-white">1</div>
-            <p class="text-xl">Select the user to whom the rent will be registered</p>
-        </div>
-        <Dropdown :is-open="isUsersOpen" @close="isUsersOpen = false" class="w-full">
-            <Button
-                @click="isUsersOpen = !isUsersOpen"
-                size="sm"
-                color="transparent"
-                class="border border-main-border w-full flex-between"
-            >
-                {{ rental.user?.name ?? 'Select user' }}
-                <Icon icon="weui:arrow-filled" class="transform rotate-90 text-xl text-main-gray" />
-            </Button>
-            <template #actions>
-                <div class="p-3">
-                    <div>
-                        <Input
-                            type="search"
-                            v-model="userSearch"
-                            placeholder="Search"
-                            icon="icon-park-outline:search"
-                            size="medium"
-                        />
-                    </div>
+        <div class="space-y-2 mb-6">
+            <div class="flex items-end gap-3">
+                <div
+                    class="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-semibold"
+                >
+                    1
+                </div>
+                <div>
+                    <p class="text-base font-medium">Select user</p>
+                    <p class="text-sm text-main-gray">
+                        Choose the user to whom the rent will be registered
+                    </p>
+                </div>
+            </div>
 
-                    <ul
-                        v-if="users"
-                        class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
-                    >
-                        <li
-                            v-for="user in users"
-                            :key="user._id"
-                            class="py-2 px-3 hover:bg-main-hover-bg rounded-md transition cursor-pointer"
+            <Dropdown :is-open="isUsersOpen" @close="isUsersOpen = false" class="w-2/3">
+                <Button
+                    @click="isUsersOpen = !isUsersOpen"
+                    size="sm"
+                    color="transparent"
+                    class="border border-main-border w-full flex-between"
+                >
+                    {{ rental.user?.name ?? 'Select user' }}
+                    <Icon
+                        icon="weui:arrow-filled"
+                        class="transform rotate-90 text-xl text-main-gray"
+                    />
+                </Button>
+                <template #actions>
+                    <div class="p-3">
+                        <div>
+                            <Input
+                                type="search"
+                                v-model="userSearch"
+                                placeholder="Search"
+                                icon="icon-park-outline:search"
+                                size="medium"
+                            />
+                        </div>
+
+                        <ul
+                            v-if="users"
+                            class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
                         >
-                            {{ user.name }}
-                            <span class="text-sm ml-2 text-main-gray">{{ user.email }}</span>
-                        </li>
-                    </ul>
+                            <li
+                                v-for="user in users"
+                                :key="user._id"
+                                class="py-2 px-3 hover:bg-main-hover-bg rounded-md transition cursor-pointer"
+                            >
+                                {{ user.name }}
+                                <span class="text-sm ml-2 text-main-gray">{{ user.email }}</span>
+                            </li>
+                        </ul>
 
-                    <div v-else-if="isLoading">Loading...</div>
-                </div>
-            </template>
-        </Dropdown>
-
-        <div class="flex items-center gap-2 mt-8 mb-4 text-xl">
-            <div class="rounded-full w-7 h-7 bg-primary flex-center text-white">2</div>
-            <p class="text-xl">Select car</p>
+                        <div v-else-if="isLoading">Loading...</div>
+                    </div>
+                </template>
+            </Dropdown>
         </div>
 
-        <Dropdown :is-open="isCarsOpen" @close="isCarsOpen = false" class="w-full">
-            <Button
-                @click="isCarsOpen = !isCarsOpen"
-                size="sm"
-                color="transparent"
-                class="border border-main-border w-full flex-between"
-            >
-                {{ rental.car?.name ?? 'Select car' }}
-                <Icon icon="weui:arrow-filled" class="transform rotate-90 text-xl text-main-gray" />
-            </Button>
-            <template #actions>
-                <div class="p-3">
-                    <div>
-                        <Input
-                            type="search"
-                            v-model="carSearch"
-                            placeholder="Search"
-                            icon="icon-park-outline:search"
-                            size="medium"
-                        />
-                    </div>
-
-                    <ul
-                        v-if="cars"
-                        class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
-                    >
-                        <li v-for="car in cars" :key="car._id">
-                            <button
-                                @click="selectCar(car)"
-                                class="py-2 px-3 hover:bg-main-hover-bg rounded-md transition cursor-pointer w-full text-left"
-                            >
-                                {{ car.name }}
-                            </button>
-                        </li>
-                    </ul>
-
-                    <div v-else-if="isLoading">Loading...</div>
+        <div class="space-y-2 mb-6">
+            <div class="flex items-end gap-3">
+                <div
+                    class="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-semibold"
+                >
+                    2
                 </div>
-            </template>
-        </Dropdown>
+                <div>
+                    <p class="text-base font-medium">Select car</p>
+                    <p class="text-sm text-main-gray">
+                        Choose the car that will be registered in this rental
+                    </p>
+                </div>
+            </div>
+            <Dropdown :is-open="isCarsOpen" @close="isCarsOpen = false" class="w-2/3">
+                <Button
+                    @click="isCarsOpen = !isCarsOpen"
+                    size="sm"
+                    color="transparent"
+                    class="border border-main-border w-full flex-between"
+                >
+                    {{ rental.car?.name ?? 'Select car' }}
+                    <Icon
+                        icon="weui:arrow-filled"
+                        class="transform rotate-90 text-xl text-main-gray"
+                    />
+                </Button>
+                <template #actions>
+                    <div class="p-3">
+                        <div>
+                            <Input
+                                type="search"
+                                v-model="carSearch"
+                                placeholder="Search"
+                                icon="icon-park-outline:search"
+                                size="medium"
+                            />
+                        </div>
+
+                        <ul
+                            v-if="cars"
+                            class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
+                        >
+                            <li v-for="car in cars" :key="car._id">
+                                <button
+                                    @click="selectCar(car)"
+                                    class="py-2 px-3 hover:bg-main-hover-bg rounded-md transition cursor-pointer w-full text-left"
+                                >
+                                    {{ car.name }}
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div v-else-if="isLoading">Loading...</div>
+                    </div>
+                </template>
+            </Dropdown>
+        </div>
+
+        <div class="space-y-2 mb-6">
+            <div class="flex items-end gap-3">
+                <div
+                    class="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-semibold"
+                >
+                    4
+                </div>
+                <div>
+                    <p class="text-base font-medium">Pickup information</p>
+                    <p class="text-sm text-main-gray">
+                        Choose where and when user will receive the car
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <Input
+                    v-model="rental.pickupLocation"
+                    size="medium"
+                    placeholder="Airport"
+                    class="w-2/3"
+                />
+                <Input type="time" v-model="rental.pickupTime" size="medium" class="w-1/3" />
+            </div>
+        </div>
     </section>
 </template>
