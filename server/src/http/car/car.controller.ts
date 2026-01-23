@@ -4,6 +4,8 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import type { Request } from 'express';
 import { Public } from 'src/common/decorators/public.decorator';
 import { GetFoundCarsDto } from './dto/getFoundCars.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/enums/role.enum';
 
 @ApiTags('Cars')
 @Controller('cars')
@@ -22,6 +24,8 @@ export class CarController {
     }
 
     @ApiOperation({ summary: 'Get cars matching search' })
+    @ApiResponse({ status: 200, description: 'Return found cars' })
+    @Roles(Role.Admin)
     @Get('found')
     async getFoundCars(@Query() query: GetFoundCarsDto) {
         return await this.carService.findAllCars(query);

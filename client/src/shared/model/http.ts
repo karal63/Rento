@@ -17,6 +17,7 @@ export const API_GET_USERS_LIST = (search: string, sort: SortMethod | null) =>
     `/user/all?search=${search}&sort=${sort ? sort?.field + ':' + sort?.order : ''}`;
 export const API_DELETE_USER = (id: string) => `/user/delete/${id}`;
 export const API_POST_USER_CREATE = '/user/create';
+export const API_GET_USERS_FOUND = (search: string) => `/user/found?search=${search}`;
 
 // PAYMENT
 export const API_POST_PAYMENT_CREATE = `/payment/create-payment-intent`;

@@ -46,7 +46,7 @@
         <Transition name="dropdown">
             <div
                 v-if="isOpen"
-                class="absolute z-20 top-[110%] border border-main-border bg-main-bg shadow rounded-md"
+                class="absolute z-20 top-[110%] border border-main-border bg-main-gray-bg shadow rounded-md"
                 :class="getClasses"
             >
                 <ul v-if="!$slots.actions" class="divide-y divide-main-border">

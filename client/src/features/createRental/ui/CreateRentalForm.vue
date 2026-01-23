@@ -6,7 +6,7 @@
     import { useCreateRentalOptions } from '../model/useCreateRentalOptions';
     import type { Car } from '@/entities/car';
 
-    const { cars, carSearch, isLoading } = useCreateRentalOptions();
+    const { cars, users, userSearch, carSearch, isLoading } = useCreateRentalOptions();
     const isUsersOpen = ref(false);
     const isCarsOpen = ref(false);
 
@@ -42,7 +42,7 @@
                 color="transparent"
                 class="border border-main-border w-full flex-between"
             >
-                Select user
+                {{ rental.user?.name ?? 'Select user' }}
                 <Icon icon="weui:arrow-filled" class="transform rotate-90 text-xl text-main-gray" />
             </Button>
             <template #actions>
@@ -50,24 +50,28 @@
                     <div>
                         <Input
                             type="search"
+                            v-model="userSearch"
                             placeholder="Search"
                             icon="icon-park-outline:search"
                             size="medium"
                         />
                     </div>
 
-                    <ul class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll">
+                    <ul
+                        v-if="users"
+                        class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
+                    >
                         <li
+                            v-for="user in users"
+                            :key="user._id"
                             class="py-2 px-3 hover:bg-main-hover-bg rounded-md transition cursor-pointer"
                         >
-                            Leo
-                        </li>
-                        <li
-                            class="py-2 px-3 hover:bg-main-hover-bg rounded-md transition cursor-pointer"
-                        >
-                            Someone
+                            {{ user.name }}
+                            <span class="text-sm ml-2 text-main-gray">{{ user.email }}</span>
                         </li>
                     </ul>
+
+                    <div v-else-if="isLoading">Loading...</div>
                 </div>
             </template>
         </Dropdown>
