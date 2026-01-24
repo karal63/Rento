@@ -48,8 +48,8 @@ export class RentController {
         const rentals = await this.rentalService.getRentsByCarId(carId);
 
         const termins = rentals.map((rental) => ({
-            rentalFrom: new Date(rental.rentFrom).toISOString(),
-            rentalTo: new Date(rental.rentTo).toISOString(),
+            dateFrom: new Date(rental.rentFrom).toISOString(),
+            dateTo: new Date(rental.rentTo).toISOString(),
         }));
 
         return termins;

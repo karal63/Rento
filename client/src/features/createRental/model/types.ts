@@ -5,8 +5,8 @@ export type CreateUser = {
     user: User | null;
     car: Car | null;
     period: {
-        from: Date | '';
-        to: Date | '';
+        dateFrom: Date | null;
+        dateTo: Date | null;
     };
     pickupLocation: string;
     pickupTime: string;

@@ -17,8 +17,8 @@ export type Rental = {
 };
 
 export type CarAvailability = {
-    rentalFrom: string;
-    rentalTo: string;
+    dateFrom: string;
+    dateTo: string;
 };
 
 export type RentalWithCar = Rental & {
@@ -44,3 +44,5 @@ export type SortMethod = {
     order: 'asc' | 'desc';
     label: string;
 };
+
+export type RentalPeriod = { dateFrom: Date | null; dateTo: Date | null };

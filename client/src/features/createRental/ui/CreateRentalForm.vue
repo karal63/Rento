@@ -5,6 +5,8 @@
     import { Icon } from '@iconify/vue';
     import { useCreateRentalOptions } from '../model/useCreateRentalOptions';
     import type { Car } from '@/entities/car';
+    import { DateRangePicker } from '@/features/selectDateRange';
+    import type { User } from '@/entities/user';
 
     const { cars, users, userSearch, carSearch, isLoading } = useCreateRentalOptions();
     const isUsersOpen = ref(false);
@@ -14,8 +16,8 @@
         user: null,
         car: null,
         period: {
-            from: '',
-            to: '',
+            dateFrom: null,
+            dateTo: null,
         },
         pickupLocation: '',
         pickupTime: '',
@@ -24,6 +26,11 @@
     const selectCar = (car: Car) => {
         rental.value.car = car;
         isCarsOpen.value = false;
+    };
+
+    const selectUser = (user: User) => {
+        rental.value.user = user;
+        isUsersOpen.value = false;
     };
 </script>
 
@@ -75,13 +82,16 @@
                             v-if="users"
                             class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
                         >
-                            <li
-                                v-for="user in users"
-                                :key="user._id"
-                                class="py-2 px-3 hover:bg-main-hover-bg rounded-md transition cursor-pointer"
-                            >
-                                {{ user.name }}
-                                <span class="text-sm ml-2 text-main-gray">{{ user.email }}</span>
+                            <li v-for="user in users" :key="user._id">
+                                <button
+                                    @click="selectUser(user)"
+                                    class="w-full text-left py-2 px-3 hover:bg-main-hover-bg rounded-md transition cursor-pointer"
+                                >
+                                    {{ user.name }}
+                                    <span class="text-sm ml-2 text-main-gray">
+                                        {{ user.email }}
+                                    </span>
+                                </button>
                             </li>
                         </ul>
 
@@ -148,6 +158,28 @@
                     </div>
                 </template>
             </Dropdown>
+        </div>
+
+        <div class="space-y-2 mb-6">
+            <div class="flex items-end gap-3">
+                <div
+                    class="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-semibold"
+                >
+                    3
+                </div>
+                <div>
+                    <p class="text-base font-medium">Period</p>
+                    <p class="text-sm text-main-gray">
+                        Choose where and when user will receive the car
+                    </p>
+                </div>
+            </div>
+
+            <DateRangePicker
+                :car="rental.car"
+                @setPeriod="rental.period = $event"
+                :period="rental.period"
+            />
         </div>
 
         <div class="space-y-2 mb-6">

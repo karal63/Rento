@@ -5,6 +5,7 @@ export type {
     RentalWithAllDetails,
     RentalStatus,
     SortMethod,
+    RentalPeriod,
 } from './model/rental.types';
 export { RENTAL_STATUS } from './model/rental.types';
 export {
@@ -15,3 +16,4 @@ export {
 } from './api/rental.api';
 export { useRentalStore } from './model/rental.store';
 export { useRentalsQuery } from './model/useRentalsQuery';
+export { checkIfAvailableDate } from './lib/checkIfAvailableDate';
