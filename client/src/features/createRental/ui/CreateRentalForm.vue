@@ -7,11 +7,23 @@
     import type { Car } from '@/entities/car';
     import { DateRangePicker } from '@/features/selectDateRange';
     import type { User } from '@/entities/user';
+    import useVuelidate from '@vuelidate/core';
+    import { required } from '@vuelidate/validators';
+
+    const rules = {
+        user: { required },
+        car: { required },
+        period: {
+            dateFrom: { required },
+            dateTo: { required },
+        },
+        pickupLocation: { required },
+        pickupTime: { required },
+    };
 
     const { cars, users, userSearch, carSearch, isLoading } = useCreateRentalOptions();
     const isUsersOpen = ref(false);
     const isCarsOpen = ref(false);
-
     const rental = ref<CreateUser>({
         user: null,
         car: null,
@@ -22,6 +34,7 @@
         pickupLocation: '',
         pickupTime: '',
     });
+    const v$ = useVuelidate(rules, rental);
 
     const selectCar = (car: Car) => {
         rental.value = {
@@ -38,6 +51,13 @@
     const selectUser = (user: User) => {
         rental.value.user = user;
         isUsersOpen.value = false;
+    };
+
+    const handleSubmit = async () => {
+        const isValid = await v$.value.$validate();
+        if (isValid) {
+            console.log(rental.value);
+        }
     };
 </script>
 
@@ -56,6 +76,9 @@
                     <p class="text-base font-medium">Select user</p>
                     <p class="text-sm text-main-gray">
                         Choose the user to whom the rent will be registered
+                    </p>
+                    <p v-for="e in v$.user.$errors" :key="e.$uid" class="text-sm text-red-500">
+                        {{ e.$message }}
                     </p>
                 </div>
             </div>
@@ -121,6 +144,9 @@
                     <p class="text-sm text-main-gray">
                         Choose the car that will be registered in this rental
                     </p>
+                    <p v-for="e in v$.car.$errors" :key="e.$uid" class="text-sm text-red-500">
+                        {{ e.$message }}
+                    </p>
                 </div>
             </div>
             <Dropdown :is-open="isCarsOpen" @close="isCarsOpen = false" class="w-2/3">
@@ -181,6 +207,13 @@
                     <p class="text-sm text-main-gray">
                         Choose where and when user will receive the car
                     </p>
+                    <p
+                        v-for="e in v$.period.dateFrom.$errors"
+                        :key="e.$uid"
+                        class="text-sm text-red-500"
+                    >
+                        {{ e.$message }}
+                    </p>
                 </div>
             </div>
 
@@ -203,6 +236,13 @@
                     <p class="text-sm text-main-gray">
                         Choose where and when user will receive the car
                     </p>
+                    <p v-if="v$.pickupLocation.$errors.length" class="text-sm text-red-500">
+                        pickup location: {{ v$.pickupLocation.$errors[0]?.$message }}
+                    </p>
+
+                    <p v-if="v$.pickupTime.$errors.length" class="text-sm text-red-500">
+                        pickup time: {{ v$.pickupTime.$errors[0]?.$message }}
+                    </p>
                 </div>
             </div>
 
@@ -215,6 +255,13 @@
                 />
                 <Input type="time" v-model="rental.pickupTime" size="medium" class="w-1/3" />
             </div>
+        </div>
+
+        <div class="mb-6 space-x-2 flex justify-end">
+            <RouterLink to="/admin/rentals">
+                <Button size="sm" color="transparent">Cancel</Button>
+            </RouterLink>
+            <Button @click="handleSubmit" :disabled="v$.$error" size="sm">Create</Button>
         </div>
     </section>
 </template>
