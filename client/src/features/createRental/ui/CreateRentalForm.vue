@@ -24,7 +24,14 @@
     });
 
     const selectCar = (car: Car) => {
-        rental.value.car = car;
+        rental.value = {
+            ...rental.value,
+            car,
+            period: {
+                dateFrom: null,
+                dateTo: null,
+            },
+        };
         isCarsOpen.value = false;
     };
 
@@ -58,6 +65,7 @@
                     @click="isUsersOpen = !isUsersOpen"
                     size="sm"
                     color="transparent"
+                    disable-uppercase
                     class="border border-main-border w-full flex-between"
                 >
                     {{ rental.user?.name ?? 'Select user' }}
@@ -120,6 +128,7 @@
                     @click="isCarsOpen = !isCarsOpen"
                     size="sm"
                     color="transparent"
+                    disable-uppercase
                     class="border border-main-border w-full flex-between"
                 >
                     {{ rental.car?.name ?? 'Select car' }}

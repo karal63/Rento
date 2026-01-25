@@ -1,12 +1,11 @@
 <script setup lang="ts">
     import type { Car } from '@/entities/car';
-    import { checkIfAvailableDate, type CarAvailability } from '@/entities/rental';
-    import { getAvailability } from '@/features/booking/model/booking.model';
+    import { checkIfAvailableDate, useCarAvailabilityQuery } from '@/entities/rental';
     import { Calendar } from '@/shared/ui';
-    import { ref, toRef, watch } from 'vue';
+    import { computed, ref, toRef } from 'vue';
     import { useRangeCalendar } from '../model/useRangeCalendar';
     import { isPastDate, isSameDay } from '@/shared/lib/date';
-    import type { RentalPeriod } from '@/entities/rental/model/rental.types';
+    import type { RentalPeriod } from '@/entities/rental';
 
     const props = defineProps<{
         car: Car | null;
@@ -17,13 +16,14 @@
         (e: 'setPeriod', period: RentalPeriod): void;
     }>();
 
-    const carAvailability = ref<CarAvailability[] | []>([]);
     const isDateFromSelected = ref(false);
     const month = ref(new Date());
     const carRef = toRef(props, 'car');
     const periodRef = toRef(props, 'period');
 
-    const { days } = useRangeCalendar(month, carRef, periodRef, carAvailability);
+    const carId = computed(() => props.car?._id);
+    const carAvailability = useCarAvailabilityQuery(carId);
+    const { days } = useRangeCalendar(month, carRef, periodRef, carAvailability?.data);
 
     const dateToISO = (date: Date) => date.toISOString();
 
@@ -38,13 +38,13 @@
         const fromISO = dateToISO(from);
         const toISO = dateToISO(to);
 
-        return carAvailability.value.some(
+        return carAvailability?.data.value?.some(
             rental => rental.dateFrom <= toISO && rental.dateTo > fromISO
         );
     };
 
     const selectDate = (date: Date) => {
-        if (isPastDate(date) || !checkIfAvailableDate(date, carAvailability.value)) return;
+        if (isPastDate(date) || !checkIfAvailableDate(date, carAvailability?.data.value)) return;
 
         const { dateFrom } = props.period;
 
@@ -80,14 +80,6 @@
         emit('setPeriod', { dateFrom: start, dateTo: updatedDate });
         isDateFromSelected.value = false;
     };
-
-    watch(
-        () => props.car,
-        async () => {
-            if (!props.car) return;
-            carAvailability.value = await getAvailability(props.car._id);
-        }
-    );
 </script>
 
 <template>

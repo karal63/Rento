@@ -17,3 +17,4 @@ export {
 export { useRentalStore } from './model/rental.store';
 export { useRentalsQuery } from './model/useRentalsQuery';
 export { checkIfAvailableDate } from './lib/checkIfAvailableDate';
+export { useCarAvailabilityQuery } from './model/queries';

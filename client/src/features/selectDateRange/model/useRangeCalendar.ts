@@ -10,7 +10,7 @@ export const useRangeCalendar = (
     month: Ref<Date>,
     car: Ref<Car | null>,
     datesPeriod: Ref<RentalPeriod>,
-    carAvailability: Ref<CarAvailability[]>
+    carAvailability?: Ref<CarAvailability[] | undefined>
 ) => {
     const days = computed(() => generateCalendarDays(month.value).map(date => mapRangeState(date)));
 
@@ -26,8 +26,8 @@ export const useRangeCalendar = (
             selected:
                 isSameDay(date, datesPeriod.value.dateFrom) ||
                 isSameDay(date, datesPeriod.value.dateTo),
-            available: checkIfAvailableDate(date, carAvailability.value),
-            showAvailabilityMark: true,
+            available: carAvailability && checkIfAvailableDate(date, carAvailability.value),
+            showAvailabilityMark: carAvailability && true,
         };
     }
 
