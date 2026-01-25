@@ -6,6 +6,7 @@ export type {
     RentalStatus,
     SortMethod,
     RentalPeriod,
+    CreateRental,
 } from './model/rental.types';
 export { RENTAL_STATUS } from './model/rental.types';
 export {

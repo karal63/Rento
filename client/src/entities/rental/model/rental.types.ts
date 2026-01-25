@@ -46,3 +46,12 @@ export type SortMethod = {
 };
 
 export type RentalPeriod = { dateFrom: Date | null; dateTo: Date | null };
+
+export type CreateRental = {
+    userId: string;
+    carId: string;
+    rentFrom: number | null;
+    rentTo: number | null;
+    pickupLocation: string;
+    pickupTime: string;
+};

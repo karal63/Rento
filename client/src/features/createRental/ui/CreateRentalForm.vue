@@ -8,6 +8,8 @@
     import type { User } from '@/entities/user';
     import useVuelidate from '@vuelidate/core';
     import { required } from '@vuelidate/validators';
+    import { createRental } from '../model/createRental';
+    import { useRouter } from 'vue-router';
 
     const props = defineProps<{
         period: {
@@ -31,6 +33,7 @@
         pickupTime: { required },
     };
 
+    const router = useRouter();
     const { cars, users, userSearch, carSearch, isLoading } = useCreateRentalOptions();
     const isUsersOpen = ref(false);
     const isCarsOpen = ref(false);
@@ -66,8 +69,10 @@
 
     const handleSubmit = async () => {
         const isValid = await v$.value.$validate();
+
         if (isValid) {
-            console.log(rental.value);
+            await createRental(rental.value);
+            router.push('/admin/rentals');
         }
     };
 
