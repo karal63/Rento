@@ -2,7 +2,7 @@ import { axiosInstance } from '@/shared/config';
 import type { AxiosResponse } from 'axios';
 import type {
     CarAvailability,
-    CreateRental,
+    ReadyRental,
     Rental,
     RentalStatus,
     RentalWithAllDetails,
@@ -44,6 +44,6 @@ export const apiGetAllRentals = async ({
     return await axiosInstance.get(API_GET_RENTALS(status, search, sort));
 };
 
-export const apiCreateRental = async (rental: CreateRental) => {
+export const apiCreateRental = async (rental: ReadyRental) => {
     await axiosInstance.post(API_POST_RENTAL_CREATE, { ...rental });
 };

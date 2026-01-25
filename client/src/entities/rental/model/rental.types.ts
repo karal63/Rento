@@ -47,7 +47,7 @@ export type SortMethod = {
 
 export type RentalPeriod = { dateFrom: Date | null; dateTo: Date | null };
 
-export type CreateRental = {
+export type ReadyRental = {
     userId: string;
     carId: string;
     rentFrom: number | null;

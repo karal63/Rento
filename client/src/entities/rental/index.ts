@@ -6,7 +6,7 @@ export type {
     RentalStatus,
     SortMethod,
     RentalPeriod,
-    CreateRental,
+    ReadyRental,
 } from './model/rental.types';
 export { RENTAL_STATUS } from './model/rental.types';
 export {
@@ -16,6 +16,7 @@ export {
     apiGetAllRentals,
 } from './api/rental.api';
 export { useRentalStore } from './model/rental.store';
-export { useRentalsQuery } from './model/useRentalsQuery';
+// export { useRentalsQuery } from './model/useRentalsQuery';
 export { checkIfAvailableDate } from './lib/checkIfAvailableDate';
-export { useCarAvailabilityQuery } from './model/queries';
+export { useCarAvailabilityQuery, useRentalsQuery } from './model/queries';
+export { useCreateRentalMutation } from './model/mutations';

@@ -8,7 +8,7 @@ import { useUserStore } from '@/entities/user';
 import { refreshTokens } from '@/features/auth/refresh';
 import { hasPermission } from '@/entities/auth';
 import { VueQueryPlugin } from '@tanstack/vue-query';
-import { queryClient } from './providers/queryClient/queryClient';
+import { queryClient } from '@/shared/config/queryClient';
 
 const bootstrap = async () => {
     const app = createApp(App);

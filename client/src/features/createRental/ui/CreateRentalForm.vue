@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { ref, watch } from 'vue';
-    import type { CreateUser } from '../model/types';
     import { Button, Dropdown, Input } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { useCreateRentalOptions } from '../model/useCreateRentalOptions';
@@ -8,8 +7,11 @@
     import type { User } from '@/entities/user';
     import useVuelidate from '@vuelidate/core';
     import { required } from '@vuelidate/validators';
-    import { createRental } from '../model/createRental';
     import { useRouter } from 'vue-router';
+    import { useCreateRentalMutation } from '@/entities/rental';
+    import type { CreateRental } from '../model/types';
+    import { buildCreateRentalPayload } from '../model/buildCreateRentalPayload';
+    import { showDialog } from '@/features/dialog/@x';
 
     const props = defineProps<{
         period: {
@@ -37,7 +39,7 @@
     const { cars, users, userSearch, carSearch, isLoading } = useCreateRentalOptions();
     const isUsersOpen = ref(false);
     const isCarsOpen = ref(false);
-    const rental = ref<CreateUser>({
+    const rental = ref<CreateRental>({
         user: null,
         car: null,
         period: {
@@ -48,6 +50,7 @@
         pickupTime: '',
     });
     const v$ = useVuelidate(rules, rental);
+    const createRentalMutation = useCreateRentalMutation();
 
     const selectCar = (car: Car) => {
         rental.value = {
@@ -69,11 +72,14 @@
 
     const handleSubmit = async () => {
         const isValid = await v$.value.$validate();
+        if (!isValid) return;
 
-        if (isValid) {
-            await createRental(rental.value);
-            router.push('/admin/rentals');
-        }
+        const payload = buildCreateRentalPayload(rental.value);
+        if (!payload) return;
+
+        await createRentalMutation.mutateAsync(payload);
+        showDialog('success', 'Rental created', 'You can cancel or edit it at any time');
+        router.push('/admin/rentals');
     };
 
     watch(
