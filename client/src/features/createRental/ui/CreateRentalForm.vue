@@ -265,3 +265,5 @@
         </div>
     </section>
 </template>
+
+<!-- fix sidebar buttons & translate them -->

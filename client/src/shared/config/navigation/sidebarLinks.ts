@@ -1,16 +1,16 @@
 export const adminLinks = [
     {
-        path: 'dashboard',
+        path: '/admin/dashboard',
         icon: 'material-symbols:dashboard-outline-rounded',
         name: 'Dashboard',
     },
     {
-        path: 'rentals',
+        path: '/admin/rentals',
         icon: 'material-symbols-light:car-rental',
         name: 'Rentals',
     },
     {
-        path: 'users',
+        path: '/admin/users',
         icon: 'mdi-light:account',
         name: 'Users',
     },
