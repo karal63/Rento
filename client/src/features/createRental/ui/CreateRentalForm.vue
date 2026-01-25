@@ -1,14 +1,24 @@
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { ref, watch } from 'vue';
     import type { CreateUser } from '../model/types';
     import { Button, Dropdown, Input } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { useCreateRentalOptions } from '../model/useCreateRentalOptions';
     import type { Car } from '@/entities/car';
-    import { DateRangePicker } from '@/features/selectDateRange';
     import type { User } from '@/entities/user';
     import useVuelidate from '@vuelidate/core';
     import { required } from '@vuelidate/validators';
+
+    const props = defineProps<{
+        period: {
+            dateFrom: Date | null;
+            dateTo: Date | null;
+        };
+    }>();
+
+    const emit = defineEmits<{
+        (e: 'setCar', car: Car): void;
+    }>();
 
     const rules = {
         user: { required },
@@ -45,6 +55,7 @@
                 dateTo: null,
             },
         };
+        emit('setCar', car);
         isCarsOpen.value = false;
     };
 
@@ -59,6 +70,16 @@
             console.log(rental.value);
         }
     };
+
+    watch(
+        () => props.period,
+        () => {
+            rental.value = {
+                ...rental.value,
+                period: props.period,
+            };
+        }
+    );
 </script>
 
 <template>
@@ -217,11 +238,7 @@
                 </div>
             </div>
 
-            <DateRangePicker
-                :car="rental.car"
-                @setPeriod="rental.period = $event"
-                :period="rental.period"
-            />
+            <slot />
         </div>
 
         <div class="space-y-2 mb-6">
@@ -265,5 +282,3 @@
         </div>
     </section>
 </template>
-
-<!-- fix sidebar buttons & translate them -->
