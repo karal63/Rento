@@ -11,7 +11,9 @@
     import { useCreateRentalMutation } from '@/entities/rental';
     import type { CreateRental } from '../model/types';
     import { buildCreateRentalPayload } from '../model/buildCreateRentalPayload';
-    import { showDialog } from '@/features/dialog/@x';
+    import { showDialog, showErrorDialog } from '@/features/dialog/@x';
+    import type { AppError } from '@/shared/model';
+    import { useI18n } from 'vue-i18n';
 
     const props = defineProps<{
         period: {
@@ -35,8 +37,10 @@
         pickupTime: { required },
     };
 
+    const { t } = useI18n();
     const router = useRouter();
     const { cars, users, userSearch, carSearch, isLoading } = useCreateRentalOptions();
+
     const isUsersOpen = ref(false);
     const isCarsOpen = ref(false);
     const rental = ref<CreateRental>({
@@ -77,9 +81,18 @@
         const payload = buildCreateRentalPayload(rental.value);
         if (!payload) return;
 
-        await createRentalMutation.mutateAsync(payload);
-        showDialog('success', 'Rental created', 'You can cancel or edit it at any time');
-        router.push('/admin/rentals');
+        try {
+            await createRentalMutation.mutateAsync(payload);
+            showDialog(
+                'success',
+                t('app.message.rental_created'),
+                t('app.message.rental_created_desc', { name: rental.value.user?.name })
+            );
+            router.push('/admin/rentals');
+        } catch (error) {
+            console.log(error);
+            showErrorDialog(error as AppError);
+        }
     };
 
     watch(
@@ -95,7 +108,7 @@
 
 <template>
     <section class="w-[50%]">
-        <h1 class="text-4xl font-medium mb-10">Create a new rental</h1>
+        <h1 class="text-4xl font-medium mb-10">{{ t('app.create_rental_page.title') }}</h1>
 
         <div class="space-y-2 mb-6">
             <div class="flex items-end gap-3">
@@ -105,9 +118,11 @@
                     1
                 </div>
                 <div>
-                    <p class="text-base font-medium">Select user</p>
+                    <p class="text-base font-medium">
+                        {{ t('app.create_rental_page.select_user') }}
+                    </p>
                     <p class="text-sm text-main-gray">
-                        Choose the user to whom the rent will be registered
+                        {{ t('app.create_rental_page.select_user_desc') }}
                     </p>
                     <p v-for="e in v$.user.$errors" :key="e.$uid" class="text-sm text-red-500">
                         {{ e.$message }}
@@ -123,7 +138,7 @@
                     disable-uppercase
                     class="border border-main-border w-full flex-between"
                 >
-                    {{ rental.user?.name ?? 'Select user' }}
+                    {{ rental.user?.name ?? t('app.create_rental_page.select_user') }}
                     <Icon
                         icon="weui:arrow-filled"
                         class="transform rotate-90 text-xl text-main-gray"
@@ -135,30 +150,32 @@
                             <Input
                                 type="search"
                                 v-model="userSearch"
-                                placeholder="Search"
+                                :placeholder="t('app.search')"
                                 icon="icon-park-outline:search"
                                 size="medium"
                             />
                         </div>
 
                         <ul
-                            v-if="users"
                             class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
                         >
                             <li v-for="user in users" :key="user._id">
                                 <button
                                     @click="selectUser(user)"
-                                    class="w-full text-left py-2 px-3 hover:bg-main-hover-bg rounded-md transition cursor-pointer"
+                                    :disabled="isLoading"
+                                    class="w-full text-left py-2 px-3 hover:bg-main-border rounded-md transition cursor-pointer"
+                                    :class="isLoading && 'text-current/50'"
                                 >
                                     {{ user.name }}
-                                    <span class="text-sm ml-2 text-main-gray">
+                                    <span
+                                        class="text-sm ml-2"
+                                        :class="isLoading ? 'text-main-gray/50' : 'text-main-gray'"
+                                    >
                                         {{ user.email }}
                                     </span>
                                 </button>
                             </li>
                         </ul>
-
-                        <div v-else-if="isLoading">Loading...</div>
                     </div>
                 </template>
             </Dropdown>
@@ -172,9 +189,11 @@
                     2
                 </div>
                 <div>
-                    <p class="text-base font-medium">Select car</p>
+                    <p class="text-base font-medium">
+                        {{ t('app.create_rental_page.select_car') }}
+                    </p>
                     <p class="text-sm text-main-gray">
-                        Choose the car that will be registered in this rental
+                        {{ t('app.create_rental_page.select_car_desc') }}
                     </p>
                     <p v-for="e in v$.car.$errors" :key="e.$uid" class="text-sm text-red-500">
                         {{ e.$message }}
@@ -201,27 +220,26 @@
                             <Input
                                 type="search"
                                 v-model="carSearch"
-                                placeholder="Search"
+                                :placeholder="t('app.search')"
                                 icon="icon-park-outline:search"
                                 size="medium"
                             />
                         </div>
 
                         <ul
-                            v-if="cars"
                             class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
                         >
                             <li v-for="car in cars" :key="car._id">
                                 <button
                                     @click="selectCar(car)"
+                                    :disabled="isLoading"
                                     class="py-2 px-3 hover:bg-main-hover-bg rounded-md transition cursor-pointer w-full text-left"
+                                    :class="isLoading && 'text-current/50'"
                                 >
                                     {{ car.name }}
                                 </button>
                             </li>
                         </ul>
-
-                        <div v-else-if="isLoading">Loading...</div>
                     </div>
                 </template>
             </Dropdown>
@@ -235,9 +253,11 @@
                     3
                 </div>
                 <div>
-                    <p class="text-base font-medium">Period</p>
+                    <p class="text-base font-medium">
+                        {{ t('app.create_rental_page.select_period') }}
+                    </p>
                     <p class="text-sm text-main-gray">
-                        Choose where and when user will receive the car
+                        {{ t('app.create_rental_page.select_period_desc') }}
                     </p>
                     <p
                         v-for="e in v$.period.dateFrom.$errors"
@@ -260,16 +280,20 @@
                     4
                 </div>
                 <div>
-                    <p class="text-base font-medium">Pickup information</p>
+                    <p class="text-base font-medium">
+                        {{ t('app.create_rental_page.pickup_information') }}
+                    </p>
                     <p class="text-sm text-main-gray">
-                        Choose where and when user will receive the car
+                        {{ t('app.create_rental_page.pickup_information_desc') }}
                     </p>
                     <p v-if="v$.pickupLocation.$errors.length" class="text-sm text-red-500">
-                        pickup location: {{ v$.pickupLocation.$errors[0]?.$message }}
+                        {{ t('app.create_rental_page.pickup_location') }}:
+                        {{ v$.pickupLocation.$errors[0]?.$message }}
                     </p>
 
                     <p v-if="v$.pickupTime.$errors.length" class="text-sm text-red-500">
-                        pickup time: {{ v$.pickupTime.$errors[0]?.$message }}
+                        {{ t('app.create_rental_page.time') }}:
+                        {{ v$.pickupTime.$errors[0]?.$message }}
                     </p>
                 </div>
             </div>
@@ -287,9 +311,11 @@
 
         <div class="mb-6 space-x-2 flex justify-end">
             <RouterLink to="/admin/rentals">
-                <Button size="sm" color="transparent">Cancel</Button>
+                <Button size="sm" color="transparent">{{ t('app.button.cancel') }}</Button>
             </RouterLink>
-            <Button @click="handleSubmit" :disabled="v$.$error" size="sm">Create</Button>
+            <Button @click="handleSubmit" :disabled="v$.$error" size="sm">
+                {{ t('app.button.create') }}
+            </Button>
         </div>
     </section>
 </template>

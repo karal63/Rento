@@ -239,15 +239,35 @@
             "user_edited": "Użytkownik edytowany",
             "user_edited_desc": "Pomyślnie edytowano użytkownika.",
             "user_created": "Użytkownik utworzony",
-            "user_created_desc": "Pomyślnie utworzono nowego użytkownika. Możesz go edytować w dowolnym momencie."
+            "user_created_desc": "Pomyślnie utworzono nowego użytkownika. Możesz go edytować w dowolnym momencie.",
+            "rental_created": "Wynajem utworzony",
+            "rental_created_desc": "Pomyślnie utworzono nowy wynajem dla {name}. Możesz go edytować w dowolnym momencie."
         },
 
         "fields_validation": {
             "phoneNumber": "Numer telefonu",
             "isPhoneNumber": "Numer telefonu musi być prawidłowym numerem telefonu",
-
             "password": "Hasło",
             "isStrongPassword": "Hasło nie jest wystarczająco silne"
+        },
+
+        "create_rental_page": {
+            "title": "Utwórz nowy wynajem",
+            "select_user": "Wybierz użytkownika",
+            "select_user_desc": "Wybierz użytkownika, na którego zostanie zarejestrowany wynajem",
+            "select_car": "Wybierz samochód",
+            "select_car_desc": "Wybierz samochód, który zostanie przypisany do tego wynajmu",
+            "select_period": "Wybierz okres",
+            "select_period_desc": "Wybierz zakres dat, w których użytkownik będzie mógł korzystać z wynajętego samochodu",
+            "pickup_information": "Informacje o odbiorze",
+            "pickup_information_desc": "Wybierz miejsce i czas odbioru samochodu przez użytkownika",
+            "pickup_location": "Miejsce odbioru",
+            "pickup_time": "Godzina odbioru"
+        },
+
+        "button": {
+            "cancel": "Anuluj",
+            "create": "Utwórz"
         }
     }
 }
