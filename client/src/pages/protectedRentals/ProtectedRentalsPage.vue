@@ -32,7 +32,7 @@
         ...sorting,
     }));
 
-    const { loading, rentals } = useRentalsQuery(queryParams);
+    const rentalsQuery = useRentalsQuery(queryParams);
 
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
@@ -70,16 +70,18 @@
     ];
 
     function onRentalCancelled(rentalId: string) {
-        rentals.value = rentals.value.map(rental => {
-            if (rental._id === rentalId) {
-                return {
-                    ...rental,
-                    status: RENTAL_STATUS.Cancelled,
-                };
-            }
+        rentalsQuery.data.value = rentalsQuery.data.value
+            ? rentalsQuery.data.value.map(rental => {
+                  if (rental._id === rentalId) {
+                      return {
+                          ...rental,
+                          status: RENTAL_STATUS.Cancelled,
+                      };
+                  }
 
-            return rental;
-        });
+                  return rental;
+              })
+            : [];
     }
 
     const handleDelete = (rental: RentalWithAllDetails) => {
@@ -96,10 +98,12 @@
 
 <template>
     <ProtectedHeader :title="t('app.protected_rentals_page.new_rental')">
-        <Button size="sm" class="flex items-center gap-3">
-            <Icon icon="material-symbols:add-rounded" class="text-xl" />
-            {{ t('app.protected_rentals_page.new_rental') }}
-        </Button>
+        <RouterLink to="rentals/create">
+            <Button size="sm" class="flex items-center gap-3">
+                <Icon icon="material-symbols:add-rounded" class="text-xl" />
+                {{ t('app.protected_rentals_page.new_rental') }}
+            </Button>
+        </RouterLink>
     </ProtectedHeader>
 
     <RentalsFilter
@@ -111,7 +115,11 @@
         :sort="sorting.sort"
     />
 
-    <RentalsTable :rows="rentals" :columns="columns" :loading="loading">
+    <RentalsTable
+        :rows="rentalsQuery.data.value ?? []"
+        :columns="columns"
+        :loading="rentalsQuery.isLoading.value"
+    >
         <template #actions="{ row }">
             <div class="w-[120px] bg-main-bg rounded-md">
                 <button

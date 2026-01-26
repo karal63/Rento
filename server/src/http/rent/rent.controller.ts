@@ -1,15 +1,3 @@
-// import { Controller, Get } from '@nestjs/common';
-// import { Public } from 'src/common/decorators/public.decorator';
-
-// @Controller('rent')
-// export class RentController {
-//     @Public()
-//     @Get()
-//     getAllRents() {
-//         return { message: 'Rents working' };
-//     }
-// }
-
 import {
     BadRequestException,
     Body,
@@ -18,6 +6,7 @@ import {
     Get,
     Param,
     Patch,
+    Post,
     Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -29,6 +18,9 @@ import { UpdateDto } from './dto/update.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { GetAllDto } from './dto/getAll.dto';
+import { CreateRentalDto } from './dto/createRental.dto';
+import { Types } from 'mongoose';
+import { Rent } from 'src/schemas/rentSchema';
 
 @ApiTags('Rentals')
 @Controller('rent')
@@ -56,8 +48,8 @@ export class RentController {
         const rentals = await this.rentalService.getRentsByCarId(carId);
 
         const termins = rentals.map((rental) => ({
-            rentalFrom: new Date(rental.rentFrom).toISOString(),
-            rentalTo: new Date(rental.rentTo).toISOString(),
+            dateFrom: new Date(rental.rentFrom).toISOString(),
+            dateTo: new Date(rental.rentTo).toISOString(),
         }));
 
         return termins;
@@ -102,6 +94,21 @@ export class RentController {
             body,
         );
         return updatedRental;
+    }
+
+    @ApiOperation({ summary: 'Creates a new rental' })
+    @ApiResponse({ status: 200, description: 'Rental created' })
+    @Roles(Role.Admin)
+    @Post('create')
+    async create(@Body() body: CreateRentalDto) {
+        const readyBody: Rent = {
+            ...body,
+            carId: new Types.ObjectId(body.carId),
+            userId: new Types.ObjectId(body.userId),
+            totalPrice: 0,
+        };
+        await this.rentalService.createRent(readyBody);
+        return;
     }
 
     @ApiOperation({ summary: 'Find a rental' })

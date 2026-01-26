@@ -239,15 +239,41 @@
             "user_edited": "User edited",
             "user_edited_desc": "You successfully edited the user.",
             "user_created": "User created",
-            "user_created_desc": "You successfully created a new user. You can edit it at any time."
+            "user_created_desc": "You successfully created a new user. You can edit it at any time.",
+            "rental_created": "Rental created",
+            "rental_created_desc": "You successfully created a new rental for {name}. You can edit it at any time."
         },
 
         "fields_validation": {
             "phoneNumber": "Phone number",
             "isPhoneNumber": "Phone number must be a valid phone number",
-
             "password": "Password",
             "isStrongPassword": "Password is not strong enough"
+        },
+
+        "create_rental_page": {
+            "title": "Create a new rental",
+            "select_user": "Select user",
+            "select_user_desc": "Choose the user to whom the rent will be registered",
+            "select_car": "Select car",
+            "select_car_desc": "Choose the car that will be registered in this rental",
+            "select_period": "Select period",
+            "select_period_desc": "Choose date range when user will be able to use rented car",
+            "pickup_information": "Pickup information",
+            "pickup_information_desc": "Choose where and when user will receive the car",
+            "pickup_location": "pickup location",
+            "pickup_time": "pickup time"
+        },
+
+        "button": {
+            "cancel": "Cancel",
+            "create": "Create"
+        },
+
+        "link": {
+            "dashboard": "Dashboard",
+            "rentals": "Rentals",
+            "users": "Users"
         }
     }
 }

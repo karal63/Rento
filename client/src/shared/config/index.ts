@@ -3,3 +3,4 @@ export { axiosInstance, baseURL } from './axiosInstance';
 export { default as VueDatePicker } from './datePicker';
 
 export { adminLinks } from './navigation/sidebarLinks';
+export { queryClient } from './queryClient';

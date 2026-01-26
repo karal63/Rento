@@ -60,4 +60,15 @@ export class UserController {
     async create(@Body() body: CreateDto) {
         return await this.userService.add(body);
     }
+
+    @ApiOperation({ summary: 'Get found users' })
+    @ApiResponse({
+        status: 200,
+        description: 'Return 20 users with matching value',
+    })
+    @Roles(Role.Admin)
+    @Get('found')
+    async getFound(@Query() query: { search: string }) {
+        return await this.userService.getFound(query);
+    }
 }

@@ -114,4 +114,20 @@ export class UserService {
             password: hashedPassword,
         });
     }
+
+    async getFound(query: { search: string }) {
+        return await this.userModel.find({
+            $or: [
+                {
+                    name: { $regex: query.search, $options: 'i' },
+                },
+                {
+                    email: { $regex: query.search, $options: 'i' },
+                },
+                {
+                    phoneNumber: { $regex: query.search, $options: 'i' },
+                },
+            ],
+        });
+    }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Car } from 'src/schemas/carSchema';
+import { GetFoundCarsDto } from './dto/getFoundCars.dto';
 
 type Query = {
     page: string;
@@ -48,5 +49,11 @@ export class CarService {
 
     async find(id: string) {
         return await this.carModel.findById(id).exec();
+    }
+
+    async findAllCars(query: GetFoundCarsDto) {
+        return await this.carModel.find({
+            name: { $regex: query.search, $options: 'i' },
+        });
     }
 }

@@ -8,3 +8,4 @@ export { default as AcceptanceModal } from './acceptModal/AcceptanceModal.vue';
 export { default as ModalTransition } from './modalTransition/ModalTransition.vue';
 export { default as ToolTip } from './toolTip/ToolTip.vue';
 export { default as Dropdown } from './dropdown/Dropdown.vue';
+export { default as Calendar } from './calendar/Calendar.vue';

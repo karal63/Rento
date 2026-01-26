@@ -90,7 +90,7 @@
                     >
                         <Icon :icon="link.icon" class="text-xl" />
                     </div>
-                    <span class="font-semibold text-sm">{{ link.name }}</span>
+                    <span class="font-semibold text-sm">{{ t(`app.link.${link.name}`) }}</span>
                 </RouterLink>
             </li>
         </ul>

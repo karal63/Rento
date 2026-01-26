@@ -2,6 +2,7 @@ import { axiosInstance } from '@/shared/config';
 import type { AxiosResponse } from 'axios';
 import type {
     CarAvailability,
+    ReadyRental,
     Rental,
     RentalStatus,
     RentalWithAllDetails,
@@ -13,6 +14,7 @@ import {
     API_GET_RENTAL_SINGLE,
     API_GET_RENTALS,
     API_GET_RENTALS_LIST,
+    API_POST_RENTAL_CREATE,
 } from '@/shared/model';
 
 export const apiGetRentalDetails = async (sessionId: string): Promise<AxiosResponse<Rental>> => {
@@ -40,4 +42,8 @@ export const apiGetAllRentals = async ({
     sort: SortMethod | null;
 }): Promise<AxiosResponse<RentalWithAllDetails[]>> => {
     return await axiosInstance.get(API_GET_RENTALS(status, search, sort));
+};
+
+export const apiCreateRental = async (rental: ReadyRental) => {
+    await axiosInstance.post(API_POST_RENTAL_CREATE, { ...rental });
 };
