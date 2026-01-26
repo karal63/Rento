@@ -1,2 +1,3 @@
-export { default as BookingForm } from './ui/BookingForm.vue';
+export { default as RentDetails } from './ui/RentDetails.vue';
+export { default as Auth } from './ui/Auth.vue';
 export { useBookingStore } from './model/booking.store';

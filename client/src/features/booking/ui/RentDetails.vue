@@ -8,7 +8,6 @@
     import Button from '@/shared/ui/button/Button.vue';
     import { useI18n } from 'vue-i18n';
     import { useCarStore } from '@/entities/car';
-    import Calendar from './Calendar.vue';
 
     const bookingStore = useBookingStore();
     const userStore = useUserStore();
@@ -16,17 +15,22 @@
     const { t } = useI18n();
 
     const isDisabled = computed(() => {
-        return !bookingStore.pickupTime || !bookingStore.location || !bookingStore.dateRange;
+        return (
+            !bookingStore.pickupTime ||
+            !bookingStore.location ||
+            !bookingStore.period.dateFrom ||
+            !bookingStore.period.dateTo
+        );
     });
 
     watch(
-        () => bookingStore.dateRange,
+        () => bookingStore.period,
         () => {
-            if (!bookingStore.dateRange[0] || !bookingStore.dateRange[1]) return;
+            if (!bookingStore.period.dateFrom || !bookingStore.period.dateTo) return;
 
             bookingStore.daysCount = calculateDays(
-                bookingStore.dateRange[0],
-                bookingStore.dateRange[1]
+                bookingStore.period.dateFrom,
+                bookingStore.period.dateTo
             );
         },
         { deep: true }
@@ -43,30 +47,14 @@
                     {{ t('app.auth.pickup_date') }}
                 </label>
 
-                <Calendar />
-
-                <!-- <VueDatePicker
-                    v-model="bookingStore.dateRange"
-                    range
-                    text-input
-                    :time-config="{ enableTimePicker: false }"
-                    :enable-time-picker="false"
-                    :placeholder="t('app.auth.select_rental_dates')"
-                    :dark="themeStore.isDark"
-                /> -->
+                <slot />
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-main-gray mb-1">
                     {{ t('app.auth.pickup_time') }}
                 </label>
-                <Input
-                    :disabled="!bookingStore.dateRange[0] || !bookingStore.dateRange[1]"
-                    v-model="bookingStore.pickupTime"
-                    type="time"
-                    size="medium"
-                    class="w-full"
-                />
+                <Input v-model="bookingStore.pickupTime" type="time" size="medium" class="w-full" />
             </div>
 
             <div>

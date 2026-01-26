@@ -1,8 +1,9 @@
 <script setup lang="ts">
     import { useCarStore } from '@/entities/car';
+    import { Auth } from '@/features/booking';
+    import { BookRental } from '@/widgets';
     import { onMounted } from 'vue';
     import { useRoute } from 'vue-router';
-    import { BookingForm } from '@/features/booking';
 
     const { params } = useRoute();
     const carStore = useCarStore();
@@ -13,5 +14,6 @@
 </script>
 
 <template>
-    <BookingForm />
+    <BookRental />
+    <Auth />
 </template>
