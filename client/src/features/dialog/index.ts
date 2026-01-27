@@ -1,3 +1,5 @@
 export { DIALOG_TYPE, type DialogType } from './model/types';
 export { default as Dialog } from './ui/Dialog.vue';
 export { useDialogStore } from './model/dialog.store';
+export { showDialog } from './model/showDialog';
+export { showErrorDialog } from './model/showErrorDialog';

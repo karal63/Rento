@@ -3,7 +3,7 @@ import { useFoundUsersQuery } from '@/entities/user';
 import { refDebounced } from '@vueuse/core';
 import { computed, ref } from 'vue';
 
-export const useCreateRentalOptions = () => {
+export const useRentalOptions = () => {
     const carSearch = ref('');
     const userSearch = ref('');
     const debouncedCarSearch = refDebounced(carSearch, 700);

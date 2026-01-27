@@ -10,3 +10,4 @@ export { default as AdminDashboardPage } from './adminDashboard/AdminDashboardPa
 export { default as ProtectedRentalsPage } from './protectedRentals/ProtectedRentalsPage.vue';
 export { default as ProtectedUsersPage } from './protectedUsers/ProtectedUsersPage.vue';
 export { default as AdminCreateRentalPage } from './adminCreateRental/AdminCreateRentalPage.vue';
+export { default as AdminEditRentalPage } from './adminEditRental/AdminEditRentalPage.vue';

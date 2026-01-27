@@ -267,7 +267,8 @@
 
         "button": {
             "cancel": "Anuluj",
-            "create": "Utwórz"
+            "create": "Utwórz",
+            "submit": "Zatwierdź"
         },
 
         "link": {

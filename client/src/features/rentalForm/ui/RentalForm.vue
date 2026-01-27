@@ -1,71 +1,37 @@
 <script setup lang="ts">
-    import { ref, watch } from 'vue';
+    import { ref } from 'vue';
     import { Button, Dropdown, Input } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
-    import { useCreateRentalOptions } from '../model/useCreateRentalOptions';
+    import { useRentalOptions } from '../model/useRentalOptions';
     import type { Car } from '@/entities/car';
     import type { User } from '@/entities/user';
-    import useVuelidate from '@vuelidate/core';
-    import { required } from '@vuelidate/validators';
-    import { useRouter } from 'vue-router';
-    import { useCreateRentalMutation } from '@/entities/rental';
-    import type { CreateRental } from '../model/types';
-    import { buildCreateRentalPayload } from '../model/buildCreateRentalPayload';
-    import { showDialog, showErrorDialog } from '@/features/dialog/@x';
-    import type { AppError } from '@/shared/model';
+    import useVuelidate, { type ValidationArgs } from '@vuelidate/core';
+    import type { RentalFormType } from '../model/types';
     import { useI18n } from 'vue-i18n';
 
+    const rental = defineModel<RentalFormType>('rental', { required: true });
+
     const props = defineProps<{
-        period: {
-            dateFrom: Date | null;
-            dateTo: Date | null;
-        };
+        rules: ValidationArgs<RentalFormType>;
     }>();
 
     const emit = defineEmits<{
-        (e: 'setCar', car: Car): void;
+        (e: 'handleSubmit'): void;
     }>();
 
-    const rules = {
-        user: { required },
-        car: { required },
-        period: {
-            dateFrom: { required },
-            dateTo: { required },
-        },
-        pickupLocation: { required },
-        pickupTime: { required },
-    };
-
     const { t } = useI18n();
-    const router = useRouter();
-    const { cars, users, userSearch, carSearch, isLoading } = useCreateRentalOptions();
+    const { cars, users, userSearch, carSearch, isLoading } = useRentalOptions();
 
     const isUsersOpen = ref(false);
     const isCarsOpen = ref(false);
-    const rental = ref<CreateRental>({
-        user: null,
-        car: null,
-        period: {
-            dateFrom: null,
-            dateTo: null,
-        },
-        pickupLocation: '',
-        pickupTime: '',
-    });
-    const v$ = useVuelidate(rules, rental);
-    const createRentalMutation = useCreateRentalMutation();
+
+    const v$ = useVuelidate(props.rules, rental);
 
     const selectCar = (car: Car) => {
-        rental.value = {
-            ...rental.value,
-            car,
-            period: {
-                dateFrom: null,
-                dateTo: null,
-            },
-        };
-        emit('setCar', car);
+        rental.value.car = car;
+        rental.value.period.dateFrom = null;
+        rental.value.period.dateTo = null;
+
         isCarsOpen.value = false;
     };
 
@@ -78,37 +44,15 @@
         const isValid = await v$.value.$validate();
         if (!isValid) return;
 
-        const payload = buildCreateRentalPayload(rental.value);
-        if (!payload) return;
-
-        try {
-            await createRentalMutation.mutateAsync(payload);
-            showDialog(
-                'success',
-                t('app.message.rental_created'),
-                t('app.message.rental_created_desc', { name: rental.value.user?.name })
-            );
-            router.push('/admin/rentals');
-        } catch (error) {
-            console.log(error);
-            showErrorDialog(error as AppError);
-        }
+        emit('handleSubmit');
     };
-
-    watch(
-        () => props.period,
-        () => {
-            rental.value = {
-                ...rental.value,
-                period: props.period,
-            };
-        }
-    );
 </script>
 
 <template>
-    <section class="w-[50%]">
-        <h1 class="text-4xl font-medium mb-10">{{ t('app.create_rental_page.title') }}</h1>
+    <section class="w-1/2">
+        <h1 class="text-4xl font-medium mb-10">
+            <slot name="header" />
+        </h1>
 
         <div class="space-y-2 mb-6">
             <div class="flex items-end gap-3">
@@ -130,7 +74,7 @@
                 </div>
             </div>
 
-            <Dropdown :is-open="isUsersOpen" @close="isUsersOpen = false" class="w-2/3">
+            <Dropdown :is-open="isUsersOpen" @close="isUsersOpen = false">
                 <Button
                     @click="isUsersOpen = !isUsersOpen"
                     size="sm"
@@ -200,7 +144,7 @@
                     </p>
                 </div>
             </div>
-            <Dropdown :is-open="isCarsOpen" @close="isCarsOpen = false" class="w-2/3">
+            <Dropdown :is-open="isCarsOpen" @close="isCarsOpen = false">
                 <Button
                     @click="isCarsOpen = !isCarsOpen"
                     size="sm"
@@ -208,7 +152,7 @@
                     disable-uppercase
                     class="border border-main-border w-full flex-between"
                 >
-                    {{ rental.car?.name ?? 'Select car' }}
+                    {{ rental.car?.name ?? t('app.create_rental_page.select_car') }}
                     <Icon
                         icon="weui:arrow-filled"
                         class="transform rotate-90 text-xl text-main-gray"
@@ -314,7 +258,7 @@
                 <Button size="sm" color="transparent">{{ t('app.button.cancel') }}</Button>
             </RouterLink>
             <Button @click="handleSubmit" :disabled="v$.$error" size="sm">
-                {{ t('app.button.create') }}
+                {{ t('app.button.submit') }}
             </Button>
         </div>
     </section>

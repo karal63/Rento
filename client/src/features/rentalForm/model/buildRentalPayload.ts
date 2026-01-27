@@ -1,7 +1,7 @@
 import type { ReadyRental } from '@/entities/rental';
-import type { CreateRental } from './types';
+import type { RentalForm } from './types';
 
-export const buildCreateRentalPayload = (rental: CreateRental): ReadyRental | undefined => {
+export const buildRentalPayload = (rental: RentalForm): ReadyRental | undefined => {
     if (!rental.period.dateFrom || !rental.period.dateTo || !rental.user || !rental.car) return;
 
     return {

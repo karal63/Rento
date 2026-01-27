@@ -267,7 +267,8 @@
 
         "button": {
             "cancel": "Cancel",
-            "create": "Create"
+            "create": "Create",
+            "submit": "Submit"
         },
 
         "link": {

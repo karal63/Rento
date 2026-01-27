@@ -11,9 +11,11 @@ import type {
 } from '../model/rental.types';
 import {
     API_GET_CAR_AVAILABILITY,
+    API_GET_CAR_FIND,
     API_GET_RENTAL_SINGLE,
     API_GET_RENTALS,
     API_GET_RENTALS_LIST,
+    API_PATCH_RENTAL_DETAILS_EDIT,
     API_POST_RENTAL_CREATE,
 } from '@/shared/model';
 
@@ -46,4 +48,12 @@ export const apiGetAllRentals = async ({
 
 export const apiCreateRental = async (rental: ReadyRental) => {
     await axiosInstance.post(API_POST_RENTAL_CREATE, { ...rental });
+};
+
+export const apiEditRentalDetails = async (rentalId: string, payload: ReadyRental) => {
+    await axiosInstance.patch(API_PATCH_RENTAL_DETAILS_EDIT(rentalId), payload);
+};
+
+export const getRentalById = async (rentalId: string) => {
+    return await axiosInstance.get(API_GET_CAR_FIND(rentalId));
 };
