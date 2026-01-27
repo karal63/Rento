@@ -44,13 +44,24 @@ export class RentController {
         description: 'returns array of rentals time ranges',
     })
     @Get('get-availability/:carId')
-    async getAvailability(@Param('carId') carId: string) {
+    async getAvailability(
+        @Param('carId') carId: string,
+        @Query('excluded-id') excludedId: string,
+    ) {
         const rentals = await this.rentalService.getRentsByCarId(carId);
 
-        const termins = rentals.map((rental) => ({
-            dateFrom: new Date(rental.rentFrom).toISOString(),
-            dateTo: new Date(rental.rentTo).toISOString(),
-        }));
+        const termins = rentals.reduce(
+            (acc: { dateFrom: string; dateTo: string }[], rental) => {
+                if (rental._id.toString() !== excludedId) {
+                    acc.push({
+                        dateFrom: new Date(rental.rentFrom).toISOString(),
+                        dateTo: new Date(rental.rentTo).toISOString(),
+                    });
+                }
+                return acc;
+            },
+            [],
+        );
 
         return termins;
     }
@@ -111,10 +122,18 @@ export class RentController {
         return;
     }
 
-    @ApiOperation({ summary: 'Find a rental' })
+    @ApiOperation({ summary: 'Find a rental by ID' })
+    @ApiResponse({ status: 200, description: 'Returns found rental' })
+    @Roles(Role.Employee, Role.Admin)
+    @Get('get-by-id/:id')
+    async getRentalById(@Param('id') rentalId: string) {
+        return await this.rentalService.getRentalById(rentalId);
+    }
+
+    @ApiOperation({ summary: 'Find a rental by session ID' })
     @ApiResponse({ status: 200, description: 'Returns found rental' })
     @Get(':sessionId')
-    async getRental(
+    async getRentalBySessionId(
         @Param('sessionId') sessionId: string,
         @GetUser() user: UserPayload,
     ) {

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-    import type { Car } from '@/entities/car';
     import {
         useEditRentalMutation,
         useRentalQuery,
@@ -11,7 +10,7 @@
     import { DateRangePicker } from '@/features/selectDateRange';
     import type { AppError } from '@/shared/model';
     import { required } from '@vuelidate/validators';
-    import { onMounted, ref, watch, watchEffect } from 'vue';
+    import { ref, watch } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { useRoute, useRouter } from 'vue-router';
 
@@ -66,11 +65,19 @@
         }
     };
 
-    watch(data, () => {
-        console.log(data);
-
-        rental.value = data.value;
-    });
+    watch(
+        data,
+        () => {
+            if (!data.value) return;
+            rental.value.car = data.value.carId;
+            rental.value.user = data.value.userId;
+            rental.value.period.dateFrom = new Date(data.value.rentFrom);
+            rental.value.period.dateTo = new Date(data.value.rentTo);
+            rental.value.pickupLocation = data.value.pickupLocation;
+            rental.value.pickupTime = data.value.pickupTime;
+        },
+        { immediate: true }
+    );
 </script>
 
 <template>
@@ -79,6 +86,7 @@
             :car="rental.car"
             @setPeriod="rental.period = $event"
             :period="rental.period"
+            :excludedId="data?._id"
         />
 
         <template #header>

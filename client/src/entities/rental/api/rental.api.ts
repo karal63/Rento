@@ -29,9 +29,10 @@ export const apiGetRentals = async (): Promise<AxiosResponse<RentalWithCar[]>> =
 };
 
 export const apiGetCarAvailability = async (
-    carId: string
+    carId: string,
+    excludedId?: string
 ): Promise<AxiosResponse<CarAvailability[]>> => {
-    return await axiosInstance.get(API_GET_CAR_AVAILABILITY(carId));
+    return await axiosInstance.get(API_GET_CAR_AVAILABILITY(carId, excludedId));
 };
 
 export const apiGetAllRentals = async ({
