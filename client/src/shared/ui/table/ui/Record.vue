@@ -16,7 +16,7 @@
     <td
         v-for="col in columns"
         :key="col.key"
-        class="px-3 py-2 sm:py-4 min-w-[200px]"
+        class="px-3 min-w-[200px] h-12 sm:h-14"
         :style="{ minWidth: col.minWidth + 'px' }"
     >
         <slot :name="`cell-${col.key}`" :row="row">
