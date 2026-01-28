@@ -1,5 +1,6 @@
 <script setup lang="ts">
-    import { RENTAL_STATUS, type RentalStatus, type SortMethod } from '@/entities/rental';
+    import type { RentalStatus, SortMethod } from '@/entities/rental';
+    import { StatusPicker } from '@/features/statusPicker';
     import { Button, Dropdown, Input } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
@@ -18,31 +19,7 @@
         sort: SortMethod | null;
     }>();
 
-    const isStatusDropdownOpen = ref(false);
     const isSortByDropdownOpen = ref(false);
-
-    const statuses = [
-        {
-            label: t(`app.status.ALL`),
-            callback: () => emit('setStatus', ''),
-        },
-        {
-            label: t(`app.status.${RENTAL_STATUS.Completed}`),
-            callback: () => emit('setStatus', RENTAL_STATUS.Completed),
-        },
-        {
-            label: t(`app.status.${RENTAL_STATUS.Cancelled}`),
-            callback: () => emit('setStatus', RENTAL_STATUS.Cancelled),
-        },
-        {
-            label: t(`app.status.${RENTAL_STATUS.Active}`),
-            callback: () => emit('setStatus', RENTAL_STATUS.Active),
-        },
-        {
-            label: t(`app.status.${RENTAL_STATUS.Pending}`),
-            callback: () => emit('setStatus', RENTAL_STATUS.Pending),
-        },
-    ];
 
     const sortByList = [
         {
@@ -79,25 +56,12 @@
                 icon="icon-park-outline:search"
             />
 
-            <Dropdown
-                :isOpen="isStatusDropdownOpen"
-                :items="statuses"
-                @close="isStatusDropdownOpen = false"
-            >
-                <Button
-                    @click="isStatusDropdownOpen = !isStatusDropdownOpen"
-                    size="sm"
-                    color="transparent"
-                    :disableUppercase="true"
-                    class="h-full border border-main-border flex-between gap-2 w-44"
-                >
-                    {{ status ? status : t('app.protected_users_page.select_status') }}
-                    <Icon
-                        icon="weui:arrow-filled"
-                        class="transform rotate-90 text-xl text-main-gray"
-                    />
-                </Button>
-            </Dropdown>
+            <StatusPicker
+                allVariant
+                :placeholder="t('app.protected_users_page.select_status')"
+                @setStatus="emit('setStatus', $event)"
+                :status="status"
+            />
 
             <Dropdown
                 :isOpen="isSortByDropdownOpen"
