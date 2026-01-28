@@ -44,7 +44,7 @@
 </script>
 
 <template>
-    <section class="mt-5">
+    <section class="mt-5 overflow-x-scroll">
         <hr class="text-main-border" />
 
         <div class="mt-5 flex gap-5">

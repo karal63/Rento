@@ -254,6 +254,8 @@
         },
 
         "rental_form": {
+            "new": "New",
+            "edit": "Edit",
             "edit_title": "Edit rental",
             "create_title": "Create a new rental",
             "select_user": "Select user",

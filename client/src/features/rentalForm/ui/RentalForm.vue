@@ -49,7 +49,7 @@
 </script>
 
 <template>
-    <section class="w-1/2">
+    <section class="w-full lg:w-1/2">
         <slot name="header" />
 
         <div class="space-y-2 mb-6">
@@ -60,10 +60,10 @@
                     1
                 </div>
                 <div>
-                    <p class="text-base font-medium">
+                    <p class="text-sm md:text-base font-medium">
                         {{ t('app.rental_form.select_user') }}
                     </p>
-                    <p class="text-sm text-main-gray">
+                    <p class="text-xs md:text-sm text-main-gray">
                         {{ t('app.rental_form.select_user_desc') }}
                     </p>
                     <p v-for="e in v$.user.$errors" :key="e.$uid" class="text-sm text-red-500">
@@ -131,10 +131,10 @@
                     2
                 </div>
                 <div>
-                    <p class="text-base font-medium">
+                    <p class="text-sm md:text-base font-medium">
                         {{ t('app.rental_form.select_car') }}
                     </p>
-                    <p class="text-sm text-main-gray">
+                    <p class="text-xs md:text-sm text-main-gray">
                         {{ t('app.rental_form.select_car_desc') }}
                     </p>
                     <p v-for="e in v$.car.$errors" :key="e.$uid" class="text-sm text-red-500">
@@ -195,10 +195,10 @@
                     3
                 </div>
                 <div>
-                    <p class="text-base font-medium">
+                    <p class="text-sm md:text-base font-medium">
                         {{ t('app.rental_form.select_period') }}
                     </p>
-                    <p class="text-sm text-main-gray">
+                    <p class="text-xs md:text-sm text-main-gray">
                         {{ t('app.rental_form.select_period_desc') }}
                     </p>
                     <p
@@ -222,10 +222,10 @@
                     4
                 </div>
                 <div>
-                    <p class="text-base font-medium">
+                    <p class="text-sm md:text-base font-medium">
                         {{ t('app.rental_form.pickup_information') }}
                     </p>
-                    <p class="text-sm text-main-gray">
+                    <p class="text-xs md:text-sm text-main-gray">
                         {{ t('app.rental_form.pickup_information_desc') }}
                     </p>
                     <p v-if="v$.pickupLocation.$errors.length" class="text-sm text-red-500">
