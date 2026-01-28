@@ -1,12 +1,7 @@
 <script setup lang="ts">
-    import {
-        useEditRentalMutation,
-        useRentalQuery,
-        type ReadyRental,
-        type RentalPeriod,
-    } from '@/entities/rental';
+    import { buildPatchPayload, useEditRentalMutation, useRentalQuery } from '@/entities/rental';
     import { showDialog, showErrorDialog } from '@/features/dialog';
-    import { RentalForm, type RentalFormType } from '@/features/rentalForm';
+    import { buildRentalPayload, RentalForm, type RentalFormType } from '@/features/rentalForm';
     import { DateRangePicker } from '@/features/selectDateRange';
     import type { AppError } from '@/shared/model';
     import { required } from '@vuelidate/validators';
@@ -44,20 +39,18 @@
     });
 
     const edit = async () => {
-        // const payload = buildRentalPayload(rental.value);
+        const payload = buildPatchPayload(data.value, buildRentalPayload(rental.value));
 
         try {
-            console.log(rental.value);
-
-            // await editRentalMutation.mutateAsync({
-            //     rentalId: params['id'] as string,
-            //     payload,
-            // });
-            // showDialog(
-            //     'success',
-            //     t('app.message.rental_edited'),
-            //     t('app.message.rental_edited_desc', { name: username })
-            // );
+            await editRentalMutation.mutateAsync({
+                rentalId: params['id'] as string,
+                payload,
+            });
+            showDialog(
+                'success',
+                t('app.message.rental_edited'),
+                t('app.message.rental_edited_desc', { name: data.value?.userId.name })
+            );
             router.push('/admin/rentals');
         } catch (error) {
             console.log(error);
@@ -90,7 +83,7 @@
         />
 
         <template #header>
-            {{ t('app.edit_rental_page.title') }}
+            {{ t('app.rental_form.edit_title') }}
         </template>
     </RentalForm>
 </template>

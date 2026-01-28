@@ -14,7 +14,7 @@ export const useCreateRentalMutation = () =>
 
 export const useEditRentalMutation = () =>
     useMutation({
-        mutationFn: ({ rentalId, payload }: { rentalId: string; payload: ReadyRental }) =>
+        mutationFn: ({ rentalId, payload }: { rentalId: string; payload: Partial<ReadyRental> }) =>
             apiEditRentalDetails(rentalId, payload),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['rentals'] });

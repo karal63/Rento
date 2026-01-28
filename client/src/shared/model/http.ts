@@ -30,7 +30,7 @@ export const API_GET_CAR_AVAILABILITY = (carId: string, excludedId?: string) =>
 export const API_GET_CAR_FIND = (rentalId: string) => `/rent/get-by-id/${rentalId}`;
 export const API_DELETE_RENTAL_CANCEL = (rentalId: string) => `/rent/cancel/${rentalId}`;
 export const API_PATCH_RENTAL_EDIT = (rentalId: string) => `/rent/edit/${rentalId}`;
-export const API_PATCH_RENTAL_DETAILS_EDIT = (rentalId: string) => `/rent/details/edit/${rentalId}`;
+export const API_PATCH_RENTAL_DETAILS_EDIT = (rentalId: string) => `/rent/edit/${rentalId}/details`;
 export const API_GET_RENTALS = (
     status: RentalStatus | '',
     search: string,

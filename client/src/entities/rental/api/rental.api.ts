@@ -51,7 +51,7 @@ export const apiCreateRental = async (rental: ReadyRental) => {
     await axiosInstance.post(API_POST_RENTAL_CREATE, { ...rental });
 };
 
-export const apiEditRentalDetails = async (rentalId: string, payload: ReadyRental) => {
+export const apiEditRentalDetails = async (rentalId: string, payload: Partial<ReadyRental>) => {
     await axiosInstance.patch(API_PATCH_RENTAL_DETAILS_EDIT(rentalId), payload);
 };
 

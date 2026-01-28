@@ -63,10 +63,10 @@
                 </div>
                 <div>
                     <p class="text-base font-medium">
-                        {{ t('app.create_rental_page.select_user') }}
+                        {{ t('app.rental_form.select_user') }}
                     </p>
                     <p class="text-sm text-main-gray">
-                        {{ t('app.create_rental_page.select_user_desc') }}
+                        {{ t('app.rental_form.select_user_desc') }}
                     </p>
                     <p v-for="e in v$.user.$errors" :key="e.$uid" class="text-sm text-red-500">
                         {{ e.$message }}
@@ -82,7 +82,7 @@
                     disable-uppercase
                     class="border border-main-border w-full flex-between"
                 >
-                    {{ rental.user?.name ?? t('app.create_rental_page.select_user') }}
+                    {{ rental.user?.name ?? t('app.rental_form.select_user') }}
                     <Icon
                         icon="weui:arrow-filled"
                         class="transform rotate-90 text-xl text-main-gray"
@@ -134,10 +134,10 @@
                 </div>
                 <div>
                     <p class="text-base font-medium">
-                        {{ t('app.create_rental_page.select_car') }}
+                        {{ t('app.rental_form.select_car') }}
                     </p>
                     <p class="text-sm text-main-gray">
-                        {{ t('app.create_rental_page.select_car_desc') }}
+                        {{ t('app.rental_form.select_car_desc') }}
                     </p>
                     <p v-for="e in v$.car.$errors" :key="e.$uid" class="text-sm text-red-500">
                         {{ e.$message }}
@@ -152,7 +152,7 @@
                     disable-uppercase
                     class="border border-main-border w-full flex-between"
                 >
-                    {{ rental.car?.name ?? t('app.create_rental_page.select_car') }}
+                    {{ rental.car?.name ?? t('app.rental_form.select_car') }}
                     <Icon
                         icon="weui:arrow-filled"
                         class="transform rotate-90 text-xl text-main-gray"
@@ -198,10 +198,10 @@
                 </div>
                 <div>
                     <p class="text-base font-medium">
-                        {{ t('app.create_rental_page.select_period') }}
+                        {{ t('app.rental_form.select_period') }}
                     </p>
                     <p class="text-sm text-main-gray">
-                        {{ t('app.create_rental_page.select_period_desc') }}
+                        {{ t('app.rental_form.select_period_desc') }}
                     </p>
                     <p
                         v-for="e in v$.period.dateFrom.$errors"
@@ -225,18 +225,18 @@
                 </div>
                 <div>
                     <p class="text-base font-medium">
-                        {{ t('app.create_rental_page.pickup_information') }}
+                        {{ t('app.rental_form.pickup_information') }}
                     </p>
                     <p class="text-sm text-main-gray">
-                        {{ t('app.create_rental_page.pickup_information_desc') }}
+                        {{ t('app.rental_form.pickup_information_desc') }}
                     </p>
                     <p v-if="v$.pickupLocation.$errors.length" class="text-sm text-red-500">
-                        {{ t('app.create_rental_page.pickup_location') }}:
+                        {{ t('app.rental_form.pickup_location') }}:
                         {{ v$.pickupLocation.$errors[0]?.$message }}
                     </p>
 
                     <p v-if="v$.pickupTime.$errors.length" class="text-sm text-red-500">
-                        {{ t('app.create_rental_page.time') }}:
+                        {{ t('app.rental_form.time') }}:
                         {{ v$.pickupTime.$errors[0]?.$message }}
                     </p>
                 </div>
