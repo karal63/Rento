@@ -38,7 +38,7 @@
 </script>
 
 <template>
-    <section class="mt-10">
+    <section class="mt-10 overflow-x-scroll">
         <Table :rows="rows" :columns="columns" :loading="loading">
             <template v-if="$slots.actions" #actions="slotProps">
                 <slot name="actions" v-bind="slotProps" />

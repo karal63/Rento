@@ -43,8 +43,17 @@
             key: 'rentalPeriod',
             header: t('app.protected_rentals_page.period'),
             render: rental =>
-                `${new Date(rental.rentFrom).toLocaleString()} - ${new Date(rental.rentTo).toLocaleString()}`,
+                `${new Date(rental.rentFrom).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                })} - ${new Date(rental.rentTo).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                })}`,
             width: '35%',
+            minWidth: 300,
         },
         {
             key: 'status',
@@ -97,7 +106,7 @@
 </script>
 
 <template>
-    <ProtectedHeader :title="t('app.protected_rentals_page.new_rental')">
+    <ProtectedHeader :title="t('app.protected_rentals_page.all_rentals')">
         <RouterLink to="rentals/create">
             <Button size="sm" class="flex items-center gap-3">
                 <Icon icon="material-symbols:add-rounded" class="text-xl" />
@@ -122,13 +131,13 @@
     >
         <template #actions="{ row }">
             <div class="w-[120px] bg-main-bg rounded-md">
-                <button
-                    @click="console.log(row._id)"
+                <RouterLink
+                    :to="`rentals/edit/${row._id}`"
                     class="px-3 py-2 w-full text-left hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
                 >
                     <Icon icon="lucide:edit" class="text-xl" />
                     {{ t('app.protected_rentals_page.edit') }}
-                </button>
+                </RouterLink>
 
                 <button
                     @click="handleDelete(row)"

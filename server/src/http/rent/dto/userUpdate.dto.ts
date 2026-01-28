@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, Matches } from 'class-validator';
 
-export class UpdateDto {
+export class UserUpdateDto {
     @ApiProperty({
         example: '09:00',
         description: 'Pickup time',

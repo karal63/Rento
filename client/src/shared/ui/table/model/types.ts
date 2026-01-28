@@ -3,4 +3,5 @@ export type TableColumn<T> = {
     header: string;
     width?: string;
     render?: (row: T) => string | number;
+    minWidth?: number;
 };

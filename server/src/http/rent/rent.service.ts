@@ -8,11 +8,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Car } from 'src/schemas/carSchema';
 import { Rent } from 'src/schemas/rentSchema';
-import { UpdateDto } from './dto/update.dto';
+import { UserUpdateDto } from './dto/userUpdate.dto';
 import { RentalRepo } from './rental.repository';
 import { GetAllDto } from './dto/getAll.dto';
 import { Role } from 'src/enums/role.enum';
 import { UserPayload } from 'src/common/types/user.type';
+import { Status } from 'src/enums/status.enum';
+import { AdminUpdateDto } from './dto/adminUpdate.dto';
+import { LogCode } from 'src/enums';
 
 @Injectable()
 export class RentService {
@@ -50,7 +53,9 @@ export class RentService {
     async getRentsByCarId(carId: string) {
         return await this.rentModel.find({
             carId: new Types.ObjectId(carId),
-            status: { $ne: 'CANCELLED' },
+            status: {
+                $nin: [Status.Cancelled, Status.Completed],
+            },
         });
     }
 
@@ -71,7 +76,7 @@ export class RentService {
         );
     }
 
-    async updateRental(rentalId: string, userId: string, body: UpdateDto) {
+    async updateRental(rentalId: string, userId: string, body: UserUpdateDto) {
         const updatedRental = await this.rentModel
             .findOneAndUpdate(
                 { _id: rentalId, userId: new Types.ObjectId(userId) }, // ownership check
@@ -124,5 +129,18 @@ export class RentService {
         }
 
         await this.rentalRepo.cancel(id);
+    }
+
+    async getRentalById(id: string) {
+        return await this.rentalRepo.findRentalDetailsById(id);
+    }
+
+    async updateRentalDetails(rentalId: string, body: AdminUpdateDto) {
+        const rental = await this.rentModel.findById(rentalId);
+        if (!rental) throw new NotFoundException(LogCode.CODE_R004);
+
+        await this.rentModel.findByIdAndUpdate(rentalId, {
+            $set: { ...body, updatedAt: Date.now() },
+        });
     }
 }

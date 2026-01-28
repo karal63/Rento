@@ -241,7 +241,9 @@
             "user_created": "User created",
             "user_created_desc": "You successfully created a new user. You can edit it at any time.",
             "rental_created": "Rental created",
-            "rental_created_desc": "You successfully created a new rental for {name}. You can edit it at any time."
+            "rental_created_desc": "You successfully created a new rental for {name}. You can edit it at any time.",
+            "rental_edited": "Rental edited",
+            "rental_edited_desc": "You successfully edited rental for {name}."
         },
 
         "fields_validation": {
@@ -251,8 +253,11 @@
             "isStrongPassword": "Password is not strong enough"
         },
 
-        "create_rental_page": {
-            "title": "Create a new rental",
+        "rental_form": {
+            "new": "New",
+            "edit": "Edit",
+            "edit_title": "Edit rental",
+            "create_title": "Create a new rental",
             "select_user": "Select user",
             "select_user_desc": "Choose the user to whom the rent will be registered",
             "select_car": "Select car",
@@ -267,7 +272,8 @@
 
         "button": {
             "cancel": "Cancel",
-            "create": "Create"
+            "create": "Create",
+            "submit": "Submit"
         },
 
         "link": {

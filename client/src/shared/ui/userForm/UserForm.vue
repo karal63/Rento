@@ -87,11 +87,13 @@
 
 <template>
     <ModalTransition :is-open="isOpen" :onCancel="handleCloseModal">
-        <div class="relative w-2/3 bg-main-bg rounded-md p-7 border border-main-border">
+        <div
+            class="relative mx-2 w-xl md:w-3xl lg:w-4xl xl:w-6xl bg-main-bg rounded-md p-5 md:p-7 border border-main-border"
+        >
             <slot name="header" />
 
             <form @submit.prevent="handleSubmit" class="mt-5">
-                <div class="grid grid-cols-2 gap-x-7 gap-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-7 gap-y-4">
                     <label>
                         <p class="text-sm text-main-gray">{{ t('app.auth.name') }}</p>
                         <p v-if="v$.name.$error" class="text-sm text-red-500">
@@ -157,7 +159,7 @@
                 <hr class="text-main-border mt-7 mb-4" />
 
                 <div class="flex gap-7">
-                    <div class="w-1/2">
+                    <div>
                         <p class="text-xl font-semibold mb-2">
                             {{ t('app.protected_users_page.roles') }}
                         </p>
@@ -181,13 +183,12 @@
                                 ref="dropdownRef"
                                 :is-open="isRoleDropdownOpen"
                                 :items="roles"
-                                class="w-[80%]"
                             >
                                 <Button
                                     size="sm"
                                     color="transparent"
                                     @click="isRoleDropdownOpen = !isRoleDropdownOpen"
-                                    class="border border-main-border w-full flex-between"
+                                    class="border border-main-border flex-between gap-3 w-48"
                                 >
                                     {{
                                         selectedRole
@@ -204,15 +205,13 @@
                             <Button
                                 @click="addRole(selectedRole)"
                                 size="sm"
-                                class="w-[20%] flex-between"
+                                class="flex items-center gap-3"
                             >
                                 <Icon icon="material-symbols:add-rounded" class="text-xl" />
                                 {{ t('app.protected_users_page.add') }}
                             </Button>
                         </div>
                     </div>
-
-                    <div class="w-1/2"></div>
                 </div>
 
                 <slot name="footer" />

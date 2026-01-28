@@ -1,25 +1,72 @@
 <script setup lang="ts">
-    import type { Car } from '@/entities/car';
-    import type { RentalPeriod } from '@/entities/rental';
-    import { CreateRentalForm } from '@/features/createRental';
+    import { useCreateRentalMutation } from '@/entities/rental';
+    import { showDialog, showErrorDialog } from '@/features/dialog';
+    import { buildRentalPayload, RentalForm, type RentalFormType } from '@/features/rentalForm';
     import { DateRangePicker } from '@/features/selectDateRange';
+    import type { AppError } from '@/shared/model';
+    import { required } from '@vuelidate/validators';
     import { ref } from 'vue';
+    import { useI18n } from 'vue-i18n';
+    import { useRouter } from 'vue-router';
 
-    const selectedCar = ref<Car | null>(null);
-    const rentalPeriod = ref<RentalPeriod>({
-        dateFrom: null,
-        dateTo: null,
+    const router = useRouter();
+    const { t } = useI18n();
+
+    const createRentalMutation = useCreateRentalMutation();
+
+    const rules = {
+        user: { required },
+        car: { required },
+        period: {
+            dateFrom: { required },
+            dateTo: { required },
+        },
+        pickupLocation: { required },
+        pickupTime: { required },
+    };
+
+    const rental = ref<RentalFormType>({
+        user: null,
+        car: null,
+        period: {
+            dateFrom: null,
+            dateTo: null,
+        },
+        pickupLocation: '',
+        pickupTime: '',
     });
 
-    const setCar = (car: Car) => (selectedCar.value = car);
+    const create = async () => {
+        const payload = buildRentalPayload(rental.value);
+        if (!payload) return;
+
+        try {
+            await createRentalMutation.mutateAsync(payload);
+            showDialog(
+                'success',
+                t('app.message.rental_created'),
+                t('app.message.rental_created_desc', { name: rental.value.user?.name })
+            );
+            router.push('/admin/rentals');
+        } catch (error) {
+            console.log(error);
+            showErrorDialog(error as AppError);
+        }
+    };
 </script>
 
 <template>
-    <CreateRentalForm @setCar="setCar($event)" :period="rentalPeriod">
+    <RentalForm @handleSubmit="create" :rules="rules" v-model:rental="rental">
         <DateRangePicker
-            :car="selectedCar"
-            @setPeriod="rentalPeriod = $event"
-            :period="rentalPeriod"
+            :car="rental.car"
+            @setPeriod="rental.period = $event"
+            :period="rental.period"
         />
-    </CreateRentalForm>
+
+        <template #header>
+            <h1 class="text-4xl font-medium mb-10">
+                {{ t('app.rental_form.create_title') }}
+            </h1>
+        </template>
+    </RentalForm>
 </template>

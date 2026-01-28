@@ -14,13 +14,14 @@ import { GetUser } from 'src/common/decorators/getUser.decorator';
 import type { UserPayload } from 'src/common/types/user.type';
 import { RentService } from './rent.service';
 import { Public } from 'src/common/decorators/public.decorator';
-import { UpdateDto } from './dto/update.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { GetAllDto } from './dto/getAll.dto';
 import { CreateRentalDto } from './dto/createRental.dto';
 import { Types } from 'mongoose';
 import { Rent } from 'src/schemas/rentSchema';
+import { UserUpdateDto } from './dto/userUpdate.dto';
+import { AdminUpdateDto } from './dto/adminUpdate.dto';
 
 @ApiTags('Rentals')
 @Controller('rent')
@@ -44,13 +45,24 @@ export class RentController {
         description: 'returns array of rentals time ranges',
     })
     @Get('get-availability/:carId')
-    async getAvailability(@Param('carId') carId: string) {
+    async getAvailability(
+        @Param('carId') carId: string,
+        @Query('excluded-id') excludedId: string,
+    ) {
         const rentals = await this.rentalService.getRentsByCarId(carId);
 
-        const termins = rentals.map((rental) => ({
-            dateFrom: new Date(rental.rentFrom).toISOString(),
-            dateTo: new Date(rental.rentTo).toISOString(),
-        }));
+        const termins = rentals.reduce(
+            (acc: { dateFrom: string; dateTo: string }[], rental) => {
+                if (rental._id.toString() !== excludedId) {
+                    acc.push({
+                        dateFrom: new Date(rental.rentFrom).toISOString(),
+                        dateTo: new Date(rental.rentTo).toISOString(),
+                    });
+                }
+                return acc;
+            },
+            [],
+        );
 
         return termins;
     }
@@ -77,15 +89,15 @@ export class RentController {
         return { success: true };
     }
 
-    @ApiOperation({ summary: 'Edit rental' })
+    @ApiOperation({ summary: 'Edit pickup details in rental' })
     @ApiResponse({
         status: 200,
         description: 'Updates pickup time and location',
     })
     @Patch('edit/:id')
-    async update(
+    async userUpdate(
         @Param('id') rentalId: string,
-        @Body() body: UpdateDto,
+        @Body() body: UserUpdateDto,
         @GetUser() user: UserPayload,
     ) {
         const updatedRental = await this.rentalService.updateRental(
@@ -94,6 +106,20 @@ export class RentController {
             body,
         );
         return updatedRental;
+    }
+
+    @ApiOperation({ summary: 'Edit whole rental' })
+    @ApiResponse({
+        status: 200,
+        description: 'Updates whole rental',
+    })
+    @Roles(Role.Admin)
+    @Patch('edit/:id/details')
+    async adminUpdate(
+        @Param('id') rentalId: string,
+        @Body() body: AdminUpdateDto,
+    ) {
+        return await this.rentalService.updateRentalDetails(rentalId, body);
     }
 
     @ApiOperation({ summary: 'Creates a new rental' })
@@ -111,10 +137,18 @@ export class RentController {
         return;
     }
 
-    @ApiOperation({ summary: 'Find a rental' })
+    @ApiOperation({ summary: 'Find a rental by ID' })
+    @ApiResponse({ status: 200, description: 'Returns found rental' })
+    @Roles(Role.Employee, Role.Admin)
+    @Get('get-by-id/:id')
+    async getRentalById(@Param('id') rentalId: string) {
+        return await this.rentalService.getRentalById(rentalId);
+    }
+
+    @ApiOperation({ summary: 'Find a rental by session ID' })
     @ApiResponse({ status: 200, description: 'Returns found rental' })
     @Get(':sessionId')
-    async getRental(
+    async getRentalBySessionId(
         @Param('sessionId') sessionId: string,
         @GetUser() user: UserPayload,
     ) {

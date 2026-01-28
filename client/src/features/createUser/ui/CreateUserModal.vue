@@ -68,14 +68,19 @@
             </div>
         </template>
         <template #footer>
-            <div class="flex justify-end gap-3">
-                <Button size="sm" color="transparent" class="border border-main-border">
+            <div class="md:flex space-y-3 md:space-y-0 justify-end gap-3 mt-5">
+                <Button
+                    size="sm"
+                    color="transparent"
+                    class="border border-main-border w-full md:max-w-max"
+                >
                     {{ t('app.protected_users_page.cancel') }}
                 </Button>
                 <Button
                     type="submit"
                     size="sm"
                     :disabled="user.roles.length <= 0 || createUserStore.loading"
+                    class="w-full md:max-w-max"
                 >
                     {{ t('app.protected_users_page.save') }}
                 </Button>
@@ -83,5 +88,3 @@
         </template>
     </UserForm>
 </template>
-
-<!--  -->

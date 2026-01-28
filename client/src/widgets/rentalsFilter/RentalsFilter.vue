@@ -1,5 +1,6 @@
 <script setup lang="ts">
-    import { RENTAL_STATUS, type RentalStatus, type SortMethod } from '@/entities/rental';
+    import type { RentalStatus, SortMethod } from '@/entities/rental';
+    import { StatusPicker } from '@/features/statusPicker';
     import { Button, Dropdown, Input } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
@@ -18,32 +19,7 @@
         sort: SortMethod | null;
     }>();
 
-    const isStatusDropdownOpen = ref(false);
     const isSortByDropdownOpen = ref(false);
-
-    // translate it
-    const statuses = [
-        {
-            label: t(`app.status.ALL`),
-            callback: () => emit('setStatus', ''),
-        },
-        {
-            label: t(`app.status.${RENTAL_STATUS.Completed}`),
-            callback: () => emit('setStatus', RENTAL_STATUS.Completed),
-        },
-        {
-            label: t(`app.status.${RENTAL_STATUS.Cancelled}`),
-            callback: () => emit('setStatus', RENTAL_STATUS.Cancelled),
-        },
-        {
-            label: t(`app.status.${RENTAL_STATUS.Active}`),
-            callback: () => emit('setStatus', RENTAL_STATUS.Active),
-        },
-        {
-            label: t(`app.status.${RENTAL_STATUS.Pending}`),
-            callback: () => emit('setStatus', RENTAL_STATUS.Pending),
-        },
-    ];
 
     const sortByList = [
         {
@@ -71,54 +47,46 @@
     <section class="mt-5">
         <hr class="text-main-border" />
 
-        <div class="mt-5 flex gap-5">
-            <Input
-                type="search"
-                @input="$emit('setSearch', $event.target.value)"
-                size="medium"
-                :placeholder="t('app.sort.search')"
-                icon="icon-park-outline:search"
-            />
+        <div class="mt-5 space-y-3 lg:space-y-0 lg:flex gap-x-5">
+            <div>
+                <Input
+                    type="search"
+                    @input="$emit('setSearch', $event.target.value)"
+                    size="medium"
+                    :placeholder="t('app.sort.search')"
+                    icon="icon-park-outline:search"
+                    class="w-full"
+                />
+            </div>
 
-            <Dropdown
-                :isOpen="isStatusDropdownOpen"
-                :items="statuses"
-                @close="isStatusDropdownOpen = false"
-            >
-                <Button
-                    @click="isStatusDropdownOpen = !isStatusDropdownOpen"
-                    size="sm"
-                    color="transparent"
-                    :disableUppercase="true"
-                    class="h-full border border-main-border flex-between gap-2 w-44"
-                >
-                    {{ status ? status : t('app.protected_users_page.select_status') }}
-                    <Icon
-                        icon="weui:arrow-filled"
-                        class="transform rotate-90 text-xl text-main-gray"
-                    />
-                </Button>
-            </Dropdown>
+            <div class="flex gap-3">
+                <StatusPicker
+                    allVariant
+                    :placeholder="t('app.protected_users_page.select_status')"
+                    @setStatus="emit('setStatus', $event)"
+                    :status="status"
+                />
 
-            <Dropdown
-                :isOpen="isSortByDropdownOpen"
-                :items="sortByList"
-                @close="isSortByDropdownOpen = false"
-            >
-                <Button
-                    @click="isSortByDropdownOpen = !isSortByDropdownOpen"
-                    size="sm"
-                    color="transparent"
-                    :disableUppercase="true"
-                    class="h-full border border-main-border flex-between gap-2 w-72"
+                <Dropdown
+                    :isOpen="isSortByDropdownOpen"
+                    :items="sortByList"
+                    @close="isSortByDropdownOpen = false"
                 >
-                    {{ sort ? sort.label : t('app.sort.by_date_latest') }}
-                    <Icon
-                        icon="weui:arrow-filled"
-                        class="transform rotate-90 text-xl text-main-gray"
-                    />
-                </Button>
-            </Dropdown>
+                    <Button
+                        @click="isSortByDropdownOpen = !isSortByDropdownOpen"
+                        size="sm"
+                        color="transparent"
+                        :disableUppercase="true"
+                        class="h-full border border-main-border flex-between gap-2 text-sm md:text-base"
+                    >
+                        {{ sort ? sort.label : t('app.sort.by_date_latest') }}
+                        <Icon
+                            icon="weui:arrow-filled"
+                            class="transform rotate-90 text-xl text-main-gray"
+                        />
+                    </Button>
+                </Dropdown>
+            </div>
         </div>
     </section>
 </template>

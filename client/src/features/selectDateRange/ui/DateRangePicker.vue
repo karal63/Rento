@@ -10,6 +10,7 @@
     const props = defineProps<{
         car: Car | null;
         period: RentalPeriod;
+        excludedId?: string;
     }>();
 
     const emit = defineEmits<{
@@ -20,9 +21,10 @@
     const month = ref(new Date());
     const carRef = toRef(props, 'car');
     const periodRef = toRef(props, 'period');
+    const excludedIdRef = toRef(props, 'excludedId');
 
     const carId = computed(() => props.car?._id);
-    const carAvailability = useCarAvailabilityQuery(carId);
+    const carAvailability = useCarAvailabilityQuery(carId, excludedIdRef);
     const { days } = useRangeCalendar(month, carRef, periodRef, carAvailability?.data);
 
     const dateToISO = (date: Date) => date.toISOString();

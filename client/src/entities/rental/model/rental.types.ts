@@ -54,4 +54,5 @@ export type ReadyRental = {
     rentTo: number | null;
     pickupLocation: string;
     pickupTime: string;
+    status?: RentalStatus;
 };

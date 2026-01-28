@@ -62,12 +62,12 @@
             </div>
         </template>
         <template #footer>
-            <div class="flex justify-end gap-3">
+            <div class="md:flex space-y-3 md:space-y-0 justify-end gap-3 mt-5">
                 <Button
                     @click="editUserStore.close"
                     size="sm"
                     color="transparent"
-                    class="border border-main-border"
+                    class="border border-main-border w-full md:max-w-max"
                 >
                     {{ t('app.protected_users_page.cancel') }}
                 </Button>
@@ -75,6 +75,7 @@
                     type="submit"
                     size="sm"
                     :disabled="editUserStore.newUser.roles.length <= 0 || editUserStore.loading"
+                    class="w-full md:max-w-max"
                 >
                     {{ t('app.protected_users_page.save') }}
                 </Button>

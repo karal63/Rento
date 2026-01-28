@@ -213,4 +213,11 @@ export class RentalRepo {
     async findRentalById(id: string) {
         return await this.rentalModel.findById(id);
     }
+
+    async findRentalDetailsById(id: string) {
+        return await this.rentalModel
+            .findById(id)
+            .populate('carId')
+            .populate('userId');
+    }
 }

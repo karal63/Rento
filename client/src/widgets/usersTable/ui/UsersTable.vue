@@ -28,6 +28,7 @@
             header: t('app.protected_users_page.auth_provider'),
             render: user => user.auth_provider,
             width: '10%',
+            minWidth: 120,
         },
         {
             key: 'email',
@@ -52,6 +53,7 @@
             header: t('app.protected_users_page.roles'),
             render: user => user.roles.join(', '),
             width: '10%',
+            minWidth: 80,
         },
     ];
 
@@ -71,7 +73,7 @@
 </script>
 
 <template>
-    <section class="mt-10">
+    <section class="mt-10 overflow-x-scroll lg:overflow-x-hidden">
         <Table :rows="users" :columns="columns" :loading="false">
             <template #actions="{ row }">
                 <div class="w-[120px] bg-main-bg rounded-md">

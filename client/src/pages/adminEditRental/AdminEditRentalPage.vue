@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import type { Breadcrumb } from '@/shared/ui';
-    import { CreateRental } from '@/widgets/createRental';
+    import { EditRental } from '@/widgets';
     import { onMounted } from 'vue';
     import { useI18n } from 'vue-i18n';
 
@@ -16,7 +16,7 @@
             href: '/admin/rentals',
         },
         {
-            label: t('app.rental_form.new'),
+            label: t('app.rental_form.edit'),
         },
     ];
 
@@ -26,7 +26,6 @@
 </script>
 
 <template>
-    <section class="flex-between gap-8">
-        <CreateRental />
-    </section>
+    <!-- form -->
+    <EditRental />
 </template>
