@@ -1,14 +1,10 @@
 <script setup lang="ts">
-    import type { Car } from '@/entities/car';
-    import {
-        useCreateRentalMutation,
-        type ReadyRental,
-        type RentalPeriod,
-    } from '@/entities/rental';
+    import { useCreateRentalMutation } from '@/entities/rental';
     import { showDialog, showErrorDialog } from '@/features/dialog';
-    import { RentalForm } from '@/features/rentalForm';
+    import { buildRentalPayload, RentalForm, type RentalFormType } from '@/features/rentalForm';
     import { DateRangePicker } from '@/features/selectDateRange';
     import type { AppError } from '@/shared/model';
+    import { required } from '@vuelidate/validators';
     import { ref } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { useRouter } from 'vue-router';
@@ -16,28 +12,40 @@
     const router = useRouter();
     const { t } = useI18n();
 
-    const selectedCar = ref<Car | null>(null);
-    const rentalPeriod = ref<RentalPeriod>({
-        dateFrom: null,
-        dateTo: null,
-    });
     const createRentalMutation = useCreateRentalMutation();
 
-    const setCar = (car: Car) => (selectedCar.value = car);
+    const rules = {
+        user: { required },
+        car: { required },
+        period: {
+            dateFrom: { required },
+            dateTo: { required },
+        },
+        pickupLocation: { required },
+        pickupTime: { required },
+    };
 
-    const create = async ({
-        payload,
-        username,
-    }: {
-        payload: ReadyRental;
-        username: string | undefined;
-    }) => {
+    const rental = ref<RentalFormType>({
+        user: null,
+        car: null,
+        period: {
+            dateFrom: null,
+            dateTo: null,
+        },
+        pickupLocation: '',
+        pickupTime: '',
+    });
+
+    const create = async () => {
+        const payload = buildRentalPayload(rental.value);
+        if (!payload) return;
+
         try {
             await createRentalMutation.mutateAsync(payload);
             showDialog(
                 'success',
                 t('app.message.rental_created'),
-                t('app.message.rental_created_desc', { name: username })
+                t('app.message.rental_created_desc', { name: rental.value.user?.name })
             );
             router.push('/admin/rentals');
         } catch (error) {
@@ -48,15 +56,15 @@
 </script>
 
 <template>
-    <RentalForm @setCar="setCar($event)" @handleSubmit="create" :period="rentalPeriod">
+    <RentalForm @handleSubmit="create" :rules="rules" v-model:rental="rental">
         <DateRangePicker
-            :car="selectedCar"
-            @setPeriod="rentalPeriod = $event"
-            :period="rentalPeriod"
+            :car="rental.car"
+            @setPeriod="rental.period = $event"
+            :period="rental.period"
         />
 
         <template #header>
-            {{ t('app.create_rental_page.title') }}
+            {{ t('app.rental_form.create_title') }}
         </template>
     </RentalForm>
 </template>
