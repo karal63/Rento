@@ -1,5 +1,12 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString, Matches } from 'class-validator';
+import {
+    IsEnum,
+    IsNumber,
+    IsOptional,
+    IsString,
+    Matches,
+} from 'class-validator';
+import { Status } from 'src/enums/status.enum';
 
 export class AdminUpdateDto {
     @ApiPropertyOptional({
@@ -51,4 +58,12 @@ export class AdminUpdateDto {
     @IsOptional()
     @Matches(/^([01]\d|2[0-3]):([0-5]\d)$/)
     pickupTime: string;
+
+    @ApiPropertyOptional({
+        example: 'Completed',
+        description: 'Indicates current rental status',
+    })
+    @IsEnum(Status)
+    @IsOptional()
+    status: string;
 }

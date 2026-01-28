@@ -50,9 +50,7 @@
 
 <template>
     <section class="w-1/2">
-        <h1 class="text-4xl font-medium mb-10">
-            <slot name="header" />
-        </h1>
+        <slot name="header" />
 
         <div class="space-y-2 mb-6">
             <div class="flex items-end gap-3">

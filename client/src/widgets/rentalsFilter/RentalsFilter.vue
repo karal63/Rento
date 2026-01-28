@@ -21,7 +21,6 @@
     const isStatusDropdownOpen = ref(false);
     const isSortByDropdownOpen = ref(false);
 
-    // translate it
     const statuses = [
         {
             label: t(`app.status.ALL`),

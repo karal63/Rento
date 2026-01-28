@@ -1,4 +1,5 @@
 import type { Car } from '@/entities/car';
+import type { RentalStatus } from '@/entities/rental';
 import type { User } from '@/entities/user';
 
 export type RentalFormType = {
@@ -10,4 +11,5 @@ export type RentalFormType = {
     };
     pickupLocation: string;
     pickupTime: string;
+    status?: RentalStatus | '';
 };

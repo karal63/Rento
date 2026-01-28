@@ -11,5 +11,6 @@ export const buildRentalPayload = (rental: RentalFormType): ReadyRental | undefi
         rentTo: rental.period.dateTo.getTime(),
         pickupLocation: rental.pickupLocation,
         pickupTime: rental.pickupTime,
+        status: rental.status ? rental.status : undefined,
     };
 };

@@ -64,7 +64,9 @@
         />
 
         <template #header>
-            {{ t('app.rental_form.create_title') }}
+            <h1 class="text-4xl font-medium mb-10">
+                {{ t('app.rental_form.create_title') }}
+            </h1>
         </template>
     </RentalForm>
 </template>

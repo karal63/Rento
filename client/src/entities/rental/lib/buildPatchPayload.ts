@@ -32,5 +32,9 @@ export const buildPatchPayload = (
         result.pickupTime = newRental.pickupTime;
     }
 
+    if (newRental.status !== original.status) {
+        result.status = newRental.status;
+    }
+
     return result;
 };
