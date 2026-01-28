@@ -92,11 +92,7 @@
                     {{ t('app.rental_form.edit_title') }}
                 </h1>
 
-                <StatusPicker
-                    allVariant
-                    @setStatus="rental.status = $event"
-                    :status="rental.status"
-                />
+                <StatusPicker @setStatus="rental.status = $event" :status="rental.status" />
             </div>
         </template>
     </RentalForm>
