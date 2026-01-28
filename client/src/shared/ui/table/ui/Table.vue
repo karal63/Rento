@@ -17,7 +17,7 @@
                     v-for="(col, i) in columns"
                     :key="col.key"
                     :style="{ width: col.width }"
-                    class="bg-main-gray-bg px-3 py-3 text-left text-sm font-semibold text-main-gray"
+                    class="bg-main-gray-bg px-3 py-3 text-left text-xs sm:text-sm font-semibold text-main-gray"
                     :class="i === 0 ? 'rounded-tl-md rounded-bl-md' : 'border-l border-main-border'"
                 >
                     {{ col.header }}
@@ -27,6 +27,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- skeleton -->
             <tr v-if="loading">
                 <td :colspan="columns.length + 1">
                     <table v-for="(_, i) in 6" :key="i" class="w-full">
@@ -52,7 +53,7 @@
                 v-else
                 v-for="row in rows"
                 :key="(row as any)._id"
-                class="border-b border-main-border text-sm"
+                class="border-b border-main-border text-xs sm:text-sm"
             >
                 <Record :columns="columns" :row="row">
                     <template v-for="(_, name) in $slots" #[name]="slotProps">

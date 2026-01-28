@@ -13,14 +13,19 @@
 </script>
 
 <template>
-    <td v-for="col in columns" :key="col.key" class="px-3 py-4">
+    <td
+        v-for="col in columns"
+        :key="col.key"
+        class="px-3 py-2 sm:py-4 min-w-[200px]"
+        :style="{ minWidth: col.minWidth + 'px' }"
+    >
         <slot :name="`cell-${col.key}`" :row="row">
             {{ col.render ? col.render(row) : (row as any)[col.key] }}
         </slot>
     </td>
 
     <td>
-        <div class="flex-center">
+        <div class="flex-center min-w-20">
             <Dropdown v-if="$slots.actions" @close="isOpen = false" :is-open="isOpen" side="left">
                 <button @click="isOpen = !isOpen" class="text-xl cursor-pointer">
                     <Icon icon="pepicons-pencil:dots-y" />
