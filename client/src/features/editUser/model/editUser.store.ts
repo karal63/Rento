@@ -1,14 +1,15 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { apiEditUser } from '../api/editUser.api';
-import { invalidateUsersQuery, type User } from '@/entities/user';
+import type { User } from '@/entities/user';
 import type { UserPayload } from '../../../shared/ui/userForm/types';
 import type { UserRole } from '@/entities/user/model/types';
 import { showDialog } from '@/features/dialog/@x';
 import { useI18n } from 'vue-i18n';
+import { useEditUserMutation } from './mutations';
 
 export const useEditUserStore = defineStore('editUser', () => {
     const { t } = useI18n();
+    const editUserMutation = useEditUserMutation();
 
     const isOpen = ref(false);
     const error = ref('');
@@ -37,8 +38,7 @@ export const useEditUserStore = defineStore('editUser', () => {
     const edit = async (id: string, payload: UserPayload) => {
         try {
             loading.value = true;
-            await apiEditUser(id, buildPatchPayload(payload));
-            invalidateUsersQuery();
+            editUserMutation.mutate({ id, payload: buildPatchPayload(payload) });
             showDialog('success', t('app.message.user_edited'), t('app.message.user_edited_desc'));
             close();
         } catch (e) {

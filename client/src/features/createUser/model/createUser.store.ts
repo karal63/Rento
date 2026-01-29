@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { apiCreateUser } from '../api/api';
 import type { UserPayload } from '@/shared/ui/userForm';
-import { showDialog, showErrorDialog } from '@/features/dialog/@x';
-import { invalidateUsersQuery } from '@/entities/user';
-import type { AppError } from '@/shared/model';
+import { showDialog } from '@/features/dialog/@x';
 import { useI18n } from 'vue-i18n';
+import { useCreateUserMutation } from './mutations';
 
 export const useCreateUserStore = defineStore('createUser', () => {
     const { t } = useI18n();
+    const createUserMutaion = useCreateUserMutation();
+
     const isModalOpen = ref(false);
     const loading = ref(false);
 
@@ -23,13 +23,12 @@ export const useCreateUserStore = defineStore('createUser', () => {
     const create = async (user: UserPayload) => {
         try {
             loading.value = true;
-            await apiCreateUser(user);
             showDialog(
                 'success',
                 t('app.message.user_created'),
                 t('app.message.user_created_desc')
             );
-            invalidateUsersQuery();
+            createUserMutaion.mutate(user);
             closeModal();
         } catch (e) {
             console.log(e);

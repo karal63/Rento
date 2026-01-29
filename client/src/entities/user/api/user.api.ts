@@ -7,11 +7,13 @@ import type { SortMethod } from '@/entities/rental';
 export const apiGetUsers = async ({
     search,
     sort,
+    page,
 }: {
     search: string;
     sort: SortMethod | null;
+    page: number;
 }): Promise<AxiosResponse<User[]>> => {
-    return await axiosInstance.get(API_GET_USERS_LIST(search, sort));
+    return await axiosInstance.get(API_GET_USERS_LIST(search, sort, page));
 };
 
 export const apiGetFoundUsers = async (search: string): Promise<AxiosResponse<User[]>> => {

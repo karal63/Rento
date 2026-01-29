@@ -3,6 +3,7 @@
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { deleteUser } from '@/features/deleteUser';
     import { useEditUserStore } from '@/features/editUser';
+    import { Pagination } from '@/features/pagination';
     import { Table, type TableColumn } from '@/shared/ui/table';
     import { Icon } from '@iconify/vue';
     import { useI18n } from 'vue-i18n';
@@ -10,6 +11,8 @@
     const { t } = useI18n();
     const acceptanceModalStore = useAcceptanceModalStore();
     const editUserStore = useEditUserStore();
+
+    const page = defineModel<number>({ required: true });
 
     defineProps<{
         users: User[];
@@ -73,8 +76,9 @@
 </script>
 
 <template>
-    <section class="mt-10 overflow-x-scroll">
-        <Table :rows="users" :columns="columns" :loading="false">
+    <!-- overflow-x-scroll doesnt work -->
+    <section class="mt-10">
+        <Table :rows="users" :columns="columns" :loading="false" class="overflow-x-scroll">
             <template #actions="{ row }">
                 <div class="w-[120px] bg-main-bg rounded-md">
                     <button
@@ -95,5 +99,7 @@
                 </div>
             </template>
         </Table>
+
+        <Pagination v-model="page" :total="10" />
     </section>
 </template>
