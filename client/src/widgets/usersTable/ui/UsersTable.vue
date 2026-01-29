@@ -52,7 +52,7 @@
             key: 'roles',
             header: t('app.protected_users_page.roles'),
             render: user => user.roles.join(', '),
-            width: '10%',
+            width: '5%',
             minWidth: 80,
         },
     ];
@@ -73,7 +73,7 @@
 </script>
 
 <template>
-    <section class="mt-10 overflow-x-scroll lg:overflow-x-hidden">
+    <section class="mt-10 overflow-x-scroll">
         <Table :rows="users" :columns="columns" :loading="false">
             <template #actions="{ row }">
                 <div class="w-[120px] bg-main-bg rounded-md">
