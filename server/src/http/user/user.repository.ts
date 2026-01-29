@@ -33,6 +33,9 @@ export class UserRepo {
     }
 
     async get(query: GetUsersDto) {
+        const limit = 20;
+        const page = parseInt(query.page);
+
         let res = this.userModel.find();
 
         if (query.search) {
@@ -56,13 +59,19 @@ export class UserRepo {
             res = res.sort({ createdAt: -1 });
         }
 
+        const total = await res.clone().countDocuments();
+
+        res = res.skip((page - 1) * limit).limit(limit);
+
         const readyUsers = (await res.exec()).map((u) => {
             const newUser = u.toObject();
             delete newUser.password;
             return newUser;
         });
 
-        return readyUsers;
+        const pages = Math.ceil(total / limit);
+
+        return { users: readyUsers, pages };
     }
 
     async delete(id: string) {

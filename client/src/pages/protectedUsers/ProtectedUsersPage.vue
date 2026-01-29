@@ -8,7 +8,7 @@
     import { ProtectedHeader, UsersFilter } from '@/widgets';
     import { UsersTable } from '@/widgets/usersTable';
     import { Icon } from '@iconify/vue';
-    import { computed, onMounted, ref } from 'vue';
+    import { computed, onMounted, ref, watchEffect } from 'vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
@@ -35,10 +35,13 @@
     }));
 
     const { data, isLoading } = useUsersQuery(queryParams);
-    // const users = computed(() => data.value ?? []);
 
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
+    });
+
+    watchEffect(() => {
+        console.log(queryParams.value);
     });
 </script>
 
@@ -57,7 +60,7 @@
         :sort="sorting.sort"
     />
 
-    <UsersTable v-model="page" :users="data" :loading="isLoading" />
+    <UsersTable v-model="page" :users="data.users" :loading="isLoading" :totalPages="data.pages" />
 
     <EditUserModal />
     <CreateUserModal />

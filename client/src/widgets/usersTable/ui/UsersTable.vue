@@ -17,6 +17,7 @@
     defineProps<{
         users: User[];
         loading: boolean;
+        totalPages: number;
     }>();
 
     const columns: TableColumn<User>[] = [
@@ -100,6 +101,6 @@
             </template>
         </Table>
 
-        <Pagination v-model="page" :total="10" />
+        <Pagination v-model="page" :total="totalPages" />
     </section>
 </template>

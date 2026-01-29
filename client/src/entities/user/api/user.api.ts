@@ -12,7 +12,7 @@ export const apiGetUsers = async ({
     search: string;
     sort: SortMethod | null;
     page: number;
-}): Promise<AxiosResponse<User[]>> => {
+}): Promise<AxiosResponse<{ users: User[]; pages: number }>> => {
     return await axiosInstance.get(API_GET_USERS_LIST(search, sort, page));
 };
 
