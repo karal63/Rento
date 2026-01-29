@@ -164,6 +164,9 @@ export class RentalRepo {
     }
 
     async getAllRentals(query: GetAllDto) {
+        const page = parseInt(query.page);
+        const limit = 20;
+
         let res = this.rentalModel.find();
 
         if (query.status) {
@@ -193,7 +196,15 @@ export class RentalRepo {
             res = res.sort({ createdAt: -1 });
         }
 
-        return res.populate(['carId', 'userId']).exec();
+        const total = await res.clone().countDocuments();
+        res = res.skip((page - 1) * limit).limit(limit);
+        const readyRentals = await res.populate(['carId', 'userId']).exec();
+        const pages = Math.ceil(total / limit);
+
+        return {
+            rentals: readyRentals,
+            pages: pages,
+        };
     }
 
     async find(id: string) {

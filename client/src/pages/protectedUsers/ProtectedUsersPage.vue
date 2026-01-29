@@ -8,7 +8,7 @@
     import { ProtectedHeader, UsersFilter } from '@/widgets';
     import { UsersTable } from '@/widgets/usersTable';
     import { Icon } from '@iconify/vue';
-    import { computed, onMounted, ref, watchEffect } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
@@ -38,10 +38,6 @@
 
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
-    });
-
-    watchEffect(() => {
-        console.log(queryParams.value);
     });
 </script>
 

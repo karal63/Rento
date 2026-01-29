@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
+    import { useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { cancelRental } from '@/features/cancelRental';
     import { useFilterRentals } from '@/features/filterRentals';
@@ -8,7 +8,7 @@
     import type { TableColumn } from '@/shared/ui/table';
     import { ProtectedHeader, RentalsFilter, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
-    import { computed, onMounted } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
@@ -27,12 +27,15 @@
     const filters = useFilterRentals();
     const sorting = useSortRentals();
 
+    const page = ref(1);
+
     const queryParams = computed(() => ({
         ...filters,
         ...sorting,
+        page: page.value,
     }));
 
-    const rentalsQuery = useRentalsQuery(queryParams);
+    const { data, isLoading } = useRentalsQuery(queryParams);
 
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
@@ -78,28 +81,13 @@
         },
     ];
 
-    function onRentalCancelled(rentalId: string) {
-        rentalsQuery.data.value = rentalsQuery.data.value
-            ? rentalsQuery.data.value.map(rental => {
-                  if (rental._id === rentalId) {
-                      return {
-                          ...rental,
-                          status: RENTAL_STATUS.Cancelled,
-                      };
-                  }
-
-                  return rental;
-              })
-            : [];
-    }
-
     const handleDelete = (rental: RentalWithAllDetails) => {
         acceptanceModalStore.open({
             title: t('app.acceptance_modal.cancellation_title'),
             message: t('app.acceptance_modal.cancellation_desc'),
             async onConfirm() {
                 await cancelRental(rental._id);
-                onRentalCancelled(rental._id);
+                // onRentalCancelled(rental._id);
             },
         });
     };
@@ -125,9 +113,11 @@
     />
 
     <RentalsTable
-        :rows="rentalsQuery.data.value ?? []"
+        v-model="page"
+        :rows="data?.rentals ?? []"
         :columns="columns"
-        :loading="rentalsQuery.isLoading.value"
+        :loading="isLoading"
+        :pages="data.pages"
     >
         <template #actions="{ row }">
             <div class="w-[120px] bg-main-bg rounded-md">

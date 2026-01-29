@@ -77,29 +77,30 @@
 </script>
 
 <template>
-    <!-- overflow-x-scroll doesnt work -->
     <section class="mt-10">
-        <Table :rows="users" :columns="columns" :loading="false" class="overflow-x-scroll">
-            <template #actions="{ row }">
-                <div class="w-[120px] bg-main-bg rounded-md">
-                    <button
-                        @click="handleEdit(row)"
-                        class="px-3 py-2 w-full text-left hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
-                    >
-                        <Icon icon="lucide:edit" class="text-xl" />
-                        {{ t('app.protected_users_page.edit') }}
-                    </button>
+        <div class="overflow-x-scroll">
+            <Table :rows="users" :columns="columns" :loading="false" class="overflow-x-scroll">
+                <template #actions="{ row }">
+                    <div class="w-[120px] bg-main-bg rounded-md">
+                        <button
+                            @click="handleEdit(row)"
+                            class="px-3 py-2 w-full text-left hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
+                        >
+                            <Icon icon="lucide:edit" class="text-xl" />
+                            {{ t('app.protected_users_page.edit') }}
+                        </button>
 
-                    <button
-                        @click="handleDelete(row)"
-                        class="px-3 py-2 w-full text-left hover:bg-red-600/10 cursor-pointer flex items-center gap-2 text-red-600 transition rounded-bl-md rounded-br-md"
-                    >
-                        <Icon icon="material-symbols:delete-outline-rounded" class="text-xl" />
-                        {{ t('app.protected_users_page.delete') }}
-                    </button>
-                </div>
-            </template>
-        </Table>
+                        <button
+                            @click="handleDelete(row)"
+                            class="px-3 py-2 w-full text-left hover:bg-red-600/10 cursor-pointer flex items-center gap-2 text-red-600 transition rounded-bl-md rounded-br-md"
+                        >
+                            <Icon icon="material-symbols:delete-outline-rounded" class="text-xl" />
+                            {{ t('app.protected_users_page.delete') }}
+                        </button>
+                    </div>
+                </template>
+            </Table>
+        </div>
 
         <Pagination v-model="page" :total="totalPages" />
     </section>

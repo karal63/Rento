@@ -1,15 +1,19 @@
 <script setup lang="ts">
     import { RENTAL_STATUS, type RentalStatus, type RentalWithAllDetails } from '@/entities/rental';
+    import { Pagination } from '@/features/pagination';
     import { Table, type TableColumn } from '@/shared/ui/table';
     import { Icon } from '@iconify/vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
 
+    const page = defineModel<number>({ required: true });
+
     defineProps<{
         rows: RentalWithAllDetails[];
         columns: TableColumn<RentalWithAllDetails>[];
         loading: boolean;
+        pages: number;
     }>();
 
     const getIcon = (status: RentalStatus | '') => {
@@ -38,21 +42,25 @@
 </script>
 
 <template>
-    <section class="mt-10 overflow-x-scroll">
-        <Table :rows="rows" :columns="columns" :loading="loading">
-            <template v-if="$slots.actions" #actions="slotProps">
-                <slot name="actions" v-bind="slotProps" />
-            </template>
+    <section class="mt-10">
+        <div class="overflow-x-scroll">
+            <Table :rows="rows" :columns="columns" :loading="loading">
+                <template v-if="$slots.actions" #actions="slotProps">
+                    <slot name="actions" v-bind="slotProps" />
+                </template>
 
-            <template #cell-status="{ row }">
-                <span
-                    class="font-semibold px-2 py-1 rounded-md flex items-center max-w-max gap-2"
-                    :class="getClasses(row.status)"
-                >
-                    <Icon :icon="getIcon(row.status)" class="text-xl" />
-                    {{ t(`app.status.${row.status}`) }}
-                </span>
-            </template>
-        </Table>
+                <template #cell-status="{ row }">
+                    <span
+                        class="font-semibold px-2 py-1 rounded-md flex items-center max-w-max gap-2"
+                        :class="getClasses(row.status)"
+                    >
+                        <Icon :icon="getIcon(row.status)" class="text-xl" />
+                        {{ t(`app.status.${row.status}`) }}
+                    </span>
+                </template>
+            </Table>
+        </div>
+
+        <Pagination v-model="page" :total="pages" />
     </section>
 </template>

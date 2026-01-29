@@ -34,9 +34,10 @@ export const API_PATCH_RENTAL_DETAILS_EDIT = (rentalId: string) => `/rent/edit/$
 export const API_GET_RENTALS = (
     status: RentalStatus | '',
     search: string,
-    sort: SortMethod | null
+    sort: SortMethod | null,
+    page: number
 ) =>
-    `/rent/all?status=${status}&search=${search}&sort=${sort ? sort.field + ':' + sort.order : ''}`;
+    `/rent/all?status=${status}&search=${search}&sort=${sort ? sort.field + ':' + sort.order : ''}&page=${page}`;
 export const API_DELETE_RENTAL = (id: string) => `/rent/delete/${id}`;
 export const API_POST_RENTAL_CREATE = '/rent/create';
 
