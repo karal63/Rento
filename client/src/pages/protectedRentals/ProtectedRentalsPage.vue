@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
-    import { cancelRental } from '@/features/cancelRental';
+    import { useCancelRental } from '@/features/cancelRental';
     import { useFilterRentals } from '@/features/filterRentals';
     import { useSortRentals } from '@/features/sortRentals';
     import { Button, type Breadcrumb } from '@/shared/ui';
@@ -26,6 +26,7 @@
     const acceptanceModalStore = useAcceptanceModalStore();
     const filters = useFilterRentals();
     const sorting = useSortRentals();
+    const { cancelRental } = useCancelRental();
 
     const page = ref(1);
 
@@ -86,8 +87,7 @@
             title: t('app.acceptance_modal.cancellation_title'),
             message: t('app.acceptance_modal.cancellation_desc'),
             async onConfirm() {
-                await cancelRental(rental._id);
-                // onRentalCancelled(rental._id);
+                cancelRental(rental._id);
             },
         });
     };

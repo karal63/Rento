@@ -1,1 +1,1 @@
-export { cancelRental } from './model/cancelRental';
+export { useCancelRental } from './model/useCancelRental';
