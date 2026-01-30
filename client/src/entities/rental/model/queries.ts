@@ -26,11 +26,16 @@ export function useRentalsQuery(
         status: RentalStatus | '';
         search: string;
         sort: SortMethod | null;
+        page: number;
     }>
 ) {
-    return useQuery({
+    return useQuery<{ rentals: RentalWithAllDetails[]; pages: number }, Error>({
         queryKey: ['rentals', queryParams],
         queryFn: () => apiGetAllRentals({ ...queryParams.value }).then(r => r.data),
+        initialData: () => ({
+            rentals: [],
+            pages: 1,
+        }),
     });
 }
 

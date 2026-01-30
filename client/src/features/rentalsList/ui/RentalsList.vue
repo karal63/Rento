@@ -5,7 +5,7 @@
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { useEditRentalStore } from '@/features/editRental';
     import { useI18n } from 'vue-i18n';
-    import { cancelRental } from '@/features/cancelRental';
+    import { useCancelRental } from '@/features/cancelRental';
 
     type RentalClass = {
         container: string;
@@ -16,6 +16,7 @@
     const acceptanceModalStore = useAcceptanceModalStore();
     const editRentalStore = useEditRentalStore();
     const { t } = useI18n();
+    const { cancelRental } = useCancelRental();
 
     const props = defineProps<{
         status: 'active' | 'pending' | 'completed' | 'cancelled';
@@ -59,7 +60,7 @@
             title: t('app.acceptance_modal.cancellation_title'),
             message: t('app.acceptance_modal.cancellation_desc'),
             onConfirm: async () => {
-                await cancelRental(id);
+                cancelRental(id);
                 rentalsStore.rentals = rentalsStore.rentals.map((rental: RentalWithCar) => {
                     if (rental._id === id) {
                         return {

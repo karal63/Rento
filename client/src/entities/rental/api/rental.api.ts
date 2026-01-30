@@ -39,12 +39,14 @@ export const apiGetAllRentals = async ({
     status,
     search,
     sort,
+    page,
 }: {
     status: RentalStatus | '';
     search: string;
     sort: SortMethod | null;
-}): Promise<AxiosResponse<RentalWithAllDetails[]>> => {
-    return await axiosInstance.get(API_GET_RENTALS(status, search, sort));
+    page: number;
+}): Promise<AxiosResponse<{ rentals: RentalWithAllDetails[]; pages: number }>> => {
+    return await axiosInstance.get(API_GET_RENTALS(status, search, sort, page));
 };
 
 export const apiCreateRental = async (rental: ReadyRental) => {
