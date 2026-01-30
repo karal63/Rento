@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import type { User } from '@/entities/user';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
-    import { deleteUser } from '@/features/deleteUser';
+    import { useDeleteUser } from '@/features/deleteUser';
     import { useEditUserStore } from '@/features/editUser';
     import { Pagination } from '@/features/pagination';
     import { Table, type TableColumn } from '@/shared/ui/table';
@@ -11,6 +11,7 @@
     const { t } = useI18n();
     const acceptanceModalStore = useAcceptanceModalStore();
     const editUserStore = useEditUserStore();
+    const { deleteUser } = useDeleteUser();
 
     const page = defineModel<number>({ required: true });
 

@@ -93,6 +93,8 @@
     };
 </script>
 
+<!-- deleting user is not cached, fix it -->
+
 <template>
     <ProtectedHeader :title="t('app.protected_rentals_page.all_rentals')">
         <RouterLink to="rentals/create">

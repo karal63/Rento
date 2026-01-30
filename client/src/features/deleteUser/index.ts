@@ -1,1 +1,1 @@
-export { deleteUser } from './model/deleteUser';
+export { useDeleteUser } from './model/useDeleteUser';

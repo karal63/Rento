@@ -6,7 +6,7 @@ export function useCancelRentalMutation() {
     return useMutation({
         mutationFn: (id: string) => apiCancelRental(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['users'] });
+            queryClient.invalidateQueries({ queryKey: ['rentals'] });
         },
     });
 }
