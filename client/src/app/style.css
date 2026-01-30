@@ -43,15 +43,6 @@
     --color-opposite-theme: #141414;
 
     --color-primary: hsl(220 90% 66%);
-
-    /* --color-mainHoverDarkBg: #19191f; */
-    /* --color-mainGray: #262629;
-    --color-mainHoverOnGray: rgba(74, 85, 101, 0.3);
-    --color-mainBorder: #242324;
-    --color-grayDull: #4a5565;
-    --color-secondary: #666666;
-    --shadow-mainShadow: 0 0 20px rgba(0, 0, 0, 0.3); */
-    /* --color-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); */
 }
 
 @layer theme {
@@ -119,4 +110,31 @@ body {
 
 .dp__input {
     @apply py-4 px-5;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.6) transparent;
+}
+
+/* WebKit browsers (Chrome, Edge, Safari) */
+*::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 116, 139, 0.6);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(100, 116, 139, 0.9);
 }
