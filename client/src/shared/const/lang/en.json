@@ -191,7 +191,8 @@
             "car_name": "Car name",
             "new_rental": "New rental",
             "edit": "Edit",
-            "cancel": "Cancel"
+            "cancel": "Cancel",
+            "deleted_user": "unknown"
         },
 
         "table": {

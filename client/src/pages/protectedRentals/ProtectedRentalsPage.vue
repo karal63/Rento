@@ -78,7 +78,10 @@
         {
             key: 'createdBy',
             header: t('app.table.created_by'),
-            render: rental => rental.userId.name,
+            render: rental =>
+                rental.userId
+                    ? rental.userId.name
+                    : `(${t('app.protected_rentals_page.deleted_user')})`,
         },
     ];
 
@@ -92,8 +95,6 @@
         });
     };
 </script>
-
-<!-- deleting user is not cached, fix it -->
 
 <template>
     <ProtectedHeader :title="t('app.protected_rentals_page.all_rentals')">
