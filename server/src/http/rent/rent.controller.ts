@@ -80,6 +80,7 @@ export class RentController {
         status: 200,
         description: "Changes rental status to 'CANCELLED'",
     })
+    @Roles(Role.Admin)
     @Delete('cancel/:id')
     async cancelRental(
         @Param('id') rentalId: string,
@@ -94,6 +95,7 @@ export class RentController {
         status: 200,
         description: 'Updates pickup time and location',
     })
+    @Roles(Role.Admin)
     @Patch('edit/:id')
     async userUpdate(
         @Param('id') rentalId: string,

@@ -4,9 +4,8 @@ import App from './App.vue';
 import router from './router/router';
 import { i18n } from '@/shared/config';
 import { createPinia } from 'pinia';
-import { useUserStore } from '@/entities/user';
+import { hasPermission, useUserStore } from '@/entities/user';
 import { refreshTokens } from '@/features/auth/refresh';
-import { hasPermission } from '@/entities/auth';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import { queryClient } from '@/shared/config/queryClient';
 
@@ -20,7 +19,7 @@ const bootstrap = async () => {
     router.beforeEach(to => {
         if (
             (to.meta.requiresAuth && !userStore.isAuthenticated) ||
-            (to.meta.requiresAdmin && !hasPermission(userStore.user, 'view:admin-page'))
+            (to.meta.requiresPermission && !hasPermission('view:protected-page'))
         ) {
             return '/';
         }
