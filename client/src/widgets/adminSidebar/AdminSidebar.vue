@@ -66,7 +66,7 @@
     >
         <h1 class="text-2xl font-semibold text-center pt-4 pb-6 border-b border-main-border mx-5">
             Rento
-            <span class="text-primary">| Admin</span>
+            <span class="text-primary">| {{ route.meta.title }}</span>
         </h1>
 
         <ul class="mt-4 px-5">

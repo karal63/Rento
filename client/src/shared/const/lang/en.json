@@ -280,7 +280,8 @@
         "link": {
             "dashboard": "Dashboard",
             "rentals": "Rentals",
-            "users": "Users"
+            "users": "Users",
+            "tickets": "Tickets"
         }
     }
 }

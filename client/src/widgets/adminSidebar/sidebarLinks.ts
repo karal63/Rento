@@ -12,18 +12,24 @@ export const adminLinks: Link[] = [
         path: '/admin/dashboard',
         icon: 'material-symbols:dashboard-outline-rounded',
         name: 'dashboard',
-        requiredAction: 'view:admin-dashboard',
+        requiredAction: 'view:admin-page',
     },
     {
         path: '/admin/rentals',
         icon: 'material-symbols-light:car-rental',
         name: 'rentals',
-        requiredAction: 'view:rentals',
+        requiredAction: 'view:admin-page',
     },
     {
         path: '/admin/users',
         icon: 'mdi-light:account',
         name: 'users',
-        requiredAction: 'view:users',
+        requiredAction: 'view:admin-page',
+    },
+    {
+        path: '/employee/tickets',
+        icon: 'ion:ticket-outline',
+        name: 'tickets',
+        requiredAction: 'view:employee-page',
     },
 ] as const;
