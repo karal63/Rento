@@ -14,6 +14,8 @@
 </script>
 
 <template>
-    <BookRental />
-    <Auth />
+    <section class="lg:w-2/3 flex-col gap-8">
+        <BookRental />
+        <Auth />
+    </section>
 </template>

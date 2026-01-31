@@ -1,7 +1,6 @@
 <script setup lang="ts">
-    import { UserSummary, useUserStore } from '@/entities/user';
+    import { hasPermission, UserSummary, useUserStore } from '@/entities/user';
     import { EditAccountModal, useEditAccountStore } from '@/features/editAccount';
-    import { hasPermission } from '@/entities/auth';
     import { logout } from '@/features/auth/logout';
     import { Button } from '@/shared/ui';
     import { useI18n } from 'vue-i18n';
@@ -16,17 +15,25 @@
         <UserSummary @edit="editAccountStore.open" />
 
         <div class="mt-5 flex justify-end gap-3">
-            <RouterLink
-                v-if="hasPermission(userStore.user, 'view:admin-page')"
-                to="/admin/dashboard"
-            >
+            <RouterLink v-if="hasPermission('view:admin-page')" to="/admin/dashboard">
                 <Button
                     v-if="userStore.isAuthenticated"
                     size="sm"
                     color="transparent"
                     class="border border-main-border"
                 >
-                    ADMIN
+                    {{ t('app.link.dashboard') }}
+                </Button>
+            </RouterLink>
+
+            <RouterLink v-if="hasPermission('view:employee-page')" to="/employee/dashboard">
+                <Button
+                    v-if="userStore.isAuthenticated"
+                    size="sm"
+                    color="transparent"
+                    class="border border-main-border"
+                >
+                    {{ t('app.link.dashboard') }}
                 </Button>
             </RouterLink>
 

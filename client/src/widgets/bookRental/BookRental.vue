@@ -8,13 +8,11 @@
 </script>
 
 <template>
-    <section class="lg:w-2/3 flex-col gap-8">
-        <RentDetails>
-            <DateRangePicker
-                :car="carStore.selectedCar"
-                :period="bookingStore.period"
-                @set-period="bookingStore.period = $event"
-            />
-        </RentDetails>
-    </section>
+    <RentDetails>
+        <DateRangePicker
+            :car="carStore.selectedCar"
+            :period="bookingStore.period"
+            @set-period="bookingStore.period = $event"
+        />
+    </RentDetails>
 </template>

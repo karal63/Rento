@@ -69,6 +69,7 @@ export class RentController {
 
     @ApiOperation({ summary: 'Get all user rentals' })
     @ApiResponse({ status: 200, description: 'Returns rentals list' })
+    @Roles(Role.Admin)
     @Get('list')
     async getUserRentals(@GetUser() user: UserPayload) {
         const rentals = await this.rentalService.getRentalsByUserId(user.id);
@@ -80,6 +81,7 @@ export class RentController {
         status: 200,
         description: "Changes rental status to 'CANCELLED'",
     })
+    @Roles(Role.Admin)
     @Delete('cancel/:id')
     async cancelRental(
         @Param('id') rentalId: string,
@@ -94,6 +96,7 @@ export class RentController {
         status: 200,
         description: 'Updates pickup time and location',
     })
+    @Roles(Role.Admin)
     @Patch('edit/:id')
     async userUpdate(
         @Param('id') rentalId: string,
