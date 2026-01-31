@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
+    import { useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
     import type { TableColumn } from '@/shared/ui/table';
     import { RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
@@ -12,7 +12,7 @@
         status: 'PENDING' as const,
         search: '',
         sort: null,
-        page: 1,
+        page: page.value,
     }));
     const page = ref(1);
 
