@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { Status, type RentalWithAllDetails } from '@/entities/rental';
+    import { normalizeDate } from '@/shared/lib/date';
     import { Dropdown } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
@@ -21,29 +22,21 @@
         </Status>
 
         <h3 class="my-3">
-            {{
-                `${new Date(rental.rentFrom).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                })} - ${new Date(rental.rentTo).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                })}`
-            }}
+            {{ `${normalizeDate(rental.rentFrom)} - ${normalizeDate(rental.rentTo)}` }}
         </h3>
 
         <ul class="flex-col gap-1 text-sm text-main-gray">
             <li>
                 {{ rental.carId.name }}
             </li>
-            <li>{{ rental.pickupLocation }} at {{ rental.pickupTime }}</li>
+            <li>
+                {{ rental.pickupLocation }} {{ t('app.tickets_page.at') }} {{ rental.pickupTime }}
+            </li>
         </ul>
 
         <div class="absolute top-3 right-3">
             <Dropdown @close="isMenuOpen = false" :is-open="isMenuOpen" side="left">
-                <button @click="isMenuOpen = !isMenuOpen">
+                <button @click="isMenuOpen = !isMenuOpen" class="text-xl cursor-pointer">
                     <Icon icon="pepicons-pencil:dots-y" />
                 </button>
 

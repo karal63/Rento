@@ -282,6 +282,11 @@
             "rentals": "Rentals",
             "users": "Users",
             "tickets": "Tickets"
+        },
+
+        "tickets_page": {
+            "tickets": "Tickets",
+            "at": "at"
         }
     }
 }

@@ -269,13 +269,19 @@
         "button": {
             "cancel": "Anuluj",
             "create": "Utwórz",
-            "submit": "Zatwierdź"
+            "submit": "Zatwierdź",
+            "tickets": "Tikety"
         },
 
         "link": {
             "dashboard": "Panel",
             "rentals": "Wynajmy",
             "users": "Użytkownicy"
+        },
+
+        "tickets_page": {
+            "tickets": "Tikety",
+            "at": "o"
         }
     }
 }
