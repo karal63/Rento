@@ -44,6 +44,12 @@ export class Rent {
 
     @Prop({ type: Number, default: null })
     cancelledAt?: number | null;
+
+    @Prop({ type: Types.ObjectId, default: null, ref: 'User' })
+    employee?: Types.ObjectId | null;
 }
 
 export const RentSchema = SchemaFactory.createForClass(Rent);
+
+// ? - required for typing
+// required - required for creating a new document

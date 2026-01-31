@@ -148,6 +148,28 @@ export class RentController {
         return await this.rentalService.getRentalById(rentalId);
     }
 
+    @ApiOperation({
+        summary: 'Get assigned rentals for employee',
+        description: 'Returns assigned to specific employee rentals',
+    })
+    @ApiResponse({ status: 200, description: 'Rentals list' })
+    @Roles(Role.Employee)
+    @Get('employee')
+    async getEmployeeRentals(@GetUser() user: UserPayload) {
+        return this.rentalService.getPendingEmployeeRentals(user.id);
+    }
+
+    @ApiOperation({
+        summary: 'Get assigned to employee rentals for admin',
+        description: 'Returns assigned to specific employee rentals',
+    })
+    @ApiResponse({ status: 200, description: 'Rentals list' })
+    @Roles(Role.Admin)
+    @Get('employee/:id')
+    async getEmployeeRentalsAdmin(@Param('id') id: string) {
+        return this.rentalService.getPendingEmployeeRentals(id);
+    }
+
     @ApiOperation({ summary: 'Find a rental by session ID' })
     @ApiResponse({ status: 200, description: 'Returns found rental' })
     @Get(':sessionId')
