@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
-    import { hasPermission } from '@/entities/user';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { useCancelRental } from '@/features/cancelRental';
     import { useFilterRentals } from '@/features/filterRentals';
@@ -123,7 +122,7 @@
         :loading="isLoading"
         :pages="data.pages"
     >
-        <template v-if="hasPermission('edit:rental')" #actions="{ row }">
+        <template #actions="{ row }">
             <div class="w-[120px] bg-main-bg rounded-md">
                 <RouterLink
                     :to="`rentals/edit/${row._id}`"

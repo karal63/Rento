@@ -15,7 +15,18 @@
         <UserSummary @edit="editAccountStore.open" />
 
         <div class="mt-5 flex justify-end gap-3">
-            <RouterLink v-if="hasPermission('view:protected-page')" to="/admin/dashboard">
+            <RouterLink v-if="hasPermission('view:admin-page')" to="/admin/dashboard">
+                <Button
+                    v-if="userStore.isAuthenticated"
+                    size="sm"
+                    color="transparent"
+                    class="border border-main-border"
+                >
+                    {{ t('app.link.dashboard') }}
+                </Button>
+            </RouterLink>
+
+            <RouterLink v-if="hasPermission('view:employee-page')" to="/employee/dashboard">
                 <Button
                     v-if="userStore.isAuthenticated"
                     size="sm"

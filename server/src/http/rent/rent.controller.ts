@@ -69,6 +69,7 @@ export class RentController {
 
     @ApiOperation({ summary: 'Get all user rentals' })
     @ApiResponse({ status: 200, description: 'Returns rentals list' })
+    @Roles(Role.Admin)
     @Get('list')
     async getUserRentals(@GetUser() user: UserPayload) {
         const rentals = await this.rentalService.getRentalsByUserId(user.id);

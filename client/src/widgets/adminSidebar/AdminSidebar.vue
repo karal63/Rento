@@ -1,12 +1,12 @@
 <script setup lang="ts">
-    import { useUserStore } from '@/entities/user';
-    import { adminLinks } from '@/shared/config';
+    import { hasPermission, useUserStore } from '@/entities/user';
     import { useClickOutside } from '@/shared/lib';
     import { useSidebarStore, useThemeStore } from '@/shared/model';
     import { Icon } from '@iconify/vue';
     import { onMounted, onUnmounted, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { useRoute } from 'vue-router';
+    import { adminLinks } from './sidebarLinks';
 
     const route = useRoute();
     const sidebarStore = useSidebarStore();
@@ -72,6 +72,7 @@
         <ul class="mt-4 px-5">
             <li v-for="link in adminLinks" :key="link.path">
                 <RouterLink
+                    v-if="hasPermission(link.requiredAction)"
                     :to="link.path"
                     class="border px-2 py-2 rounded-md flex items-center gap-2 cursor-pointer"
                     :class="

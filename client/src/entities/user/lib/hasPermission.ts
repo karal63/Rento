@@ -1,11 +1,18 @@
 import { useUserStore } from '../model/user.store';
 
 type Role = keyof typeof ROLES;
-type Permission = (typeof ROLES)[Role][number];
+export type Permission = (typeof ROLES)[Role][number];
 
 const ROLES = {
-    admin: ['view:protected-page', 'edit:rental'],
-    employee: ['view:protected-page'],
+    admin: [
+        'view:admin-page',
+        'edit:rental',
+        'create:rental',
+        'view:rentals',
+        'view:admin-dashboard',
+        'view:users',
+    ],
+    employee: ['view:employee-page'],
     user: [],
 } as const;
 

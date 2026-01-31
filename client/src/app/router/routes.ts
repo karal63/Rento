@@ -78,7 +78,7 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/admin',
         component: AdminLayout,
-        meta: { requiresAuth: true, requiresPermission: true },
+        meta: { requiresAuth: true, requiresAdmin: true },
         children: [
             {
                 path: 'dashboard',

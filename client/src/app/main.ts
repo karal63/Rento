@@ -19,7 +19,8 @@ const bootstrap = async () => {
     router.beforeEach(to => {
         if (
             (to.meta.requiresAuth && !userStore.isAuthenticated) ||
-            (to.meta.requiresPermission && !hasPermission('view:protected-page'))
+            (to.meta.requiresAdmin && !hasPermission('view:admin-page')) ||
+            (to.meta.requiresEmployee && !hasPermission('view:employee-page'))
         ) {
             return '/';
         }
