@@ -1,12 +1,29 @@
 <script setup lang="ts">
     import { useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
+    import { useBreakpoint } from '@/shared/lib';
+    import type { Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
-    import { RentalsTable } from '@/widgets';
+    import { RentalCards, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
-    import { computed, ref } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
+    const { isMobile } = useBreakpoint();
+
+    const emit = defineEmits<{
+        (e: 'setBreadcrumbs', data: Breadcrumb[]): void;
+    }>();
+
+    const breadcrumbs = [
+        {
+            label: t('app.tickets_page.tickets'),
+        },
+    ];
+
+    onMounted(async () => {
+        emit('setBreadcrumbs', breadcrumbs);
+    });
 
     const pendingParams = computed(() => ({
         status: 'PENDING' as const,
@@ -63,7 +80,16 @@
 </script>
 
 <template>
+    <RentalCards
+        v-if="isMobile"
+        :rows="data.rentals"
+        :loading="isLoading"
+        :pages="data.pages"
+        v-model="page"
+    />
+
     <RentalsTable
+        v-else
         :columns="columns"
         :rows="data.rentals"
         :loading="isLoading"
