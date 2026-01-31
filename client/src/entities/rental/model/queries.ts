@@ -27,6 +27,7 @@ export function useRentalsQuery(
         search: string;
         sort: SortMethod | null;
         page: number;
+        unassigned?: boolean;
     }>
 ) {
     return useQuery<{ rentals: RentalWithAllDetails[]; pages: number }, Error>({

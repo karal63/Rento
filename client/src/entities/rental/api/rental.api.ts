@@ -16,6 +16,7 @@ import {
     API_GET_RENTALS,
     API_GET_RENTALS_LIST,
     API_PATCH_RENTAL_DETAILS_EDIT,
+    API_POST_RENTAL_ASSIGN,
     API_POST_RENTAL_CREATE,
 } from '@/shared/model';
 
@@ -40,13 +41,15 @@ export const apiGetAllRentals = async ({
     search,
     sort,
     page,
+    unassigned,
 }: {
     status: RentalStatus | '';
     search: string;
     sort: SortMethod | null;
     page: number;
+    unassigned?: boolean;
 }): Promise<AxiosResponse<{ rentals: RentalWithAllDetails[]; pages: number }>> => {
-    return await axiosInstance.get(API_GET_RENTALS(status, search, sort, page));
+    return await axiosInstance.get(API_GET_RENTALS(status, search, sort, page, unassigned));
 };
 
 export const apiCreateRental = async (rental: ReadyRental) => {
@@ -59,4 +62,8 @@ export const apiEditRentalDetails = async (rentalId: string, payload: Partial<Re
 
 export const getRentalById = async (rentalId: string) => {
     return await axiosInstance.get(API_GET_CAR_FIND(rentalId));
+};
+
+export const apiAssignToRental = async (rentalId: string) => {
+    await axiosInstance.post(API_POST_RENTAL_ASSIGN(rentalId));
 };

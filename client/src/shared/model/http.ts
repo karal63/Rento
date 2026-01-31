@@ -35,11 +35,18 @@ export const API_GET_RENTALS = (
     status: RentalStatus | '',
     search: string,
     sort: SortMethod | null,
-    page: number
+    page: number,
+    unassigned?: boolean
 ) =>
-    `/rent/all?status=${status}&search=${search}&sort=${sort ? sort.field + ':' + sort.order : ''}&page=${page}`;
+    `/rent/all?status=${status}&search=${search}&sort=${sort ? sort.field + ':' + sort.order : ''}&page=${page}&unassigned=${unassigned}`;
 export const API_DELETE_RENTAL = (id: string) => `/rent/delete/${id}`;
 export const API_POST_RENTAL_CREATE = '/rent/create';
+export const API_GET_RENTAL_ASSIGNED = (rentalId: string) => `/rent/${rentalId}/employee`;
+export const API_GET_RENTAL_ASSIGNED_ADMIN = (rentalId: string, employeeId: string) =>
+    `/rent/${rentalId}/employee/${employeeId}`;
+export const API_POST_RENTAL_ASSIGN = (rentalId: string) => `/rent/${rentalId}/assign`;
+export const API_POST_RENTAL_ASSIGN_ADMIN = (rentalId: string, userId: string) =>
+    `/rent/${rentalId}/assign/${userId}`;
 
 // ADMIN DASHBOARD
 export const API_GET_DASHBOARD_SUMMARY = '/admin/dashboard/summary';

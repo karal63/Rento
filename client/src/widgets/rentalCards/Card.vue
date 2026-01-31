@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { Status, type RentalWithAllDetails } from '@/entities/rental';
+    import { useAssignToRental } from '@/features/assignToRental';
     import { normalizeDate } from '@/shared/lib/date';
     import { Dropdown } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
@@ -7,12 +8,18 @@
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
+    const { assignToRental } = useAssignToRental();
 
     defineProps<{
         rental: RentalWithAllDetails;
     }>();
 
     const isMenuOpen = ref(false);
+
+    const handlePick = (rentalId: string) => {
+        assignToRental(rentalId);
+        isMenuOpen.value = false;
+    };
 </script>
 
 <template>
@@ -43,7 +50,7 @@
                 <template #actions>
                     <div class="bg-main-bg rounded-md">
                         <button
-                            @click="console.log(rental)"
+                            @click="handlePick(rental._id)"
                             class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
                         >
                             <Icon icon="material-symbols:add-rounded" class="text-xl" />

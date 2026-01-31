@@ -30,4 +30,11 @@ export class GetAllDto {
     })
     @IsString()
     page: string;
+
+    @ApiProperty({
+        example: true,
+        description: 'Indicates whether rental has assigned employee',
+    })
+    @IsString()
+    unassigned?: boolean;
 }

@@ -30,6 +30,7 @@
         search: '',
         sort: null,
         page: page.value,
+        unassigned: true,
     }));
     const page = ref(1);
 

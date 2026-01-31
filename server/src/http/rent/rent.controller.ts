@@ -176,7 +176,7 @@ export class RentController {
     })
     @ApiResponse({ status: 200, description: 'Employee assigned' })
     @Roles(Role.Employee)
-    @Post(':id/employee/assign')
+    @Post(':id/assign')
     async assignEmployee(
         @GetUser() user: UserPayload,
         @Param('id') rentalId: string,
