@@ -154,4 +154,10 @@ export class RentService {
             .populate('userId')
             .populate('carId');
     }
+
+    async assign(rentalId: string, employeId: string) {
+        await this.rentModel.findByIdAndUpdate(rentalId, {
+            employee: new Types.ObjectId(employeId),
+        });
+    }
 }
