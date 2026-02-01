@@ -15,7 +15,11 @@
 <template>
     <section>
         <ul class="flex-col gap-3">
-            <Card v-for="row in rows" :key="row._id" :rental="row" />
+            <Card v-for="row in rows" :key="row._id" :rental="row">
+                <template #actions="{ rental }">
+                    <slot name="actions" v-bind="{ rental }" />
+                </template>
+            </Card>
         </ul>
     </section>
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-    import { useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
+    import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
+    import { useAssignToRental } from '@/features/assignToRental';
     import { useBreakpoint } from '@/shared/lib';
     import type { Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
@@ -10,6 +11,7 @@
 
     const { t } = useI18n();
     const { isMobile } = useBreakpoint();
+    const { assignToRental } = useAssignToRental();
 
     const emit = defineEmits<{
         (e: 'setBreadcrumbs', data: Breadcrumb[]): void;
@@ -26,7 +28,7 @@
     });
 
     const pendingParams = computed(() => ({
-        status: 'PENDING' as const,
+        status: RENTAL_STATUS.Pending,
         search: '',
         sort: null,
         page: page.value,
@@ -34,7 +36,9 @@
     }));
     const page = ref(1);
 
-    const { data, isLoading } = useRentalsQuery(pendingParams);
+    const { data, isFetching } = useRentalsQuery(pendingParams);
+    const rentals = computed(() => data.value?.rentals ?? []);
+    const pages = computed(() => data.value?.pages ?? 1);
 
     const columns: TableColumn<RentalWithAllDetails>[] = [
         {
@@ -78,29 +82,45 @@
                     : `(${t('app.protected_rentals_page.deleted_user')})`,
         },
     ];
+
+    const handlePick = (rentalId: string) => {
+        assignToRental(rentalId);
+    };
 </script>
 
 <template>
     <RentalCards
         v-if="isMobile"
-        :rows="data.rentals"
-        :loading="isLoading"
-        :pages="data.pages"
+        :rows="rentals"
+        :loading="isFetching"
+        :pages="pages"
         v-model="page"
-    />
+    >
+        <template #actions="{ rental }">
+            <div class="min-w-max bg-main-bg rounded-md">
+                <button
+                    @click="handlePick(rental._id)"
+                    class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
+                >
+                    <Icon icon="material-symbols:add-rounded" class="text-xl" />
+                    {{ t('app.tickets_page.pick') }}
+                </button>
+            </div>
+        </template>
+    </RentalCards>
 
     <RentalsTable
         v-else
         :columns="columns"
-        :rows="data.rentals"
-        :loading="isLoading"
-        :pages="data.pages"
+        :rows="rentals"
+        :loading="isFetching"
+        :pages="pages"
         v-model="page"
     >
         <template #actions="{ row }">
             <div class="min-w-max bg-main-bg rounded-md">
                 <button
-                    @click="console.log(row)"
+                    @click="handlePick(row._id)"
                     class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
                 >
                     <Icon icon="material-symbols:add-rounded" class="text-xl" />

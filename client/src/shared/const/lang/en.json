@@ -244,7 +244,9 @@
             "rental_created": "Rental created",
             "rental_created_desc": "You successfully created a new rental for {name}. You can edit it at any time.",
             "rental_edited": "Rental edited",
-            "rental_edited_desc": "You successfully edited rental for {name}."
+            "rental_edited_desc": "You successfully edited rental for {name}.",
+            "assigned_to_project": "User assigned",
+            "assigned_to_project_desc": "You successfully assigned yourself to rental"
         },
 
         "fields_validation": {
@@ -286,7 +288,8 @@
 
         "tickets_page": {
             "tickets": "Tickets",
-            "at": "at"
+            "at": "at",
+            "pick": "Pick"
         }
     }
 }

@@ -38,7 +38,7 @@ export const API_GET_RENTALS = (
     page: number,
     unassigned?: boolean
 ) =>
-    `/rent/all?status=${status}&search=${search}&sort=${sort ? sort.field + ':' + sort.order : ''}&page=${page}&unassigned=${unassigned}`;
+    `/rent/all?status=${status}&search=${search}&sort=${sort ? sort.field + ':' + sort.order : ''}&page=${page}&unassigned=${unassigned ? unassigned : ''}`;
 export const API_DELETE_RENTAL = (id: string) => `/rent/delete/${id}`;
 export const API_POST_RENTAL_CREATE = '/rent/create';
 export const API_GET_RENTAL_ASSIGNED = (rentalId: string) => `/rent/${rentalId}/employee`;

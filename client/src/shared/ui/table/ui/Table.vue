@@ -28,7 +28,7 @@
         </thead>
         <tbody>
             <!-- skeleton -->
-            <tr v-if="loading || !rows.length">
+            <tr v-if="loading">
                 <td :colspan="columns.length + 1">
                     <table v-for="(_, i) in 6" :key="i" class="w-full">
                         <tbody>

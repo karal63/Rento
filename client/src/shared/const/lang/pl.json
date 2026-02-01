@@ -242,7 +242,9 @@
             "user_created": "Użytkownik utworzony",
             "user_created_desc": "Pomyślnie utworzono nowego użytkownika. Możesz go edytować w dowolnym momencie.",
             "rental_created": "Wynajem utworzony",
-            "rental_created_desc": "Pomyślnie utworzono nowy wynajem dla {name}. Możesz go edytować w dowolnym momencie."
+            "rental_created_desc": "Pomyślnie utworzono nowy wynajem dla {name}. Możesz go edytować w dowolnym momencie.",
+            "assigned_to_project": "Użytkownik przypisany",
+            "assigned_to_project_desc": "Pomyślnie przypisałeś się do wynajmu"
         },
 
         "fields_validation": {
@@ -281,7 +283,8 @@
 
         "tickets_page": {
             "tickets": "Tikety",
-            "at": "o"
+            "at": "o",
+            "pick": "Wybierz"
         }
     }
 }
