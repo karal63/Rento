@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Rent } from 'src/schemas/rentSchema';
 import { GetAllDto } from './dto/getAll.dto';
 import { Status } from 'src/enums/status.enum';
 import { Car } from 'src/schemas/carSchema';
+import { UserPayload } from 'src/common/types/user.type';
 
 @Injectable()
 export class RentalRepo {
@@ -163,13 +164,15 @@ export class RentalRepo {
         return res;
     }
 
-    async getAllRentals(query: GetAllDto) {
+    async getAllRentals(query: GetAllDto, user: UserPayload) {
         const page = parseInt(query.page);
         const limit = 20;
 
         let res = this.rentalModel.find();
 
-        if (query.status) {
+        if (query.status && Array.isArray(query.status)) {
+            res = res.find({ status: { $in: query.status } });
+        } else if (query.status) {
             res = res.find({ status: query.status });
         }
 
@@ -198,6 +201,10 @@ export class RentalRepo {
 
         if (query.unassigned) {
             res = res.find({ employee: null });
+        }
+
+        if (query.my) {
+            res = res.find({ employee: new Types.ObjectId(user.id) });
         }
 
         const total = await res.clone().countDocuments();

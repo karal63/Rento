@@ -1,36 +1,34 @@
 <script setup lang="ts">
     import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
-    import { useAssignToRental } from '@/features/assignToRental';
     import { useBreakpoint } from '@/shared/lib';
-    import type { Breadcrumb } from '@/shared/ui';
+    import { Button, type Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
-    import { RentalCards, RentalsTable } from '@/widgets';
+    import { ProtectedHeader, RentalCards, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
     import { computed, onMounted, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
     const { isMobile } = useBreakpoint();
-    const { assignToRental } = useAssignToRental();
+
+    const breadcrumbs = [
+        {
+            label: t('app.employee_page.dashboard'),
+        },
+    ];
 
     const emit = defineEmits<{
         (e: 'setBreadcrumbs', data: Breadcrumb[]): void;
     }>();
 
-    const breadcrumbs = [
-        {
-            label: t('app.tickets_page.tickets'),
-        },
-    ];
-
-    onMounted(async () => {
+    onMounted(() => {
         emit('setBreadcrumbs', breadcrumbs);
     });
 
     const pendingParams = computed(() => ({
-        statuses: [RENTAL_STATUS.Pending],
+        statuses: [RENTAL_STATUS.Pending, RENTAL_STATUS.Active],
         page: page.value,
-        unassigned: true,
+        my: true,
     }));
     const page = ref(1);
 
@@ -52,41 +50,36 @@
                     month: 'long',
                     day: 'numeric',
                 })}`,
-            width: '35%',
+            width: '25%',
             minWidth: 300,
         },
         {
             key: 'status',
             header: t('app.protected_rentals_page.status'),
             render: rental => rental.status,
-            width: '15%',
+            width: '25%',
         },
         {
             key: 'name',
             header: t('app.protected_rentals_page.car_name'),
             render: rental => rental.carId.name,
-        },
-        {
-            key: 'createdAt',
-            header: t('app.table.created_at'),
-            render: rental => new Date(rental.createdAt).toLocaleString(),
-        },
-        {
-            key: 'createdBy',
-            header: t('app.table.created_by'),
-            render: rental =>
-                rental.userId
-                    ? rental.userId.name
-                    : `(${t('app.protected_rentals_page.deleted_user')})`,
+            width: '25%',
         },
     ];
-
-    const handlePick = (rentalId: string) => {
-        assignToRental(rentalId);
-    };
 </script>
 
 <template>
+    <ProtectedHeader title="Rentals assigned to you">
+        <Button
+            size="sm"
+            color="transparent"
+            class="border border-main-border flex items-center gap-2"
+        >
+            <Icon icon="material-symbols-light:history-rounded" class="text-2xl" />
+            <span class="hidden sm:block">History</span>
+        </Button>
+    </ProtectedHeader>
+
     <RentalCards
         v-if="isMobile"
         :rows="rentals"
@@ -97,7 +90,7 @@
         <template #actions="{ rental }">
             <div class="min-w-max bg-main-bg rounded-md">
                 <button
-                    @click="handlePick(rental._id)"
+                    @click="console.log(rental._id)"
                     class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
                 >
                     <Icon icon="material-symbols:add-rounded" class="text-xl" />
@@ -118,11 +111,11 @@
         <template #actions="{ row }">
             <div class="min-w-max bg-main-bg rounded-md">
                 <button
-                    @click="handlePick(row._id)"
+                    @click="console.log(row._id)"
                     class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
                 >
                     <Icon icon="material-symbols:add-rounded" class="text-xl" />
-                    Pick
+                    {{ t('app.tickets_page.pick') }}
                 </button>
             </div>
         </template>

@@ -12,3 +12,4 @@ export { default as ProtectedUsersPage } from './protectedUsers/ProtectedUsersPa
 export { default as AdminCreateRentalPage } from './adminCreateRental/AdminCreateRentalPage.vue';
 export { default as AdminEditRentalPage } from './adminEditRental/AdminEditRentalPage.vue';
 export { default as TicketsPage } from './tickets/TicketsPage.vue';
+export { default as EmployeeDashboard } from './employeeDashboard/EmployeeDashboard.vue';

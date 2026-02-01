@@ -23,11 +23,12 @@ export function useCarAvailabilityQuery(
 
 export function useRentalsQuery(
     queryParams: ComputedRef<{
-        status: RentalStatus | '';
-        search: string;
-        sort: SortMethod | null;
-        page: number;
+        statuses?: (RentalStatus | '')[];
+        search?: string;
+        sort?: SortMethod | null;
+        page?: number;
         unassigned?: boolean;
+        my?: boolean;
     }>
 ) {
     return useQuery<{ rentals: RentalWithAllDetails[]; pages: number }, Error>({

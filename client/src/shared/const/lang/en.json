@@ -290,6 +290,12 @@
             "tickets": "Tickets",
             "at": "at",
             "pick": "Pick"
+        },
+
+        "employee_page": {
+            "dashboard": "Dashboard",
+            "at": "at",
+            "pick": "Pick"
         }
     }
 }

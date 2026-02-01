@@ -13,7 +13,7 @@
 </script>
 
 <template>
-    <section>
+    <section class="mt-5">
         <ul class="flex-col gap-3">
             <Card v-for="row in rows" :key="row._id" :rental="row">
                 <template #actions="{ rental }">

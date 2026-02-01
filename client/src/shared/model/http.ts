@@ -32,13 +32,14 @@ export const API_DELETE_RENTAL_CANCEL = (rentalId: string) => `/rent/cancel/${re
 export const API_PATCH_RENTAL_EDIT = (rentalId: string) => `/rent/edit/${rentalId}`;
 export const API_PATCH_RENTAL_DETAILS_EDIT = (rentalId: string) => `/rent/edit/${rentalId}/details`;
 export const API_GET_RENTALS = (
-    status: RentalStatus | '',
-    search: string,
-    sort: SortMethod | null,
-    page: number,
-    unassigned?: boolean
+    statuses?: (RentalStatus | '')[],
+    search?: string,
+    sort?: SortMethod | null,
+    page?: number,
+    unassigned?: boolean,
+    my?: boolean
 ) =>
-    `/rent/all?status=${status}&search=${search}&sort=${sort ? sort.field + ':' + sort.order : ''}&page=${page}&unassigned=${unassigned ? unassigned : ''}`;
+    `/rent/all?search=${search ? search : ''}${statuses ? statuses.map(s => '&status=' + s).join('') : ''}&sort=${sort ? sort.field + ':' + sort.order : ''}&page=${page ? page : ''}&unassigned=${unassigned ? unassigned : ''}&my=${my ? my : ''}`;
 export const API_DELETE_RENTAL = (id: string) => `/rent/delete/${id}`;
 export const API_POST_RENTAL_CREATE = '/rent/create';
 export const API_GET_RENTAL_ASSIGNED = (rentalId: string) => `/rent/${rentalId}/employee`;

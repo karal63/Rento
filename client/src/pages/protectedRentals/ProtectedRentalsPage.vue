@@ -109,10 +109,10 @@
     </ProtectedHeader>
 
     <RentalsFilter
-        @setStatus="filters.status = $event"
+        @setStatus="filters.statuses = [$event]"
         @setSearch="filters.search = $event"
         @setSort="sorting.sort = $event"
-        :status="filters.status"
+        :status="filters.statuses[0] ?? ''"
         :search="filters.search"
         :sort="sorting.sort"
     />
