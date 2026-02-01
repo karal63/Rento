@@ -1,13 +1,10 @@
 <script setup lang="ts">
     import { Status, type RentalWithAllDetails } from '@/entities/rental';
     import { normalizeDate } from '@/shared/lib/date';
-    import { Dropdown } from '@/shared/ui';
-    import { Icon } from '@iconify/vue';
-    import { ref } from 'vue';
+
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
-    const isMenuOpen = ref(false);
 
     defineProps<{
         rental: RentalWithAllDetails;
@@ -33,18 +30,6 @@
             </li>
         </ul>
 
-        <div class="absolute top-3 right-3">
-            <Dropdown @close="isMenuOpen = false" :is-open="isMenuOpen" side="left">
-                <button @click="isMenuOpen = !isMenuOpen" class="text-xl cursor-pointer">
-                    <Icon icon="pepicons-pencil:dots-y" />
-                </button>
-
-                <template #actions>
-                    <div class="bg-main-bg rounded-md">
-                        <slot name="actions" v-bind="{ rental }" />
-                    </div>
-                </template>
-            </Dropdown>
-        </div>
+        <slot name="actions" v-bind="{ rental }" />
     </li>
 </template>
