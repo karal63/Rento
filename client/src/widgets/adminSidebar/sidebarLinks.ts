@@ -27,6 +27,12 @@ export const adminLinks: Link[] = [
         requiredAction: 'view:admin-page',
     },
     {
+        path: '/employee/dashboard',
+        icon: 'material-symbols:dashboard-outline-rounded',
+        name: 'dashboard',
+        requiredAction: 'view:employee-page',
+    },
+    {
         path: '/employee/tickets',
         icon: 'ion:ticket-outline',
         name: 'tickets',

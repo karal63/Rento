@@ -101,8 +101,8 @@ export class RentService {
         return updatedRental;
     }
 
-    async getRentals(query: GetAllDto) {
-        return this.rentalRepo.getAllRentals(query);
+    async getRentals(query: GetAllDto, user: UserPayload) {
+        return this.rentalRepo.getAllRentals(query, user);
     }
 
     async cancelRental(id: string, user: UserPayload) {

@@ -37,19 +37,21 @@ export const apiGetCarAvailability = async (
 };
 
 export const apiGetAllRentals = async ({
-    status,
+    statuses,
     search,
     sort,
     page,
     unassigned,
+    my,
 }: {
-    status: RentalStatus | '';
-    search: string;
-    sort: SortMethod | null;
-    page: number;
+    statuses?: RentalStatus[];
+    search?: string;
+    sort?: SortMethod | null;
+    page?: number;
     unassigned?: boolean;
+    my?: boolean;
 }): Promise<AxiosResponse<{ rentals: RentalWithAllDetails[]; pages: number }>> => {
-    return await axiosInstance.get(API_GET_RENTALS(status, search, sort, page, unassigned));
+    return await axiosInstance.get(API_GET_RENTALS(statuses, search, sort, page, unassigned, my));
 };
 
 export const apiCreateRental = async (rental: ReadyRental) => {

@@ -7,8 +7,7 @@ export class GetAllDto {
         example: 'CANCELLED',
         description: 'Rental status',
     })
-    @IsString()
-    status: Status | '';
+    status: Status[] | '';
 
     @ApiProperty({
         example: 1,
@@ -36,5 +35,12 @@ export class GetAllDto {
         description: 'Indicates whether rental has assigned employee',
     })
     @IsString()
-    unassigned?: boolean;
+    unassigned: boolean;
+
+    @ApiProperty({
+        example: true,
+        description: 'Indicates if we want to get only rentals assigned to us',
+    })
+    @IsString()
+    my: boolean;
 }
