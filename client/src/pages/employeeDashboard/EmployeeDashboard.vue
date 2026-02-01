@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
     import { useBreakpoint } from '@/shared/lib';
-    import type { Breadcrumb } from '@/shared/ui';
+    import { Button, type Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
     import { ProtectedHeader, RentalCards, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
@@ -69,7 +69,16 @@
 </script>
 
 <template>
-    <ProtectedHeader title="Rentals assigned to you" />
+    <ProtectedHeader title="Rentals assigned to you">
+        <Button
+            size="sm"
+            color="transparent"
+            class="border border-main-border flex items-center gap-2"
+        >
+            <Icon icon="material-symbols-light:history-rounded" class="text-2xl" />
+            <span class="hidden sm:block">History</span>
+        </Button>
+    </ProtectedHeader>
 
     <RentalCards
         v-if="isMobile"
@@ -106,7 +115,7 @@
                     class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
                 >
                     <Icon icon="material-symbols:add-rounded" class="text-xl" />
-                    Pick
+                    {{ t('app.tickets_page.pick') }}
                 </button>
             </div>
         </template>
