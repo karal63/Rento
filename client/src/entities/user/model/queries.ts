@@ -21,9 +21,6 @@ export function useUsersQuery(
     return useQuery<{ users: User[]; pages: number }, Error>({
         queryKey: ['users', queryParams],
         queryFn: () => apiGetUsers({ ...queryParams.value }).then(r => r.data),
-        initialData: () => ({
-            users: [],
-            pages: 1,
-        }),
+        placeholderData: keepPreviousData,
     });
 }

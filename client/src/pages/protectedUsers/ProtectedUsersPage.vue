@@ -35,6 +35,8 @@
     }));
 
     const { data, isLoading } = useUsersQuery(queryParams);
+    const users = computed(() => data.value?.users ?? []);
+    const pages = computed(() => data.value?.pages ?? 1);
 
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
@@ -56,7 +58,7 @@
         :sort="sorting.sort"
     />
 
-    <UsersTable v-model="page" :users="data.users" :loading="isLoading" :totalPages="data.pages" />
+    <UsersTable v-model="page" :users="users" :loading="isLoading" :totalPages="pages" />
 
     <EditUserModal />
     <CreateUserModal />
