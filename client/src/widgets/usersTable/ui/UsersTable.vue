@@ -3,7 +3,7 @@
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { useDeleteUser } from '@/features/deleteUser';
     import { useEditUserStore } from '@/features/editUser';
-    import { Pagination } from '@/features/pagination';
+    import { Pagination } from '@/shared/ui';
     import { Table, type TableColumn } from '@/shared/ui/table';
     import { Icon } from '@iconify/vue';
     import { useI18n } from 'vue-i18n';

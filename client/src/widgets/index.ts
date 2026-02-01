@@ -16,3 +16,4 @@ export { default as RentalsFilter } from './rentalsFilter/RentalsFilter.vue';
 export { default as UsersFilter } from './usersFilter/UsersFilter.vue';
 export { default as BookRental } from './bookRental/BookRental.vue';
 export { default as EditRental } from './editRental/EditRental.vue';
+export { default as RentalCards } from './rentalCards/RentalCards.vue';

@@ -13,6 +13,7 @@ import {
     ProtectedUsersPage,
     AdminCreateRentalPage,
     AdminEditRentalPage,
+    TicketsPage,
 } from '@/pages';
 
 import BookingLayout from '../layouts/BookingLayout.vue';
@@ -78,7 +79,7 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/admin',
         component: AdminLayout,
-        meta: { requiresAuth: true, requiresAdmin: true },
+        meta: { requiresAuth: true, requiresAdmin: true, title: 'Admin' },
         children: [
             {
                 path: 'dashboard',
@@ -99,6 +100,18 @@ export const routes: RouteRecordRaw[] = [
             {
                 path: 'users',
                 component: ProtectedUsersPage,
+            },
+        ],
+    },
+
+    {
+        path: '/employee',
+        component: AdminLayout,
+        meta: { requiresAuth: true, requiresEmployee: true, title: 'Employee' },
+        children: [
+            {
+                path: 'tickets',
+                component: TicketsPage,
             },
         ],
     },

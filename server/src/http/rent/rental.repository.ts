@@ -196,6 +196,10 @@ export class RentalRepo {
             res = res.sort({ createdAt: -1 });
         }
 
+        if (query.unassigned) {
+            res = res.find({ employee: null });
+        }
+
         const total = await res.clone().countDocuments();
         res = res.skip((page - 1) * limit).limit(limit);
         const readyRentals = await res.populate(['carId', 'userId']).exec();

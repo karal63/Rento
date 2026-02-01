@@ -11,3 +11,4 @@ export { default as ProtectedRentalsPage } from './protectedRentals/ProtectedRen
 export { default as ProtectedUsersPage } from './protectedUsers/ProtectedUsersPage.vue';
 export { default as AdminCreateRentalPage } from './adminCreateRental/AdminCreateRentalPage.vue';
 export { default as AdminEditRentalPage } from './adminEditRental/AdminEditRentalPage.vue';
+export { default as TicketsPage } from './tickets/TicketsPage.vue';

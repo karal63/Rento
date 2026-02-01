@@ -143,4 +143,21 @@ export class RentService {
             $set: { ...body, updatedAt: Date.now() },
         });
     }
+
+    async getPendingEmployeeRentals(employeeId: string) {
+        return this.rentModel
+            .find({
+                status: Status.Pending,
+                employee: new Types.ObjectId(employeeId),
+            })
+            .populate('employee')
+            .populate('userId')
+            .populate('carId');
+    }
+
+    async assign(rentalId: string, employeId: string) {
+        await this.rentModel.findByIdAndUpdate(rentalId, {
+            employee: new Types.ObjectId(employeId),
+        });
+    }
 }

@@ -19,5 +19,10 @@ export { useRentalStore } from './model/rental.store';
 // export { useRentalsQuery } from './model/useRentalsQuery';
 export { checkIfAvailableDate } from './lib/checkIfAvailableDate';
 export { useCarAvailabilityQuery, useRentalsQuery, useRentalQuery } from './model/queries';
-export { useCreateRentalMutation, useEditRentalMutation } from './model/mutations';
+export {
+    useCreateRentalMutation,
+    useEditRentalMutation,
+    useAssignToRentalMutation,
+} from './model/mutations';
 export { buildPatchPayload } from './lib/buildPatchPayload';
+export { default as Status } from './ui/Status.vue';

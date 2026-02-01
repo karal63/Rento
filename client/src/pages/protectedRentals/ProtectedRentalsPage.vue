@@ -37,6 +37,8 @@
     }));
 
     const { data, isLoading } = useRentalsQuery(queryParams);
+    const rentals = computed(() => data.value?.rentals ?? []);
+    const pages = computed(() => data.value?.pages ?? 1);
 
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
@@ -117,10 +119,10 @@
 
     <RentalsTable
         v-model="page"
-        :rows="data?.rentals ?? []"
+        :rows="rentals"
         :columns="columns"
         :loading="isLoading"
-        :pages="data.pages"
+        :pages="pages"
     >
         <template #actions="{ row }">
             <div class="w-[120px] bg-main-bg rounded-md">

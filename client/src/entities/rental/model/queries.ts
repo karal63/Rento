@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/vue-query';
+import { keepPreviousData, useQuery } from '@tanstack/vue-query';
 import { apiGetAllRentals, apiGetCarAvailability, getRentalById } from '../api/rental.api';
 import type {
     CarAvailability,
@@ -27,15 +27,13 @@ export function useRentalsQuery(
         search: string;
         sort: SortMethod | null;
         page: number;
+        unassigned?: boolean;
     }>
 ) {
     return useQuery<{ rentals: RentalWithAllDetails[]; pages: number }, Error>({
         queryKey: ['rentals', queryParams],
         queryFn: () => apiGetAllRentals({ ...queryParams.value }).then(r => r.data),
-        initialData: () => ({
-            rentals: [],
-            pages: 1,
-        }),
+        placeholderData: keepPreviousData,
     });
 }
 
