@@ -170,9 +170,9 @@ export class RentalRepo {
 
         let res = this.rentalModel.find();
 
-        if (Array.isArray(query.status)) {
+        if (query.status && Array.isArray(query.status)) {
             res = res.find({ status: { $in: query.status } });
-        } else {
+        } else if (query.status) {
             res = res.find({ status: query.status });
         }
 

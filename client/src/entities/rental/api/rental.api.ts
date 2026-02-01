@@ -44,7 +44,7 @@ export const apiGetAllRentals = async ({
     unassigned,
     my,
 }: {
-    statuses?: RentalStatus[];
+    statuses?: (RentalStatus | '')[];
     search?: string;
     sort?: SortMethod | null;
     page?: number;

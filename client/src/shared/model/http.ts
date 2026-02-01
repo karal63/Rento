@@ -32,7 +32,7 @@ export const API_DELETE_RENTAL_CANCEL = (rentalId: string) => `/rent/cancel/${re
 export const API_PATCH_RENTAL_EDIT = (rentalId: string) => `/rent/edit/${rentalId}`;
 export const API_PATCH_RENTAL_DETAILS_EDIT = (rentalId: string) => `/rent/edit/${rentalId}/details`;
 export const API_GET_RENTALS = (
-    statuses?: RentalStatus[],
+    statuses?: (RentalStatus | '')[],
     search?: string,
     sort?: SortMethod | null,
     page?: number,

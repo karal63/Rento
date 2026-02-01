@@ -28,9 +28,7 @@
     });
 
     const pendingParams = computed(() => ({
-        status: RENTAL_STATUS.Pending,
-        search: '',
-        sort: null,
+        statuses: [RENTAL_STATUS.Pending],
         page: page.value,
         unassigned: true,
     }));

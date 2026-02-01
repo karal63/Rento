@@ -23,7 +23,7 @@ export function useCarAvailabilityQuery(
 
 export function useRentalsQuery(
     queryParams: ComputedRef<{
-        statuses?: RentalStatus[];
+        statuses?: (RentalStatus | '')[];
         search?: string;
         sort?: SortMethod | null;
         page?: number;
