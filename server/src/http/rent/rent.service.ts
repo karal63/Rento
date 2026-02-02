@@ -144,20 +144,26 @@ export class RentService {
         });
     }
 
-    async getPendingEmployeeRentals(employeeId: string) {
-        return this.rentModel
-            .find({
-                status: Status.Pending,
-                employee: new Types.ObjectId(employeeId),
-            })
-            .populate('employee')
-            .populate('userId')
-            .populate('carId');
-    }
-
     async assign(rentalId: string, employeId: string) {
         await this.rentModel.findByIdAndUpdate(rentalId, {
             employee: new Types.ObjectId(employeId),
+        });
+    }
+
+    async unassign(rentalId: string, user: UserPayload) {
+        const rental = await this.rentModel.findById(rentalId);
+        if (!rental) throw new NotFoundException(LogCode.CODE_R004);
+
+        if (
+            rental?.employee &&
+            !rental.employee.equals(user.id) &&
+            !user.roles.includes(Role.Admin)
+        ) {
+            throw new ForbiddenException(LogCode.CODE_R009);
+        }
+
+        await this.rentModel.findByIdAndUpdate(rentalId, {
+            employee: null,
         });
     }
 }

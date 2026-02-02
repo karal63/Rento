@@ -4,4 +4,5 @@ export const enum LogCode {
     CODE_U009 = 'CODE_U009',
 
     CODE_R004 = 'CODE_R004',
+    CODE_R009 = 'CODE_R009',
 }
