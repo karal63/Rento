@@ -48,6 +48,7 @@ export const API_GET_RENTAL_ASSIGNED_ADMIN = (rentalId: string, employeeId: stri
 export const API_POST_RENTAL_ASSIGN = (rentalId: string) => `/rent/${rentalId}/assign`;
 export const API_POST_RENTAL_ASSIGN_ADMIN = (rentalId: string, userId: string) =>
     `/rent/${rentalId}/assign/${userId}`;
+export const API_POST_RENTAL_UNASSIGN = (rentalId: string) => `/rent/${rentalId}/unassign`;
 
 // ADMIN DASHBOARD
 export const API_GET_DASHBOARD_SUMMARY = '/admin/dashboard/summary';

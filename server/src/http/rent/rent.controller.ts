@@ -148,28 +148,6 @@ export class RentController {
         return await this.rentalService.getRentalById(rentalId);
     }
 
-    // @ApiOperation({
-    //     summary: 'Get assigned rentals for employee',
-    //     description: 'Returns assigned to specific employee rentals',
-    // })
-    // @ApiResponse({ status: 200, description: 'Rentals list' })
-    // @Roles(Role.Employee)
-    // @Get('employee')
-    // async getEmployeeRentals(@GetUser() user: UserPayload) {
-    //     return this.rentalService.getPendingEmployeeRentals(user.id);
-    // }
-
-    // @ApiOperation({
-    //     summary: 'Get assigned to employee rentals for admin',
-    //     description: 'Returns assigned to specific employee rentals',
-    // })
-    // @ApiResponse({ status: 200, description: 'Rentals list' })
-    // @Roles(Role.Admin)
-    // @Get('employee/:id')
-    // async getEmployeeRentalsAdmin(@Param('id') id: string) {
-    //     return this.rentalService.getPendingEmployeeRentals(id);
-    // }
-
     @ApiOperation({
         summary: 'Assign rental',
         description: 'employee assigns to rental',
@@ -185,17 +163,17 @@ export class RentController {
     }
 
     @ApiOperation({
-        summary: 'Assign employee to rental',
-        description: 'admin assigns employee to rental',
+        summary: 'Unassign rental',
+        description: 'employee unassigns rental assigned to him',
     })
     @ApiResponse({ status: 200, description: 'Employee assigned' })
-    @Roles(Role.Admin)
-    @Post(':id/assign/:userId')
-    async assignEmployeeAdmin(
+    @Roles(Role.Admin, Role.Employee)
+    @Post(':id/unassign')
+    async unassign(
         @Param('id') rentalId: string,
-        @Param('userId') employeeId: string,
+        @GetUser() user: UserPayload,
     ) {
-        return this.rentalService.assign(rentalId, employeeId);
+        return this.rentalService.unassign(rentalId, user);
     }
 
     @ApiOperation({ summary: 'Find a rental by session ID' })

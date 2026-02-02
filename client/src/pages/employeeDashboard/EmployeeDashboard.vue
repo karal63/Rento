@@ -1,5 +1,7 @@
 <script setup lang="ts">
     import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
+    import { RentalActions } from '@/features/rentalActions';
+    import { UnassignRentalButotn } from '@/features/unassignRental';
     import { useBreakpoint } from '@/shared/lib';
     import { Button, type Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
@@ -31,6 +33,8 @@
         my: true,
     }));
     const page = ref(1);
+    const isMobilePanelOpen = ref(false);
+    const selectedRental = ref<RentalWithAllDetails | null>(null);
 
     const { data, isFetching } = useRentalsQuery(pendingParams);
     const rentals = computed(() => data.value?.rentals ?? []);
@@ -66,9 +70,29 @@
             width: '25%',
         },
     ];
+
+    const openMobileMenu = (rental: RentalWithAllDetails) => {
+        selectedRental.value = rental;
+        isMobilePanelOpen.value = !isMobilePanelOpen.value;
+    };
 </script>
 
 <template>
+    <RentalActions :is-mobile-menu-open="isMobilePanelOpen" @close="isMobilePanelOpen = false">
+        <div class="px-5 pt-4">
+            <Button
+                size="sm"
+                color="transparent"
+                disable-uppercase
+                class="flex justify-start items-center gap-3 w-full"
+            >
+                <Icon icon="ic:round-edit" class="text-xl" />
+                Change status
+            </Button>
+            <UnassignRentalButotn :rental="selectedRental" @closeMenu="isMobilePanelOpen = false" />
+        </div>
+    </RentalActions>
+
     <ProtectedHeader title="Rentals assigned to you">
         <Button
             size="sm"
@@ -88,15 +112,12 @@
         v-model="page"
     >
         <template #actions="{ rental }">
-            <div class="min-w-max bg-main-bg rounded-md">
-                <button
-                    @click="console.log(rental._id)"
-                    class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
-                >
-                    <Icon icon="material-symbols:add-rounded" class="text-xl" />
-                    {{ t('app.tickets_page.pick') }}
-                </button>
-            </div>
+            <button
+                @click="openMobileMenu(rental)"
+                class="absolute top-3 right-3 text-xl cursor-pointer"
+            >
+                <Icon icon="pepicons-pencil:dots-y" />
+            </button>
         </template>
     </RentalCards>
 
