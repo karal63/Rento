@@ -56,3 +56,11 @@ export type ReadyRental = {
     pickupTime: string;
     status?: RentalStatus;
 };
+
+export const CHANGE_STATUS = {
+    Completed: 'COMPLETED',
+    Active: 'ACTIVE',
+    Pending: 'PENDING',
+} as const;
+
+export type ChangeStatus = (typeof CHANGE_STATUS)[keyof typeof CHANGE_STATUS];

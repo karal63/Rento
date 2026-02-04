@@ -1,7 +1,8 @@
 <script setup lang="ts">
     import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
+    import { ChangeStatusButton, ChangeStatusModal } from '@/features/changeStatus';
     import { RentalActions } from '@/features/rentalActions';
-    import { UnassignRentalButotn } from '@/features/unassignRental';
+    import { UnassignRentalButton } from '@/features/unassignRental';
     import { useBreakpoint } from '@/shared/lib';
     import { Button, type Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
@@ -80,18 +81,13 @@
 <template>
     <RentalActions :is-mobile-menu-open="isMobilePanelOpen" @close="isMobilePanelOpen = false">
         <div class="px-5 pt-4">
-            <Button
-                size="sm"
-                color="transparent"
-                disable-uppercase
-                class="flex justify-start items-center gap-3 w-full"
-            >
-                <Icon icon="ic:round-edit" class="text-xl" />
-                Change status
-            </Button>
-            <UnassignRentalButotn :rental="selectedRental" @closeMenu="isMobilePanelOpen = false" />
+            <ChangeStatusButton :rental="selectedRental" @closeMenu="isMobilePanelOpen = false" />
+            <UnassignRentalButton :rental="selectedRental" @closeMenu="isMobilePanelOpen = false" />
         </div>
     </RentalActions>
+
+    <!-- TEMPORARY here, move to modal providers for future cases -->
+    <ChangeStatusModal />
 
     <ProtectedHeader title="Rentals assigned to you">
         <Button

@@ -2,6 +2,7 @@ import { axiosInstance } from '@/shared/config';
 import type { AxiosResponse } from 'axios';
 import type {
     CarAvailability,
+    ChangeStatus,
     ReadyRental,
     Rental,
     RentalStatus,
@@ -18,6 +19,7 @@ import {
     API_PATCH_RENTAL_DETAILS_EDIT,
     API_POST_RENTAL_ASSIGN,
     API_POST_RENTAL_CREATE,
+    API_POST_RENTAL_STATUS,
 } from '@/shared/model';
 
 export const apiGetRentalDetails = async (sessionId: string): Promise<AxiosResponse<Rental>> => {
@@ -68,4 +70,8 @@ export const getRentalById = async (rentalId: string) => {
 
 export const apiAssignToRental = async (rentalId: string) => {
     await axiosInstance.post(API_POST_RENTAL_ASSIGN(rentalId));
+};
+
+export const apiChangeRentalStatus = async (rentalId: string, status: ChangeStatus) => {
+    await axiosInstance.post(API_POST_RENTAL_STATUS(rentalId), { status });
 };
