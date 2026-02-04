@@ -86,7 +86,6 @@
         </div>
     </RentalActions>
 
-    <!-- TEMPORARY here, move to modal providers for future cases -->
     <ChangeStatusModal />
 
     <ProtectedHeader title="Rentals assigned to you">
@@ -127,13 +126,8 @@
     >
         <template #actions="{ row }">
             <div class="min-w-max bg-main-bg rounded-md">
-                <button
-                    @click="console.log(row._id)"
-                    class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
-                >
-                    <Icon icon="material-symbols:add-rounded" class="text-xl" />
-                    {{ t('app.tickets_page.pick') }}
-                </button>
+                <ChangeStatusButton :rental="row" />
+                <UnassignRentalButton :rental="row" />
             </div>
         </template>
     </RentalsTable>
