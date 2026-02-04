@@ -166,4 +166,8 @@ export class RentService {
             employee: null,
         });
     }
+
+    async changeStatus(rentalId: string, status: Status) {
+        await this.rentalRepo.changeStatus(rentalId, status);
+    }
 }

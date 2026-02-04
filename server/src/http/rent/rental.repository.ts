@@ -242,4 +242,8 @@ export class RentalRepo {
             .populate('carId')
             .populate('userId');
     }
+
+    async changeStatus(rentalId: string, status: Status) {
+        await this.rentalModel.findByIdAndUpdate(rentalId, { status });
+    }
 }
