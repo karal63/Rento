@@ -58,7 +58,7 @@
         >
             <!-- Header -->
             <div class="flex items-center justify-between pb-4">
-                <h2 class="text-xl font-semibold">Change status</h2>
+                <h2 class="text-xl font-semibold">{{ t('app.employee_page.change_status') }}</h2>
                 <button
                     @click="handleClose"
                     class="hover:bg-main-hover-bg p-1.5 rounded-md transition"
@@ -88,8 +88,12 @@
 
             <!-- Footer -->
             <div class="flex justify-end gap-2 pt-5">
-                <Button size="sm" color="transparent" @click="handleClose">Cancel</Button>
-                <Button size="sm" :disabled="!selectedStatus" @click="handleSave">Save</Button>
+                <Button size="sm" color="transparent" @click="handleClose">
+                    {{ t('app.button.cancel') }}
+                </Button>
+                <Button size="sm" :disabled="!selectedStatus" @click="handleSave">
+                    {{ t('app.button.save') }}
+                </Button>
             </div>
         </div>
     </ModalTransition>

@@ -4,7 +4,7 @@
     import { RentalActions } from '@/features/rentalActions';
     import { UnassignRentalButton } from '@/features/unassignRental';
     import { useBreakpoint } from '@/shared/lib';
-    import { Button, type Breadcrumb } from '@/shared/ui';
+    import type { Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
     import { ProtectedHeader, RentalCards, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
@@ -88,15 +88,15 @@
 
     <ChangeStatusModal />
 
-    <ProtectedHeader title="Rentals assigned to you">
-        <Button
+    <ProtectedHeader :title="t('app.employee_page.rentals_assigned_to_you')">
+        <!-- <Button
             size="sm"
             color="transparent"
             class="border border-main-border flex items-center gap-2"
         >
             <Icon icon="material-symbols-light:history-rounded" class="text-2xl" />
             <span class="hidden sm:block">History</span>
-        </Button>
+        </Button> -->
     </ProtectedHeader>
 
     <RentalCards
@@ -125,7 +125,7 @@
         v-model="page"
     >
         <template #actions="{ row }">
-            <div class="min-w-max bg-main-bg rounded-md">
+            <div class="min-w-max rounded-md">
                 <ChangeStatusButton :rental="row" />
                 <UnassignRentalButton :rental="row" />
             </div>

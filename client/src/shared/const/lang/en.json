@@ -180,7 +180,8 @@
             "cancellation_title": "Confirm cancellation",
             "cancellation_desc": "Are you sure you want to cancel this rental? This action cannot be undone.",
             "deletion_title": "Confirm deletion",
-            "deletion_desc": "Are you sure you want to delete"
+            "deletion_desc": "Are you sure you want to delete",
+            "confirm_action": "Confirm action"
         },
 
         "protected_rentals_page": {
@@ -276,7 +277,8 @@
         "button": {
             "cancel": "Cancel",
             "create": "Create",
-            "submit": "Submit"
+            "submit": "Submit",
+            "save": "Save"
         },
 
         "link": {
@@ -294,8 +296,12 @@
 
         "employee_page": {
             "dashboard": "Dashboard",
+            "rentals_assigned_to_you": "Rentals assigned to you",
             "at": "at",
-            "pick": "Pick"
+            "pick": "Pick",
+            "change_status": "Change status",
+            "unassign": "Unassign",
+            "confirm_unassign_desc": "Are you sure you want to unassign yourself from this rental?"
         }
     }
 }

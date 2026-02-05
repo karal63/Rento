@@ -180,7 +180,8 @@
             "cancellation_title": "Potwierdź anulowanie",
             "cancellation_desc": "Czy na pewno chcesz anulować ten wynajem? Tej operacji nie można cofnąć.",
             "deletion_title": "Potwierdź usunięcie",
-            "deletion_desc": "Czy na pewno chcesz usunąć"
+            "deletion_desc": "Czy na pewno chcesz usunąć",
+            "confirm_action": "Potwierdź działanie"
         },
 
         "protected_rentals_page": {
@@ -272,19 +273,30 @@
             "cancel": "Anuluj",
             "create": "Utwórz",
             "submit": "Zatwierdź",
-            "tickets": "Tikety"
+            "save": "Zapisz"
         },
 
         "link": {
             "dashboard": "Panel",
             "rentals": "Wynajmy",
-            "users": "Użytkownicy"
+            "users": "Użytkownicy",
+            "tickets": "Tikety"
         },
 
         "tickets_page": {
             "tickets": "Tikety",
             "at": "o",
             "pick": "Wybierz"
+        },
+
+        "employee_page": {
+            "dashboard": "Panel",
+            "rentals_assigned_to_you": "Wynajmy przypisane do Ciebie",
+            "at": "o",
+            "pick": "Odbierz",
+            "change_status": "Zmień status",
+            "unassign": "Wypisz się",
+            "confirm_unassign_desc": "Czy na pewno chcesz wypisać się z tego wynajmu?"
         }
     }
 }
