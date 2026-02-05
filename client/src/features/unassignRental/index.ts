@@ -1,1 +1,1 @@
-export { default as UnassignRentalButotn } from './ui/UnassignRentalButton.vue';
+export { default as UnassignRentalButton } from './ui/UnassignRentalButton.vue';

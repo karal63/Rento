@@ -22,6 +22,7 @@ import { Types } from 'mongoose';
 import { Rent } from 'src/schemas/rentSchema';
 import { UserUpdateDto } from './dto/userUpdate.dto';
 import { AdminUpdateDto } from './dto/adminUpdate.dto';
+import { ChangeStatusDto } from './dto/changeStatus.dto';
 
 @ApiTags('Rentals')
 @Controller('rent')
@@ -174,6 +175,20 @@ export class RentController {
         @GetUser() user: UserPayload,
     ) {
         return this.rentalService.unassign(rentalId, user);
+    }
+
+    @ApiOperation({
+        summary: 'Change rental status',
+        description: 'Employee can quickly switch rental status',
+    })
+    @ApiResponse({ status: 201, description: 'Status switched' })
+    @Roles(Role.Employee)
+    @Post(':id/change-status')
+    async changeStatus(
+        @Param('id') rentalId: string,
+        @Body() body: ChangeStatusDto,
+    ) {
+        return this.rentalService.changeStatus(rentalId, body.status);
     }
 
     @ApiOperation({ summary: 'Find a rental by session ID' })

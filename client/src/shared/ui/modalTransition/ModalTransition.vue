@@ -10,7 +10,7 @@
         <div
             v-if="isOpen"
             @click.self="onCancel"
-            class="fixed z-20 left-0 top-0 w-full h-full bg-black/30 flex-center"
+            class="fixed z-30 left-0 top-0 w-full h-full bg-black/30 flex-center"
         >
             <slot />
         </div>

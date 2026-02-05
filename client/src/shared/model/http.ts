@@ -49,6 +49,7 @@ export const API_POST_RENTAL_ASSIGN = (rentalId: string) => `/rent/${rentalId}/a
 export const API_POST_RENTAL_ASSIGN_ADMIN = (rentalId: string, userId: string) =>
     `/rent/${rentalId}/assign/${userId}`;
 export const API_POST_RENTAL_UNASSIGN = (rentalId: string) => `/rent/${rentalId}/unassign`;
+export const API_POST_RENTAL_STATUS = (rentalId: string) => `/rent/${rentalId}/change-status`;
 
 // ADMIN DASHBOARD
 export const API_GET_DASHBOARD_SUMMARY = '/admin/dashboard/summary';

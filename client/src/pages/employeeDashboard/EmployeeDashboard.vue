@@ -1,9 +1,10 @@
 <script setup lang="ts">
     import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
+    import { ChangeStatusButton, ChangeStatusModal } from '@/features/changeStatus';
     import { RentalActions } from '@/features/rentalActions';
-    import { UnassignRentalButotn } from '@/features/unassignRental';
+    import { UnassignRentalButton } from '@/features/unassignRental';
     import { useBreakpoint } from '@/shared/lib';
-    import { Button, type Breadcrumb } from '@/shared/ui';
+    import type { Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
     import { ProtectedHeader, RentalCards, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
@@ -80,28 +81,22 @@
 <template>
     <RentalActions :is-mobile-menu-open="isMobilePanelOpen" @close="isMobilePanelOpen = false">
         <div class="px-5 pt-4">
-            <Button
-                size="sm"
-                color="transparent"
-                disable-uppercase
-                class="flex justify-start items-center gap-3 w-full"
-            >
-                <Icon icon="ic:round-edit" class="text-xl" />
-                Change status
-            </Button>
-            <UnassignRentalButotn :rental="selectedRental" @closeMenu="isMobilePanelOpen = false" />
+            <ChangeStatusButton :rental="selectedRental" @closeMenu="isMobilePanelOpen = false" />
+            <UnassignRentalButton :rental="selectedRental" @closeMenu="isMobilePanelOpen = false" />
         </div>
     </RentalActions>
 
-    <ProtectedHeader title="Rentals assigned to you">
-        <Button
+    <ChangeStatusModal />
+
+    <ProtectedHeader :title="t('app.employee_page.rentals_assigned_to_you')">
+        <!-- <Button
             size="sm"
             color="transparent"
             class="border border-main-border flex items-center gap-2"
         >
             <Icon icon="material-symbols-light:history-rounded" class="text-2xl" />
             <span class="hidden sm:block">History</span>
-        </Button>
+        </Button> -->
     </ProtectedHeader>
 
     <RentalCards
@@ -130,14 +125,9 @@
         v-model="page"
     >
         <template #actions="{ row }">
-            <div class="min-w-max bg-main-bg rounded-md">
-                <button
-                    @click="console.log(row._id)"
-                    class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
-                >
-                    <Icon icon="material-symbols:add-rounded" class="text-xl" />
-                    {{ t('app.tickets_page.pick') }}
-                </button>
+            <div class="min-w-max rounded-md">
+                <ChangeStatusButton :rental="row" />
+                <UnassignRentalButton :rental="row" />
             </div>
         </template>
     </RentalsTable>

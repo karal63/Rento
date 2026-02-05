@@ -1,7 +1,12 @@
 import { useMutation } from '@tanstack/vue-query';
-import { apiAssignToRental, apiCreateRental, apiEditRentalDetails } from '../api/rental.api';
+import {
+    apiAssignToRental,
+    apiChangeRentalStatus,
+    apiCreateRental,
+    apiEditRentalDetails,
+} from '../api/rental.api';
 import { queryClient } from '@/shared/config';
-import type { ReadyRental } from './rental.types';
+import type { ChangeStatus, ReadyRental } from './rental.types';
 
 export const useCreateRentalMutation = () =>
     useMutation({
@@ -25,6 +30,16 @@ export const useEditRentalMutation = () =>
 export function useAssignToRentalMutation() {
     return useMutation({
         mutationFn: (rentalId: string) => apiAssignToRental(rentalId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['rentals'] });
+        },
+    });
+}
+
+export function useChangeStatusMutation() {
+    return useMutation({
+        mutationFn: ({ rentalId, status }: { rentalId: string; status: ChangeStatus }) =>
+            apiChangeRentalStatus(rentalId, status),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['rentals'] });
         },
