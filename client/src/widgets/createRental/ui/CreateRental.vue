@@ -41,7 +41,6 @@
     const create = async () => {
         const payload = buildRentalPayload(rental.value);
         if (!payload) return;
-        console.log(payload);
 
         try {
             await createRentalMutation.mutateAsync(payload);

@@ -14,7 +14,7 @@ export class CreateRentalDto {
         description: 'References an employee',
     })
     @IsString()
-    employeeId: string;
+    employee: string;
 
     @ApiProperty({
         example: '692f4e940bb25367ab854f7e',
