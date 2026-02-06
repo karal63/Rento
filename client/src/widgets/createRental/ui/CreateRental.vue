@@ -70,3 +70,5 @@
         </template>
     </RentalForm>
 </template>
+
+<!-- add select employee and show selected -->

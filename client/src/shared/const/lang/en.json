@@ -199,7 +199,8 @@
         "table": {
             "created_at": "Created At",
             "created_by": "Created By",
-            "name": "Name"
+            "name": "Name",
+            "assigned_to": "Assigned to"
         },
 
         "sort": {

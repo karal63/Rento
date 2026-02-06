@@ -14,6 +14,7 @@ export type Rental = {
     createdAt: number;
     updatedAt: number;
     cancelledAt: number;
+    employee: string;
 };
 
 export type CarAvailability = {
@@ -28,6 +29,7 @@ export type RentalWithCar = Rental & {
 export type RentalWithAllDetails = Rental & {
     carId: Car;
     userId: User;
+    employee: User;
 };
 
 export const RENTAL_STATUS = {
