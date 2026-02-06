@@ -81,11 +81,7 @@
             key: 'assignedTo',
             header: t('app.table.assigned_to'),
             render: rental =>
-                rental.employee
-                    ? rental.employee.email
-                        ? rental.employee.email
-                        : rental.employee.name
-                    : '-',
+                rental.employee ? `${rental.employee.name} ${rental.employee.secondName}` : '-',
         },
     ];
 

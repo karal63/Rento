@@ -241,8 +241,7 @@ export class RentalRepo {
     async findRentalDetailsById(id: string) {
         return await this.rentalModel
             .findById(id)
-            .populate('carId')
-            .populate('userId');
+            .populate(['carId', 'userId', 'employee']);
     }
 
     async changeStatus(rentalId: string, status: Status) {

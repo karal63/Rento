@@ -67,6 +67,7 @@
         data,
         () => {
             if (!data.value) return;
+            rental.value.employee = data.value.employee;
             rental.value.car = data.value.carId;
             rental.value.user = data.value.userId;
             rental.value.period.dateFrom = new Date(data.value.rentFrom);
