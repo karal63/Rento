@@ -15,6 +15,7 @@
     const createRentalMutation = useCreateRentalMutation();
 
     const rules = {
+        employee: {},
         user: { required },
         car: { required },
         period: {
@@ -26,6 +27,7 @@
     };
 
     const rental = ref<RentalFormType>({
+        employee: null,
         user: null,
         car: null,
         period: {
@@ -39,6 +41,7 @@
     const create = async () => {
         const payload = buildRentalPayload(rental.value);
         if (!payload) return;
+        console.log(payload);
 
         try {
             await createRentalMutation.mutateAsync(payload);

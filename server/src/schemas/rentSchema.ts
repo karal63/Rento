@@ -6,10 +6,10 @@ export type RentDocument = HydratedDocument<Rent>;
 
 @Schema()
 export class Rent {
-    @Prop({ required: true, ref: 'Car' })
+    @Prop({ type: Types.ObjectId, required: true, ref: 'Car' })
     carId: Types.ObjectId;
 
-    @Prop({ required: true, ref: 'User' })
+    @Prop({ type: Types.ObjectId, required: true, ref: 'User' })
     userId: Types.ObjectId;
 
     @Prop({ required: true })

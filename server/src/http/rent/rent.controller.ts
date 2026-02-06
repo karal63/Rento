@@ -135,6 +135,7 @@ export class RentController {
             ...body,
             carId: new Types.ObjectId(body.carId),
             userId: new Types.ObjectId(body.userId),
+            employee: new Types.ObjectId(body.employeeId),
             totalPrice: 0,
         };
         await this.rentalService.createRent(readyBody);

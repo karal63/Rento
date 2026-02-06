@@ -20,8 +20,10 @@
     }>();
 
     const { t } = useI18n();
-    const { cars, users, userSearch, carSearch, isLoading } = useRentalOptions();
+    const { cars, users, employees, userSearch, carSearch, employeeSearch, isLoading } =
+        useRentalOptions();
 
+    const isEmployeesOpen = ref(false);
     const isUsersOpen = ref(false);
     const isCarsOpen = ref(false);
 
@@ -38,6 +40,11 @@
     const selectUser = (user: User) => {
         rental.value.user = user;
         isUsersOpen.value = false;
+    };
+
+    const selectEmployee = (employee: User) => {
+        isEmployeesOpen.value = false;
+        rental.value.employee = employee;
     };
 
     const handleSubmit = async () => {
@@ -58,6 +65,77 @@
                     class="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-semibold"
                 >
                     1
+                </div>
+                <div>
+                    <p class="text-sm md:text-base font-medium">
+                        {{ t('app.rental_form.select_employee') }}
+                    </p>
+                    <p class="text-xs md:text-sm text-main-gray">
+                        {{ t('app.rental_form.select_employee_desc') }}
+                    </p>
+                    <p v-for="e in v$.employee.$errors" :key="e.$uid" class="text-sm text-red-500">
+                        {{ e.$message }}
+                    </p>
+                </div>
+            </div>
+
+            <Dropdown :is-open="isEmployeesOpen" @close="isEmployeesOpen = false">
+                <Button
+                    @click="isEmployeesOpen = !isEmployeesOpen"
+                    size="sm"
+                    color="transparent"
+                    disable-uppercase
+                    class="border border-main-border w-full flex-between"
+                >
+                    {{ rental.employee?.email ?? t('app.rental_form.select_employee') }}
+                    <Icon
+                        icon="weui:arrow-filled"
+                        class="transform rotate-90 text-xl text-main-gray"
+                    />
+                </Button>
+                <template #actions>
+                    <div class="p-3">
+                        <div>
+                            <Input
+                                type="search"
+                                v-model="employeeSearch"
+                                :placeholder="t('app.search')"
+                                icon="icon-park-outline:search"
+                                size="medium"
+                            />
+                        </div>
+
+                        <ul
+                            class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
+                        >
+                            <li v-for="employee in employees?.users" :key="employee._id">
+                                <button
+                                    @click="selectEmployee(employee)"
+                                    :disabled="isLoading"
+                                    class="w-full text-left py-2 px-3 hover:bg-main-border rounded-md transition cursor-pointer"
+                                    :class="isLoading && 'text-current/50'"
+                                >
+                                    {{ employee.name }} {{ employee.secondName }}
+                                    <span
+                                        class="text-sm ml-2"
+                                        :class="isLoading ? 'text-main-gray/50' : 'text-main-gray'"
+                                    >
+                                        {{ employee.email }}
+                                    </span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </template>
+            </Dropdown>
+        </div>
+
+        <div class="space-y-2 mb-6">
+            <div class="flex items-end gap-3">
+                <div
+                    class="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-semibold"
+                >
+                    2
                 </div>
                 <div>
                     <p class="text-sm md:text-base font-medium">
@@ -101,7 +179,7 @@
                         <ul
                             class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
                         >
-                            <li v-for="user in users" :key="user._id">
+                            <li v-for="user in users?.users" :key="user._id">
                                 <button
                                     @click="selectUser(user)"
                                     :disabled="isLoading"
@@ -128,7 +206,7 @@
                 <div
                     class="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-semibold"
                 >
-                    2
+                    3
                 </div>
                 <div>
                     <p class="text-sm md:text-base font-medium">
@@ -192,7 +270,7 @@
                 <div
                     class="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-semibold"
                 >
-                    3
+                    4
                 </div>
                 <div>
                     <p class="text-sm md:text-base font-medium">
@@ -219,7 +297,7 @@
                 <div
                     class="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-semibold"
                 >
-                    4
+                    5
                 </div>
                 <div>
                     <p class="text-sm md:text-base font-medium">
