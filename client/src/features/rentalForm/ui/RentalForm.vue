@@ -87,7 +87,7 @@
                     disable-uppercase
                     class="border border-main-border w-full flex-between"
                 >
-                    {{ rental.employee?.email ?? t('app.rental_form.select_employee') }}
+                    {{ rental.employee?.name ?? t('app.rental_form.select_employee') }}
                     <Icon
                         icon="weui:arrow-filled"
                         class="transform rotate-90 text-xl text-main-gray"

@@ -19,6 +19,14 @@ export class AdminUpdateDto {
 
     @ApiPropertyOptional({
         example: '692f4e940bb25367ab854f7e',
+        description: 'References an employee',
+    })
+    @IsString()
+    @IsOptional()
+    employee: string;
+
+    @ApiPropertyOptional({
+        example: '692f4e940bb25367ab854f7e',
         description: 'Represents a user that made a rental',
     })
     @IsString()

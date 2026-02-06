@@ -5,7 +5,7 @@ export const buildRentalPayload = (rental: RentalFormType): ReadyRental | undefi
     if (!rental.period.dateFrom || !rental.period.dateTo || !rental.user || !rental.car) return;
 
     return {
-        employeeId: rental.employee?._id,
+        employee: rental.employee?._id,
         userId: rental.user._id,
         carId: rental.car._id,
         rentFrom: rental.period.dateFrom.getTime(),
