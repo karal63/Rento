@@ -15,6 +15,7 @@
     const createRentalMutation = useCreateRentalMutation();
 
     const rules = {
+        employee: {},
         user: { required },
         car: { required },
         period: {
@@ -26,6 +27,7 @@
     };
 
     const rental = ref<RentalFormType>({
+        employee: null,
         user: null,
         car: null,
         period: {
@@ -70,3 +72,5 @@
         </template>
     </RentalForm>
 </template>
+
+<!-- add select employee and show selected -->

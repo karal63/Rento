@@ -49,6 +49,10 @@ export class UserRepo {
             });
         }
 
+        if (query.role) {
+            res = res.find({ roles: query.role });
+        }
+
         if (query.sort) {
             const sortMethod = query.sort.split(':');
             const field = sortMethod[0];

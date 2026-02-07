@@ -8,6 +8,10 @@ export const buildPatchPayload = (
 
     const result: Partial<ReadyRental> = {};
 
+    if (!original.employee || newRental.employee !== original.employee._id) {
+        result.employee = newRental.employee;
+    }
+
     if (newRental.carId !== original.carId._id) {
         result.carId = newRental.carId;
     }

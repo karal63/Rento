@@ -209,7 +209,9 @@ export class RentalRepo {
 
         const total = await res.clone().countDocuments();
         res = res.skip((page - 1) * limit).limit(limit);
-        const readyRentals = await res.populate(['carId', 'userId']).exec();
+        const readyRentals = await res
+            .populate(['carId', 'userId', 'employee'])
+            .exec();
         const pages = Math.ceil(total / limit);
 
         return {
@@ -239,8 +241,7 @@ export class RentalRepo {
     async findRentalDetailsById(id: string) {
         return await this.rentalModel
             .findById(id)
-            .populate('carId')
-            .populate('userId');
+            .populate(['carId', 'userId', 'employee']);
     }
 
     async changeStatus(rentalId: string, status: Status) {

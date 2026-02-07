@@ -18,6 +18,7 @@
     const { data } = useRentalQuery(params['id'] as string);
 
     const rules = {
+        employee: {},
         user: { required },
         car: { required },
         period: {
@@ -30,6 +31,7 @@
     };
 
     const rental = ref<RentalFormType>({
+        employee: null,
         user: null,
         car: null,
         period: {
@@ -65,6 +67,7 @@
         data,
         () => {
             if (!data.value) return;
+            rental.value.employee = data.value.employee;
             rental.value.car = data.value.carId;
             rental.value.user = data.value.userId;
             rental.value.period.dateFrom = new Date(data.value.rentFrom);

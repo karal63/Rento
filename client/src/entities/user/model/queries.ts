@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from '@tanstack/vue-query';
 import type { ComputedRef, Ref } from 'vue';
-import type { User } from './types';
+import type { User, UserRole } from './types';
 import { apiGetFoundUsers, apiGetUsers } from '../api/user.api';
 import type { SortMethod } from '@/entities/rental';
 
@@ -13,9 +13,10 @@ export const useFoundUsersQuery = (search: Ref<string>) =>
 
 export function useUsersQuery(
     queryParams: ComputedRef<{
-        search: string;
-        sort: SortMethod | null;
-        page: number;
+        search?: string;
+        role?: UserRole;
+        sort?: SortMethod | null;
+        page?: number;
     }>
 ) {
     return useQuery<{ users: User[]; pages: number }, Error>({

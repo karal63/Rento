@@ -78,12 +78,10 @@
             render: rental => new Date(rental.createdAt).toLocaleString(),
         },
         {
-            key: 'createdBy',
-            header: t('app.table.created_by'),
+            key: 'assignedTo',
+            header: t('app.table.assigned_to'),
             render: rental =>
-                rental.userId
-                    ? rental.userId.name
-                    : `(${t('app.protected_rentals_page.deleted_user')})`,
+                rental.employee ? `${rental.employee.name} ${rental.employee.secondName}` : '-',
         },
     ];
 

@@ -199,7 +199,8 @@
         "table": {
             "created_at": "Created At",
             "created_by": "Created By",
-            "name": "Name"
+            "name": "Name",
+            "assigned_to": "Assigned to"
         },
 
         "sort": {
@@ -262,6 +263,8 @@
             "edit": "Edit",
             "edit_title": "Edit rental",
             "create_title": "Create a new rental",
+            "select_employee": "Select employee (Optional)",
+            "select_employee_desc": "Choose the employee to whom the rent will be registered",
             "select_user": "Select user",
             "select_user_desc": "Choose the user to whom the rent will be registered",
             "select_car": "Select car",
