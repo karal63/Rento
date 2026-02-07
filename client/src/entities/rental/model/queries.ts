@@ -7,6 +7,7 @@ import type {
     SortMethod,
 } from './rental.types';
 import { computed, type ComputedRef, type Ref } from 'vue';
+import type { AppError } from '@/shared/model';
 
 export function useCarAvailabilityQuery(
     carId: Ref<string | undefined> | ComputedRef<string | undefined>,
@@ -39,7 +40,7 @@ export function useRentalsQuery(
 }
 
 export function useRentalQuery(rentalId: string) {
-    return useQuery<RentalWithAllDetails, Error>({
+    return useQuery<RentalWithAllDetails, AppError>({
         queryKey: ['rentals', rentalId],
         queryFn: () => getRentalById(rentalId).then(r => r.data),
     });

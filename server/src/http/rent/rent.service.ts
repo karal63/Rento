@@ -131,8 +131,22 @@ export class RentService {
         await this.rentalRepo.cancel(id);
     }
 
-    async getRentalById(id: string) {
-        return await this.rentalRepo.findRentalDetailsById(id);
+    async getRentalById(id: string, user: UserPayload) {
+        if (!Types.ObjectId.isValid(id)) {
+            throw new NotFoundException(LogCode.CODE_R004);
+        }
+
+        const foundRental = await this.rentalRepo.findRentalDetailsById(id);
+        if (
+            !foundRental ||
+            ((foundRental.status === Status.Cancelled ||
+                foundRental.status === Status.Completed) &&
+                !user.roles.includes(Role.Admin))
+        ) {
+            throw new NotFoundException(LogCode.CODE_R004);
+        }
+
+        return foundRental;
     }
 
     async updateRentalDetails(rentalId: string, body: AdminUpdateDto) {

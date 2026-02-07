@@ -4,7 +4,7 @@
     import { RentalActions } from '@/features/rentalActions';
     import { UnassignRentalButton } from '@/features/unassignRental';
     import { useBreakpoint } from '@/shared/lib';
-    import type { Breadcrumb } from '@/shared/ui';
+    import { Button, type Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
     import { ProtectedHeader, RentalCards, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
@@ -83,6 +83,17 @@
         <div class="px-5 pt-4">
             <ChangeStatusButton :rental="selectedRental" @closeMenu="isMobilePanelOpen = false" />
             <UnassignRentalButton :rental="selectedRental" @closeMenu="isMobilePanelOpen = false" />
+            <RouterLink :to="`/employee/rentals/${selectedRental?._id}`">
+                <Button
+                    size="sm"
+                    color="transparent"
+                    disable-uppercase
+                    class="flex justify-start items-center gap-3 w-full"
+                >
+                    <Icon icon="ri:more-fill" class="text-xl" />
+                    {{ t('app.button.more_details') }}
+                </Button>
+            </RouterLink>
         </div>
     </RentalActions>
 
@@ -128,6 +139,17 @@
             <div class="min-w-max rounded-md">
                 <ChangeStatusButton :rental="row" />
                 <UnassignRentalButton :rental="row" />
+                <RouterLink :to="`/employee/rentals/${row._id}`">
+                    <Button
+                        size="sm"
+                        color="transparent"
+                        disable-uppercase
+                        class="flex justify-start items-center gap-3 w-full"
+                    >
+                        <Icon icon="ri:more-fill" class="text-xl" />
+                        {{ t('app.button.more_details') }}
+                    </Button>
+                </RouterLink>
             </div>
         </template>
     </RentalsTable>

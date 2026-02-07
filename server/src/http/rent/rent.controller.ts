@@ -146,8 +146,11 @@ export class RentController {
     @ApiResponse({ status: 200, description: 'Returns found rental' })
     @Roles(Role.Employee, Role.Admin)
     @Get('get-by-id/:id')
-    async getRentalById(@Param('id') rentalId: string) {
-        return await this.rentalService.getRentalById(rentalId);
+    async getRentalById(
+        @Param('id') rentalId: string,
+        @GetUser() user: UserPayload,
+    ) {
+        return await this.rentalService.getRentalById(rentalId, user);
     }
 
     @ApiOperation({
