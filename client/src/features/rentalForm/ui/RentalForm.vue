@@ -80,23 +80,32 @@
             </div>
 
             <Dropdown :is-open="isEmployeesOpen" @close="isEmployeesOpen = false">
-                <Button
-                    @click="isEmployeesOpen = !isEmployeesOpen"
-                    size="sm"
-                    color="transparent"
-                    disable-uppercase
-                    class="border border-main-border w-full flex-between"
-                >
-                    {{
-                        rental.employee
-                            ? `${rental.employee?.name} ${rental.employee?.secondName}`
-                            : t('app.rental_form.select_employee')
-                    }}
-                    <Icon
-                        icon="weui:arrow-filled"
-                        class="transform rotate-90 text-xl text-main-gray"
-                    />
-                </Button>
+                <div class="flex items-center gap-2">
+                    <button
+                        v-if="rental.employee"
+                        @click="rental.employee = null"
+                        class="text-xl font-semibold cursor-pointer"
+                    >
+                        <Icon icon="material-symbols:close-rounded" />
+                    </button>
+                    <Button
+                        @click="isEmployeesOpen = !isEmployeesOpen"
+                        size="sm"
+                        color="transparent"
+                        disable-uppercase
+                        class="border border-main-border w-full flex-between"
+                    >
+                        {{
+                            rental.employee
+                                ? `${rental.employee?.name} ${rental.employee?.secondName}`
+                                : t('app.rental_form.select_employee')
+                        }}
+                        <Icon
+                            icon="weui:arrow-filled"
+                            class="transform rotate-90 text-xl text-main-gray"
+                        />
+                    </Button>
+                </div>
                 <template #actions>
                     <div class="p-3">
                         <div>
