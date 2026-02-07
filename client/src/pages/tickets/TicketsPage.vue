@@ -1,8 +1,9 @@
 <script setup lang="ts">
     import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
     import { useAssignToRental } from '@/features/assignToRental';
+    import { useSortRentals } from '@/features/sortRentals';
     import { useBreakpoint } from '@/shared/lib';
-    import type { Breadcrumb } from '@/shared/ui';
+    import { Button, Dropdown, type Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
     import { RentalCards, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
@@ -12,6 +13,7 @@
     const { t } = useI18n();
     const { isMobile } = useBreakpoint();
     const { assignToRental } = useAssignToRental();
+    const sorting = useSortRentals();
 
     const emit = defineEmits<{
         (e: 'setBreadcrumbs', data: Breadcrumb[]): void;
@@ -31,8 +33,10 @@
         statuses: [RENTAL_STATUS.Pending],
         page: page.value,
         unassigned: true,
+        sort: sorting.sort,
     }));
     const page = ref(1);
+    const isSortByDropdownOpen = ref(false);
 
     const { data, isFetching } = useRentalsQuery(pendingParams);
     const rentals = computed(() => data.value?.rentals ?? []);
@@ -84,9 +88,75 @@
     const handlePick = (rentalId: string) => {
         assignToRental(rentalId);
     };
+
+    const sortByList = [
+        {
+            label: t('app.sort.created_at_latest'),
+            callback: () =>
+                (sorting.sort = {
+                    field: 'createdAt',
+                    order: 'desc',
+                    label: t('app.sort.by_date_latest'),
+                }),
+        },
+        {
+            label: t('app.sort.created_at_oldest'),
+            callback: () =>
+                (sorting.sort = {
+                    field: 'createdAt',
+                    order: 'asc',
+                    label: t('app.sort.created_at_oldest'),
+                }),
+        },
+        {
+            label: t('app.sort.rental_start_closest'),
+            callback: () =>
+                (sorting.sort = {
+                    field: 'rentFrom',
+                    order: 'asc',
+                    label: t('app.sort.rental_start_closest'),
+                }),
+        },
+        {
+            label: t('app.sort.rental_start_oldest'),
+            callback: () =>
+                (sorting.sort = {
+                    field: 'rentFrom',
+                    order: 'desc',
+                    label: t('app.sort.rental_start_oldest'),
+                }),
+        },
+    ];
 </script>
 
 <template>
+    <section class="mt-5">
+        <hr class="text-main-border" />
+
+        <div class="mt-5">
+            <Dropdown
+                :isOpen="isSortByDropdownOpen"
+                :items="sortByList"
+                @close="isSortByDropdownOpen = false"
+                class="max-w-max"
+            >
+                <Button
+                    @click="isSortByDropdownOpen = !isSortByDropdownOpen"
+                    size="sm"
+                    color="transparent"
+                    :disableUppercase="true"
+                    class="border border-main-border flex-between gap-2 text-sm md:text-base"
+                >
+                    {{ sorting.sort ? sorting.sort.label : t('app.sort.by_date_latest') }}
+                    <Icon
+                        icon="weui:arrow-filled"
+                        class="transform rotate-90 text-xl text-main-gray"
+                    />
+                </Button>
+            </Dropdown>
+        </div>
+    </section>
+
     <RentalCards
         v-if="isMobile"
         :rows="rentals"

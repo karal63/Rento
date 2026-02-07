@@ -82,7 +82,7 @@
     >
         <button
             @click="isStatusDropdownOpen = !isStatusDropdownOpen"
-            class="rounded-md px-4 py-2 flex-between gap-2 w-44 cursor-pointer h-full"
+            class="rounded-md px-4 py-2 flex-between gap-2 cursor-pointer h-full"
             :class="getClasses"
         >
             <p class="flex items-center gap-2">

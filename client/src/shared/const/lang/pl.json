@@ -193,19 +193,25 @@
             "new_rental": "Nowy wynajem",
             "edit": "Edytuj",
             "cancel": "Anuluj",
-            "deleted_user": "nieznany"
+            "deleted_user": "nieznany",
+            "select_status": "Wybierz status"
         },
 
         "table": {
             "created_at": "Utworzono",
             "created_by": "Utworzone przez",
-            "name": "Nazwa"
+            "name": "Nazwa",
+            "assigned_to": "Przypisany do"
         },
 
         "sort": {
             "by_date_latest": "Według daty (od najnowszych)",
             "by_date_oldest": "Według daty (od najstarszych)",
-            "search": "Szukaj"
+            "search": "Szukaj",
+            "created_at_latest": "Data utworzenia (od najnowszych)",
+            "created_at_oldest": "Data utworzenia (od najstarszych)",
+            "rental_start_closest": "Rozpoczęcie wynajmu (najbliższe najpierw)",
+            "rental_start_oldest": "Rozpoczęcie wynajmu (od najstarszych)"
         },
 
         "protected_users_page": {
@@ -221,7 +227,6 @@
             "edit": "Edytuj",
             "delete": "Usuń",
 
-            "select_status": "Wybierz status",
             "cancel": "Anuluj",
             "save": "Zapisz",
             "select_role": "Wybierz rolę",
@@ -244,6 +249,8 @@
             "user_created_desc": "Pomyślnie utworzono nowego użytkownika. Możesz go edytować w dowolnym momencie.",
             "rental_created": "Wynajem utworzony",
             "rental_created_desc": "Pomyślnie utworzono nowy wynajem dla {name}. Możesz go edytować w dowolnym momencie.",
+            "rental_edited": "Wynajem edytowany",
+            "rental_edited_desc": "Pomyślnie edytowano wynajem dla {name}.",
             "assigned_to_project": "Użytkownik przypisany",
             "assigned_to_project_desc": "Pomyślnie przypisałeś się do wynajmu"
         },
@@ -255,8 +262,13 @@
             "isStrongPassword": "Hasło nie jest wystarczająco silne"
         },
 
-        "create_rental_page": {
-            "title": "Utwórz nowy wynajem",
+        "rental_form": {
+            "new": "Nowy",
+            "edit": "Edytuj",
+            "edit_title": "Edytuj wynajem",
+            "create_title": "Utwórz nowy wynajem",
+            "select_employee": "Wybierz pracownika (opcjonalnie)",
+            "select_employee_desc": "Wybierz pracownika, na którego będzie rejestrowany czynsz",
             "select_user": "Wybierz użytkownika",
             "select_user_desc": "Wybierz użytkownika, na którego zostanie zarejestrowany wynajem",
             "select_car": "Wybierz samochód",
