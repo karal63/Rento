@@ -193,7 +193,8 @@
             "new_rental": "New rental",
             "edit": "Edit",
             "cancel": "Cancel",
-            "deleted_user": "unknown"
+            "deleted_user": "unknown",
+            "select_status": "Select status"
         },
 
         "table": {
@@ -206,7 +207,11 @@
         "sort": {
             "by_date_latest": "By date (latest first)",
             "by_date_oldest": "By date (oldest first)",
-            "search": "Search"
+            "search": "Search",
+            "created_at_latest": "Created at (latest first)",
+            "created_at_oldest": "Created at (oldest first)",
+            "rental_start_closest": "Rental start (closest first)",
+            "rental_start_oldest": "Rental start (oldest first)"
         },
 
         "protected_users_page": {
@@ -222,7 +227,6 @@
             "edit": "Edit",
             "delete": "Delete",
 
-            "select_status": "Select status",
             "cancel": "Cancel",
             "save": "Save",
             "select_role": "Select role",

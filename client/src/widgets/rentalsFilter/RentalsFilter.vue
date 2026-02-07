@@ -62,7 +62,7 @@
             <div class="flex gap-3">
                 <StatusPicker
                     allVariant
-                    :placeholder="t('app.protected_users_page.select_status')"
+                    :placeholder="t('app.protected_rentals_page.select_status')"
                     @setStatus="emit('setStatus', $event)"
                     :status="status"
                 />
@@ -77,7 +77,7 @@
                         size="sm"
                         color="transparent"
                         :disableUppercase="true"
-                        class="h-full border border-main-border flex-between gap-2 text-sm md:text-base"
+                        class="border border-main-border flex-between gap-2 text-sm md:text-base"
                     >
                         {{ sort ? sort.label : t('app.sort.by_date_latest') }}
                         <Icon
