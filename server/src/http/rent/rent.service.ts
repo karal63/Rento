@@ -139,8 +139,13 @@ export class RentService {
         const rental = await this.rentModel.findById(rentalId);
         if (!rental) throw new NotFoundException(LogCode.CODE_R004);
 
+        const readyBody = {
+            ...body,
+            employee: body.employee ? body.employee : null,
+        };
+
         await this.rentModel.findByIdAndUpdate(rentalId, {
-            $set: { ...body, updatedAt: Date.now() },
+            $set: { ...readyBody, updatedAt: Date.now() },
         });
     }
 
