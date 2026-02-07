@@ -211,7 +211,7 @@
                         size="sm"
                         color="transparent"
                         disable-uppercase
-                        class="flex items-center gap-2"
+                        class="flex items-center gap-3"
                     >
                         <Icon icon="ri:more-fill" class="text-xl" />
                         {{ t('app.button.more_details') }}

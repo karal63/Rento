@@ -2,7 +2,6 @@
     import { RENTAL_STATUS, Status, useRentalQuery } from '@/entities/rental';
     import { normalizeDate } from '@/shared/lib/date';
     import type { Breadcrumb } from '@/shared/ui';
-    import { Button } from '@/shared/ui';
     import { ProtectedHeader } from '@/widgets';
     import { Icon } from '@iconify/vue';
     import { onMounted } from 'vue';
@@ -33,9 +32,7 @@
 </script>
 
 <template>
-    <ProtectedHeader title="Rental Details">
-        <Button size="sm">Edit</Button>
-    </ProtectedHeader>
+    <ProtectedHeader title="Rental Details" />
 
     <section v-if="isLoading" class="mt-10">
         <div class="skeleton w-full xl:w-[40%] h-[300px] rounded-md"></div>

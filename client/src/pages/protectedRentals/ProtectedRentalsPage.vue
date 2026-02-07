@@ -123,22 +123,41 @@
         :pages="pages"
     >
         <template #actions="{ row }">
-            <div class="w-[120px] bg-main-bg rounded-md">
-                <RouterLink
-                    :to="`rentals/edit/${row._id}`"
-                    class="px-3 py-2 w-full text-left hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
-                >
-                    <Icon icon="lucide:edit" class="text-xl" />
-                    {{ t('app.protected_rentals_page.edit') }}
+            <div class="min-w-max bg-main-bg rounded-md">
+                <RouterLink :to="`rentals/edit/${row._id}`">
+                    <Button
+                        size="sm"
+                        color="transparent"
+                        disableUppercase
+                        class="w-full flex items-center gap-3"
+                    >
+                        <Icon icon="lucide:edit" class="text-xl" />
+                        {{ t('app.protected_rentals_page.edit') }}
+                    </Button>
                 </RouterLink>
 
-                <button
+                <Button
+                    size="sm"
+                    color="transparent"
+                    disableUppercase
                     @click="handleDelete(row)"
-                    class="px-3 py-2 w-full text-left hover:bg-red-600/10 cursor-pointer flex items-center gap-2 text-red-600 transition rounded-bl-md rounded-br-md"
+                    class="w-full flex items-center gap-3"
                 >
                     <Icon icon="material-symbols:cancel-outline-rounded" class="text-xl" />
                     {{ t('app.protected_rentals_page.cancel') }}
-                </button>
+                </Button>
+
+                <RouterLink :to="`rentals/${row._id}`">
+                    <Button
+                        size="sm"
+                        color="transparent"
+                        disableUppercase
+                        class="w-full flex items-center gap-3"
+                    >
+                        <Icon icon="ri:more-fill" class="text-xl" />
+                        {{ t('app.button.more_details') }}
+                    </Button>
+                </RouterLink>
             </div>
         </template>
     </RentalsTable>

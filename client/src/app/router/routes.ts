@@ -103,6 +103,10 @@ export const routes: RouteRecordRaw[] = [
                 path: 'users',
                 component: ProtectedUsersPage,
             },
+            {
+                path: 'rentals/:id',
+                component: RentalDetailsPage,
+            },
         ],
     },
 
