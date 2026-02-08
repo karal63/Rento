@@ -13,3 +13,4 @@ export { default as AdminCreateRentalPage } from './adminCreateRental/AdminCreat
 export { default as AdminEditRentalPage } from './adminEditRental/AdminEditRentalPage.vue';
 export { default as TicketsPage } from './tickets/TicketsPage.vue';
 export { default as EmployeeDashboard } from './employeeDashboard/EmployeeDashboard.vue';
+export { default as RentalDetailsPage } from './rentalDetails/RentalDetailsPage.vue';

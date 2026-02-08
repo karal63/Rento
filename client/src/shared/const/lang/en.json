@@ -236,6 +236,7 @@
 
         "errors": {
             "CODE_U009": "User with this email already exists",
+            "CODE_R004": "Rental not found",
             "UNKNOWN": "Unknown error",
             "VALIDATION_ERROR": "Some fields are filled in incorrectly: {field}"
         },
@@ -285,7 +286,8 @@
             "cancel": "Cancel",
             "create": "Create",
             "submit": "Submit",
-            "save": "Save"
+            "save": "Save",
+            "more_details": "More details"
         },
 
         "link": {

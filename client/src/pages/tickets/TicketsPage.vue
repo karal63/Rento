@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { RENTAL_STATUS, useRentalsQuery, type RentalWithAllDetails } from '@/entities/rental';
-    import { useAssignToRental } from '@/features/assignToRental';
+    import { AssignToRentalButton } from '@/features/assignToRental';
+    import { RentalActions } from '@/features/rentalActions';
     import { useSortRentals } from '@/features/sortRentals';
     import { useBreakpoint } from '@/shared/lib';
     import { Button, Dropdown, type Breadcrumb } from '@/shared/ui';
@@ -12,7 +13,6 @@
 
     const { t } = useI18n();
     const { isMobile } = useBreakpoint();
-    const { assignToRental } = useAssignToRental();
     const sorting = useSortRentals();
 
     const emit = defineEmits<{
@@ -41,6 +41,13 @@
     const { data, isFetching } = useRentalsQuery(pendingParams);
     const rentals = computed(() => data.value?.rentals ?? []);
     const pages = computed(() => data.value?.pages ?? 1);
+    const isMobilePanelOpen = ref(false);
+    const selectedRental = ref<RentalWithAllDetails | null>(null);
+
+    const openMobileMenu = (rental: RentalWithAllDetails) => {
+        selectedRental.value = rental;
+        isMobilePanelOpen.value = true;
+    };
 
     const columns: TableColumn<RentalWithAllDetails>[] = [
         {
@@ -85,10 +92,6 @@
         },
     ];
 
-    const handlePick = (rentalId: string) => {
-        assignToRental(rentalId);
-    };
-
     const sortByList = [
         {
             label: t('app.sort.created_at_latest'),
@@ -130,9 +133,27 @@
 </script>
 
 <template>
+    <RentalActions :is-mobile-menu-open="isMobilePanelOpen" @close="isMobilePanelOpen = false">
+        <div class="px-5 pt-4">
+            <AssignToRentalButton :rental="selectedRental" @closeMenu="isMobilePanelOpen = false" />
+            <RouterLink :to="`/employee/rentals/${selectedRental?._id}`">
+                <Button
+                    size="sm"
+                    color="transparent"
+                    disable-uppercase
+                    class="flex justify-start items-center gap-3 w-full"
+                >
+                    <Icon icon="ri:more-fill" class="text-xl" />
+                    {{ t('app.button.more_details') }}
+                </Button>
+            </RouterLink>
+        </div>
+    </RentalActions>
+
     <section class="mt-5">
         <hr class="text-main-border" />
 
+        <!-- sort -->
         <div class="mt-5">
             <Dropdown
                 :isOpen="isSortByDropdownOpen"
@@ -165,15 +186,12 @@
         v-model="page"
     >
         <template #actions="{ rental }">
-            <div class="min-w-max bg-main-bg rounded-md">
-                <button
-                    @click="handlePick(rental._id)"
-                    class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
-                >
-                    <Icon icon="material-symbols:add-rounded" class="text-xl" />
-                    {{ t('app.tickets_page.pick') }}
-                </button>
-            </div>
+            <button
+                @click="openMobileMenu(rental)"
+                class="absolute top-3 right-3 text-xl cursor-pointer"
+            >
+                <Icon icon="pepicons-pencil:dots-y" />
+            </button>
         </template>
     </RentalCards>
 
@@ -186,14 +204,19 @@
         v-model="page"
     >
         <template #actions="{ row }">
-            <div class="min-w-max bg-main-bg rounded-md">
-                <button
-                    @click="handlePick(row._id)"
-                    class="px-3 py-2 w-full text-left text-green-600 hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
-                >
-                    <Icon icon="material-symbols:add-rounded" class="text-xl" />
-                    Pick
-                </button>
+            <div class="min-w-max rounded-md flex-col">
+                <AssignToRentalButton :rental="row" />
+                <RouterLink :to="`/employee/rentals/${row._id}`">
+                    <Button
+                        size="sm"
+                        color="transparent"
+                        disable-uppercase
+                        class="flex items-center gap-3"
+                    >
+                        <Icon icon="ri:more-fill" class="text-xl" />
+                        {{ t('app.button.more_details') }}
+                    </Button>
+                </RouterLink>
             </div>
         </template>
     </RentalsTable>
