@@ -173,7 +173,8 @@
         "role": {
             "user": "Użytkownik",
             "employee": "Pracownik",
-            "admin": "Administrator"
+            "admin": "Administrator",
+            "all": "Wszystkie"
         },
 
         "acceptance_modal": {

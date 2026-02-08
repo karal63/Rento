@@ -1,8 +1,9 @@
 <script setup lang="ts">
-    import type { User } from '@/entities/user';
+    import { RoleBlock, type User } from '@/entities/user';
     import { useAcceptanceModalStore } from '@/features/acceptanceModal';
     import { useDeleteUser } from '@/features/deleteUser';
     import { useEditUserStore } from '@/features/editUser';
+    import { normalizeDate } from '@/shared/lib/date';
     import { Pagination } from '@/shared/ui';
     import { Table, type TableColumn } from '@/shared/ui/table';
     import { Icon } from '@iconify/vue';
@@ -25,15 +26,14 @@
         {
             key: 'name',
             header: t('app.table.name'),
-            render: user => user.name,
+            render: user => `${user.name} ${user.secondName ?? ''}`,
             width: '15%',
         },
         {
-            key: 'authProvider',
-            header: t('app.protected_users_page.auth_provider'),
-            render: user => user.auth_provider,
-            width: '10%',
-            minWidth: 120,
+            key: 'roles',
+            header: t('app.protected_users_page.roles'),
+            render: user => user.roles.join(', '),
+            width: '15%',
         },
         {
             key: 'email',
@@ -50,15 +50,8 @@
         {
             key: 'createdAt',
             header: t('app.table.created_at'),
-            render: user => new Date(user.createdAt).toLocaleString(),
+            render: user => normalizeDate(user.createdAt),
             width: '15%',
-        },
-        {
-            key: 'roles',
-            header: t('app.protected_users_page.roles'),
-            render: user => user.roles.join(', '),
-            width: '5%',
-            minWidth: 80,
         },
     ];
 
@@ -82,7 +75,7 @@
         <div class="overflow-x-scroll">
             <Table :rows="users" :columns="columns" :loading="false" class="overflow-x-scroll">
                 <template #actions="{ row }">
-                    <div class="w-[120px] bg-main-bg rounded-md">
+                    <div class="w-[120px] rounded-md">
                         <button
                             @click="handleEdit(row)"
                             class="px-3 py-2 w-full text-left hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
@@ -99,6 +92,10 @@
                             {{ t('app.protected_users_page.delete') }}
                         </button>
                     </div>
+                </template>
+
+                <template #cell-roles="{ row }">
+                    <RoleBlock :role="row.roles[0]" />
                 </template>
             </Table>
         </div>
