@@ -14,7 +14,7 @@ export const useFoundUsersQuery = (search: Ref<string>) =>
 export function useUsersQuery(
     queryParams: ComputedRef<{
         search?: string;
-        role?: UserRole;
+        role?: UserRole | '';
         sort?: SortMethod | null;
         page?: number;
     }>

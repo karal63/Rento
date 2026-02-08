@@ -16,7 +16,7 @@ export const API_PATCH_USER_EDIT = `/user/edit`;
 export const API_PATCH_USER_EDIT_ID = (id: string) => `/user/edit/${id}`;
 export const API_GET_USERS_LIST = (
     search?: string,
-    role?: UserRole,
+    role?: UserRole | '',
     sort?: SortMethod | null,
     page?: number
 ) =>
