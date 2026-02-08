@@ -8,7 +8,7 @@
     import type { TableColumn } from '@/shared/ui/table';
     import { RentalCards, RentalsTable } from '@/widgets';
     import { Icon } from '@iconify/vue';
-    import { computed, onMounted, ref } from 'vue';
+    import { computed, onMounted, ref, watch } from 'vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
@@ -130,6 +130,10 @@
                 }),
         },
     ];
+
+    watch(page, () => {
+        window.scrollTo(0, 0);
+    });
 </script>
 
 <template>

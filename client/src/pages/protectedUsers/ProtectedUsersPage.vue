@@ -8,7 +8,7 @@
     import { ProtectedHeader, UsersFilter } from '@/widgets';
     import { UsersTable } from '@/widgets/usersTable';
     import { Icon } from '@iconify/vue';
-    import { computed, onMounted, ref } from 'vue';
+    import { computed, onMounted, ref, watch } from 'vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
@@ -40,6 +40,10 @@
 
     onMounted(async () => {
         emit('setBreadcrumbs', breadcrumbs);
+    });
+
+    watch(page, () => {
+        window.scrollTo(0, 0);
     });
 </script>
 
