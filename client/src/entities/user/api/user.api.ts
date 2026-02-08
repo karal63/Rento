@@ -11,7 +11,7 @@ export const apiGetUsers = async ({
     page,
 }: {
     search?: string;
-    role?: UserRole;
+    role?: UserRole | '';
     sort?: SortMethod | null;
     page?: number;
 }): Promise<AxiosResponse<{ users: User[]; pages: number }>> => {

@@ -60,6 +60,7 @@
         @set-sort="sorting.sort = $event"
         :search="filters.search"
         :sort="sorting.sort"
+        v-model:role="filters.role"
     />
 
     <UsersTable v-model="page" :users="users" :loading="isLoading" :totalPages="pages" />
