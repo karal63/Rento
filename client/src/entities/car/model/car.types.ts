@@ -10,6 +10,7 @@ export type Car = {
     };
     deposit: number;
     pricing: PriceRange[];
+    brand: string;
 };
 
 export type PriceRange = {

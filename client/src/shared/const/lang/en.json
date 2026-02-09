@@ -295,7 +295,8 @@
             "dashboard": "Dashboard",
             "rentals": "Rentals",
             "users": "Users",
-            "tickets": "Tickets"
+            "tickets": "Tickets",
+            "cars": "Cars"
         },
 
         "tickets_page": {
@@ -312,6 +313,12 @@
             "change_status": "Change status",
             "unassign": "Unassign",
             "confirm_unassign_desc": "Are you sure you want to unassign yourself from this rental?"
+        },
+
+        "admin_cars_page": {
+            "cars": "Cars",
+            "all_cars": "All cars",
+            "new_car": "New car"
         }
     }
 }

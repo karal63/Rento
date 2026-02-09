@@ -16,6 +16,7 @@ import {
     TicketsPage,
     EmployeeDashboard,
     RentalDetailsPage,
+    AdminCars,
 } from '@/pages';
 
 import BookingLayout from '../layouts/BookingLayout.vue';
@@ -106,6 +107,10 @@ export const routes: RouteRecordRaw[] = [
             {
                 path: 'rentals/:id',
                 component: RentalDetailsPage,
+            },
+            {
+                path: 'cars',
+                component: AdminCars,
             },
         ],
     },

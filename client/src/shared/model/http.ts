@@ -3,7 +3,7 @@ import type { UserRole } from '@/entities/user';
 
 // CAR
 export const API_GET_CAR_SINGLE = (id: string) => `/cars/${id}`;
-export const API_GET_CAR_LIST = (page: number, brands: string[], search: string) =>
+export const API_GET_CAR_LIST = (page: number, brands?: string[], search?: string) =>
     `/cars/?page=${page}${brands ? brands.map(b => `&brand=${b}`).join('') : ''}${search ? `&search=${search}` : ''}`;
 export const API_GET_CARS_FOUND = (search: string) => `/cars/found?search=${search}`;
 
