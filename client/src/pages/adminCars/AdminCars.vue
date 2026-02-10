@@ -41,5 +41,29 @@
         </RouterLink>
     </ProtectedHeader>
 
-    <AdminCarsList :cars="data?.cars || []" :loading="isLoading" />
+    <AdminCarsList :cars="data?.cars || []" :loading="isLoading">
+        <template #actions="{ car }">
+            <div class="bg-main-bg rounded-md">
+                <Button
+                    @click="console.log(car)"
+                    size="sm"
+                    color="transparent"
+                    disableUppercase
+                    class="w-full flex items-center gap-3"
+                >
+                    <Icon icon="lucide:edit" class="text-xl" />
+                    Edit
+                </Button>
+                <Button
+                    size="sm"
+                    color="transparent"
+                    disableUppercase
+                    class="w-full flex items-center gap-3"
+                >
+                    <Icon icon="material-symbols:cancel-outline-rounded" class="text-xl" />
+                    Delete
+                </Button>
+            </div>
+        </template>
+    </AdminCarsList>
 </template>
