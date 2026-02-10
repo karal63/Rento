@@ -12,7 +12,7 @@
 </script>
 
 <template>
-    <li class="shadow border border-main-border p-3 rounded-md relative">
+    <li class="shadow border bg-main-gray-bg border-main-border p-3 rounded-md relative">
         <Status :status="rental.status">
             {{ t(`app.status.${rental.status}`) }}
         </Status>

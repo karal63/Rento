@@ -7,11 +7,15 @@ export const apiGetSingleCar = async (id: string): Promise<AxiosResponse<Car>> =
     return await axiosInstance.get(API_GET_CAR_SINGLE(id));
 };
 
-export const apiGetCars = async (
-    page: number,
-    brands: string[],
-    search: string
-): Promise<AxiosResponse<{ cars: Car[]; pagesAmount: number; allBrands: string[] }>> => {
+export const apiGetCars = async ({
+    page,
+    brands,
+    search,
+}: {
+    page: number;
+    brands?: string[];
+    search?: string;
+}): Promise<AxiosResponse<{ cars: Car[]; pagesAmount: number; allBrands: string[] }>> => {
     return await axiosInstance.get(API_GET_CAR_LIST(page, brands, search));
 };
 

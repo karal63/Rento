@@ -294,7 +294,8 @@
             "dashboard": "Panel",
             "rentals": "Wynajmy",
             "users": "Użytkownicy",
-            "tickets": "Tikety"
+            "tickets": "Tikety",
+            "cars": "Samochody"
         },
 
         "tickets_page": {

@@ -27,6 +27,12 @@ export const adminLinks: Link[] = [
         requiredAction: 'view:admin-page',
     },
     {
+        path: '/admin/cars',
+        icon: 'mdi:car-outline',
+        name: 'cars',
+        requiredAction: 'view:admin-page',
+    },
+    {
         path: '/employee/dashboard',
         icon: 'material-symbols:dashboard-outline-rounded',
         name: 'dashboard',
