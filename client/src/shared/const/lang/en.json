@@ -319,6 +319,26 @@
             "cars": "Cars",
             "all_cars": "All cars",
             "new_car": "New car"
+        },
+
+        "add_car_page": {
+            "cars": "Cars",
+            "add_new_car": "Add new car"
+        },
+
+        "car_form": {
+            "new": "New",
+            "car_name": "Car name",
+            "car_name_desc": "Enter car model and full name, e.g. Mercedes-Benz S-Class W223",
+            "car_brand": "Brand",
+            "car_full_name": "Full name",
+            "car_images": "Car images",
+            "car_images_desc": "Attach at least one image of the car. You can add more images after creating the car.",
+            "select_image": "Select image",
+            "car_details": "Car details",
+            "car_details_desc": "Enter car details like power, acceleration, etc.",
+            "car_pricing": "Car pricing",
+            "car_pricing_desc": "Enter car pricing for different rental periods"
         }
     }
 }

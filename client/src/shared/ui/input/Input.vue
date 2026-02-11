@@ -7,7 +7,7 @@
     const props = defineProps<{
         size: 'small' | 'medium' | 'large';
         placeholder?: string;
-        type?: 'time' | 'date' | 'tel' | 'password' | 'email' | 'search';
+        type?: 'time' | 'date' | 'tel' | 'password' | 'email' | 'search' | 'number';
         isError?: boolean;
         icon?: string;
         disabled?: boolean;

@@ -17,3 +17,17 @@ export type PriceRange = {
     price: number;
     name: string;
 };
+
+export type CarForm = {
+    name: string;
+    image: string;
+    details: {
+        acceleration: string;
+        transmission: string;
+        power: string;
+        numberOfSeats: string;
+    };
+    deposit: number;
+    pricing: PriceRange[];
+    brand: string;
+};

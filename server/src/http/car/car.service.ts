@@ -15,7 +15,7 @@ export class CarService {
     constructor(@InjectModel(Car.name) private carModel: Model<Car>) {}
 
     async findAll(query: Query) {
-        const limit = 4;
+        const limit = 16;
         const page = parseInt(query.page, 10) || 1;
         const offset = (page - 1) * limit;
 
