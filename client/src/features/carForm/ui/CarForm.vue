@@ -22,7 +22,7 @@
 </script>
 
 <template>
-    <section class="lg:w-1/2">
+    <section class="xl:w-2/3 2xl:w-1/2">
         <div class="space-y-2 mb-6">
             <div class="flex items-end gap-3">
                 <div
@@ -39,8 +39,8 @@
                     </p>
                 </div>
             </div>
-            <div class="flex gap-3">
-                <div class="w-1/4">
+            <div class="space-y-3 lg:flex lg:space-y-0 gap-3">
+                <div class="w-full lg:w-1/4">
                     <Input
                         size="medium"
                         v-model="car.brand"
@@ -55,7 +55,7 @@
                         {{ e.$message }}
                     </p>
                 </div>
-                <div class="w-3/4">
+                <div class="w-full lg:w-3/4">
                     <Input
                         size="medium"
                         v-model="car.name"
@@ -210,10 +210,6 @@
                 <h4 class="text-lg mt-4 mb-1">
                     {{ t('app.car_form.pricing_periods') }}
                 </h4>
-
-                <!-- change this to table look -->
-                <!-- days | price -->
-                <!-- 1 day | 3800 -->
 
                 <table class="w-full xl:w-1/2">
                     <thead class="bg-main-gray-bg">
