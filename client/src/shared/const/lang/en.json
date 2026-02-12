@@ -338,7 +338,11 @@
             "car_details": "Car details",
             "car_details_desc": "Enter car details like power, acceleration, etc.",
             "car_pricing": "Car pricing",
-            "car_pricing_desc": "Enter car pricing for different rental periods"
+            "car_pricing_desc": "Enter car pricing for different rental periods",
+            "deposit": "Deposit",
+            "pricing_periods": "Pricing periods",
+            "rental_period": "Rental period",
+            "price_per_day": "Price per day"
         }
     }
 }

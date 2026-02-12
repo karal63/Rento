@@ -198,6 +198,104 @@
                     </p>
                 </div>
             </div>
+
+            <div>
+                <h4 class="text-lg mt-4 mb-1">
+                    {{ t('app.car_form.deposit') }} ({{ t('app.zl') }})
+                </h4>
+                <Input size="medium" type="number" placeholder="30000" />
+            </div>
+
+            <div class="mt-4">
+                <h4 class="text-lg mt-4 mb-1">
+                    {{ t('app.car_form.pricing_periods') }}
+                </h4>
+
+                <!-- change this to table look -->
+                <!-- days | price -->
+                <!-- 1 day | 3800 -->
+
+                <table class="w-full xl:w-1/2">
+                    <thead class="bg-main-gray-bg">
+                        <tr class="">
+                            <td class="text-left border border-main-border px-4 py-2 w-1/2">
+                                {{ t('app.car_form.rental_period') }}
+                            </td>
+                            <td class="text-left border border-main-border px-4 py-2 w-1/2">
+                                {{ t('app.car_form.price_per_day') }} ({{ t('app.zl') }})
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border border-t-0 border-main-border">
+                            <td class="py-2 px-4">{{ t('app.prices.day') }}</td>
+                            <td>
+                                <Input
+                                    size="medium"
+                                    type="number"
+                                    placeholder="500"
+                                    class="py-2 px-4"
+                                />
+                            </td>
+                        </tr>
+                        <tr class="border border-t-0 border-main-border">
+                            <td class="py-2 px-4">{{ t('app.prices.2_3_days') }}</td>
+                            <td>
+                                <Input
+                                    size="medium"
+                                    type="number"
+                                    placeholder="500"
+                                    class="py-2 px-4"
+                                />
+                            </td>
+                        </tr>
+                        <tr class="border border-t-0 border-main-border">
+                            <td class="py-2 px-4">{{ t('app.prices.4_6_days') }}</td>
+                            <td>
+                                <Input
+                                    size="medium"
+                                    type="number"
+                                    placeholder="500"
+                                    class="py-2 px-4"
+                                />
+                            </td>
+                        </tr>
+                        <tr class="border border-t-0 border-main-border">
+                            <td class="py-2 px-4">{{ t('app.prices.7_13_days') }}</td>
+                            <td>
+                                <Input
+                                    size="medium"
+                                    type="number"
+                                    placeholder="500"
+                                    class="py-2 px-4"
+                                />
+                            </td>
+                        </tr>
+                        <tr class="border border-t-0 border-main-border">
+                            <td class="py-2 px-4">{{ t('app.prices.14_29_days') }}</td>
+                            <td>
+                                <Input
+                                    size="medium"
+                                    type="number"
+                                    placeholder="500"
+                                    class="py-2 px-4"
+                                />
+                            </td>
+                        </tr>
+                        <tr class="border border-t-0 border-main-border">
+                            <td class="py-2 px-4">{{ t('app.prices.month') }}</td>
+                            <td>
+                                <Input
+                                    size="medium"
+                                    type="number"
+                                    placeholder="500"
+                                    class="py-2 px-4"
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="mb-6 space-x-2 flex justify-end">
