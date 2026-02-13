@@ -49,11 +49,15 @@
         },
         brand: '',
     });
+
+    const addCar = () => {
+        console.log(car.value);
+    };
 </script>
 
 <template>
     <h1 class="text-4xl font-medium mb-10">
         {{ t('app.add_car_page.add_new_car') }}
     </h1>
-    <CarForm v-model="car" :rules="rules" />
+    <CarForm v-model="car" :rules="rules" @submit="addCar" />
 </template>
