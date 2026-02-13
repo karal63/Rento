@@ -10,13 +10,21 @@
         name: { required },
         image: { required },
         details: {
-            acceleration: { required },
+            accelerationTo100: { required },
+            horsepower: { required },
+            torqueNm: { required },
             transmission: { required },
-            power: { required },
             numberOfSeats: { required },
         },
         deposit: { required },
-        pricing: { required },
+        pricing: {
+            day: { required },
+            days2_3: { required },
+            days4_6: { required },
+            days7_13: { required },
+            days14_29: { required },
+            month: { required },
+        },
         brand: { required },
     };
 
@@ -24,13 +32,21 @@
         name: '',
         image: '',
         details: {
-            acceleration: '',
-            transmission: '',
-            power: '',
-            numberOfSeats: '',
+            accelerationTo100: null,
+            horsepower: null,
+            torqueNm: null,
+            transmission: null,
+            numberOfSeats: null,
         },
-        deposit: 0,
-        pricing: [],
+        deposit: null,
+        pricing: {
+            day: null,
+            days2_3: null,
+            days4_6: null,
+            days7_13: null,
+            days14_29: null,
+            month: null,
+        },
         brand: '',
     });
 </script>
