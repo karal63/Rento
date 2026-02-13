@@ -14,7 +14,14 @@
 <template>
     <li class="relative shadow border bg-main-gray-bg border-main-border rounded-md p-3">
         <RouterLink :to="`cars/${car._id}`" class="flex">
-            <img :src="car.image" :alt="car.name" class="w-[110px] md:w-[150px] rounded-md" />
+            <!-- make images same wodth and height -->
+            <div class="w-[110px] md:w-[150px] max-h-[100px]">
+                <img
+                    :src="car.image"
+                    :alt="car.name"
+                    class="rounded-md h-full w-full object-cover"
+                />
+            </div>
 
             <div class="ml-5 flex-col justify-between">
                 <h3 class="font-semibold text-md md:text-xl">{{ car.name }}</h3>

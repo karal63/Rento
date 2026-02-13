@@ -1,13 +1,14 @@
 <script setup lang="ts">
     import type { CarForm } from '@/entities/car';
     import { Button, Input } from '@/shared/ui';
-    import { Icon } from '@iconify/vue';
     import { useVuelidate, type ValidationArgs } from '@vuelidate/core';
     import { useI18n } from 'vue-i18n';
     import CarDetails from './CarDetails.vue';
     import Pricing from './Pricing.vue';
+    import { useRouter } from 'vue-router';
 
     const { t } = useI18n();
+    const router = useRouter();
 
     const car = defineModel<CarForm>({ required: true });
 
@@ -23,7 +24,10 @@
 
     const handleSubmit = async () => {
         const isValid = await v$.value.$validate();
-        if (isValid) emit('submit');
+        if (isValid) {
+            emit('submit');
+            router.push('/admin/cars');
+        }
     };
 </script>
 
@@ -95,14 +99,19 @@
             <p v-for="e in v$.image.$errors" :key="e.$uid" class="mt-1 text-sm text-red-500">
                 {{ e.$message }}
             </p>
-            <div
+
+            <Input
+                size="medium"
+                v-model="car.image"
+                :is-error="v$.image.$error"
+                placeholder="URL to image"
+            />
+            <!-- <div
                 class="relative border rounded-md w-1/2"
                 :class="v$.image.$error ? 'border-red-500' : 'border-main-border'"
             >
-                <!-- Hidden real input -->
                 <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" />
 
-                <!-- Custom UI -->
 
                 <div class="pl-10 py-2 pointer-events-none text-gray-500">
                     {{ t('app.car_form.select_image') }}
@@ -112,7 +121,7 @@
                     icon="proicons:attach"
                     class="absolute left-3 top-1/2 -translate-y-1/2 text-xl"
                 />
-            </div>
+            </div> -->
         </div>
 
         <div class="space-y-2 mb-6">

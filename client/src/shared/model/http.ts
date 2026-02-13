@@ -6,6 +6,7 @@ export const API_GET_CAR_SINGLE = (id: string) => `/cars/${id}`;
 export const API_GET_CAR_LIST = (page: number, brands?: string[], search?: string) =>
     `/cars/?page=${page}${brands ? brands.map(b => `&brand=${b}`).join('') : ''}${search ? `&search=${search}` : ''}`;
 export const API_GET_CARS_FOUND = (search: string) => `/cars/found?search=${search}`;
+export const API_POST_CAR_ADD = '/cars/add';
 
 // USER
 export const API_POST_USER_SIGNUP = `/auth/signup`;

@@ -342,7 +342,9 @@
             "deposit": "Deposit",
             "pricing_periods": "Pricing periods",
             "rental_period": "Rental period",
-            "price_per_day": "Price per day"
+            "price_per_day": "Price per day",
+            "car_added": "Car added",
+            "car_added_desc": "You successfully added a new car. You can edit it at any time."
         }
     }
 }
