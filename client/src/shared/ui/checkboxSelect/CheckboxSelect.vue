@@ -13,7 +13,8 @@
     }>();
 
     defineEmits<{
-        (e: 'addBrand', brand: string): void;
+        (e: 'add', brand: string): void;
+        (e: 'remove', brand: string): void;
     }>();
 </script>
 
@@ -38,7 +39,8 @@
             <CheckboxItem
                 v-for="item in items"
                 :key="item"
-                @addBrand="$emit('addBrand', $event)"
+                @add="$emit('add', $event)"
+                @remove="$emit('remove', $event)"
                 :item="item"
             />
         </div>

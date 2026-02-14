@@ -18,7 +18,7 @@ export const useAllCarsQuery = (
     }>
 ) =>
     useQuery<{ cars: Car[]; pagesAmount: number; allBrands: string[] }, Error>({
-        queryKey: ['allCars', carsOptions.value],
+        queryKey: ['allCars', carsOptions],
         queryFn: () => apiGetCars({ ...carsOptions.value }).then(r => r.data),
         placeholderData: keepPreviousData,
     });

@@ -1,45 +1,16 @@
 <script setup lang="ts">
-    import { useCarStore } from '@/entities/car';
+    import { useAllCarsQuery } from '@/entities/car';
     import CarCard from './CarCard.vue';
-    import { ref, watch } from 'vue';
-    import Pagination from '../pagination/ui/Pagination.vue';
-    import { useRouter } from 'vue-router';
-    import { CheckboxSelect, Input } from '@/shared/ui';
-    import { Button } from '@/shared/ui/button';
+    import { computed, ref } from 'vue';
+    import { CheckboxSelect, Input, Pagination } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
     import { useI18n } from 'vue-i18n';
 
-    const carStore = useCarStore();
-    const router = useRouter();
     const { t } = useI18n();
 
-    const loading = ref(false);
-    const pages = ref(1);
-    const currentPage = ref(1);
-    const brands = ref<string[]>([]);
-
-    // input
+    const page = ref(1);
     const selectedBrands = ref<string[]>([]);
     const searchInput = ref('');
-
-    const getCars = async () => {
-        loading.value = true;
-
-        const { pagesAmount: newPagesAmount, allBrands } = await carStore.getCars(
-            currentPage.value,
-            selectedBrands.value,
-            searchInput.value
-        );
-        pages.value = newPagesAmount;
-        brands.value = allBrands;
-        router.push(`/cars?page=${currentPage.value}`);
-        loading.value = false;
-    };
-
-    const manualGetCars = async () => {
-        currentPage.value = 1;
-        await getCars();
-    };
 
     const addBrand = (brand: string) => {
         selectedBrands.value.push(brand);
@@ -47,10 +18,14 @@
 
     const removeBrands = (brand: string) => {
         selectedBrands.value = selectedBrands.value.filter(b => b !== brand);
-        manualGetCars();
     };
 
-    watch(currentPage, async () => getCars(), { immediate: true });
+    const getCarsParams = computed(() => ({
+        page: 1,
+        brands: selectedBrands.value,
+        search: searchInput.value,
+    }));
+    const { data, isLoading } = useAllCarsQuery(getCarsParams);
 </script>
 
 <template>
@@ -71,8 +46,9 @@
             <div>
                 <h2 class="text-main-gray mt-6 mb-1">{{ t('app.brand') }}</h2>
                 <CheckboxSelect
-                    @addBrand="addBrand($event)"
-                    :items="brands"
+                    @add="addBrand($event)"
+                    @remove="removeBrands($event)"
+                    :items="data?.allBrands ?? []"
                     :selectedCount="selectedBrands.length"
                 />
 
@@ -89,22 +65,15 @@
                     </li>
                 </ul>
             </div>
-
-            <div class="mt-10">
-                <Button @click="manualGetCars" class="w-full flex-center">
-                    <span>{{ t('app.browse_results') }}</span>
-                    <Icon icon="mdi:magnify" class="w-5 h-5 ml-2" />
-                </Button>
-            </div>
         </div>
-        <div v-if="loading" class="w-full lg:w-[80%] grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div v-if="isLoading" class="w-full lg:w-[80%] grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div v-for="(_, i) in 4" :key="i" class="h-[600px] skeleton rounded-md"></div>
         </div>
         <div v-else class="w-full xl:w-[80%]">
             <div class="grid grid-col-1 lg:grid-cols-2 gap-8">
-                <CarCard v-for="car in carStore.cars" :key="car._id" :car="car" />
+                <CarCard v-for="car in data?.cars" :key="car._id" :car="car" />
             </div>
-            <Pagination v-model="currentPage" :total="pages" />
+            <Pagination v-model="page" :total="data?.pagesAmount ?? 1" />
         </div>
     </div>
 </template>

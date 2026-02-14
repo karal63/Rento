@@ -7,12 +7,15 @@
         item: string;
     }>();
     const emit = defineEmits<{
-        (e: 'addBrand', brand: string): void;
+        (e: 'add', brand: string): void;
+        (e: 'remove', brand: string): void;
     }>();
 
     watch(isChecked, () => {
         if (isChecked.value) {
-            emit('addBrand', props.item);
+            emit('add', props.item);
+        } else {
+            emit('remove', props.item);
         }
     });
 </script>
