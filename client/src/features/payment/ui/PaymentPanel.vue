@@ -68,8 +68,7 @@
                 bookingStore.period.dateFrom.getTime(),
                 bookingStore.period.dateTo.getTime(),
                 bookingStore.location,
-                bookingStore.pickupTime,
-                bookingStore.daysCount
+                bookingStore.pickupTime
             );
             clientSecret.value = res.data.clientSecret;
             loading.value = false;

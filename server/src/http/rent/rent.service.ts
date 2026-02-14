@@ -24,18 +24,25 @@ export class RentService {
         private readonly rentalRepo: RentalRepo,
     ) {}
 
-    calculateTotal(car: Car, daysCount: number) {
+    calculateTotal(car: Car, rentalFrom: number, rentalTo: number) {
         const pricing = car.pricing;
+        const daysCount = this.calculateDays(rentalFrom, rentalTo);
         let pricePerDay = 0;
 
-        if (daysCount == 1) pricePerDay = pricing[0]?.price ?? 0;
-        else if (daysCount <= 3) pricePerDay = pricing[1]?.price ?? 0;
-        else if (daysCount <= 6) pricePerDay = pricing[2]?.price ?? 0;
-        else if (daysCount <= 13) pricePerDay = pricing[3]?.price ?? 0;
-        else if (daysCount <= 29) pricePerDay = pricing[4]?.price ?? 0;
-        else if (daysCount === 30) pricePerDay = pricing[5]?.price ?? 0;
+        if (daysCount == 1) pricePerDay = pricing.day;
+        else if (daysCount <= 3) pricePerDay = pricing.days2_3;
+        else if (daysCount <= 6) pricePerDay = pricing.days4_6;
+        else if (daysCount <= 13) pricePerDay = pricing.days7_13;
+        else if (daysCount <= 29) pricePerDay = pricing.days14_29;
+        else if (daysCount === 30) pricePerDay = pricing.month;
 
         return pricePerDay * daysCount;
+    }
+
+    calculateDays(rentalFrom: number, rentalTo: number) {
+        const diffMs = rentalTo - rentalFrom;
+
+        return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
     }
 
     async createRent(rent: Rent) {
