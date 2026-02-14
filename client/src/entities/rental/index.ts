@@ -18,7 +18,6 @@ export {
     apiChangeRentalStatus,
 } from './api/rental.api';
 export { useRentalStore } from './model/rental.store';
-// export { useRentalsQuery } from './model/useRentalsQuery';
 export { checkIfAvailableDate } from './lib/checkIfAvailableDate';
 export { useCarAvailabilityQuery, useRentalsQuery, useRentalQuery } from './model/queries';
 export {
