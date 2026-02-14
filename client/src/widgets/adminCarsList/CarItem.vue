@@ -17,7 +17,6 @@
 <template>
     <li class="relative shadow border bg-main-gray-bg border-main-border rounded-md p-3">
         <RouterLink :to="`cars/${car._id}`" class="flex">
-            <!-- make images same wodth and height -->
             <div class="w-[110px] md:w-[150px] max-h-[100px]">
                 <img
                     :src="car.image"
@@ -33,9 +32,8 @@
                 >
                     <p class="flex gap-2 items-center">
                         <Icon icon="ic:outline-speed" class="text-2xl" />
-                        {{ car.details.accelerationTo100 }}{{ t('app.s') }} {{ t('app.to') }} 100{{
-                            t('app.km_h')
-                        }}
+                        {{ car.details.accelerationTo100 }} {{ t('app.s') }} {{ t('app.to') }} 100
+                        {{ t('app.km_h') }}
                     </p>
                     <p class="flex gap-2 items-center">
                         <Icon icon="ph:horse" class="text-2xl" />

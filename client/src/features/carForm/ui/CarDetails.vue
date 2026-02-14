@@ -39,12 +39,12 @@
                         class="w-18"
                     />
                     <div class="flex gap-2 items-end">
-                        <span class="text-xl">s</span>
-                        <span class="text-main-gray text-sm">(time)</span>
+                        <span class="text-xl">{{ t('app.s') }}</span>
+                        <span class="text-main-gray text-sm">({{ t('app.car_form.time') }})</span>
                     </div>
                 </div>
 
-                <p class="text-xl">to 100km/h</p>
+                <p class="text-xl">{{ t('app.to') }} 100 {{ t('app.km_h') }}</p>
             </div>
         </div>
 
@@ -66,7 +66,7 @@
                 size="medium"
                 :is-error="v$.details.transmission.$error"
                 :min="0"
-                placeholder="Auto"
+                :placeholder="t('app.car_form.auto')"
                 class="border border-main-border p-4"
             />
         </div>
@@ -97,7 +97,7 @@
                         placeholder="640"
                         class="w-18"
                     />
-                    <span class="text-xl">KM</span>
+                    <span class="text-xl">{{ t('app.hp') }}</span>
                 </div>
 
                 <p class="text-xl">/</p>
@@ -112,7 +112,7 @@
                         placeholder="600"
                         class="w-18"
                     />
-                    <span class="text-xl">Nm</span>
+                    <span class="text-xl">{{ t('app.nm') }}</span>
                 </div>
             </div>
         </div>

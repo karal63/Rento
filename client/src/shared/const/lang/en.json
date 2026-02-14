@@ -18,7 +18,7 @@
         "s": "s",
         "to": "to",
         "km_h": "km/h",
-        "hp": "hp",
+        "hp": "Hp",
         "nm": "Nm",
         "transmission": "Transmission",
         "power": "Power",
@@ -349,7 +349,9 @@
             "rental_period": "Rental period",
             "price_per_day": "Price per day",
             "car_added": "Car added",
-            "car_added_desc": "You successfully added a new car. You can edit it at any time."
+            "car_added_desc": "You successfully added a new car. You can edit it at any time.",
+            "time": "time",
+            "auto": "Auto"
         }
     }
 }
