@@ -3,6 +3,9 @@
     import Dropdown from '@/shared/ui/dropdown/Dropdown.vue';
     import { Icon } from '@iconify/vue';
     import { ref } from 'vue';
+    import { useI18n } from 'vue-i18n';
+
+    const { t } = useI18n();
 
     defineProps<{
         car: Car;
@@ -30,11 +33,14 @@
                 >
                     <p class="flex gap-2 items-center">
                         <Icon icon="ic:outline-speed" class="text-2xl" />
-                        {{ car.details.acceleration }}
+                        {{ car.details.accelerationTo100 }}{{ t('app.s') }} {{ t('app.to') }} 100{{
+                            t('app.km_h')
+                        }}
                     </p>
                     <p class="flex gap-2 items-center">
                         <Icon icon="ph:horse" class="text-2xl" />
-                        {{ car.details.power }}
+                        {{ car.details.horsepower }} {{ t('app.hp') }} / {{ car.details.torqueNm }}
+                        {{ t('app.nm') }}
                     </p>
                     <p class="hidden lg:flex gap-2 items-center">
                         <Icon icon="mingcute:seat-line" class="text-2xl" />

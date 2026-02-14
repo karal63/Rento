@@ -10,15 +10,17 @@ export type Car = {
         numberOfSeats: number;
     };
     deposit: number;
-    pricing: {
-        day: number;
-        days2_3: number;
-        days4_6: number;
-        days7_13: number;
-        days14_29: number;
-        month: number;
-    };
+    pricing: CarDetails;
     brand: string;
+};
+
+export type CarDetails = {
+    day: number;
+    days2_3: number;
+    days4_6: number;
+    days7_13: number;
+    days14_29: number;
+    month: number;
 };
 
 export type PriceRange = {

@@ -10,7 +10,7 @@
     import { computed, onMounted, ref } from 'vue';
     import { apiCreatePaymentIntent } from '../api/payment.api';
     import { Icon } from '@iconify/vue';
-    import { calculateRentalPrice } from '@/entities/booking';
+    import { calculateRentalPrice } from '../lib/calculateRentalPrice';
     import { useCarStore } from '@/entities/car';
     import { useBookingStore } from '@/features/booking';
     import { useI18n } from 'vue-i18n';
@@ -60,13 +60,13 @@
     onMounted(async () => {
         if (!carStore.selectedCar) return;
         try {
-            if (!bookingStore.dateRange[0] || !bookingStore.dateRange[1]) return;
+            if (!bookingStore.period.dateFrom || !bookingStore.period.dateTo) return;
             loading.value = true;
 
             const res = await apiCreatePaymentIntent(
                 carStore.selectedCar._id,
-                bookingStore.dateRange[0].getTime(),
-                bookingStore.dateRange[1].getTime(),
+                bookingStore.period.dateFrom.getTime(),
+                bookingStore.period.dateTo.getTime(),
                 bookingStore.location,
                 bookingStore.pickupTime,
                 bookingStore.daysCount
@@ -83,9 +83,11 @@
     });
 
     const getFullPrice = computed(() => {
+        if (!carStore.selectedCar) return 0;
+
         const pricePerDay = calculateRentalPrice(
             bookingStore.daysCount,
-            carStore.selectedCar!.pricing
+            carStore.selectedCar?.pricing
         );
 
         return pricePerDay * bookingStore.daysCount;
