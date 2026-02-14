@@ -15,6 +15,11 @@
         "key_confidentiality": "Absolute confidentiality",
         "cars_page_title": "Rent a car in Warsaw",
         "acceleration": "Acceleration",
+        "s": "s",
+        "to": "to",
+        "km_h": "km/h",
+        "hp": "hp",
+        "nm": "Nm",
         "transmission": "Transmission",
         "power": "Power",
         "number_of_seats": "Number of seats",
@@ -81,10 +86,10 @@
 
         "prices": {
             "day": "Day",
-            "2_3_days": "2-3 days",
-            "4_6_days": "4-6 days",
-            "7_13_days": "7-13 days",
-            "14_29_days": "14-29 days",
+            "days2_3": "2-3 days",
+            "days4_6": "4-6 days",
+            "days7_13": "7-13 days",
+            "days14_29": "14-29 days",
             "month": "Month"
         },
 

@@ -46,22 +46,22 @@
                     />
                 </div>
 
-                <!-- Booking Card -->
                 <div
                     class="w-full xl:w-1/4 flex flex-col rounded-2xl sticky top-24 h-max mt-10 xl:mt-0"
                 >
-                    <!-- Cars details highlighted -->
                     <div class="mb-5 space-y-4 divide-y divide-main-border">
                         <h3 class="flex items-end justify-between">
                             <span class="text-lg font-semibold">{{ t('app.acceleration') }}</span>
                             <span class="text-primary text-2xl">
-                                {{ carStore.selectedCar?.details.acceleration }}
+                                {{ carStore.selectedCar?.details.accelerationTo100
+                                }}{{ t('app.s') }} {{ t('app.to') }} 100 {{ t('app.km_h') }}
                             </span>
                         </h3>
                         <h3 class="flex items-end justify-between">
                             <span class="text-lg font-semibold">{{ t('app.power') }}</span>
                             <span class="text-primary text-2xl">
-                                {{ carStore.selectedCar?.details.power }}
+                                {{ carStore.selectedCar?.details.horsepower }}{{ t('app.hp') }} /
+                                {{ carStore.selectedCar?.details.torqueNm }} {{ t('app.nm') }}
                             </span>
                         </h3>
                         <h3 class="flex items-end justify-between">
@@ -95,18 +95,23 @@
                     <div>
                         <h4 class="text-3xl mb-4 font-semibold">{{ t('app.prices_header') }}</h4>
                         <table class="w-full border-collapse overflow-hidden rounded-xl">
-                            <tr
-                                v-for="price in carStore.selectedCar?.pricing"
-                                :key="price.name"
-                                class="even:bg-main-gray-bg"
-                            >
-                                <td class="border border-main-border px-4 py-2 text-lg">
-                                    {{ t(`app.prices.${price.name}`) }}
-                                </td>
-                                <td class="border border-main-border px-4 py-2 text-lg font-medium">
-                                    {{ price.price }} {{ t('app.zl') }}
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr
+                                    v-for="(price, key) in carStore.selectedCar?.pricing"
+                                    :key="key"
+                                    class="even:bg-main-gray-bg"
+                                >
+                                    <td class="border border-main-border px-4 py-2 text-lg">
+                                        {{ t(`app.prices.${key}`) }}
+                                    </td>
+                                    <td
+                                        class="border border-main-border px-4 py-2 text-lg font-medium"
+                                    >
+                                        {{ price }}
+                                        {{ t('app.zl') }}
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

@@ -3,13 +3,21 @@ export type Car = {
     name: string;
     image: string;
     details: {
-        acceleration: string;
+        accelerationTo100: number;
+        horsepower: number;
+        torqueNm: number;
         transmission: string;
-        power: string;
         numberOfSeats: number;
     };
     deposit: number;
-    pricing: PriceRange[];
+    pricing: {
+        day: number;
+        days2_3: number;
+        days4_6: number;
+        days7_13: number;
+        days14_29: number;
+        month: number;
+    };
     brand: string;
 };
 
