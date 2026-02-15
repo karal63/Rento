@@ -14,7 +14,7 @@
     const userStore = useUserStore();
     const { t } = useI18n();
 
-    const isMobile = ref();
+    const isMobile = ref(true);
     const isMenuOpen = ref(false);
     const isThemeMenuOpen = ref(false);
     const menuRef = ref<HTMLElement | null>(null);
@@ -60,6 +60,7 @@
         @click="closeSidebar"
         class="fixed w-full h-full left-0 top-0 bg-black/20 z-10"
     ></div>
+
     <nav
         class="fixed top-0 left-0 bg-main-bg border-r border-main-border h-full w-60 py-5 z-20 transform transition"
         :class="sidebarStore.isAdminOpen || !isMobile ? 'translate-x-0' : '-translate-x-full'"
