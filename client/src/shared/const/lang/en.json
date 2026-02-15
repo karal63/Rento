@@ -266,7 +266,8 @@
             "phoneNumber": "Phone number",
             "isPhoneNumber": "Phone number must be a valid phone number",
             "password": "Password",
-            "isStrongPassword": "Password is not strong enough"
+            "isStrongPassword": "Password is not strong enough",
+            "image": "Text must be URL format"
         },
 
         "rental_form": {
@@ -323,12 +324,15 @@
         "admin_cars_page": {
             "cars": "Cars",
             "all_cars": "All cars",
-            "new_car": "New car"
+            "new_car": "New car",
+            "delete_car_desc": "Are you sure you want to delete {name}"
         },
 
         "add_car_page": {
             "cars": "Cars",
-            "add_new_car": "Add new car"
+            "add_new_car": "Add new car",
+            "car_added": "Car added",
+            "car_added_desc": "You successfully added a new car. You can edit it at any time."
         },
 
         "car_form": {
@@ -348,8 +352,6 @@
             "pricing_periods": "Pricing periods",
             "rental_period": "Rental period",
             "price_per_day": "Price per day",
-            "car_added": "Car added",
-            "car_added_desc": "You successfully added a new car. You can edit it at any time.",
             "time": "time",
             "auto": "Auto"
         }

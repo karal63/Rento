@@ -1,5 +1,7 @@
 <script setup lang="ts">
-    import { useAllCarsQuery } from '@/entities/car';
+    import { useAllCarsQuery, type Car } from '@/entities/car';
+    import { useAcceptanceModalStore } from '@/features/acceptanceModal';
+    import { useDeleteCar } from '@/features/deleteCar';
     import { Button, type Breadcrumb } from '@/shared/ui';
     import { ProtectedHeader } from '@/widgets';
     import { AdminCarsList } from '@/widgets/adminCarsList';
@@ -11,6 +13,7 @@
     const emit = defineEmits<{
         (e: 'setBreadcrumbs', breadcrumbs: Breadcrumb[]): void;
     }>();
+    const acceptanceModalStore = useAcceptanceModalStore();
 
     const breadcrumbs = [
         {
@@ -22,6 +25,7 @@
         emit('setBreadcrumbs', breadcrumbs);
     });
 
+    const { deleteCar } = useDeleteCar();
     const page = ref(1);
 
     const carsOptions = computed(() => ({
@@ -29,6 +33,16 @@
     }));
 
     const { data, isLoading } = useAllCarsQuery(carsOptions);
+
+    const handleDelete = (car: Car) => {
+        acceptanceModalStore.open({
+            title: t('app.acceptance_modal.confirm_action'),
+            message: t('app.admin_cars_page.delete_car_desc', { name: car.name }),
+            onConfirm: () => {
+                deleteCar(car._id);
+            },
+        });
+    };
 </script>
 
 <template>
@@ -41,7 +55,12 @@
         </RouterLink>
     </ProtectedHeader>
 
-    <AdminCarsList :cars="data?.cars || []" :loading="isLoading">
+    <AdminCarsList
+        :cars="data?.cars || []"
+        :loading="isLoading"
+        v-model="page"
+        :totalPages="data?.pagesAmount ?? 1"
+    >
         <template #actions="{ car }">
             <div class="bg-main-bg rounded-md">
                 <Button
@@ -55,6 +74,7 @@
                     Edit
                 </Button>
                 <Button
+                    @click="handleDelete(car)"
                     size="sm"
                     color="transparent"
                     disableUppercase
