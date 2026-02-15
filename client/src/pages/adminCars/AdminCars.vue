@@ -41,7 +41,12 @@
         </RouterLink>
     </ProtectedHeader>
 
-    <AdminCarsList :cars="data?.cars || []" :loading="isLoading">
+    <AdminCarsList
+        :cars="data?.cars || []"
+        :loading="isLoading"
+        v-model="page"
+        :totalPages="data?.pagesAmount ?? 1"
+    >
         <template #actions="{ car }">
             <div class="bg-main-bg rounded-md">
                 <Button
