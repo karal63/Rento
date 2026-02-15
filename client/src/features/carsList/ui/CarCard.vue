@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { Button } from '@/shared/ui/button';
     import { useI18n } from 'vue-i18n';
-    import { useCarStore, type Car, type PriceRange } from '@/entities/car';
+    import { useCarStore, type Car } from '@/entities/car';
     import { useRouter } from 'vue-router';
 
     const { t } = useI18n();
@@ -36,7 +36,10 @@
                 <div class="mt-8 text-lg flex-col gap-3 text-main-gray">
                     <div class="flex-between">
                         <p>{{ t('app.acceleration') }}:</p>
-                        <p>{{ car.details.acceleration }}</p>
+                        <p>
+                            {{ car.details.accelerationTo100 }}{{ t('app.s') }}
+                            {{ t('app.to') }} 100 {{ t('app.km_h') }}
+                        </p>
                     </div>
                     <div class="flex-between">
                         <p>{{ t('app.transmission') }}:</p>
@@ -44,7 +47,10 @@
                     </div>
                     <div class="flex-between">
                         <p>{{ t('app.power') }}:</p>
-                        <p>{{ car.details.power }}</p>
+                        <p>
+                            {{ car.details.horsepower }} {{ t('app.hp') }} /
+                            {{ car.details.torqueNm }} {{ t('app.nm') }}
+                        </p>
                     </div>
                     <div class="flex-between">
                         <p>{{ t('app.number_of_seats') }}:</p>
@@ -57,11 +63,7 @@
                 <div>
                     <p class="text-xl lg:text-3xl mt-8 font-bold text-primary">
                         {{ t('app.price_from') }}
-                        {{
-                            Math.floor(
-                                (car.pricing[car.pricing.length - 1] as PriceRange).price / 30
-                            ).toFixed(0)
-                        }}
+                        {{ Math.floor(car.pricing.month / 30).toFixed(0) }}
                         {{ t('app.zl') }}
                     </p>
                     <p class="text-sm text-main-gray">{{ t('app.price_desc') }}</p>

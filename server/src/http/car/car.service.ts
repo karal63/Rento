@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Car } from 'src/schemas/carSchema';
 import { GetFoundCarsDto } from './dto/getFoundCars.dto';
+import { AddCarDto } from './dto/addCar.dto';
 
 type Query = {
     page: string;
@@ -15,7 +16,7 @@ export class CarService {
     constructor(@InjectModel(Car.name) private carModel: Model<Car>) {}
 
     async findAll(query: Query) {
-        const limit = 4;
+        const limit = 16;
         const page = parseInt(query.page, 10) || 1;
         const offset = (page - 1) * limit;
 
@@ -55,5 +56,10 @@ export class CarService {
         return await this.carModel.find({
             name: { $regex: query.search, $options: 'i' },
         });
+    }
+
+    async addCar(car: AddCarDto) {
+        const newCar = new this.carModel(car);
+        await newCar.save();
     }
 }

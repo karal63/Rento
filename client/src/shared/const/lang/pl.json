@@ -15,6 +15,11 @@
         "key_confidentiality": "Absolutna poufność",
         "cars_page_title": "Wynajem samochodu w Warszawie",
         "acceleration": "Przyspieszenie",
+        "s": "s",
+        "to": "do",
+        "km_h": "km/h",
+        "hp": "Km",
+        "nm": "Nm",
         "transmission": "Skrzynia biegów",
         "power": "Moc",
         "number_of_seats": "Liczba miejsc",
@@ -81,10 +86,10 @@
 
         "prices": {
             "day": "Dzień",
-            "2_3_days": "2-3 dni",
-            "4_6_days": "4-6 dni",
-            "7_13_days": "7-13 dni",
-            "14_29_days": "14-29 dni",
+            "days2_3": "2-3 dni",
+            "days4_6": "4-6 dni",
+            "days7_13": "7-13 dni",
+            "days14_29": "14-29 dni",
             "month": "Miesiąc"
         },
 
@@ -237,6 +242,7 @@
 
         "errors": {
             "CODE_U009": "Użytkownik z tym adresem e-mail już istnieje",
+            "CODE_R004": "Wynajem nie istnieje",
             "UNKNOWN": "Nieznany błąd",
             "VALIDATION_ERROR": "Niektóre pola są wypełnione nieprawidłowo: {field}"
         },
@@ -312,6 +318,40 @@
             "change_status": "Zmień status",
             "unassign": "Wypisz się",
             "confirm_unassign_desc": "Czy na pewno chcesz wypisać się z tego wynajmu?"
+        },
+
+        "admin_cars_page": {
+            "cars": "Samochody",
+            "all_cars": "Wszystie samochody",
+            "new_car": "Nowy"
+        },
+
+        "add_car_page": {
+            "cars": "Samochody",
+            "add_new_car": "Dodaj nowy samochód"
+        },
+
+        "car_form": {
+            "new": "Nowy",
+            "car_name": "Nazwa samochodu",
+            "car_name_desc": "Wprowadź model samochodu i pełną nazwę, np. Mercedes-Benz Klasa S W223",
+            "car_brand": "Marka",
+            "car_full_name": "Pełna nazwa",
+            "car_images": "Zdjęcia samochodu",
+            "car_images_desc": "Dodaj co najmniej jedno zdjęcie samochodu. Możesz dodać więcej zdjęć po utworzeniu samochodu.",
+            "select_image": "Wybierz zdjęcie",
+            "car_details": "Szczegóły samochodu",
+            "car_details_desc": "Wprowadź szczegóły samochodu, takie jak moc, przyspieszenie itp.",
+            "car_pricing": "Cennik samochodu",
+            "car_pricing_desc": "Wprowadź ceny wynajmu dla różnych okresów",
+            "deposit": "Kaucja",
+            "pricing_periods": "Okresy cenowe",
+            "rental_period": "Okres wynajmu",
+            "price_per_day": "Cena za dzień",
+            "car_added": "Samochód dodany",
+            "car_added_desc": "Pomyślnie dodano nowy samochód. Możesz go edytować w dowolnym momencie.",
+            "time": "czas",
+            "auto": "Automat"
         }
     }
 }

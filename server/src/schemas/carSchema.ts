@@ -3,17 +3,48 @@ import { HydratedDocument } from 'mongoose';
 
 export type CatDocument = HydratedDocument<Car>;
 
-class Details {
-    acceleration: string;
+@Schema({ _id: false })
+export class Details {
+    @Prop()
+    accelerationTo100: number;
+
+    @Prop()
+    horsepower: number;
+
+    @Prop()
+    torqueNm: number;
+
+    @Prop()
     transmission: string;
-    power: string;
+
+    @Prop()
     numberOfSeats: number;
 }
 
-type Price = {
-    price: number;
-    name: string;
-};
+export const DetailsSchema = SchemaFactory.createForClass(Details);
+
+@Schema({ _id: false })
+export class Pricing {
+    @Prop()
+    day: number;
+
+    @Prop()
+    days2_3: number;
+
+    @Prop()
+    days4_6: number;
+
+    @Prop()
+    days7_13: number;
+
+    @Prop()
+    days14_29: number;
+
+    @Prop()
+    month: number;
+}
+
+const PriceSchema = SchemaFactory.createForClass(Pricing);
 
 @Schema()
 export class Car {
@@ -23,14 +54,17 @@ export class Car {
     @Prop()
     image: string;
 
-    @Prop()
+    @Prop({ type: DetailsSchema })
     details: Details;
 
     @Prop()
     deposit: number;
 
+    @Prop({ type: PriceSchema })
+    pricing: Pricing;
+
     @Prop()
-    pricing: Price[];
+    brand: string;
 }
 
 export const CarSchema = SchemaFactory.createForClass(Car);

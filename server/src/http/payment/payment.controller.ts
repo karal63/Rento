@@ -48,7 +48,11 @@ export class PaymentController {
         if (body.rentFrom === body.rentTo)
             throw new BadRequestException(['Dates must be different']);
 
-        const total = this.rentService.calculateTotal(car, body.daysCount);
+        const total = this.rentService.calculateTotal(
+            car,
+            body.rentFrom,
+            body.rentTo,
+        );
 
         const paymentIntent = await this.stripeService.createPaymentIntent(
             total * 100,

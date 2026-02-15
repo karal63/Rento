@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { calculateRentalPrice } from '@/entities/booking';
+    import { calculateRentalPrice } from '@/features/payment';
     import { useCarStore } from '@/entities/car';
     import { useBookingStore } from '@/features/booking';
     import { ref, watch } from 'vue';

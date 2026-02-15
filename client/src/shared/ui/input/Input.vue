@@ -2,15 +2,17 @@
     import { Icon } from '@iconify/vue';
     import { computed } from 'vue';
 
-    const modelValue = defineModel<string>('modelValue');
+    const modelValue = defineModel<string | number | null>('modelValue');
 
     const props = defineProps<{
         size: 'small' | 'medium' | 'large';
         placeholder?: string;
-        type?: 'time' | 'date' | 'tel' | 'password' | 'email' | 'search';
+        type?: 'time' | 'date' | 'tel' | 'password' | 'email' | 'search' | 'number';
         isError?: boolean;
         icon?: string;
         disabled?: boolean;
+        min?: number;
+        max?: number;
     }>();
 
     defineEmits<{
@@ -53,6 +55,8 @@
             :placeholder="placeholder"
             class="border rounded-md outline-0 focus:ring-1 transition ring-primary disabled:opacity-50 w-full"
             :class="getClasses"
+            :min="min"
+            :max="max"
         />
 
         <Icon
