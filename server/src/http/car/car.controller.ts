@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Query,
+    Req,
+} from '@nestjs/common';
 import { CarService } from './car.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import type { Request } from 'express';
@@ -32,9 +41,21 @@ export class CarController {
         return await this.carService.findAllCars(query);
     }
 
+    @ApiOperation({ summary: 'Add new car' })
+    @ApiResponse({ status: 201, description: 'Car added' })
+    @Roles(Role.Admin)
     @Post('add')
     async addCar(@Body() body: AddCarDto) {
         await this.carService.addCar(body);
+    }
+
+    @ApiOperation({ summary: 'Remove car' })
+    @ApiResponse({ status: 200, description: 'Car deleted' })
+    @ApiResponse({ status: 404, description: 'Car not found' })
+    @Roles(Role.Admin)
+    @Delete('remove/:id')
+    async removeCar(@Param('id') carId: string) {
+        return this.carService.removeCar(carId);
     }
 
     @Public()

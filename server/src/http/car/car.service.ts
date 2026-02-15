@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Car } from 'src/schemas/carSchema';
 import { GetFoundCarsDto } from './dto/getFoundCars.dto';
 import { AddCarDto } from './dto/addCar.dto';
+import { LogCode } from 'src/enums';
 
 type Query = {
     page: string;
@@ -61,5 +62,12 @@ export class CarService {
     async addCar(car: AddCarDto) {
         const newCar = new this.carModel(car);
         await newCar.save();
+    }
+
+    async removeCar(id: string) {
+        const car = await this.carModel.findById(id);
+        if (!car) throw new NotFoundException(LogCode.CODE_C004);
+
+        await car.deleteOne();
     }
 }

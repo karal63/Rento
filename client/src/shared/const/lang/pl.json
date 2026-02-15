@@ -328,7 +328,9 @@
 
         "add_car_page": {
             "cars": "Samochody",
-            "add_new_car": "Dodaj nowy samochód"
+            "add_new_car": "Dodaj nowy samochód",
+            "car_added": "Samochód dodany",
+            "car_added_desc": "Pomyślnie dodano nowy samochód. Możesz go edytować w dowolnym momencie."
         },
 
         "car_form": {
@@ -348,8 +350,6 @@
             "pricing_periods": "Okresy cenowe",
             "rental_period": "Okres wynajmu",
             "price_per_day": "Cena za dzień",
-            "car_added": "Samochód dodany",
-            "car_added_desc": "Pomyślnie dodano nowy samochód. Możesz go edytować w dowolnym momencie.",
             "time": "czas",
             "auto": "Automat"
         }
