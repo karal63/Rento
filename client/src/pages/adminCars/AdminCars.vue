@@ -63,16 +63,18 @@
     >
         <template #actions="{ car }">
             <div class="bg-main-bg rounded-md">
-                <Button
-                    @click="console.log(car)"
-                    size="sm"
-                    color="transparent"
-                    disableUppercase
-                    class="w-full flex items-center gap-3"
-                >
-                    <Icon icon="lucide:edit" class="text-xl" />
-                    Edit
-                </Button>
+                <RouterLink :to="`/admin/cars/edit/${car._id}`">
+                    <Button
+                        size="sm"
+                        color="transparent"
+                        disableUppercase
+                        class="w-full flex items-center gap-3"
+                    >
+                        <Icon icon="lucide:edit" class="text-xl" />
+                        Edit
+                    </Button>
+                </RouterLink>
+
                 <Button
                     @click="handleDelete(car)"
                     size="sm"

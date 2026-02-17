@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/vue-query';
-import { apiGetCars, apiGetFoundCars } from '../api/car.api';
+import { apiGetCars, apiGetFoundCars, apiGetSingleCar } from '../api/car.api';
 import type { ComputedRef, Ref } from 'vue';
 import type { Car } from './car.types';
 
@@ -22,3 +22,10 @@ export const useAllCarsQuery = (
         queryFn: () => apiGetCars({ ...carsOptions.value }).then(r => r.data),
         placeholderData: keepPreviousData,
     });
+
+export function useCarQuery(id: string) {
+    return useQuery<Car, Error>({
+        queryKey: ['car', id],
+        queryFn: () => apiGetSingleCar(id).then(r => r.data),
+    });
+}

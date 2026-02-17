@@ -1,14 +1,14 @@
 <script setup lang="ts">
-    import type { CarForm } from '@/entities/car';
+    import type { CarFormType } from '@/entities/car';
     import { Input } from '@/shared/ui';
     import type { Validation } from '@vuelidate/core';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
-    const car = defineModel<CarForm>({ required: true });
+    const car = defineModel<CarFormType>({ required: true });
 
     defineProps<{
-        v$: Validation<CarForm>;
+        v$: Validation<CarFormType>;
     }>();
 </script>
 
@@ -39,7 +39,7 @@
                 </td>
             </tr>
             <tr class="border border-t-0 border-main-border">
-                <td class="py-2 px-4">{{ t('app.prices.2_3_days') }}</td>
+                <td class="py-2 px-4">{{ t('app.prices.days2_3') }}</td>
                 <td>
                     <Input
                         v-model="car.pricing.days2_3"
@@ -52,7 +52,7 @@
                 </td>
             </tr>
             <tr class="border border-t-0 border-main-border">
-                <td class="py-2 px-4">{{ t('app.prices.4_6_days') }}</td>
+                <td class="py-2 px-4">{{ t('app.prices.days4_6') }}</td>
                 <td>
                     <Input
                         v-model="car.pricing.days4_6"
@@ -65,7 +65,7 @@
                 </td>
             </tr>
             <tr class="border border-t-0 border-main-border">
-                <td class="py-2 px-4">{{ t('app.prices.7_13_days') }}</td>
+                <td class="py-2 px-4">{{ t('app.prices.days7_13') }}</td>
                 <td>
                     <Input
                         v-model="car.pricing.days7_13"
@@ -78,7 +78,7 @@
                 </td>
             </tr>
             <tr class="border border-t-0 border-main-border">
-                <td class="py-2 px-4">{{ t('app.prices.14_29_days') }}</td>
+                <td class="py-2 px-4">{{ t('app.prices.days14_29') }}</td>
                 <td>
                     <Input
                         v-model="car.pricing.days14_29"

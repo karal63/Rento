@@ -5,6 +5,7 @@ import { Car } from 'src/schemas/carSchema';
 import { GetFoundCarsDto } from './dto/getFoundCars.dto';
 import { AddCarDto } from './dto/addCar.dto';
 import { LogCode } from 'src/enums';
+import { EditCarDto } from './dto/editCar.dto';
 
 type Query = {
     page: string;
@@ -69,5 +70,36 @@ export class CarService {
         if (!car) throw new NotFoundException(LogCode.CODE_C004);
 
         await car.deleteOne();
+    }
+
+    async editCar(id: string, body: EditCarDto) {
+        const car = await this.carModel.findById(id);
+        if (!car) throw new NotFoundException(LogCode.CODE_C004);
+
+        const updateData = this.flattenObject(body);
+
+        await car.updateOne({
+            $set: updateData,
+        });
+    }
+
+    flattenObject<T extends object>(
+        obj: T,
+        parentKey = '',
+        result: Record<string, unknown> = {},
+    ): Record<string, unknown> {
+        for (const key in obj) {
+            const value = obj[key];
+
+            const newKey = parentKey ? `${parentKey}.${key}` : key;
+
+            if (value && typeof value === 'object' && !Array.isArray(value)) {
+                this.flattenObject(value, newKey, result);
+            } else {
+                result[newKey] = value;
+            }
+        }
+
+        return result;
     }
 }

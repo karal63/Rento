@@ -28,7 +28,7 @@ export type PriceRange = {
     name: string;
 };
 
-export type CarForm = {
+export type CarFormType = {
     name: string;
     image: string;
     details: {

@@ -8,6 +8,7 @@ export const API_GET_CAR_LIST = (page: number, brands?: string[], search?: strin
 export const API_GET_CARS_FOUND = (search: string) => `/cars/found?search=${search}`;
 export const API_POST_CAR_ADD = '/cars/add';
 export const API_DELETE_CAR_REMOVE = (id: string) => `/cars/remove/${id}`;
+export const API_PATCH_CAR_EDIT = (id: string) => `/cars/edit/${id}`;
 
 // USER
 export const API_POST_USER_SIGNUP = `/auth/signup`;

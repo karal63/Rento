@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import type { CarFormType } from '@/entities/car';
     import { useAddCar } from '@/features/addCar';
     import { CarForm } from '@/features/carForm';
     import { showDialog, showErrorDialog } from '@/features/dialog';
@@ -32,7 +33,7 @@
         brand: { required },
     };
 
-    const car = ref({
+    const car = ref<CarFormType>({
         name: '',
         image: '',
         details: {

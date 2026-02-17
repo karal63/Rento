@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { USER_ROLE, type UserRole } from '@/entities/user';
-    import { computed, watch } from 'vue';
+    import { computed } from 'vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
@@ -8,14 +8,6 @@
     const props = defineProps<{
         role: UserRole;
     }>();
-
-    watch(
-        () => props.role,
-        newRole => {
-            console.log('Role changed:', newRole);
-        },
-        { immediate: true }
-    );
 
     const getClasses = computed(() => {
         let baseClasses = 'px-3 py-1 rounded-md text-sm font-medium max-w-max transition-all';

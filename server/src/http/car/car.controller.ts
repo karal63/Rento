@@ -4,6 +4,7 @@ import {
     Delete,
     Get,
     Param,
+    Patch,
     Post,
     Query,
     Req,
@@ -16,6 +17,7 @@ import { GetFoundCarsDto } from './dto/getFoundCars.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { AddCarDto } from './dto/addCar.dto';
+import { EditCarDto } from './dto/editCar.dto';
 
 @ApiTags('Cars')
 @Controller('cars')
@@ -56,6 +58,14 @@ export class CarController {
     @Delete('remove/:id')
     async removeCar(@Param('id') carId: string) {
         return this.carService.removeCar(carId);
+    }
+
+    @ApiOperation({ summary: 'Edit car' })
+    @ApiResponse({ status: 200, description: 'Car edited' })
+    @ApiResponse({ status: 404, description: 'Car not found' })
+    @Patch('edit/:id')
+    async editCar(@Param('id') carId: string, @Body() body: EditCarDto) {
+        return this.carService.editCar(carId, body);
     }
 
     @Public()

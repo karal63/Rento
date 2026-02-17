@@ -335,6 +335,13 @@
             "car_added_desc": "You successfully added a new car. You can edit it at any time."
         },
 
+        "edit_car_page": {
+            "cars": "Cars",
+            "edit_car": "Edit car",
+            "car_added": "Car edited",
+            "car_added_desc": "You successfully edited a car: {name}."
+        },
+
         "car_form": {
             "new": "New",
             "car_name": "Car name",
