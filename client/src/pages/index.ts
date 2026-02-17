@@ -16,3 +16,4 @@ export { default as EmployeeDashboard } from './employeeDashboard/EmployeeDashbo
 export { default as RentalDetailsPage } from './rentalDetails/RentalDetailsPage.vue';
 export { default as AdminCars } from './adminCars/AdminCars.vue';
 export { default as AdminAddCar } from './adminAddCar/AdminAddCar.vue';
+export { default as AdminEditCar } from './adminEditCar/AdminEditCar.vue';

@@ -1,19 +1,19 @@
 <script setup lang="ts">
-    import type { CarForm } from '@/entities/car';
     import { Button, Input } from '@/shared/ui';
     import { useVuelidate, type ValidationArgs } from '@vuelidate/core';
     import { useI18n } from 'vue-i18n';
     import CarDetails from './CarDetails.vue';
     import Pricing from './Pricing.vue';
     import { useRouter } from 'vue-router';
+    import type { CarFormType } from '@/entities/car';
 
     const { t } = useI18n();
     const router = useRouter();
 
-    const car = defineModel<CarForm>({ required: true });
+    const car = defineModel<CarFormType>({ required: true });
 
     const props = defineProps<{
-        rules: ValidationArgs<CarForm>;
+        rules: ValidationArgs<CarFormType>;
     }>();
 
     const emit = defineEmits<{
@@ -187,7 +187,7 @@
         </div>
 
         <div class="mb-6 space-x-2 flex justify-end">
-            <RouterLink to="/admin/rentals">
+            <RouterLink to="/admin/cars">
                 <Button size="sm" color="transparent">{{ t('app.button.cancel') }}</Button>
             </RouterLink>
             <Button @click="handleSubmit" :disabled="v$.$error" size="sm">
@@ -196,3 +196,6 @@
         </div>
     </section>
 </template>
+
+<!-- fix behavior when after clicking edit button inputs are empty -->
+<!-- after clicking edit twice this happens -->

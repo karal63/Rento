@@ -18,3 +18,4 @@ export { default as BookRental } from './bookRental/BookRental.vue';
 export { default as EditRental } from './editRental/EditRental.vue';
 export { default as RentalCards } from './rentalCards/RentalCards.vue';
 export { default as AddCar } from './addCar/AddCar.vue';
+export { default as EditCar } from './editCar/EditCar.vue';
