@@ -325,7 +325,7 @@
             "cars": "Cars",
             "all_cars": "All cars",
             "new_car": "New car",
-            "delete_car_desc": "Are you sure you want to delete {name}"
+            "delete_car_desc": "Are you sure you want to delete {name}?"
         },
 
         "add_car_page": {
@@ -338,8 +338,8 @@
         "edit_car_page": {
             "cars": "Cars",
             "edit_car": "Edit car",
-            "car_added": "Car edited",
-            "car_added_desc": "You successfully edited a car: {name}."
+            "car_edited": "Car edited",
+            "car_edited_desc": "You successfully edited a car: {name}."
         },
 
         "car_form": {

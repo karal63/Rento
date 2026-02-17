@@ -67,7 +67,7 @@
             showDialog(
                 'success',
                 t('app.edit_car_page.car_edited'),
-                t('app.edit_car_page.car_edited_desc')
+                t('app.edit_car_page.car_edited_desc', { name: car.value.name })
             );
         } catch (error) {
             showErrorDialog(error as AppError);
