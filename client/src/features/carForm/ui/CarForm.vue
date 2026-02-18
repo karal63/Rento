@@ -6,6 +6,8 @@
     import Pricing from './Pricing.vue';
     import { useRouter } from 'vue-router';
     import type { CarFormType } from '@/entities/car';
+    import { Icon } from '@iconify/vue';
+    import { uploadImage } from '@/shared/lib/upload';
 
     const { t } = useI18n();
     const router = useRouter();
@@ -28,6 +30,10 @@
             emit('submit');
             router.push('/admin/cars');
         }
+    };
+
+    const handleUpload = async (e: Event) => {
+        await uploadImage(e.target.files);
     };
 </script>
 
@@ -100,18 +106,22 @@
                 {{ e.$message }}
             </p>
 
-            <Input
+            <!-- <Input
                 size="medium"
                 v-model="car.image"
                 :is-error="v$.image.$error"
                 placeholder="URL to image"
-            />
-            <!-- <div
+            /> -->
+            <div
                 class="relative border rounded-md w-1/2"
                 :class="v$.image.$error ? 'border-red-500' : 'border-main-border'"
             >
-                <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" />
-
+                <input
+                    type="file"
+                    @change="handleUpload"
+                    multiple
+                    class="absolute inset-0 opacity-0 cursor-pointer"
+                />
 
                 <div class="pl-10 py-2 pointer-events-none text-gray-500">
                     {{ t('app.car_form.select_image') }}
@@ -121,7 +131,7 @@
                     icon="proicons:attach"
                     class="absolute left-3 top-1/2 -translate-y-1/2 text-xl"
                 />
-            </div> -->
+            </div>
         </div>
 
         <div class="space-y-2 mb-6">
