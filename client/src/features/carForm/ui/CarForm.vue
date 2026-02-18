@@ -33,8 +33,12 @@
     };
 
     const handleUpload = async (e: Event) => {
-        const images = await uploadImage(e.target.files);
-        if (images) car.value.image = [...images];
+        const target = e.target as HTMLInputElement;
+        if (!target.files || target.files?.length === 0) return;
+
+        const images = (await uploadImage(target.files)) ?? [];
+
+        car.value.image = [...images];
     };
 </script>
 

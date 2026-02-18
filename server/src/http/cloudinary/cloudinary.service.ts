@@ -7,16 +7,21 @@ export class CloudinaryService {
         @Inject('CLOUDINARY') private readonly cloudinary: typeof Cloudinary,
     ) {}
 
-    upload(file: Express.Multer.File) {
+    async uploadMultiple(files: Express.Multer.File[]) {
+        const uploads = files.map((file) => this.uploadSingle(file));
+        return Promise.all(uploads);
+    }
+
+    private uploadSingle(file: Express.Multer.File) {
         return new Promise((resolve, reject) => {
-            const upload = this.cloudinary.uploader.upload_stream(
+            const stream = this.cloudinary.uploader.upload_stream(
+                { folder: 'rento' },
                 (error, result) => {
-                    if (error) return reject(error);
+                    if (error) return reject(error as Error);
                     resolve(result);
                 },
             );
-
-            upload.end(file.buffer);
+            stream.end(file.buffer);
         });
     }
 }

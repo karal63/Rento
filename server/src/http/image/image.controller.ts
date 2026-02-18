@@ -2,14 +2,17 @@ import {
     Body,
     Controller,
     Post,
-    UploadedFile,
     UploadedFiles,
     UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
+
+type UploadedImage = {
+    url: string;
+};
 
 @ApiTags('Image')
 @Controller('image')
@@ -20,12 +23,15 @@ export class ImageController {
     @ApiResponse({ status: 200, description: 'Returns an array of image URLs' })
     @Post('upload')
     @UseInterceptors(
-        FileInterceptor('file', {
+        FilesInterceptor('file', 10, {
             storage: memoryStorage(),
         }),
     )
-    async upload(@UploadedFile() file: Express.Multer.File) {
-        console.log('file:', file); // <--- should log the file
-        return this.cloudinaryService.upload(file);
+    async upload(@UploadedFiles() files: Express.Multer.File[]) {
+        const images = await this.cloudinaryService.uploadMultiple(files);
+
+        return images.map((img: UploadedImage) => {
+            return img.url;
+        });
     }
 }
