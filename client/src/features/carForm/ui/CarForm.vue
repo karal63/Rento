@@ -33,7 +33,8 @@
     };
 
     const handleUpload = async (e: Event) => {
-        await uploadImage(e.target.files);
+        const images = await uploadImage(e.target.files);
+        if (images) car.value.image = [...images];
     };
 </script>
 

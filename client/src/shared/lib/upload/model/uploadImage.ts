@@ -5,11 +5,10 @@ export const uploadImage = async (files: File[]) => {
 
     try {
         const formData = new FormData();
-        images.forEach(img => formData.append('files', img));
+        formData.append('file', images[0]);
+        // images.forEach(img => formData.append('file', img));
 
-        console.log(images);
-
-        await apiUploadImage(formData);
+        return (await apiUploadImage(formData)).data;
     } catch (error) {
         console.log(error);
     }
