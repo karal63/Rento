@@ -40,7 +40,7 @@
                     <div v-if="loading" class="w-full h-[420px] skeleton rounded-xl"></div>
                     <img
                         v-else
-                        :src="carStore.selectedCar?.image"
+                        :src="carStore.selectedCar?.images[0]"
                         alt="Selected car"
                         class="w-full rounded-xl shadow-md"
                     />
