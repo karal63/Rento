@@ -62,3 +62,6 @@ export const API_POST_RENTAL_STATUS = (rentalId: string) => `/rent/${rentalId}/c
 
 // ADMIN DASHBOARD
 export const API_GET_DASHBOARD_SUMMARY = '/admin/dashboard/summary';
+
+// IMAGE
+export const API_POST_IMAGE_UPLOAD = '/image/upload';

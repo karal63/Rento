@@ -24,7 +24,7 @@
     >
         <div @click="select" class="h-[300px] md:h-[400px]">
             <img
-                :src="car.image"
+                :src="car.images[0]"
                 alt=""
                 class="rounded-tl-xl rounded-tr-md h-full w-full object-cover"
             />

@@ -17,6 +17,8 @@ import { StripeModule } from './http/stripe/stripe.module';
 import { PaymentModule } from './http/payment/payment.module';
 import { RolesGuard } from './common/guards/roles.guard';
 import { DashboardModule } from './http/dashboard/dashboard.module';
+import { ImageModule } from './http/image/image.module';
+import { CloudinaryModule } from './http/cloudinary/cloudinary.module';
 
 @Module({
     imports: [
@@ -36,6 +38,8 @@ import { DashboardModule } from './http/dashboard/dashboard.module';
         StripeModule,
         PaymentModule,
         DashboardModule,
+        ImageModule,
+        CloudinaryModule,
     ],
     controllers: [AppController, RentController],
     providers: [

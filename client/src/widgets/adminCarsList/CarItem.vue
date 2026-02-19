@@ -19,7 +19,7 @@
         <RouterLink :to="`cars/${car._id}`" class="flex">
             <div class="w-[110px] md:w-[150px] h-[75px] md:h-[100px]">
                 <img
-                    :src="car.image"
+                    :src="car.images[0]"
                     :alt="car.name"
                     class="rounded-md h-full w-full object-cover"
                 />

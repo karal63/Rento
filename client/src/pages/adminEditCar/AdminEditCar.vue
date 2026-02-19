@@ -28,7 +28,6 @@
         data,
         name => {
             if (!name) return;
-
             emit('setBreadcrumbs', breadcrumbs.value);
         },
         { immediate: true }

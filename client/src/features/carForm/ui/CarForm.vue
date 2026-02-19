@@ -6,6 +6,8 @@
     import Pricing from './Pricing.vue';
     import { useRouter } from 'vue-router';
     import type { CarFormType } from '@/entities/car';
+    import { Icon } from '@iconify/vue';
+    import { uploadImage } from '@/shared/lib/upload';
 
     const { t } = useI18n();
     const router = useRouter();
@@ -28,6 +30,19 @@
             emit('submit');
             router.push('/admin/cars');
         }
+    };
+
+    const handleUpload = async (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        if (!target.files || target.files?.length === 0) return;
+
+        const images = (await uploadImage(target.files)) ?? [];
+
+        car.value.images = [...car.value.images, ...images];
+    };
+
+    const removeImage = (selectedImg: string) => {
+        car.value.images = car.value.images.filter(img => img !== selectedImg);
     };
 </script>
 
@@ -96,22 +111,33 @@
                 </div>
             </div>
 
-            <p v-for="e in v$.image.$errors" :key="e.$uid" class="mt-1 text-sm text-red-500">
+            <p v-for="e in v$.images.$errors" :key="e.$uid" class="mt-1 text-sm text-red-500">
                 {{ e.$message }}
             </p>
 
-            <Input
-                size="medium"
-                v-model="car.image"
-                :is-error="v$.image.$error"
-                placeholder="URL to image"
-            />
-            <!-- <div
-                class="relative border rounded-md w-1/2"
-                :class="v$.image.$error ? 'border-red-500' : 'border-main-border'"
-            >
-                <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" />
+            <div class="py-2 grid grid-cols-5 gap-3 max-w-max">
+                <div v-for="img in car.images" :key="img" class="group w-[125px] h-[75px] relative">
+                    <img :src="img" :alt="img" class="rounded-md h-full w-full object-cover" />
 
+                    <button
+                        @click="removeImage(img)"
+                        class="opacity-0 group-hover:opacity-100 transition absolute -right-3 -top-3 cursor-pointer bg-main-gray-bg hover:bg-main-hover-bg p-1 rounded-md"
+                    >
+                        <Icon icon="material-symbols-light:close" class="text-xl" />
+                    </button>
+                </div>
+            </div>
+
+            <div
+                class="relative border rounded-md w-1/2"
+                :class="v$.images.$error ? 'border-red-500' : 'border-main-border'"
+            >
+                <input
+                    type="file"
+                    @change="handleUpload"
+                    multiple
+                    class="absolute inset-0 opacity-0 cursor-pointer"
+                />
 
                 <div class="pl-10 py-2 pointer-events-none text-gray-500">
                     {{ t('app.car_form.select_image') }}
@@ -121,7 +147,7 @@
                     icon="proicons:attach"
                     class="absolute left-3 top-1/2 -translate-y-1/2 text-xl"
                 />
-            </div> -->
+            </div>
         </div>
 
         <div class="space-y-2 mb-6">
