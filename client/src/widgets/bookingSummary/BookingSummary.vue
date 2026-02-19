@@ -26,7 +26,7 @@
         <!-- Image + name -->
         <div class="flex flex-col md:flex-row gap-6">
             <img
-                :src="carStore.selectedCar?.image"
+                :src="carStore.selectedCar?.images[0]"
                 :alt="carStore.selectedCar?.name"
                 class="w-full md:w-72 h-48 object-cover rounded-xl"
             />

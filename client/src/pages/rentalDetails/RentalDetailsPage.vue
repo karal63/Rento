@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { RENTAL_STATUS, Status, useRentalQuery } from '@/entities/rental';
     import { normalizeDate } from '@/shared/lib/date';
-    import type { Breadcrumb } from '@/shared/ui';
+    import { ImagesCarousel, type Breadcrumb } from '@/shared/ui';
     import { ProtectedHeader } from '@/widgets';
     import { Icon } from '@iconify/vue';
     import { onMounted } from 'vue';
@@ -18,6 +18,7 @@
     const breadcrumbs = [
         {
             label: t('app.protected_rentals_page.rentals'),
+            href: '/admin/rentals',
         },
         {
             label: route.params.id as string,
@@ -46,11 +47,7 @@
     </section>
 
     <section v-else class="mt-10 xl:flex gap-8">
-        <img
-            :src="data?.carId.image"
-            :alt="data?.carId.name"
-            class="rounded-md w-full xl:w-[40%]"
-        />
+        <ImagesCarousel :images="data?.carId.images ?? []" class="w-full xl:w-[40%]" />
 
         <div class="flex-col mt-5 xl:mt-0">
             <div class="flex flex-col-reverse xl:flex-row gap-5 xl:items-center">

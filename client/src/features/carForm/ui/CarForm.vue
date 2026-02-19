@@ -222,6 +222,3 @@
         </div>
     </section>
 </template>
-
-<!-- fix behavior when after clicking edit button inputs are empty -->
-<!-- after clicking edit twice this happens -->

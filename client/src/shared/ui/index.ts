@@ -11,3 +11,4 @@ export { default as Dropdown } from './dropdown/Dropdown.vue';
 export { default as Calendar } from './calendar/Calendar.vue';
 export { default as Pagination } from './pagination/Pagination.vue';
 export { default as FlyingPanel } from './flyingPanel/FlyingPanel.vue';
+export { default as ImagesCarousel } from './imagesCarousel/ImagesCarousel.vue';
