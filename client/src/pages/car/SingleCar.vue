@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { useCarStore } from '@/entities/car';
-    import { Breadcrumbs } from '@/shared/ui';
+    import { Breadcrumbs, ImagesCarousel } from '@/shared/ui';
     import { Button } from '@/shared/ui/button';
     import { computed, onMounted, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
@@ -38,11 +38,10 @@
                 <!-- Car Image Section -->
                 <div class="w-full xl:w-3/4">
                     <div v-if="loading" class="w-full h-[420px] skeleton rounded-xl"></div>
-                    <img
+                    <ImagesCarousel
                         v-else
-                        :src="carStore.selectedCar?.images[0]"
-                        alt="Selected car"
-                        class="w-full rounded-xl shadow-md"
+                        :images="carStore.selectedCar?.images ?? []"
+                        class="h-[250px] sm:h-[400px] lg:h-[750px]"
                     />
                 </div>
 

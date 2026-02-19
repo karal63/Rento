@@ -110,9 +110,9 @@
                 <div class="md:flex md:flex-row md:items-center gap-4">
                     <!-- Image -->
                     <img
-                        :src="rental.carId.image"
+                        :src="rental.carId.images[0]"
                         alt=""
-                        class="w-full h-36 sm:h-52 object-cover rounded-md md:w-24 md:h-20"
+                        class="w-full h-36 sm:h-52 object-cover rounded-md md:w-32 md:h-20"
                     />
 
                     <!-- Details -->
