@@ -52,7 +52,7 @@ export class Car {
     name: string;
 
     @Prop()
-    image: string;
+    images: string[];
 
     @Prop({ type: DetailsSchema })
     details: Details;

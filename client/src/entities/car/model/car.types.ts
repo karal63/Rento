@@ -1,7 +1,7 @@
 export type Car = {
     _id: string;
     name: string;
-    image: string;
+    images: string[];
     details: {
         accelerationTo100: number;
         horsepower: number;
@@ -30,7 +30,7 @@ export type PriceRange = {
 
 export type CarFormType = {
     name: string;
-    image: string;
+    images: string[];
     details: {
         accelerationTo100: number | null;
         horsepower: number | null;

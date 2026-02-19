@@ -13,8 +13,8 @@ export const buildEditPayload = (originalCar: Car, newCar: CarFormType) => {
     if (originalCar.deposit !== newCar.deposit) {
         result.deposit = newCar.deposit;
     }
-    if (originalCar.image !== newCar.image) {
-        result.image = newCar.image;
+    if (JSON.stringify(originalCar.images) !== JSON.stringify(newCar.images)) {
+        result.images = newCar.images;
     }
 
     // details

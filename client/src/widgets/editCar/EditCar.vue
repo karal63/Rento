@@ -17,7 +17,7 @@
 
     const rules = {
         name: { required },
-        image: { required },
+        images: { required },
         details: {
             accelerationTo100: { required },
             horsepower: { required },
@@ -39,7 +39,7 @@
 
     const car = ref<CarFormType>({
         name: '',
-        image: '',
+        images: [],
         details: {
             accelerationTo100: null,
             horsepower: null,
@@ -80,7 +80,7 @@
             car.value = {
                 brand: props.originalCar?.brand ?? '',
                 name: props.originalCar?.name ?? '',
-                image: props.originalCar?.image ?? '',
+                images: props.originalCar?.images ?? [],
                 details: {
                     accelerationTo100: props.originalCar?.details.accelerationTo100 ?? null,
                     horsepower: props.originalCar?.details.horsepower ?? null,

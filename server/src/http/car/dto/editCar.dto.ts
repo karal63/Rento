@@ -6,7 +6,6 @@ import {
     IsOptional,
     IsPositive,
     IsString,
-    IsUrl,
     Min,
     ValidateNested,
 } from 'class-validator';
@@ -76,9 +75,8 @@ export class EditCarDto {
     name: string;
 
     @ApiProperty({ example: 'https://example.com/car-image.jpg' })
-    @IsUrl()
     @IsOptional()
-    image: string;
+    images: string[];
 
     @ApiPropertyOptional({ description: 'Car details', type: CarDetailsDto })
     @ValidateNested()

@@ -38,7 +38,11 @@
 
         const images = (await uploadImage(target.files)) ?? [];
 
-        car.value.image = [...images];
+        car.value.images = [...car.value.images, ...images];
+    };
+
+    const removeImage = (selectedImg: string) => {
+        car.value.images = car.value.images.filter(img => img !== selectedImg);
     };
 </script>
 
@@ -107,19 +111,26 @@
                 </div>
             </div>
 
-            <p v-for="e in v$.image.$errors" :key="e.$uid" class="mt-1 text-sm text-red-500">
+            <p v-for="e in v$.images.$errors" :key="e.$uid" class="mt-1 text-sm text-red-500">
                 {{ e.$message }}
             </p>
 
-            <!-- <Input
-                size="medium"
-                v-model="car.image"
-                :is-error="v$.image.$error"
-                placeholder="URL to image"
-            /> -->
+            <div class="py-2 grid grid-cols-5 gap-3 max-w-max">
+                <div v-for="img in car.images" :key="img" class="group w-[125px] h-[75px] relative">
+                    <img :src="img" :alt="img" class="rounded-md h-full w-full object-cover" />
+
+                    <button
+                        @click="removeImage(img)"
+                        class="opacity-0 group-hover:opacity-100 transition absolute -right-3 -top-3 cursor-pointer bg-main-gray-bg hover:bg-main-hover-bg p-1 rounded-md"
+                    >
+                        <Icon icon="material-symbols-light:close" class="text-xl" />
+                    </button>
+                </div>
+            </div>
+
             <div
                 class="relative border rounded-md w-1/2"
-                :class="v$.image.$error ? 'border-red-500' : 'border-main-border'"
+                :class="v$.images.$error ? 'border-red-500' : 'border-main-border'"
             >
                 <input
                     type="file"
