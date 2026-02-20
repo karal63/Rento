@@ -20,7 +20,7 @@
 
 <template>
     <div
-        class="shadow-xl shadow-main-border hover:shadow-md transition rounded-bl-xl rounded-br-md overflow-hidden"
+        class="bg-main-gray-bg border border-main-border rounded-bl-xl rounded-br-md overflow-hidden"
     >
         <div @click="select" class="h-[300px] md:h-[400px]">
             <img

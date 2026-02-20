@@ -115,13 +115,13 @@
                 {{ e.$message }}
             </p>
 
-            <div class="py-2 grid grid-cols-5 gap-3 max-w-max">
+            <div class="py-2 grid grid-cols-3 max-w-max lg:grid-cols-5 gap-3">
                 <div v-for="img in car.images" :key="img" class="group w-[125px] h-[75px] relative">
                     <img :src="img" :alt="img" class="rounded-md h-full w-full object-cover" />
 
                     <button
                         @click="removeImage(img)"
-                        class="opacity-0 group-hover:opacity-100 transition absolute -right-3 -top-3 cursor-pointer bg-main-gray-bg hover:bg-main-hover-bg p-1 rounded-md"
+                        class="md:opacity-0 group-hover:opacity-100 transition absolute -right-3 -top-3 cursor-pointer bg-main-gray-bg hover:bg-main-hover-bg p-1 rounded-md"
                     >
                         <Icon icon="material-symbols-light:close" class="text-xl" />
                     </button>

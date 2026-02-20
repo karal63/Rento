@@ -294,7 +294,8 @@
             "create": "Create",
             "submit": "Submit",
             "save": "Save",
-            "more_details": "More details"
+            "more_details": "More details",
+            "edit": "Edit"
         },
 
         "link": {
