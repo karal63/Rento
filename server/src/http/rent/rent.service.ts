@@ -34,7 +34,7 @@ export class RentService {
         else if (daysCount <= 6) pricePerDay = pricing.days4_6;
         else if (daysCount <= 13) pricePerDay = pricing.days7_13;
         else if (daysCount <= 29) pricePerDay = pricing.days14_29;
-        else if (daysCount === 30) pricePerDay = pricing.month;
+        else if (daysCount >= 30) pricePerDay = pricing.month / 30;
 
         return pricePerDay * daysCount;
     }
