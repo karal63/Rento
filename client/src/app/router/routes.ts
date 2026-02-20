@@ -19,6 +19,7 @@ import {
     AdminCars,
     AdminAddCar,
     AdminEditCar,
+    CarDetailsPage,
 } from '@/pages';
 
 import BookingLayout from '../layouts/BookingLayout.vue';
@@ -121,6 +122,10 @@ export const routes: RouteRecordRaw[] = [
             {
                 path: 'cars/edit/:id',
                 component: AdminEditCar,
+            },
+            {
+                path: 'cars/:id',
+                component: CarDetailsPage,
             },
         ],
     },
