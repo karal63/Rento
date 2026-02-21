@@ -70,7 +70,7 @@
             <div v-for="(_, i) in 4" :key="i" class="h-[600px] skeleton rounded-md"></div>
         </div>
         <div v-else class="w-full xl:w-[80%]">
-            <div class="grid grid-col-1 lg:grid-cols-2 gap-8">
+            <div class="grid grid-col-1 md:grid-cols-2 gap-8">
                 <CarCard v-for="car in data?.cars" :key="car._id" :car="car" />
             </div>
             <Pagination v-model="page" :total="data?.pagesAmount ?? 1" />
