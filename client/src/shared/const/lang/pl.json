@@ -184,7 +184,7 @@
 
         "acceptance_modal": {
             "cancellation_title": "Potwierdź anulowanie",
-            "cancellation_desc": "Czy na pewno chcesz anulować ten wynajem? Tej operacji nie można cofnąć.",
+            "cancellation_desc": "Tej czynności nie można cofnąć. Zwrot zostanie przetworzony i może potrwać kilka dni, zanim pojawi się na Twoim koncie.",
             "deletion_title": "Potwierdź usunięcie",
             "deletion_desc": "Czy na pewno chcesz usunąć",
             "confirm_action": "Potwierdź działanie"

@@ -184,7 +184,7 @@
 
         "acceptance_modal": {
             "cancellation_title": "Confirm cancellation",
-            "cancellation_desc": "Are you sure you want to cancel this rental? This action cannot be undone.",
+            "cancellation_desc": "This action cannot be undone. Your refund will be processed and may take a few days to appear in your account.",
             "deletion_title": "Confirm deletion",
             "deletion_desc": "Are you sure you want to delete",
             "confirm_action": "Confirm action"
