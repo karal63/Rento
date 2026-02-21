@@ -3,7 +3,7 @@ import { createI18n } from 'vue-i18n';
 const languages: string[] = [];
 
 function loadLocaleMessages() {
-    const messages: Record<string, any> = {};
+    const messages: Record<string, never> = {};
 
     const locales = import.meta.glob('../const/lang/*.json', { eager: true });
 
@@ -21,7 +21,7 @@ function loadLocaleMessages() {
 
 const i18n = createI18n({
     legacy: false, // optional, depending on Composition or Legacy API
-    locale: 'en',
+    locale: JSON.parse(localStorage.getItem('rento_lang') ?? '"en"'),
     fallbackLocale: 'en',
     messages: loadLocaleMessages(),
 });

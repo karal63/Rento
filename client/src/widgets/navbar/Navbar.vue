@@ -6,6 +6,7 @@
     import { languages } from '@/shared/config';
     import { useSidebarStore, useThemeStore } from '@/shared/model';
     import { useUserStore } from '@/entities/user';
+    import { Dropdown } from '@/shared/ui';
 
     const { t, locale } = useI18n();
     const themeStore = useThemeStore();
@@ -13,11 +14,17 @@
     const userStore = useUserStore();
 
     const open = ref(false);
+
+    const setLang = (lang: string) => {
+        locale.value = lang;
+        localStorage.setItem('rento_lang', JSON.stringify(lang));
+        open.value = false;
+    };
 </script>
 
 <template>
     <nav class="py-5 fixed top-0 w-full backdrop-blur-md bg-main-bg/30 z-20">
-        <div class="max-w-[1700px] m-auto flex items-center flex-between px-5 lg:px-10">
+        <div class="max-w-[1700px] m-auto flex items-center flex-between px-5 md:px-10">
             <h3 class="text-3xl md:text-4xl font-semibold">
                 <RouterLink to="/">Rento</RouterLink>
             </h3>
@@ -35,8 +42,10 @@
             </ul>
 
             <div class="flex items-center gap-5">
-                <div class="relative hidden lg:inline-block text-left">
-                    <button
+                <Dropdown :is-open="open" @close="open = false" class="hidden md:block">
+                    <Button
+                        size="sm"
+                        color="transparent"
                         @click="open = !open"
                         class="cursor-pointer hover:bg-main-hover-bg rounded-md px-2 py-1 transition"
                     >
@@ -44,27 +53,22 @@
                             {{ locale }}
                             <Icon class="text-2xl" icon="iconamoon:arrow-down-2-light" />
                         </div>
-                    </button>
+                    </Button>
 
-                    <transition name="fade">
-                        <div
-                            v-if="open"
-                            class="absolute right-0 z-10 mt-2 w-20 origin-top-right rounded-lg bg-main-bg shadow-lg ring-1 ring-main-border ring-opacity-5"
+                    <template #actions>
+                        <button
+                            v-for="lang in languages"
+                            :key="lang"
+                            @click="setLang(lang)"
+                            class="bg-main-bg uppercase py-2 w-full rounded-md cursor-pointer hover:bg-main-hover-bg transition"
+                            :class="lang === locale && 'bg-main-hover-bg'"
                         >
-                            <button
-                                v-for="lang in languages"
-                                :key="lang"
-                                @click="locale = lang"
-                                class="block py-2 w-full rounded-md cursor-pointer hover:bg-main-hover-bg transition"
-                                :class="lang === locale && 'bg-main-hover-bg'"
-                            >
-                                {{ lang }}
-                            </button>
-                        </div>
-                    </transition>
-                </div>
+                            {{ lang }}
+                        </button>
+                    </template>
+                </Dropdown>
 
-                <button @click="themeStore.toggleTheme" class="hidden lg:block cursor-pointer">
+                <button @click="themeStore.toggleTheme" class="hidden md:block cursor-pointer">
                     <Icon v-if="themeStore.isDark" icon="fontisto:day-sunny" class="text-2xl" />
                     <Icon
                         v-else
@@ -82,7 +86,7 @@
                 </RouterLink>
 
                 <RouterLink to="/cars">
-                    <Button size="sm" class="hidden md:block">
+                    <Button size="sm" class="hidden lg:block">
                         {{ t('app.book_btn') }}
                     </Button>
                 </RouterLink>
