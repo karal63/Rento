@@ -35,11 +35,4 @@ export class CreateIntentDto {
     @IsNotEmpty()
     @IsString()
     pickupTime: string;
-
-    // @ApiProperty({ example: 5, description: 'Number of rental days' })
-    // @IsNotEmpty()
-    // @IsNumber()
-    // @Min(1)
-    // @Max(30)
-    // daysCount: number;
 }

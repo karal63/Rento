@@ -1,14 +1,60 @@
 <script setup lang="ts">
     import { useCarQuery } from '@/entities/car';
-    import { Button, ImagesCarousel } from '@/shared/ui';
+    import { useAcceptanceModalStore } from '@/features/acceptanceModal';
+    import { useDeleteCar } from '@/features/deleteCar';
+    import { showErrorDialog } from '@/features/dialog';
+    import type { AppError } from '@/shared/model';
+    import { Button, ImagesCarousel, type Breadcrumb } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
+    import { computed, onMounted, watch } from 'vue';
     import { useI18n } from 'vue-i18n';
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
 
     const { params } = useRoute();
     const { t } = useI18n();
+    const acceptanceModalStore = useAcceptanceModalStore();
+    const router = useRouter();
+    const { deleteCar } = useDeleteCar();
 
     const { data } = useCarQuery(params['id'] as string);
+
+    const breadcrumbs = computed(() => [
+        {
+            label: t('app.car_details_page.cars'),
+            href: '/admin/cars',
+        },
+        {
+            label: data.value?.name ?? (params['id'] as string),
+        },
+    ]);
+
+    const emit = defineEmits<{
+        (e: 'setBreadcrumbs', data: Breadcrumb[]): void;
+    }>();
+
+    const handleDelete = () => {
+        acceptanceModalStore.open({
+            title: t('app.acceptance_modal.confirm_action'),
+            message: t('app.admin_cars_page.delete_car_desc', { name: data.value?.name }),
+            onConfirm: async () => {
+                try {
+                    await deleteCar(params['id'] as string);
+                } catch (error) {
+                    showErrorDialog(error as AppError);
+                } finally {
+                    router.push('/admin/cars');
+                }
+            },
+        });
+    };
+
+    watch(
+        breadcrumbs,
+        () => {
+            emit('setBreadcrumbs', breadcrumbs.value);
+        },
+        { immediate: true }
+    );
 </script>
 
 <template>
@@ -97,7 +143,11 @@
             </table>
         </div>
 
-        <div class="mt-7 flex justify-end">
+        <div class="mt-7 flex justify-end gap-3">
+            <Button @click="handleDelete" size="sm" color="red" class="flex items-center gap-2">
+                <Icon icon="material-symbols:cancel-outline-rounded" class="text-xl" />
+                {{ t('app.button.delete') }}
+            </Button>
             <RouterLink :to="`/admin/cars/edit/${params['id']}`">
                 <Button size="sm" class="flex items-center gap-2">
                     <Icon icon="lucide:edit" class="text-xl" />
