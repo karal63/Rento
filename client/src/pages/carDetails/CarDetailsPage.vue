@@ -6,7 +6,7 @@
     import type { AppError } from '@/shared/model';
     import { Button, ImagesCarousel, type Breadcrumb } from '@/shared/ui';
     import { Icon } from '@iconify/vue';
-    import { computed, onMounted, watch } from 'vue';
+    import { computed, watch } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { useRoute, useRouter } from 'vue-router';
 
