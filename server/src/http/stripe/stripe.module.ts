@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common';
+import { forwardRef, Global, Module } from '@nestjs/common';
 import { StripeService } from './stripe.service';
 import { StripeController } from './stripe.controller';
 import Stripe from 'stripe';
@@ -17,6 +17,6 @@ import { RentModule } from '../rent/rent.module';
     ],
     exports: ['STRIPE_CLIENT', StripeService],
     controllers: [StripeController],
-    imports: [RentModule],
+    imports: [forwardRef(() => RentModule)],
 })
 export class StripeModule {}
