@@ -107,7 +107,7 @@
             >
                 <PopoverPanel
                     static
-                    class="fixed top-5 left-1/2 transform -translate-x-1/2 w-full max-w-md rounded-md bg-pure-theme p-4 text-left shadow-xl flex gap-3"
+                    class="fixed top-5 left-1/2 transform -translate-x-1/2 w-[350px] sm:w-[440px] rounded-md bg-pure-theme p-4 text-left shadow-xl flex gap-3"
                 >
                     <div>
                         <Icon
@@ -140,7 +140,7 @@
                             </ul>
                         </div>
 
-                        <div v-if="!dialogStore.dialog.context" class="mt-4">
+                        <div v-if="!dialogStore.dialog.context" class="mt-4 hidden sm:block">
                             <button
                                 type="button"
                                 class="cursor-pointer inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
@@ -151,6 +151,13 @@
                             </button>
                         </div>
                     </div>
+
+                    <button
+                        @click="dialogStore.hide()"
+                        class="sm:hidden absolute right-3 top-3 cursor-pointer p-1 rounded-md"
+                    >
+                        <Icon icon="material-symbols-light:close" class="text-xl" />
+                    </button>
                 </PopoverPanel>
             </TransitionChild>
         </TransitionRoot>

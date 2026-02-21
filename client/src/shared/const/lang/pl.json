@@ -295,7 +295,8 @@
             "submit": "Zatwierdź",
             "save": "Zapisz",
             "more_details": "Więcej szczegółów",
-            "edit": "Edytuj"
+            "edit": "Edytuj",
+            "delete": "Usuń"
         },
 
         "link": {
@@ -362,6 +363,10 @@
             "price_per_day": "Cena za dzień",
             "time": "czas",
             "auto": "Automat"
+        },
+
+        "car_details_page": {
+            "cars": "Samochody"
         }
     }
 }
