@@ -47,26 +47,28 @@
     <section class="mt-5">
         <hr class="text-main-border" />
 
-        <div class="mt-5 space-y-3 lg:space-y-0 lg:flex gap-x-5">
-            <div>
+        <div class="mt-5 flex gap-3 flex-wrap">
+            <div class="w-full lg:max-w-md">
                 <Input
                     type="search"
                     @input="$emit('setSearch', $event.target.value)"
                     size="medium"
                     :placeholder="t('app.sort.search')"
                     icon="icon-park-outline:search"
-                    class="w-full"
                 />
             </div>
 
-            <div class="flex gap-3">
+            <div class="w-full lg:max-w-max">
                 <StatusPicker
                     allVariant
                     :placeholder="t('app.protected_rentals_page.select_status')"
                     @setStatus="emit('setStatus', $event)"
                     :status="status"
                 />
+            </div>
 
+            <!-- Sort By -->
+            <div class="w-full md:w-auto md:min-w-[200px]">
                 <Dropdown
                     :isOpen="isSortByDropdownOpen"
                     :items="sortByList"
@@ -77,12 +79,15 @@
                         size="sm"
                         color="transparent"
                         :disableUppercase="true"
-                        class="border border-main-border flex-between gap-2 text-sm md:text-base"
+                        class="w-full h-full border border-main-border flex items-center justify-between gap-3 px-4 py-2"
                     >
-                        {{ sort ? sort.label : t('app.sort.by_date_latest') }}
+                        <span class="truncate">
+                            {{ sort ? sort.label : t('app.sort.by_date_latest') }}
+                        </span>
+
                         <Icon
                             icon="weui:arrow-filled"
-                            class="transform rotate-90 text-xl text-main-gray"
+                            class="rotate-90 text-lg text-main-gray shrink-0"
                         />
                     </Button>
                 </Dropdown>

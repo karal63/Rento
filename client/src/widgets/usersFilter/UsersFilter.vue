@@ -67,8 +67,9 @@
     <section class="mt-5">
         <hr class="text-main-border" />
 
-        <div class="mt-5 md:flex gap-5 space-y-3 md:space-y-0">
-            <div>
+        <div class="mt-5 flex gap-3 flex-wrap">
+            <!-- Search -->
+            <div class="w-full lg:max-w-md">
                 <Input
                     type="search"
                     @input="$emit('setSearch', $event.target.value)"
@@ -78,54 +79,60 @@
                 />
             </div>
 
-            <div class="h-12">
+            <!-- Role Filter -->
+            <div class="w-full md:w-auto md:min-w-[180px]">
                 <Dropdown
                     :isOpen="isRoleDropdownOpen"
                     :items="rolesList"
                     @close="isRoleDropdownOpen = false"
-                    class="max-w-max"
                 >
                     <Button
                         @click="isRoleDropdownOpen = !isRoleDropdownOpen"
                         size="sm"
                         color="transparent"
                         :disableUppercase="true"
-                        class="h-full border border-main-border flex-between gap-4 py-2"
+                        class="w-full h-full border border-main-border flex items-center justify-between gap-3 px-4 py-2"
                     >
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 truncate">
                             <Icon icon="lets-icons:filter-big" />
-                            {{
-                                role
-                                    ? t(`app.role.${role}`)
-                                    : t('app.protected_users_page.select_role')
-                            }}
+                            <span class="truncate">
+                                {{
+                                    role
+                                        ? t(`app.role.${role}`)
+                                        : t('app.protected_users_page.select_role')
+                                }}
+                            </span>
                         </div>
+
                         <Icon
                             icon="weui:arrow-filled"
-                            class="transform rotate-90 text-xl text-main-gray"
+                            class="rotate-90 text-lg text-main-gray shrink-0"
                         />
                     </Button>
                 </Dropdown>
             </div>
 
-            <div class="h-12">
+            <!-- Sort By -->
+            <div class="w-full md:w-auto md:min-w-[200px]">
                 <Dropdown
                     :isOpen="isSortByDropdownOpen"
                     :items="sortByList"
                     @close="isSortByDropdownOpen = false"
-                    class="max-w-max"
                 >
                     <Button
                         @click="isSortByDropdownOpen = !isSortByDropdownOpen"
                         size="sm"
                         color="transparent"
                         :disableUppercase="true"
-                        class="h-full border border-main-border flex-between gap-2 w-72 py-2"
+                        class="w-full h-full border border-main-border flex items-center justify-between gap-3 px-4 py-2"
                     >
-                        {{ sort ? sort.label : t('app.sort.by_date_latest') }}
+                        <span class="truncate">
+                            {{ sort ? sort.label : t('app.sort.by_date_latest') }}
+                        </span>
+
                         <Icon
                             icon="weui:arrow-filled"
-                            class="transform rotate-90 text-xl text-main-gray"
+                            class="rotate-90 text-lg text-main-gray shrink-0"
                         />
                     </Button>
                 </Dropdown>

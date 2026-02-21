@@ -1,14 +1,14 @@
 <script setup lang="ts">
-    import type { CarForm } from '@/entities/car';
+    import type { CarFormType } from '@/entities/car';
     import { Input } from '@/shared/ui';
     import type { Validation } from '@vuelidate/core';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
-    const car = defineModel<CarForm>({ required: true });
+    const car = defineModel<CarFormType>({ required: true });
 
     defineProps<{
-        v$: Validation<CarForm>;
+        v$: Validation<CarFormType>;
     }>();
 </script>
 

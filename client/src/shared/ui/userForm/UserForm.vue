@@ -87,142 +87,160 @@
 
 <template>
     <ModalTransition :is-open="isOpen" :onCancel="handleCloseModal">
-        <div
-            class="relative mx-2 w-xl md:w-3xl lg:w-4xl xl:w-6xl bg-main-bg rounded-md p-5 md:p-7 border border-main-border"
-        >
-            <slot name="header" />
-
-            <form @submit.prevent="handleSubmit" class="mt-5">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-7 gap-y-4">
-                    <label>
-                        <p class="text-sm text-main-gray">{{ t('app.auth.name') }}</p>
-                        <p v-if="v$.name.$error" class="text-sm text-red-500">
-                            {{ v$.name.$errors[0]?.$message }}
-                        </p>
-                        <Input
-                            size="medium"
-                            v-model="newUser.name"
-                            :is-error="v$.name.$error || errorFields.includes('name')"
-                            @onUpdate="$emit('clearError', 'name')"
-                        />
-                    </label>
-                    <label>
-                        <p class="text-sm text-main-gray">{{ t('app.auth.second_name') }}</p>
-                        <p v-if="v$.secondName.$error" class="text-sm text-red-500">
-                            {{ v$.secondName.$errors[0]?.$message }}
-                        </p>
-                        <Input
-                            size="medium"
-                            v-model="newUser.secondName"
-                            :is-error="v$.secondName.$error || errorFields.includes('secondName')"
-                            @onUpdate="$emit('clearError', 'secondName')"
-                        />
-                    </label>
-                    <label>
-                        <p class="text-sm text-main-gray">{{ t('app.auth.email') }}</p>
-                        <p v-if="v$.email.$error" class="text-sm text-red-500">
-                            {{ v$.email.$errors[0]?.$message }}
-                        </p>
-                        <Input
-                            size="medium"
-                            v-model="newUser.email"
-                            :is-error="v$.email.$error || errorFields.includes('email')"
-                            @onUpdate="$emit('clearError', 'email')"
-                        />
-                    </label>
-                    <label>
-                        <p class="text-sm text-main-gray">{{ t('app.auth.phone_number') }}</p>
-                        <p v-if="v$.phoneNumber.$error" class="text-sm text-red-500">
-                            {{ v$.phoneNumber.$errors[0]?.$message }}
-                        </p>
-                        <Input
-                            size="medium"
-                            v-model="newUser.phoneNumber"
-                            :is-error="v$.phoneNumber.$error || errorFields.includes('phoneNumber')"
-                            @onUpdate="$emit('clearError', 'phoneNumber')"
-                        />
-                    </label>
-                    <label>
-                        <p class="text-sm text-main-gray">{{ t('app.auth.password') }}</p>
-                        <p v-if="v$.password.$error" class="text-sm text-red-500">
-                            {{ v$.password.$errors[0]?.$message }}
-                        </p>
-                        <Input
-                            size="medium"
-                            v-model="newUser.password"
-                            :is-error="v$.password.$error || errorFields.includes('password')"
-                            @onUpdate="$emit('clearError', 'password')"
-                        />
-                    </label>
-                </div>
-
-                <hr class="text-main-border mt-7 mb-4" />
-
-                <div class="flex gap-7">
-                    <div>
-                        <p class="text-xl font-semibold mb-2">
-                            {{ t('app.protected_users_page.roles') }}
-                        </p>
-
-                        <ul class="flex gap-3 mb-4">
-                            <li v-for="role in newUser.roles" :key="role" class="max-w-max">
-                                <Button
-                                    @click="removeRole(role)"
-                                    size="sm"
-                                    color="transparent"
-                                    class="max-w-max px-5 text-sm py-2 border border-main-border rounded-md flex gap-3 items-center"
-                                >
-                                    {{ t(`app.role.${role}`) }}
-                                    <Icon icon="material-symbols-light:close" />
-                                </Button>
-                            </li>
-                        </ul>
-
-                        <div class="flex gap-3">
-                            <Dropdown
-                                ref="dropdownRef"
-                                :is-open="isRoleDropdownOpen"
-                                :items="roles"
-                            >
-                                <Button
-                                    size="sm"
-                                    color="transparent"
-                                    @click="isRoleDropdownOpen = !isRoleDropdownOpen"
-                                    class="border border-main-border flex-between gap-3 w-48"
-                                >
-                                    {{
-                                        selectedRole
-                                            ? selectedRole
-                                            : t('app.protected_users_page.select_role')
-                                    }}
-                                    <Icon
-                                        icon="weui:arrow-filled"
-                                        class="transform rotate-90 text-xl text-main-gray"
-                                    />
-                                </Button>
-                            </Dropdown>
-
-                            <Button
-                                @click="addRole(selectedRole)"
-                                size="sm"
-                                class="flex items-center gap-3"
-                            >
-                                <Icon icon="material-symbols:add-rounded" class="text-xl" />
-                                {{ t('app.protected_users_page.add') }}
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-
-                <slot name="footer" />
-            </form>
-
-            <button
-                @click="handleCloseModal"
-                class="absolute right-3 top-3 cursor-pointer hover:bg-main-hover-bg p-1 rounded-md"
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div
+                class="relative w-full max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-6xl max-h-[90vh] bg-main-bg rounded-md border border-main-border flex flex-col"
             >
-                <Icon icon="material-symbols-light:close" class="text-xl" />
-            </button>
+                <!-- Header -->
+                <div class="p-5 md:p-7 border-b border-main-border shrink-0">
+                    <slot name="header" />
+                </div>
+
+                <!-- Scrollable Content -->
+                <div class="overflow-y-auto p-5 md:p-7">
+                    <form @submit.prevent="handleSubmit" class="mt-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-7 gap-y-4">
+                            <label>
+                                <p class="text-sm text-main-gray">{{ t('app.auth.name') }}</p>
+                                <p v-if="v$.name.$error" class="text-sm text-red-500">
+                                    {{ v$.name.$errors[0]?.$message }}
+                                </p>
+                                <Input
+                                    size="medium"
+                                    v-model="newUser.name"
+                                    :is-error="v$.name.$error || errorFields.includes('name')"
+                                    @onUpdate="$emit('clearError', 'name')"
+                                />
+                            </label>
+                            <label>
+                                <p class="text-sm text-main-gray">
+                                    {{ t('app.auth.second_name') }}
+                                </p>
+                                <p v-if="v$.secondName.$error" class="text-sm text-red-500">
+                                    {{ v$.secondName.$errors[0]?.$message }}
+                                </p>
+                                <Input
+                                    size="medium"
+                                    v-model="newUser.secondName"
+                                    :is-error="
+                                        v$.secondName.$error || errorFields.includes('secondName')
+                                    "
+                                    @onUpdate="$emit('clearError', 'secondName')"
+                                />
+                            </label>
+                            <label>
+                                <p class="text-sm text-main-gray">{{ t('app.auth.email') }}</p>
+                                <p v-if="v$.email.$error" class="text-sm text-red-500">
+                                    {{ v$.email.$errors[0]?.$message }}
+                                </p>
+                                <Input
+                                    size="medium"
+                                    v-model="newUser.email"
+                                    :is-error="v$.email.$error || errorFields.includes('email')"
+                                    @onUpdate="$emit('clearError', 'email')"
+                                />
+                            </label>
+                            <label>
+                                <p class="text-sm text-main-gray">
+                                    {{ t('app.auth.phone_number') }}
+                                </p>
+                                <p v-if="v$.phoneNumber.$error" class="text-sm text-red-500">
+                                    {{ v$.phoneNumber.$errors[0]?.$message }}
+                                </p>
+                                <Input
+                                    size="medium"
+                                    v-model="newUser.phoneNumber"
+                                    :is-error="
+                                        v$.phoneNumber.$error || errorFields.includes('phoneNumber')
+                                    "
+                                    @onUpdate="$emit('clearError', 'phoneNumber')"
+                                />
+                            </label>
+                            <label>
+                                <p class="text-sm text-main-gray">{{ t('app.auth.password') }}</p>
+                                <p v-if="v$.password.$error" class="text-sm text-red-500">
+                                    {{ v$.password.$errors[0]?.$message }}
+                                </p>
+                                <Input
+                                    size="medium"
+                                    v-model="newUser.password"
+                                    :is-error="
+                                        v$.password.$error || errorFields.includes('password')
+                                    "
+                                    @onUpdate="$emit('clearError', 'password')"
+                                />
+                            </label>
+                        </div>
+
+                        <hr class="text-main-border mt-7 mb-4" />
+
+                        <div class="flex gap-7">
+                            <div>
+                                <p class="text-xl font-semibold mb-2">
+                                    {{ t('app.protected_users_page.roles') }}
+                                </p>
+
+                                <ul class="flex gap-3 mb-4">
+                                    <li v-for="role in newUser.roles" :key="role" class="max-w-max">
+                                        <Button
+                                            @click="removeRole(role)"
+                                            size="sm"
+                                            color="transparent"
+                                            class="max-w-max px-5 text-sm py-2 border border-main-border rounded-md flex gap-3 items-center"
+                                        >
+                                            {{ t(`app.role.${role}`) }}
+                                            <Icon icon="material-symbols-light:close" />
+                                        </Button>
+                                    </li>
+                                </ul>
+
+                                <div class="flex gap-3">
+                                    <Dropdown
+                                        ref="dropdownRef"
+                                        :is-open="isRoleDropdownOpen"
+                                        :items="roles"
+                                    >
+                                        <Button
+                                            size="sm"
+                                            color="transparent"
+                                            @click="isRoleDropdownOpen = !isRoleDropdownOpen"
+                                            class="border border-main-border flex-between gap-3 w-48"
+                                        >
+                                            {{
+                                                selectedRole
+                                                    ? selectedRole
+                                                    : t('app.protected_users_page.select_role')
+                                            }}
+                                            <Icon
+                                                icon="weui:arrow-filled"
+                                                class="transform rotate-90 text-xl text-main-gray"
+                                            />
+                                        </Button>
+                                    </Dropdown>
+
+                                    <Button
+                                        @click="addRole(selectedRole)"
+                                        size="sm"
+                                        class="flex items-center gap-3"
+                                    >
+                                        <Icon icon="material-symbols:add-rounded" class="text-xl" />
+                                        {{ t('app.protected_users_page.add') }}
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <slot name="footer" />
+                    </form>
+                </div>
+
+                <button
+                    @click="handleCloseModal"
+                    class="absolute right-3 top-3 cursor-pointer hover:bg-main-hover-bg p-1 rounded-md"
+                >
+                    <Icon icon="material-symbols-light:close" class="text-xl" />
+                </button>
+            </div>
         </div>
     </ModalTransition>
 </template>
