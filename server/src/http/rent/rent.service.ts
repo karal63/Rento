@@ -113,12 +113,12 @@ export class RentService {
     }
 
     async cancelRental(id: string, user: UserPayload) {
-        const rental = await this.rentalRepo.findRentalById(id);
-        if (!rental) throw new NotFoundException('Rental not found');
-
         const isPrivileged =
             user.roles.includes(Role.Admin) ||
             user.roles.includes(Role.Employee);
+
+        const rental = await this.rentalRepo.findRentalById(id);
+        if (!rental) throw new NotFoundException('Rental not found');
 
         if (!isPrivileged) {
             if (rental.userId.toString() !== user.id) {
@@ -136,6 +136,7 @@ export class RentService {
         }
 
         await this.rentalRepo.cancel(id);
+        return rental;
     }
 
     async getRentalById(id: string, user: UserPayload) {

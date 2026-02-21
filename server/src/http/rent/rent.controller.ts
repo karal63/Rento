@@ -23,11 +23,15 @@ import { Rent } from 'src/schemas/rentSchema';
 import { UserUpdateDto } from './dto/userUpdate.dto';
 import { AdminUpdateDto } from './dto/adminUpdate.dto';
 import { ChangeStatusDto } from './dto/changeStatus.dto';
+import { StripeService } from '../stripe/stripe.service';
 
 @ApiTags('Rentals')
 @Controller('rent')
 export class RentController {
-    constructor(private readonly rentalService: RentService) {}
+    constructor(
+        private readonly rentalService: RentService,
+        private readonly stripeService: StripeService,
+    ) {}
     // cant put routes under routes with query param
 
     @ApiOperation({ summary: 'Get all rentals' })
@@ -88,7 +92,11 @@ export class RentController {
         @Param('id') rentalId: string,
         @GetUser() user: UserPayload,
     ) {
-        await this.rentalService.cancelRental(rentalId, user);
+        const rental = await this.rentalService.cancelRental(rentalId, user);
+        if (rental.intentId) {
+            await this.stripeService.createRefund(rental.intentId);
+        }
+
         return { success: true };
     }
 

@@ -43,4 +43,8 @@ export class StripeService {
             process.env.STRIPE_WEBHOOK_SECRET as string,
         );
     }
+
+    async createRefund(id: string) {
+        return this.stripe.refunds.create({ payment_intent: id });
+    }
 }
