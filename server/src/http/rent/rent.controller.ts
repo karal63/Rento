@@ -105,7 +105,7 @@ export class RentController {
         status: 200,
         description: 'Updates pickup time and location',
     })
-    @Roles(Role.Admin)
+    @Roles(Role.User, Role.Employee, Role.Admin)
     @Patch('edit/:id')
     async userUpdate(
         @Param('id') rentalId: string,
