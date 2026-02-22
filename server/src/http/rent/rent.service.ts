@@ -163,7 +163,7 @@ export class RentService {
 
         const readyBody = {
             ...body,
-            employee: body.employee ? body.employee : null,
+            employee: body.employee === '' ? null : body.employee,
         };
 
         await this.rentModel.findByIdAndUpdate(rentalId, {

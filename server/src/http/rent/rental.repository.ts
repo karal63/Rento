@@ -183,10 +183,20 @@ export class RentalRepo {
                 })
                 .select('_id');
 
-            res = res.or([
+            const orConditions: {
+                carId?: any;
+                status?: any;
+                _id?: any;
+            }[] = [
                 { carId: { $in: cars.map((c) => c._id) } },
                 { status: { $regex: query.search, $options: 'i' } },
-            ]);
+            ];
+
+            if (Types.ObjectId.isValid(query.search)) {
+                orConditions.push({ _id: new Types.ObjectId(query.search) });
+            }
+
+            res = res.or(orConditions);
         }
 
         if (query.sort) {

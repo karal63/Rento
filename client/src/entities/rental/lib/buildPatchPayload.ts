@@ -16,7 +16,7 @@ export const buildPatchPayload = (
         result.carId = newRental.carId;
     }
 
-    if (newRental.userId !== original.userId._id) {
+    if (!original.userId || newRental.userId !== original.userId._id) {
         result.userId = newRental.userId;
     }
 
@@ -39,6 +39,8 @@ export const buildPatchPayload = (
     if (newRental.status !== original.status) {
         result.status = newRental.status;
     }
+
+    console.log(result);
 
     return result;
 };
