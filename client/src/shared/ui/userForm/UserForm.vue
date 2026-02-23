@@ -101,9 +101,11 @@
                     <form @submit.prevent="handleSubmit" class="mt-5">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-7 gap-y-4">
                             <label>
-                                <p class="text-sm text-main-gray">{{ t('app.auth.name') }}</p>
                                 <p v-if="v$.name.$error" class="text-sm text-red-500">
-                                    {{ v$.name.$errors[0]?.$message }}
+                                    {{ t(`app.protected_users_page.${v$.name.$errors[0]?.$uid}`) }}
+                                </p>
+                                <p v-else class="text-sm text-main-gray">
+                                    {{ t('app.auth.name') }}
                                 </p>
                                 <Input
                                     size="medium"
@@ -113,11 +115,15 @@
                                 />
                             </label>
                             <label>
-                                <p class="text-sm text-main-gray">
-                                    {{ t('app.auth.second_name') }}
-                                </p>
                                 <p v-if="v$.secondName.$error" class="text-sm text-red-500">
-                                    {{ v$.secondName.$errors[0]?.$message }}
+                                    {{
+                                        t(
+                                            `app.protected_users_page.${v$.secondName.$errors[0]?.$uid}`
+                                        )
+                                    }}
+                                </p>
+                                <p v-else class="text-sm text-main-gray">
+                                    {{ t('app.auth.second_name') }}
                                 </p>
                                 <Input
                                     size="medium"
@@ -129,9 +135,11 @@
                                 />
                             </label>
                             <label>
-                                <p class="text-sm text-main-gray">{{ t('app.auth.email') }}</p>
                                 <p v-if="v$.email.$error" class="text-sm text-red-500">
-                                    {{ v$.email.$errors[0]?.$message }}
+                                    {{ t(`app.protected_users_page.${v$.email.$errors[0]?.$uid}`) }}
+                                </p>
+                                <p v-else class="text-sm text-main-gray">
+                                    {{ t('app.auth.email') }}
                                 </p>
                                 <Input
                                     size="medium"
@@ -141,11 +149,15 @@
                                 />
                             </label>
                             <label>
-                                <p class="text-sm text-main-gray">
-                                    {{ t('app.auth.phone_number') }}
-                                </p>
                                 <p v-if="v$.phoneNumber.$error" class="text-sm text-red-500">
-                                    {{ v$.phoneNumber.$errors[0]?.$message }}
+                                    {{
+                                        t(
+                                            `app.protected_users_page.${v$.phoneNumber.$errors[0]?.$uid}`
+                                        )
+                                    }}
+                                </p>
+                                <p v-else class="text-sm text-main-gray">
+                                    {{ t('app.auth.phone_number') }}
                                 </p>
                                 <Input
                                     size="medium"
@@ -157,9 +169,15 @@
                                 />
                             </label>
                             <label>
-                                <p class="text-sm text-main-gray">{{ t('app.auth.password') }}</p>
                                 <p v-if="v$.password.$error" class="text-sm text-red-500">
-                                    {{ v$.password.$errors[0]?.$message }}
+                                    {{
+                                        t(
+                                            `app.protected_users_page.${v$.password.$errors[0]?.$uid}`
+                                        )
+                                    }}
+                                </p>
+                                <p v-else class="text-sm text-main-gray">
+                                    {{ t('app.auth.password') }}
                                 </p>
                                 <Input
                                     size="medium"

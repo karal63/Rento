@@ -237,7 +237,19 @@
             "save": "Zapisz",
             "select_role": "Wybierz rolę",
             "add": "Dodaj",
-            "close_dialog_btn": "Rozumiem, dzięki!"
+            "close_dialog_btn": "Rozumiem, dzięki!",
+
+            "name-required": "Imię jest wymagane",
+            "name-length": "Imię musi mieć co najmniej 3 znaki",
+
+            "secondName-required": "Nazwisko jest wymagane",
+            "secondName-length": "Nazwisko musi mieć co najmniej 3 znaki",
+
+            "email-required": "Adres e-mail jest wymagany",
+            "email-email": "Adres e-mail jest nieprawidłowy",
+
+            "phoneNumber-required": "Numer telefonu jest wymagany",
+            "phoneNumber-length": "Numer telefonu musi zawierać co najmniej 12 cyfr"
         },
 
         "errors": {

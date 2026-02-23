@@ -4,34 +4,11 @@
     import { CarForm } from '@/features/carForm';
     import { showDialog, showErrorDialog } from '@/features/dialog';
     import type { AppError } from '@/shared/model';
-    import { required } from '@vuelidate/validators';
     import { ref } from 'vue';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
     const { addCar } = useAddCar();
-
-    const rules = {
-        name: { required },
-        images: { required },
-        details: {
-            accelerationTo100: { required },
-            horsepower: { required },
-            torqueNm: { required },
-            transmission: { required },
-            numberOfSeats: { required },
-        },
-        deposit: { required },
-        pricing: {
-            day: { required },
-            days2_3: { required },
-            days4_6: { required },
-            days7_13: { required },
-            days14_29: { required },
-            month: { required },
-        },
-        brand: { required },
-    };
 
     const car = ref<CarFormType>({
         name: '',
@@ -73,5 +50,5 @@
     <h1 class="text-4xl font-medium mb-10">
         {{ t('app.add_car_page.add_new_car') }}
     </h1>
-    <CarForm v-model="car" :rules="rules" @submit="submit" />
+    <CarForm v-model="car" @submit="submit" />
 </template>

@@ -237,7 +237,19 @@
             "save": "Save",
             "select_role": "Select role",
             "add": "Add",
-            "close_dialog_btn": "Got it, thanks!"
+            "close_dialog_btn": "Got it, thanks!",
+
+            "name-required": "Name is required",
+            "name-length": "Name must must be a minimum of 3 characters",
+
+            "secondName-required": "Second name is required",
+            "secondName-length": "Second name must must be a minimum of 3 characters",
+
+            "email-required": "Email is required",
+            "email-email": "Email is not a valid email address",
+
+            "phoneNumber-required": "Phone number is required",
+            "phoneNumber-length": "Phone number must must be a minimum of 12 numbers"
         },
 
         "errors": {
@@ -362,7 +374,48 @@
             "rental_period": "Rental period",
             "price_per_day": "Price per day",
             "time": "time",
-            "auto": "Auto"
+            "auto": "Auto",
+
+            "images-required": "At least 1 image is required",
+            "images-maxLength": "You only can attach up to 10 images",
+
+            "required_value": "Value is required",
+
+            "brand-required": "Brand is required",
+            "brand-minLength": "Brand must be at least 2 characters long",
+            "brand-maxLength": "The brand name must not contain more than 100 characters.",
+
+            "name-required": "Name is required",
+            "name-minLength": "Name must be at least 2 characters long",
+            "name-maxLength": "The car name must not contain more than 100 characters.",
+
+            "deposit-required": "Deposit is required",
+            "deposit-numeric": "Deposit must be greater than 0",
+            "deposit-minValue": "Deposit must be greater than 0",
+
+            "details": {
+                "transmission-required": "Value is required",
+                "transmission-minLength": "The value must contain at least 3 characters",
+                "transmission-maxLength": "The value must not exceed 50 characters",
+
+                "horsepower-required": "Value is required",
+                "horsepower-minValue": "Value must be greater than 0",
+                "horsepower-maxValue": "Value must be less than 3000",
+
+                "accelerationTo100-required": "Value is required",
+                "accelerationTo100-minValue": "Value must be greater than 0",
+                "accelerationTo100-numeric": "Value must be greater than 0",
+                "accelerationTo100-maxValue": "Value must be less than 20",
+
+                "torqueNm-required": "Value is required",
+                "torqueNm-numeric": "Value must be greater than 0",
+                "torqueNm-minValue": "Value must be greater than 0",
+                "torqueNm-maxValue": "Value must be less than 5000",
+
+                "numberOfSeats-required": "Value is required",
+                "numberOfSeats-minValue": "Value must be greater than 0",
+                "numberOfSeats-maxValue": "Value must be less than 20"
+            }
         },
 
         "car_details_page": {

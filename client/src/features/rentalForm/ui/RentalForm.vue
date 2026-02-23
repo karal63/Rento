@@ -325,7 +325,7 @@
                     </p>
 
                     <p v-if="v$.pickupTime.$errors.length" class="text-sm text-red-500">
-                        {{ t('app.rental_form.time') }}:
+                        {{ t('app.rental_form.pickup_time') }}:
                         {{ v$.pickupTime.$errors[0]?.$message }}
                     </p>
                 </div>
