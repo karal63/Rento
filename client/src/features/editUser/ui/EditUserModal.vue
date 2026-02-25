@@ -45,6 +45,7 @@
         try {
             await editUserStore.edit(editUserStore.user?._id, formUser.value);
             clearUser();
+            v$.value.$reset();
         } catch (e) {
             const error = e as AppError;
             showErrorDialog(error);
@@ -63,6 +64,9 @@
     const handleCloseModal = () => {
         clearUser();
         editUserStore.close();
+
+        // makes errors show up only after clicking submit button
+        v$.value.$reset();
     };
 
     const clearUser = () => {

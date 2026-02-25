@@ -37,6 +37,7 @@
                 t('app.message.user_created_desc')
             );
             clearUser();
+            v$.value.$reset();
         } catch (e) {
             const error = e as AppError;
             showErrorDialog(e as AppError);
@@ -51,6 +52,7 @@
     const handleClose = () => {
         clearUser();
         createUserStore.closeModal();
+        v$.value.$reset();
     };
 
     const clearError = (field: string) => {
