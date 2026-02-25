@@ -237,19 +237,32 @@
             "save": "Zapisz",
             "select_role": "Wybierz rolę",
             "add": "Dodaj",
-            "close_dialog_btn": "Rozumiem, dzięki!",
+            "close_dialog_btn": "Rozumiem, dzięki!"
+        },
 
+        "user_form": {
             "name-required": "Imię jest wymagane",
-            "name-length": "Imię musi mieć co najmniej 3 znaki",
+            "name-minLength": "Imię musi zawierać co najmniej 3 znaki",
+            "name-maxLength": "Imię nie może przekraczać 25 znaków",
 
             "secondName-required": "Nazwisko jest wymagane",
-            "secondName-length": "Nazwisko musi mieć co najmniej 3 znaki",
+            "secondName-minLength": "Nazwisko musi zawierać co najmniej 3 znaki",
+            "secondName-maxLength": "Nazwisko nie może przekraczać 25 znaków",
 
             "email-required": "Adres e-mail jest wymagany",
             "email-email": "Adres e-mail jest nieprawidłowy",
+            "email-maxLength": "Adres e-mail nie może przekraczać 254 znaków",
 
             "phoneNumber-required": "Numer telefonu jest wymagany",
-            "phoneNumber-length": "Numer telefonu musi zawierać co najmniej 12 cyfr"
+            "phoneNumber-phoneValidator": "Numer telefonu musi być w formacie międzynarodowym (np. +12345678901)",
+
+            "password-required": "Hasło jest wymagane",
+            "password-minLength": "Hasło musi zawierać co najmniej 8 znaków",
+            "password-maxLength": "Hasło nie może przekraczać 100 znaków",
+            "password-strongPassword": "Hasło musi zawierać co najmniej jedną wielką literę, jedną małą literę oraz jedną cyfrę",
+
+            "roles-minLength": "Użytkownik musi mieć co najmniej 1 rolę",
+            "roles-required": "Rola jest wymagana"
         },
 
         "errors": {
@@ -374,7 +387,48 @@
             "rental_period": "Okres wynajmu",
             "price_per_day": "Cena za dzień",
             "time": "czas",
-            "auto": "Automat"
+            "auto": "Automat",
+
+            "images-required": "Wymagane jest co najmniej 1 zdjęcie",
+            "images-maxLength": "Możesz dodać maksymalnie 10 zdjęć",
+
+            "required_value": "Wartość jest wymagana",
+
+            "brand-required": "Marka jest wymagana",
+            "brand-minLength": "Marka musi mieć co najmniej 2 znaki",
+            "brand-maxLength": "Nazwa marki nie może przekraczać 100 znaków",
+
+            "name-required": "Nazwa jest wymagana",
+            "name-minLength": "Nazwa musi mieć co najmniej 2 znaki",
+            "name-maxLength": "Nazwa samochodu nie może przekraczać 100 znaków",
+
+            "deposit-required": "Kaucja jest wymagana",
+            "deposit-numeric": "Kaucja musi być większa niż 0",
+            "deposit-minValue": "Kaucja musi być większa niż 0",
+
+            "details": {
+                "transmission-required": "Wartość jest wymagana",
+                "transmission-minLength": "Wartość musi zawierać co najmniej 3 znaki",
+                "transmission-maxLength": "Wartość nie może przekraczać 50 znaków",
+
+                "horsepower-required": "Wartość jest wymagana",
+                "horsepower-minValue": "Wartość musi być większa niż 0",
+                "horsepower-maxValue": "Wartość musi być mniejsza niż 3000",
+
+                "accelerationTo100-required": "Wartość jest wymagana",
+                "accelerationTo100-minValue": "Wartość musi być większa niż 0",
+                "accelerationTo100-numeric": "Wartość musi być większa niż 0",
+                "accelerationTo100-maxValue": "Wartość musi być mniejsza niż 20",
+
+                "torqueNm-required": "Wartość jest wymagana",
+                "torqueNm-numeric": "Wartość musi być większa niż 0",
+                "torqueNm-minValue": "Wartość musi być większa niż 0",
+                "torqueNm-maxValue": "Wartość musi być mniejsza niż 5000",
+
+                "numberOfSeats-required": "Wartość jest wymagana",
+                "numberOfSeats-minValue": "Wartość musi być większa niż 0",
+                "numberOfSeats-maxValue": "Wartość musi być mniejsza niż 20"
+            }
         },
 
         "car_details_page": {

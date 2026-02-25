@@ -15,14 +15,6 @@ export const useEditUserStore = defineStore('editUser', () => {
     const error = ref('');
     const user = ref<User | null>(null);
     const loading = ref(false);
-    const newUser = ref<UserPayload>({
-        name: '',
-        secondName: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
-        roles: [],
-    });
 
     const close = () => {
         isOpen.value = false;
@@ -38,7 +30,7 @@ export const useEditUserStore = defineStore('editUser', () => {
     const edit = async (id: string, payload: UserPayload) => {
         try {
             loading.value = true;
-            editUserMutation.mutate({ id, payload: buildPatchPayload(payload) });
+            await editUserMutation.mutateAsync({ id, payload: buildPatchPayload(payload) });
             showDialog('success', t('app.message.user_edited'), t('app.message.user_edited_desc'));
             close();
         } catch (e) {
@@ -92,15 +84,7 @@ export const useEditUserStore = defineStore('editUser', () => {
 
     const resetUser = () => {
         user.value = null;
-        newUser.value = {
-            name: '',
-            secondName: '',
-            email: '',
-            phoneNumber: '',
-            password: '',
-            roles: [],
-        };
     };
 
-    return { isOpen, close, open, edit, error, user, newUser, loading };
+    return { isOpen, close, open, edit, error, user, loading };
 });

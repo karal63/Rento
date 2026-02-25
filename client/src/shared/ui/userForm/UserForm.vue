@@ -7,30 +7,19 @@
     import { Button } from '../button';
     import { Dropdown } from '..';
     import { Icon } from '@iconify/vue';
-    import { email, minLength, required } from '@vuelidate/validators';
-    import useVuelidate from '@vuelidate/core';
+    import type { Validation, ValidationArgs } from '@vuelidate/core';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n();
     const isRoleDropdownOpen = ref(false);
     const selectedRole = ref<UserRole | ''>('');
 
-    const userRules = {
-        name: { required, length: minLength(3) },
-        secondName: { required, length: minLength(3) },
-        email: { required, email },
-        phoneNumber: { required, length: minLength(12) },
-        password: { length: minLength(6) },
-        roles: { required, length: minLength(1) },
-    };
-
-    const props = defineProps<{
+    defineProps<{
         isOpen: boolean;
-        user: UserPayload;
         errorFields: string[];
+        rules: ValidationArgs<UserPayload>;
+        v$: Validation<UserPayload>;
     }>();
-
-    const v$ = useVuelidate(userRules, props.user);
 
     const emit = defineEmits<{
         (e: 'closeModal'): void;
@@ -38,7 +27,7 @@
         (e: 'clearError', field: string): void;
     }>();
 
-    const newUser = defineModel<UserPayload>({ required: true });
+    const user = defineModel<UserPayload>({ required: true });
 
     const roles = [
         {
@@ -65,22 +54,20 @@
     ];
 
     const handleCloseModal = () => {
+        // modal doesnt close
         emit('closeModal');
     };
 
     const addRole = (selectedRole: UserRole | '') => {
-        if (selectedRole && !newUser.value.roles.includes(selectedRole))
-            newUser.value.roles.push(selectedRole);
+        if (selectedRole && !user.value.roles.includes(selectedRole))
+            user.value.roles.push(selectedRole);
     };
 
     const removeRole = (role: UserRole) => {
-        newUser.value.roles = newUser.value.roles.filter(r => r !== role);
+        user.value.roles = user.value.roles.filter(r => r !== role);
     };
 
     const handleSubmit = async () => {
-        const isValid = await v$.value.$validate();
-        if (!isValid) return;
-
         emit('handleSubmit');
     };
 </script>
@@ -102,32 +89,28 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-7 gap-y-4">
                             <label>
                                 <p v-if="v$.name.$error" class="text-sm text-red-500">
-                                    {{ t(`app.protected_users_page.${v$.name.$errors[0]?.$uid}`) }}
+                                    {{ t(`app.user_form.${v$.name.$errors[0]?.$uid}`) }}
                                 </p>
                                 <p v-else class="text-sm text-main-gray">
                                     {{ t('app.auth.name') }}
                                 </p>
                                 <Input
                                     size="medium"
-                                    v-model="newUser.name"
+                                    v-model="user.name"
                                     :is-error="v$.name.$error || errorFields.includes('name')"
                                     @onUpdate="$emit('clearError', 'name')"
                                 />
                             </label>
                             <label>
                                 <p v-if="v$.secondName.$error" class="text-sm text-red-500">
-                                    {{
-                                        t(
-                                            `app.protected_users_page.${v$.secondName.$errors[0]?.$uid}`
-                                        )
-                                    }}
+                                    {{ t(`app.user_form.${v$.secondName.$errors[0]?.$uid}`) }}
                                 </p>
                                 <p v-else class="text-sm text-main-gray">
                                     {{ t('app.auth.second_name') }}
                                 </p>
                                 <Input
                                     size="medium"
-                                    v-model="newUser.secondName"
+                                    v-model="user.secondName"
                                     :is-error="
                                         v$.secondName.$error || errorFields.includes('secondName')
                                     "
@@ -136,32 +119,28 @@
                             </label>
                             <label>
                                 <p v-if="v$.email.$error" class="text-sm text-red-500">
-                                    {{ t(`app.protected_users_page.${v$.email.$errors[0]?.$uid}`) }}
+                                    {{ t(`app.user_form.${v$.email.$errors[0]?.$uid}`) }}
                                 </p>
                                 <p v-else class="text-sm text-main-gray">
                                     {{ t('app.auth.email') }}
                                 </p>
                                 <Input
                                     size="medium"
-                                    v-model="newUser.email"
+                                    v-model="user.email"
                                     :is-error="v$.email.$error || errorFields.includes('email')"
                                     @onUpdate="$emit('clearError', 'email')"
                                 />
                             </label>
                             <label>
                                 <p v-if="v$.phoneNumber.$error" class="text-sm text-red-500">
-                                    {{
-                                        t(
-                                            `app.protected_users_page.${v$.phoneNumber.$errors[0]?.$uid}`
-                                        )
-                                    }}
+                                    {{ t(`app.user_form.${v$.phoneNumber.$errors[0]?.$uid}`) }}
                                 </p>
                                 <p v-else class="text-sm text-main-gray">
                                     {{ t('app.auth.phone_number') }}
                                 </p>
                                 <Input
                                     size="medium"
-                                    v-model="newUser.phoneNumber"
+                                    v-model="user.phoneNumber"
                                     :is-error="
                                         v$.phoneNumber.$error || errorFields.includes('phoneNumber')
                                     "
@@ -170,18 +149,14 @@
                             </label>
                             <label>
                                 <p v-if="v$.password.$error" class="text-sm text-red-500">
-                                    {{
-                                        t(
-                                            `app.protected_users_page.${v$.password.$errors[0]?.$uid}`
-                                        )
-                                    }}
+                                    {{ t(`app.user_form.${v$.password.$errors[0]?.$uid}`) }}
                                 </p>
                                 <p v-else class="text-sm text-main-gray">
                                     {{ t('app.auth.password') }}
                                 </p>
                                 <Input
                                     size="medium"
-                                    v-model="newUser.password"
+                                    v-model="user.password"
                                     :is-error="
                                         v$.password.$error || errorFields.includes('password')
                                     "
@@ -199,7 +174,7 @@
                                 </p>
 
                                 <ul class="flex gap-3 mb-4">
-                                    <li v-for="role in newUser.roles" :key="role" class="max-w-max">
+                                    <li v-for="role in user.roles" :key="role" class="max-w-max">
                                         <Button
                                             @click="removeRole(role)"
                                             size="sm"
@@ -222,7 +197,7 @@
                                             size="sm"
                                             color="transparent"
                                             @click="isRoleDropdownOpen = !isRoleDropdownOpen"
-                                            class="border border-main-border flex-between gap-3 w-48"
+                                            class="border border-main-border flex-between gap-3"
                                         >
                                             {{
                                                 selectedRole

@@ -5,7 +5,6 @@ import { useMutation } from '@tanstack/vue-query';
 
 export function useCreateUserMutation() {
     return useMutation({
-        mutationKey: ['users'],
         mutationFn: (user: UserPayload) => apiCreateUser(user).then(r => r.data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['users'] });

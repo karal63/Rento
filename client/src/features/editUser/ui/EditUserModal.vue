@@ -2,34 +2,49 @@
     import { useEditUserStore } from '../model/editUser.store';
     import { ref, watch } from 'vue';
     import { Button } from '@/shared/ui';
-    import { UserForm } from '@/shared/ui/userForm';
+    import { UserForm, type UserPayload } from '@/shared/ui/userForm';
     import { useI18n } from 'vue-i18n';
     import type { AppError } from '@/shared/model';
     import { showErrorDialog } from '@/features/dialog/@x';
+    import { rules } from '../const/rules';
+    import useVuelidate from '@vuelidate/core';
 
     const editUserStore = useEditUserStore();
     const { t } = useI18n();
 
     const errorFields = ref<string[]>([]);
+    const formUser = ref<UserPayload>({
+        name: '',
+        secondName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        roles: ['user'],
+    });
+
+    const v$ = useVuelidate(rules, formUser);
 
     watch(
         () => editUserStore.user,
         () => {
             if (!editUserStore.user) return;
 
-            editUserStore.newUser.name = editUserStore.user.name;
-            editUserStore.newUser.secondName = editUserStore.user.secondName ?? '';
-            editUserStore.newUser.email = editUserStore.user.email ?? '';
-            editUserStore.newUser.phoneNumber = editUserStore.user.phoneNumber ?? '';
-            editUserStore.newUser.roles = [...editUserStore.user.roles];
+            formUser.value.name = editUserStore.user.name;
+            formUser.value.secondName = editUserStore.user.secondName ?? '';
+            formUser.value.email = editUserStore.user.email ?? '';
+            formUser.value.phoneNumber = editUserStore.user.phoneNumber ?? '';
+            formUser.value.roles = [...editUserStore.user.roles];
         }
     );
 
     const handleEdit = async () => {
-        if (!editUserStore.user) return;
+        const isValid = await v$.value.$validate();
+
+        if (!editUserStore.user || !isValid) return;
 
         try {
-            await editUserStore.edit(editUserStore.user?._id, editUserStore.newUser);
+            await editUserStore.edit(editUserStore.user?._id, formUser.value);
+            clearUser();
         } catch (e) {
             const error = e as AppError;
             showErrorDialog(error);
@@ -44,16 +59,33 @@
     const clearError = (field: string) => {
         errorFields.value = errorFields.value.filter(f => f !== field);
     };
+
+    const handleCloseModal = () => {
+        clearUser();
+        editUserStore.close();
+    };
+
+    const clearUser = () => {
+        formUser.value = {
+            name: '',
+            secondName: '',
+            email: '',
+            phoneNumber: '',
+            password: '',
+            roles: [],
+        };
+    };
 </script>
 
 <template>
     <UserForm
+        v-model="formUser"
         :is-open="editUserStore.isOpen"
-        :user="editUserStore.newUser"
-        @handle-submit="handleEdit"
-        @close-modal="editUserStore.close"
-        v-model="editUserStore.newUser"
         :errorFields="errorFields"
+        :rules="rules"
+        :v$="v$"
+        @handle-submit="handleEdit"
+        @close-modal="handleCloseModal"
         @clearError="clearError"
     >
         <template #header>
@@ -74,7 +106,7 @@
                 <Button
                     type="submit"
                     size="sm"
-                    :disabled="editUserStore.newUser.roles.length <= 0 || editUserStore.loading"
+                    :disabled="formUser.roles.length <= 0 || editUserStore.loading"
                     class="w-full md:max-w-max"
                 >
                     {{ t('app.protected_users_page.save') }}
