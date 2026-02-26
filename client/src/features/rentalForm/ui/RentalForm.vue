@@ -5,15 +5,12 @@
     import { useRentalOptions } from '../model/useRentalOptions';
     import type { Car } from '@/entities/car';
     import type { User } from '@/entities/user';
-    import useVuelidate, { type ValidationArgs } from '@vuelidate/core';
+    import useVuelidate from '@vuelidate/core';
     import type { RentalFormType } from '../model/types';
     import { useI18n } from 'vue-i18n';
+    import { rentalRules } from '../const/validation';
 
     const rental = defineModel<RentalFormType>('rental', { required: true });
-
-    const props = defineProps<{
-        rules: ValidationArgs<RentalFormType>;
-    }>();
 
     const emit = defineEmits<{
         (e: 'handleSubmit'): void;
@@ -27,7 +24,7 @@
     const isUsersOpen = ref(false);
     const isCarsOpen = ref(false);
 
-    const v$ = useVuelidate(props.rules, rental);
+    const v$ = useVuelidate(rentalRules, rental);
 
     const selectCar = (car: Car) => {
         rental.value.car = car;
@@ -73,8 +70,8 @@
                     <p class="text-xs md:text-sm text-main-gray">
                         {{ t('app.rental_form.select_employee_desc') }}
                     </p>
-                    <p v-for="e in v$.employee.$errors" :key="e.$uid" class="text-sm text-red-500">
-                        {{ e.$message }}
+                    <p v-if="v$.employee.$error" class="text-sm text-red-500">
+                        {{ t(`app.rental_form.${v$.employee.$errors[0]?.$uid}`) }}
                     </p>
                 </div>
             </div>
@@ -157,8 +154,8 @@
                     <p class="text-xs md:text-sm text-main-gray">
                         {{ t('app.rental_form.select_user_desc') }}
                     </p>
-                    <p v-for="e in v$.user.$errors" :key="e.$uid" class="text-sm text-red-500">
-                        {{ e.$message }}
+                    <p v-if="v$.user.$error" class="text-sm text-red-500">
+                        {{ t(`app.rental_form.${v$.user.$errors[0]?.$uid}`) }}
                     </p>
                 </div>
             </div>
@@ -228,8 +225,8 @@
                     <p class="text-xs md:text-sm text-main-gray">
                         {{ t('app.rental_form.select_car_desc') }}
                     </p>
-                    <p v-for="e in v$.car.$errors" :key="e.$uid" class="text-sm text-red-500">
-                        {{ e.$message }}
+                    <p v-if="v$.car.$error" class="text-sm text-red-500">
+                        {{ t(`app.rental_form.${v$.car.$errors[0]?.$uid}`) }}
                     </p>
                 </div>
             </div>
@@ -292,12 +289,8 @@
                     <p class="text-xs md:text-sm text-main-gray">
                         {{ t('app.rental_form.select_period_desc') }}
                     </p>
-                    <p
-                        v-for="e in v$.period.dateFrom.$errors"
-                        :key="e.$uid"
-                        class="text-sm text-red-500"
-                    >
-                        {{ e.$message }}
+                    <p v-if="v$.period.dateFrom.$error" class="text-sm text-red-500">
+                        {{ t(`app.rental_form.${v$.period.dateFrom.$errors[0]?.$uid}`) }}
                     </p>
                 </div>
             </div>
@@ -319,14 +312,14 @@
                     <p class="text-xs md:text-sm text-main-gray">
                         {{ t('app.rental_form.pickup_information_desc') }}
                     </p>
-                    <p v-if="v$.pickupLocation.$errors.length" class="text-sm text-red-500">
+                    <p v-if="v$.pickupLocation.$error" class="text-sm text-red-500">
                         {{ t('app.rental_form.pickup_location') }}:
-                        {{ v$.pickupLocation.$errors[0]?.$message }}
+                        {{ t(`app.rental_form.${v$.pickupLocation.$errors[0]?.$uid}`) }}
                     </p>
 
-                    <p v-if="v$.pickupTime.$errors.length" class="text-sm text-red-500">
+                    <p v-if="v$.pickupTime.$error" class="text-sm text-red-500">
                         {{ t('app.rental_form.pickup_time') }}:
-                        {{ v$.pickupTime.$errors[0]?.$message }}
+                        {{ t(`app.rental_form.${v$.pickupTime.$errors[0]?.$uid}`) }}
                     </p>
                 </div>
             </div>

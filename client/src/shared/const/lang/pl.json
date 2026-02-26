@@ -311,7 +311,18 @@
             "pickup_information": "Informacje o odbiorze",
             "pickup_information_desc": "Wybierz miejsce i czas odbioru samochodu przez użytkownika",
             "pickup_location": "Miejsce odbioru",
-            "pickup_time": "Godzina odbioru"
+            "pickup_time": "Godzina odbioru",
+
+            "user-required": "Użytkownik jest wymagany",
+            "car-required": "Samochód jest wymagany",
+            "period": {
+                "dateFrom-required": "Daty są wymagane"
+            },
+            "pickupLocation-required": "Wartość jest wymagana",
+            "pickupLocation-minLength": "Lokalizacja musi zawierać co najmniej 4 znaki",
+            "pickupLocation-maxLength": "Lokalizacja nie może przekraczać 50 znaków",
+            "pickupTime-required": "Wartość jest wymagana",
+            "pickupTime-timeValidator": "Godzina odbioru musi być w formacie np. 07:00"
         },
 
         "button": {

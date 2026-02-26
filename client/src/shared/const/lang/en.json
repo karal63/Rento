@@ -311,7 +311,18 @@
             "pickup_information": "Pickup information",
             "pickup_information_desc": "Choose where and when user will receive the car",
             "pickup_location": "pickup location",
-            "pickup_time": "pickup time"
+            "pickup_time": "pickup time",
+
+            "user-required": "User is required",
+            "car-required": "Car is required",
+            "period": {
+                "dateFrom-required": "Dates are required"
+            },
+            "pickupLocation-required": "Value is required",
+            "pickupLocation-minLength": "Location must contain at least 4 letters",
+            "pickupLocation-maxLength": "Location cannot exceed 50 letters",
+            "pickupTime-required": "Value is required",
+            "pickupTime-timeValidator": "Pickup time must be in format ex. 07:00"
         },
 
         "button": {
