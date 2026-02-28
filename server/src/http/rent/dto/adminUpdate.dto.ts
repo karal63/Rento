@@ -4,6 +4,7 @@ import {
     IsNumber,
     IsOptional,
     IsString,
+    Length,
     Matches,
 } from 'class-validator';
 import { Status } from 'src/enums/status.enum';
@@ -55,6 +56,7 @@ export class AdminUpdateDto {
             'Determines location where car will be picked up by a client',
     })
     @IsString()
+    @Length(4, 50)
     @IsOptional()
     pickupLocation: string;
 

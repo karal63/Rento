@@ -5,11 +5,11 @@ import { buildEditPayload } from '../lib/buildEditPayload';
 export const useEditCar = () => {
     const mutation = useEditCarMutation();
 
-    const editCar = (originalCar: Car, newCar: CarFormType) => {
+    const editCar = async (originalCar: Car, newCar: CarFormType) => {
         const payload = buildEditPayload(originalCar, newCar);
 
         try {
-            mutation.mutateAsync({ id: originalCar._id, car: payload });
+            await mutation.mutateAsync({ id: originalCar._id, car: payload });
         } catch (error) {
             throw error;
         }

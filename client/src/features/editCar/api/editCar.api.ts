@@ -4,5 +4,5 @@ import { API_PATCH_CAR_EDIT } from '@/shared/model';
 import type { DeepPartial } from '../model/types';
 
 export const apiEditCar = async (carId: string, payload: DeepPartial<CarFormType>) => {
-    axiosInstance.patch(API_PATCH_CAR_EDIT(carId), { ...payload });
+    await axiosInstance.patch(API_PATCH_CAR_EDIT(carId), { ...payload });
 };

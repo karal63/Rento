@@ -4,7 +4,6 @@
     import { showDialog, showErrorDialog } from '@/features/dialog';
     import { useEditCar } from '@/features/editCar';
     import type { AppError } from '@/shared/model';
-    import { required } from '@vuelidate/validators';
     import { ref, watch } from 'vue';
     import { useI18n } from 'vue-i18n';
 
@@ -14,28 +13,6 @@
     const props = defineProps<{
         originalCar?: Car;
     }>();
-
-    const rules = {
-        name: { required },
-        images: { required },
-        details: {
-            accelerationTo100: { required },
-            horsepower: { required },
-            torqueNm: { required },
-            transmission: { required },
-            numberOfSeats: { required },
-        },
-        deposit: { required },
-        pricing: {
-            day: { required },
-            days2_3: { required },
-            days4_6: { required },
-            days7_13: { required },
-            days14_29: { required },
-            month: { required },
-        },
-        brand: { required },
-    };
 
     const car = ref<CarFormType>({
         name: '',
@@ -63,7 +40,8 @@
         if (!props.originalCar) return;
 
         try {
-            editCar(props.originalCar, car.value);
+            await editCar(props.originalCar, car.value);
+
             showDialog(
                 'success',
                 t('app.edit_car_page.car_edited'),
@@ -107,5 +85,5 @@
     <h1 class="text-4xl font-medium mb-10">
         {{ t('app.edit_car_page.edit_car') }}
     </h1>
-    <CarForm v-model="car" :rules="rules" @submit="submit" />
+    <CarForm v-model="car" @submit="submit" />
 </template>

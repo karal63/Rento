@@ -4,7 +4,6 @@
     import { buildRentalPayload, RentalForm, type RentalFormType } from '@/features/rentalForm';
     import { DateRangePicker } from '@/features/selectDateRange';
     import type { AppError } from '@/shared/model';
-    import { required } from '@vuelidate/validators';
     import { ref } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { useRouter } from 'vue-router';
@@ -13,18 +12,6 @@
     const { t } = useI18n();
 
     const createRentalMutation = useCreateRentalMutation();
-
-    const rules = {
-        employee: {},
-        user: { required },
-        car: { required },
-        period: {
-            dateFrom: { required },
-            dateTo: { required },
-        },
-        pickupLocation: { required },
-        pickupTime: { required },
-    };
 
     const rental = ref<RentalFormType>({
         employee: null,
@@ -58,7 +45,7 @@
 </script>
 
 <template>
-    <RentalForm @handleSubmit="create" :rules="rules" v-model:rental="rental">
+    <RentalForm @handleSubmit="create" v-model:rental="rental">
         <DateRangePicker
             :car="rental.car"
             @setPeriod="rental.period = $event"
@@ -72,5 +59,3 @@
         </template>
     </RentalForm>
 </template>
-
-<!-- add select employee and show selected -->

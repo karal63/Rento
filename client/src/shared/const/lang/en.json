@@ -240,6 +240,31 @@
             "close_dialog_btn": "Got it, thanks!"
         },
 
+        "user_form": {
+            "name-required": "Name is required",
+            "name-minLength": "Name must contain at least 3 characters",
+            "name-maxLength": "Name must not exceed 25 characters",
+
+            "secondName-required": "Second name is required",
+            "secondName-minLength": "Second name must contain at least 3 characters",
+            "secondName-maxLength": "Second name must not exceed 25 characters",
+
+            "email-required": "Email is required",
+            "email-email": "Email is not a valid email address",
+            "email-maxLength": "Email must not exceed 254 characters",
+
+            "phoneNumber-required": "Phone number is required",
+            "phoneNumber-phoneValidator": "Phone number must be in international format (e.g. +12345678901)",
+
+            "password-required": "Password is required",
+            "password-minLength": "Password must contain at least 8 characters",
+            "password-maxLength": "Password must not exceed 100 characters",
+            "password-strongPassword": "Password must contain at least one uppercase letter, one lowercase letter and one number",
+
+            "roles-minLength": "User must have at least 1 role",
+            "roles-required": "Role is required"
+        },
+
         "errors": {
             "CODE_U009": "User with this email already exists",
             "CODE_R004": "Rental not found",
@@ -286,7 +311,18 @@
             "pickup_information": "Pickup information",
             "pickup_information_desc": "Choose where and when user will receive the car",
             "pickup_location": "pickup location",
-            "pickup_time": "pickup time"
+            "pickup_time": "pickup time",
+
+            "user-required": "User is required",
+            "car-required": "Car is required",
+            "period": {
+                "dateFrom-required": "Dates are required"
+            },
+            "pickupLocation-required": "Value is required",
+            "pickupLocation-minLength": "Location must contain at least 4 letters",
+            "pickupLocation-maxLength": "Location cannot exceed 50 letters",
+            "pickupTime-required": "Value is required",
+            "pickupTime-timeValidator": "Pickup time must be in format ex. 07:00"
         },
 
         "button": {
@@ -362,7 +398,48 @@
             "rental_period": "Rental period",
             "price_per_day": "Price per day",
             "time": "time",
-            "auto": "Auto"
+            "auto": "Auto",
+
+            "images-required": "At least 1 image is required",
+            "images-maxLength": "You only can attach up to 10 images",
+
+            "required_value": "Value is required",
+
+            "brand-required": "Brand is required",
+            "brand-minLength": "Brand must be at least 2 characters long",
+            "brand-maxLength": "The brand name must not contain more than 100 characters.",
+
+            "name-required": "Name is required",
+            "name-minLength": "Name must be at least 2 characters long",
+            "name-maxLength": "The car name must not contain more than 100 characters.",
+
+            "deposit-required": "Deposit is required",
+            "deposit-numeric": "Deposit must be greater than 0",
+            "deposit-minValue": "Deposit must be greater than 0",
+
+            "details": {
+                "transmission-required": "Value is required",
+                "transmission-minLength": "The value must contain at least 3 characters",
+                "transmission-maxLength": "The value must not exceed 50 characters",
+
+                "horsepower-required": "Value is required",
+                "horsepower-minValue": "Value must be greater than 0",
+                "horsepower-maxValue": "Value must be less than 3000",
+
+                "accelerationTo100-required": "Value is required",
+                "accelerationTo100-minValue": "Value must be greater than 0",
+                "accelerationTo100-numeric": "Value must be greater than 0",
+                "accelerationTo100-maxValue": "Value must be less than 20",
+
+                "torqueNm-required": "Value is required",
+                "torqueNm-numeric": "Value must be greater than 0",
+                "torqueNm-minValue": "Value must be greater than 0",
+                "torqueNm-maxValue": "Value must be less than 5000",
+
+                "numberOfSeats-required": "Value is required",
+                "numberOfSeats-minValue": "Value must be greater than 0",
+                "numberOfSeats-maxValue": "Value must be less than 20"
+            }
         },
 
         "car_details_page": {

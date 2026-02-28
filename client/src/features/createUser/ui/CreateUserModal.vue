@@ -4,8 +4,10 @@
     import { useI18n } from 'vue-i18n';
     import { useCreateUserStore } from '../model/createUser.store';
     import { ref } from 'vue';
-    import { showErrorDialog } from '@/features/dialog/@x';
+    import { showDialog, showErrorDialog } from '@/features/dialog/@x';
     import type { AppError } from '@/shared/model';
+    import { rules } from '../const/rules';
+    import useVuelidate from '@vuelidate/core';
 
     const { t } = useI18n();
     const createUserStore = useCreateUserStore();
@@ -21,9 +23,21 @@
         roles: ['user'],
     });
 
+    const v$ = useVuelidate(rules, user);
+
     const handleCreate = async () => {
+        const isValid = await v$.value.$validate();
+        if (!isValid) return;
+
         try {
             await createUserStore.create(user.value);
+            showDialog(
+                'success',
+                t('app.message.user_created'),
+                t('app.message.user_created_desc')
+            );
+            clearUser();
+            v$.value.$reset();
         } catch (e) {
             const error = e as AppError;
             showErrorDialog(e as AppError);
@@ -36,31 +50,37 @@
     };
 
     const handleClose = () => {
+        clearUser();
+        createUserStore.closeModal();
+        v$.value.$reset();
+    };
+
+    const clearError = (field: string) => {
+        errorFields.value = errorFields.value.filter(f => f !== field);
+    };
+
+    const clearUser = () => {
         user.value = {
             name: '',
             secondName: '',
             email: '',
             phoneNumber: '',
             password: '',
-            roles: ['user'],
+            roles: [],
         };
-        createUserStore.closeModal();
-    };
-
-    const clearError = (field: string) => {
-        errorFields.value = errorFields.value.filter(f => f !== field);
     };
 </script>
 
 <template>
     <UserForm
+        v-model="user"
         :is-open="createUserStore.isModalOpen"
-        :user="user"
+        :error-fields="errorFields"
+        :rules="rules"
+        :v$="v$"
         @handle-submit="handleCreate"
         @close-modal="handleClose"
-        v-model="user"
         @clear-error="clearError"
-        :error-fields="errorFields"
     >
         <template #header>
             <div>

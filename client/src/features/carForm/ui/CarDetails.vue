@@ -19,12 +19,8 @@
                 class="text-lg border border-main-border py-2 px-4 bg-main-gray-bg flex items-center gap-3"
             >
                 {{ t('app.acceleration') }}
-                <p class="mt-1 text-sm text-red-500">
-                    {{
-                        v$.details.accelerationTo100.$error
-                            ? v$.details.accelerationTo100.$errors[0].$message
-                            : ''
-                    }}
+                <p v-if="v$.details.accelerationTo100.$error" class="mt-1 text-sm text-red-500">
+                    {{ t(`app.car_form.${v$.details.accelerationTo100.$errors[0].$uid}`) }}
                 </p>
             </h4>
             <div class="flex items-center gap-3 border border-t-0 border-main-border p-4">
@@ -53,12 +49,8 @@
                 class="text-lg border border-main-border py-2 px-4 bg-main-gray-bg flex items-center gap-3"
             >
                 {{ t('app.transmission') }}
-                <p class="mt-1 text-sm text-red-500">
-                    {{
-                        v$.details.transmission.$error
-                            ? v$.details.transmission.$errors[0].$message
-                            : ''
-                    }}
+                <p v-if="v$.details.transmission.$error" class="mt-1 text-sm text-red-500">
+                    {{ t(`app.car_form.${v$.details.transmission.$errors[0].$uid}`) }}
                 </p>
             </h4>
             <Input
@@ -79,9 +71,9 @@
                 <p class="mt-1 text-sm text-red-500">
                     {{
                         v$.details.horsepower.$error
-                            ? v$.details.horsepower.$errors[0].$message
+                            ? t(`app.car_form.${v$.details.horsepower.$errors[0].$uid}`)
                             : v$.details.torqueNm.$error
-                              ? v$.details.torqueNm.$errors[0].$message
+                              ? t(`app.car_form.${v$.details.torqueNm.$errors[0].$uid}`)
                               : ''
                     }}
                 </p>
@@ -122,12 +114,8 @@
                 class="text-lg border border-main-border py-2 px-4 bg-main-gray-bg flex items-center gap-3"
             >
                 {{ t('app.number_of_seats') }}
-                <p class="mt-1 text-sm text-red-500">
-                    {{
-                        v$.details.numberOfSeats.$error
-                            ? v$.details.numberOfSeats.$errors[0].$message
-                            : ''
-                    }}
+                <p v-if="v$.details.numberOfSeats.$error" class="mt-1 text-sm text-red-500">
+                    {{ t(`app.car_form.${v$.details.numberOfSeats.$errors[0].$uid}`) }}
                 </p>
             </h4>
             <Input

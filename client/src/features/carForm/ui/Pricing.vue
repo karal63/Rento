@@ -30,6 +30,7 @@
                 <td>
                     <Input
                         v-model="car.pricing.day"
+                        :min="0"
                         type="number"
                         :is-error="v$.pricing.day.$error"
                         size="medium"
@@ -43,6 +44,7 @@
                 <td>
                     <Input
                         v-model="car.pricing.days2_3"
+                        :min="0"
                         size="medium"
                         type="number"
                         :is-error="v$.pricing.days2_3.$error"
@@ -56,6 +58,7 @@
                 <td>
                     <Input
                         v-model="car.pricing.days4_6"
+                        :min="0"
                         size="medium"
                         type="number"
                         :is-error="v$.pricing.days4_6.$error"
@@ -69,6 +72,7 @@
                 <td>
                     <Input
                         v-model="car.pricing.days7_13"
+                        :min="0"
                         size="medium"
                         type="number"
                         :is-error="v$.pricing.days7_13.$error"
@@ -82,6 +86,7 @@
                 <td>
                     <Input
                         v-model="car.pricing.days14_29"
+                        :min="0"
                         size="medium"
                         type="number"
                         :is-error="v$.pricing.days14_29.$error"
@@ -95,6 +100,7 @@
                 <td>
                     <Input
                         v-model="car.pricing.month"
+                        :min="0"
                         size="medium"
                         type="number"
                         :is-error="v$.pricing.month.$error"

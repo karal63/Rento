@@ -9,6 +9,7 @@ import {
     IsString,
     IsStrongPassword,
     Length,
+    MaxLength,
 } from 'class-validator';
 import { Role } from 'src/enums/role.enum';
 
@@ -18,7 +19,7 @@ export class EditDto {
         description: 'First name',
     })
     @IsString()
-    @Length(3)
+    @Length(3, 25)
     @IsOptional()
     name: string;
 
@@ -27,6 +28,7 @@ export class EditDto {
         description: "Can't be empty",
     })
     @IsString()
+    @Length(3, 25)
     @IsOptional()
     secondName: string;
 
@@ -35,6 +37,7 @@ export class EditDto {
         description: 'Email addres',
     })
     @IsEmail()
+    @MaxLength(254)
     @IsOptional()
     email: string;
 
@@ -61,9 +64,9 @@ export class EditDto {
         enum: Role,
         isArray: true,
     })
-    @IsOptional()
     @IsArray()
     @ArrayMinSize(1)
     @IsEnum(Role, { each: true })
+    @IsOptional()
     roles: Role[];
 }

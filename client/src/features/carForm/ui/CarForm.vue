@@ -1,11 +1,11 @@
 <script setup lang="ts">
     import { Button, Input } from '@/shared/ui';
-    import { useVuelidate, type ValidationArgs } from '@vuelidate/core';
+    import { useVuelidate } from '@vuelidate/core';
     import { useI18n } from 'vue-i18n';
     import CarDetails from './CarDetails.vue';
     import Pricing from './Pricing.vue';
     import { useRouter } from 'vue-router';
-    import type { CarFormType } from '@/entities/car';
+    import { carRules, type CarFormType } from '@/entities/car';
     import { Icon } from '@iconify/vue';
     import { uploadImage } from '@/shared/lib/upload';
 
@@ -14,15 +14,11 @@
 
     const car = defineModel<CarFormType>({ required: true });
 
-    const props = defineProps<{
-        rules: ValidationArgs<CarFormType>;
-    }>();
-
     const emit = defineEmits<{
         (e: 'submit'): void;
     }>();
 
-    const v$ = useVuelidate(props.rules, car);
+    const v$ = useVuelidate(carRules, car);
 
     const handleSubmit = async () => {
         const isValid = await v$.value.$validate();
@@ -72,12 +68,8 @@
                         :is-error="v$.brand.$error"
                         :placeholder="t('app.car_form.car_brand')"
                     />
-                    <p
-                        v-for="e in v$.brand.$errors"
-                        :key="e.$uid"
-                        class="mt-1 text-sm text-red-500"
-                    >
-                        {{ e.$message }}
+                    <p v-if="v$.brand.$error" class="mt-1 text-sm text-red-500">
+                        {{ t(`app.car_form.${v$.brand.$errors[0]?.$uid}`) }}
                     </p>
                 </div>
                 <div class="w-full lg:w-3/4">
@@ -87,8 +79,8 @@
                         :is-error="v$.name.$error"
                         :placeholder="t('app.car_form.car_full_name')"
                     />
-                    <p v-for="e in v$.name.$errors" :key="e.$uid" class="mt-1 text-sm text-red-500">
-                        {{ e.$message }}
+                    <p v-if="v$.name.$error" class="mt-1 text-sm text-red-500">
+                        {{ t(`app.car_form.${v$.name.$errors[0]?.$uid}`) }}
                     </p>
                 </div>
             </div>
@@ -111,8 +103,8 @@
                 </div>
             </div>
 
-            <p v-for="e in v$.images.$errors" :key="e.$uid" class="mt-1 text-sm text-red-500">
-                {{ e.$message }}
+            <p v-if="v$.images.$error" class="mt-1 text-sm text-red-500">
+                {{ t(`app.car_form.${v$.images.$errors[0]?.$uid}`) }}
             </p>
 
             <div class="py-2 grid grid-cols-3 max-w-max lg:grid-cols-5 gap-3">
@@ -190,8 +182,8 @@
             <div>
                 <h4 class="text-lg mt-4 mb-1 flex items-center gap-3">
                     {{ t('app.car_form.deposit') }} ({{ t('app.zl') }})
-                    <p class="mt-1 text-sm text-red-500">
-                        {{ v$.deposit.$error ? v$.deposit.$errors[0]?.$message : '' }}
+                    <p v-if="v$.deposit.$error" class="mt-1 text-sm text-red-500">
+                        {{ t(`app.car_form.${v$.deposit.$errors[0]?.$uid}`) }}
                     </p>
                 </h4>
                 <Input
