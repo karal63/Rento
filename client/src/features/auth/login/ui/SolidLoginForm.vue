@@ -105,9 +105,7 @@
                         </Field>
                         <Field>
                             <Button type="submit">{{ t('app.auth.login') }}</Button>
-                            <div class="flex justify-center items-center">
-                                <div id="telegram-login"></div>
-                            </div>
+                            <div id="telegram-login"></div>
                         </Field>
                     </FieldGroup>
                 </form>
