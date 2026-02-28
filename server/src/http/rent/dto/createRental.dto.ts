@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString, Matches } from 'class-validator';
+import { IsNumber, IsString, Length, Matches } from 'class-validator';
 
 export class CreateRentalDto {
     @ApiProperty({
@@ -43,6 +43,7 @@ export class CreateRentalDto {
             'Determines location where car will be picked up by a client',
     })
     @IsString()
+    @Length(4, 50)
     pickupLocation: string;
 
     @ApiProperty({

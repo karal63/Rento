@@ -8,6 +8,7 @@ import {
     IsString,
     IsStrongPassword,
     Length,
+    MaxLength,
 } from 'class-validator';
 import { Role } from 'src/enums/role.enum';
 
@@ -17,7 +18,7 @@ export class CreateDto {
         description: 'First name',
     })
     @IsString()
-    @Length(3)
+    @Length(3, 25)
     name: string;
 
     @ApiProperty({
@@ -25,6 +26,7 @@ export class CreateDto {
         description: "Can't be empty",
     })
     @IsString()
+    @Length(3, 25)
     secondName: string;
 
     @ApiProperty({
@@ -32,6 +34,7 @@ export class CreateDto {
         description: 'Email addres',
     })
     @IsEmail()
+    @MaxLength(254)
     email: string;
 
     @ApiProperty({

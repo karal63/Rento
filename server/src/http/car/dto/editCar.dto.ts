@@ -1,106 +1,115 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+    ArrayMaxSize,
+    ArrayMinSize,
     IsInt,
     IsNumber,
     IsOptional,
-    IsPositive,
     IsString,
+    Length,
+    Max,
     Min,
     ValidateNested,
 } from 'class-validator';
 
 class CarDetailsDto {
     @IsNumber()
-    @IsPositive()
+    @Min(0)
+    @Max(20)
     @IsOptional()
     accelerationTo100: number;
 
     @IsInt()
     @Min(1)
+    @Max(3000)
     @IsOptional()
     horsepower: number;
 
     @IsInt()
     @Min(1)
+    @Max(5000)
     @IsOptional()
     torqueNm: number;
 
     @IsString()
+    @Length(3, 50)
     @IsOptional()
     transmission: string;
 
     @IsInt()
     @Min(1)
+    @Max(20)
     @IsOptional()
     numberOfSeats: number;
 }
 
 class CarPricingDto {
     @IsNumber()
-    @IsPositive()
+    @Min(0)
     @IsOptional()
-    day?: number;
+    day: number;
 
     @IsNumber()
-    @IsPositive()
+    @Min(0)
     @IsOptional()
     days2_3: number;
 
     @IsNumber()
-    @IsPositive()
+    @Min(0)
     @IsOptional()
     days4_6: number;
 
     @IsNumber()
-    @IsPositive()
+    @Min(0)
     @IsOptional()
     days7_13: number;
 
     @IsNumber()
-    @IsPositive()
+    @Min(0)
     @IsOptional()
     days14_29: number;
 
     @IsNumber()
-    @IsPositive()
+    @Min(0)
     @IsOptional()
     month: number;
 }
 
 export class EditCarDto {
-    @ApiPropertyOptional({ example: 'BMW X5' })
+    @ApiProperty({ example: 'BMW X5' })
     @IsString()
+    @Length(2, 100)
     @IsOptional()
     name: string;
 
     @ApiProperty({ example: 'https://example.com/car-image.jpg' })
+    @ArrayMinSize(1)
+    @ArrayMaxSize(10)
     @IsOptional()
     images: string[];
 
-    @ApiPropertyOptional({ description: 'Car details', type: CarDetailsDto })
+    @ApiProperty({ description: 'Car details', type: CarDetailsDto })
     @ValidateNested()
-    @IsOptional()
     @Type(() => CarDetailsDto)
+    @IsOptional()
     details: CarDetailsDto;
 
-    @ApiPropertyOptional({
-        example: 30000,
-        description: 'Deposit amount in zl',
-    })
+    @ApiProperty({ example: 30000, description: 'Deposit amount in zl' })
     @IsInt()
     @Min(0)
     @IsOptional()
     deposit: number;
 
-    @ApiPropertyOptional({ description: 'Car pricing', type: CarPricingDto })
+    @ApiProperty({ description: 'Car pricing', type: CarPricingDto })
     @ValidateNested()
-    @IsOptional()
     @Type(() => CarPricingDto)
+    @IsOptional()
     pricing: CarPricingDto;
 
-    @ApiPropertyOptional({ example: 'Lamborghini', description: 'Car brand' })
+    @ApiProperty({ example: 'Lamborghini', description: 'Car brand' })
     @IsString()
+    @Length(2, 100)
     @IsOptional()
     brand: string;
 }

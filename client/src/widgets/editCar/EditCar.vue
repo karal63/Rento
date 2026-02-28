@@ -40,7 +40,8 @@
         if (!props.originalCar) return;
 
         try {
-            editCar(props.originalCar, car.value);
+            await editCar(props.originalCar, car.value);
+
             showDialog(
                 'success',
                 t('app.edit_car_page.car_edited'),
