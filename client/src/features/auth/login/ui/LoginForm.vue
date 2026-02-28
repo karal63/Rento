@@ -7,6 +7,8 @@
     import Button from '@/shared/ui/button/Button.vue';
     import { Icon } from '@iconify/vue';
     import { useI18n } from 'vue-i18n';
+    import { showErrorDialog } from '@/features/dialog/@x';
+    import type { AppError } from '@/shared/model';
 
     const { t } = useI18n();
 
@@ -35,9 +37,13 @@
         if (!isValid) return;
 
         loading.value = true;
-        const res = await login(loginUser);
-        serverErrors.value = Array.isArray(res) ? res : res ? [res] : [];
-        loading.value = false;
+        try {
+            await login(loginUser);
+        } catch (error) {
+            showErrorDialog(error as AppError);
+        } finally {
+            loading.value = false;
+        }
     };
 </script>
 

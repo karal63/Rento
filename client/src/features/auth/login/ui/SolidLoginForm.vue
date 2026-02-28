@@ -1,19 +1,33 @@
 <script setup lang="ts">
-    import { Button, Input } from '@/shared/ui';
-    import { ref } from 'vue';
-    import type { LoginDto } from '../model/types';
-    import { login } from '../model/login.model';
+    import { onMounted, ref, type HTMLAttributes } from 'vue';
+    import { cn } from '@/shared/lib';
+    import { Button } from '@/shared/shadcn/ui/button';
+    import {
+        Card,
+        CardContent,
+        CardDescription,
+        CardHeader,
+        CardTitle,
+    } from '@/shared/shadcn/ui/card';
+    import { Field, FieldGroup, FieldLabel } from '@/shared/shadcn/ui/field';
+    import { Input } from '@/shared/shadcn/ui/input';
     import { useRouter } from 'vue-router';
-    import { showErrorDialog } from '@/features/dialog/@x';
-    import type { AppError } from '@/shared/model';
+    import { useI18n } from 'vue-i18n';
+    import type { LoginDto } from '../model/types';
     import useVuelidate from '@vuelidate/core';
     import { email, maxLength, required } from '@vuelidate/validators';
-    import { strongPassword } from '../model/validation';
-    import { useI18n } from 'vue-i18n';
+    import { login } from '../model/login.model';
+    import { showErrorDialog } from '@/features/dialog';
+    import type { AppError } from '@/shared/model';
+    import { baseURL } from '@/shared/config';
+
+    const props = defineProps<{
+        class?: HTMLAttributes['class'];
+    }>();
 
     const rules = {
         email: { required, email, maxLength: maxLength(254) },
-        password: { required, strongPassword },
+        password: { required },
     };
     const router = useRouter();
     const { t } = useI18n();
@@ -35,45 +49,69 @@
             showErrorDialog(error as AppError);
         }
     };
+
+    onMounted(() => {
+        const script = document.createElement('script');
+        script.src = 'https://telegram.org/js/telegram-widget.js?22';
+        script.async = true;
+        script.setAttribute('data-telegram-login', 'rento_cr_bot');
+        script.setAttribute('data-size', 'large');
+        script.setAttribute('data-userpic', 'false');
+        script.setAttribute('data-radius', '8');
+        script.setAttribute('data-auth-url', `${baseURL}auth/telegram?url=/`);
+
+        document.getElementById('telegram-login')?.appendChild(script);
+    });
 </script>
 
 <template>
-    <section class="flex items-center justify-center min-h-screen">
-        <div class="w-full max-w-xl rounded-2xl border border-main-border shadow-lg p-8">
-            <h1 class="text-3xl font-semibold">Welcome back!</h1>
-
-            <form @submit.prevent="handleSubmit" class="mt-8 space-y-5">
-                <div>
-                    <p v-if="v$.email.$error" class="text-red-500 text-sm font-medium mb-1">
-                        {{ t(`app.auth_form.${v$.email.$errors[0]?.$uid}`) }}
-                    </p>
-                    <label v-else class="block text-sm font-medium mb-1">Email</label>
-                    <Input
-                        v-model="loginDto.email"
-                        size="large"
-                        placeholder="you@example.com"
-                        class="w-full rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
-
-                <div>
-                    <div class="flex justify-between items-center mb-1">
-                        <p v-if="v$.password.$error" class="text-red-500 text-sm font-medium mb-1">
-                            {{ t(`app.login_form.${v$.password.$errors[0]?.$uid}`) }}
-                        </p>
-                        <label v-else class="block text-sm font-medium mb-1">Password</label>
-                    </div>
-                    <Input
-                        v-model="loginDto.password"
-                        size="large"
-                        type="password"
-                        placeholder="••••••••"
-                        class="w-full rounded-lg focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
-
-                <Button type="submit" size="md" class="mt-5 w-full">Sign in</Button>
-            </form>
-        </div>
-    </section>
+    <div :class="cn('flex flex-col gap-6 max-w-md', props.class)">
+        <Card>
+            <CardHeader>
+                <CardTitle>{{ t('app.login_page.card_title') }}</CardTitle>
+                <CardDescription>{{ t('app.login_page.card_desc') }}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <form @submit.prevent="handleSubmit">
+                    <FieldGroup>
+                        <Field>
+                            <p v-if="v$.email.$error" class="text-red-500 text-sm font-medium mb-1">
+                                {{ t(`app.login_page.${v$.email.$errors[0]?.$uid}`) }}
+                            </p>
+                            <FieldLabel v-else for="email">{{ t('app.auth.email') }}</FieldLabel>
+                            <Input
+                                v-model="loginDto.email"
+                                id="email"
+                                placeholder="m@example.com"
+                                required
+                            />
+                        </Field>
+                        <Field>
+                            <p
+                                v-if="v$.password.$error"
+                                class="text-red-500 text-sm font-medium mb-1"
+                            >
+                                {{ t(`app.login_page.${v$.password.$errors[0]?.$uid}`) }}
+                            </p>
+                            <FieldLabel v-else for="password">
+                                {{ t('app.auth.password') }}
+                            </FieldLabel>
+                            <Input
+                                v-model="loginDto.password"
+                                id="password"
+                                type="password"
+                                required
+                            />
+                        </Field>
+                        <Field>
+                            <Button type="submit">{{ t('app.auth.login') }}</Button>
+                            <div class="flex justify-center items-center">
+                                <div id="telegram-login"></div>
+                            </div>
+                        </Field>
+                    </FieldGroup>
+                </form>
+            </CardContent>
+        </Card>
+    </div>
 </template>

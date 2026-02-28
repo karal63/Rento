@@ -444,6 +444,14 @@
 
         "car_details_page": {
             "cars": "Samochody"
+        },
+
+        "login_page": {
+            "card_title": "Zaloguj się do swojego konta",
+            "card_desc": "Wprowadź swój adres e-mail poniżej, aby zalogować się do konta",
+            "email-required": "Adres e-mail jest wymagany",
+            "email-email": "Adres e-mail musi być prawidłowy",
+            "password-required": "Hasło jest wymagane"
         }
     }
 }
