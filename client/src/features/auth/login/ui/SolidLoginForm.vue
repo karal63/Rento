@@ -79,7 +79,10 @@
                 <form @submit.prevent="handleSubmit">
                     <FieldGroup>
                         <Field>
-                            <p v-if="v$.email.$error" class="text-red-500 text-sm font-medium mb-1">
+                            <p
+                                v-if="v$.email.$error"
+                                class="text-destructive text-sm font-medium mb-1"
+                            >
                                 {{ t(`app.login_page.${v$.email.$errors[0]?.$uid}`) }}
                             </p>
                             <FieldLabel v-else for="email">{{ t('app.auth.email') }}</FieldLabel>
@@ -93,7 +96,7 @@
                         <Field>
                             <p
                                 v-if="v$.password.$error"
-                                class="text-red-500 text-sm font-medium mb-1"
+                                class="text-destructive text-sm font-medium mb-1"
                             >
                                 {{ t(`app.login_page.${v$.password.$errors[0]?.$uid}`) }}
                             </p>
