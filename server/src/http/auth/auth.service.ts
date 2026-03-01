@@ -143,8 +143,7 @@ export class AuthService {
     }
 
     verifyTelegramData(data: TelegramLoginQuery) {
-        // remove maybe car id from data (do not pass car id)
-        const { hash, car_id, ...fields } = data;
+        const { hash, url, ...fields } = data;
         const dataCheckString = Object.keys(fields)
             .sort()
             .map((key) => `${key}=${fields[key]}`)
@@ -158,7 +157,6 @@ export class AuthService {
             .createHmac('sha256', secretKey)
             .update(dataCheckString)
             .digest('hex');
-        console.log(hmac, hash);
 
         return hmac === hash;
     }

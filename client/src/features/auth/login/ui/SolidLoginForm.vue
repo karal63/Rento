@@ -61,6 +61,10 @@
         script.setAttribute('data-auth-url', `${baseURL}auth/telegram?url=/`);
 
         document.getElementById('telegram-login')?.appendChild(script);
+
+        window.scrollTo({
+            top: 0,
+        });
     });
 </script>
 

@@ -38,7 +38,8 @@
             "quick_links": "Quick Links",
             "contact": "Contact",
             "home": "Home",
-            "cars": "Cars"
+            "cars": "Cars",
+            "login": "Login"
         },
         "auth": {
             "rent_details": "Rent details",

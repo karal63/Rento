@@ -30,6 +30,9 @@
                         <li>
                             <RouterLink to="/contact">{{ t('app.footer.contact') }}</RouterLink>
                         </li>
+                        <li>
+                            <RouterLink to="/login">{{ t('app.footer.login') }}</RouterLink>
+                        </li>
                     </ul>
                 </div>
 

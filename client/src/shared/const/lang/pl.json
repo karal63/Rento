@@ -38,7 +38,8 @@
             "quick_links": "Szybkie linki",
             "contact": "Kontakt",
             "home": "Strona główna",
-            "cars": "Lista samochodów"
+            "cars": "Lista samochodów",
+            "login": "Zaloguj się"
         },
         "auth": {
             "rent_details": "Szczegóły wynajmu",
