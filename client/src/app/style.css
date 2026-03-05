@@ -83,11 +83,6 @@
     }
 }
 
-body {
-    background-color: var(--color-main-bg);
-    color: var(--color-main-text);
-}
-
 .flex-center {
     display: flex;
     align-items: center;

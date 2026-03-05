@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-    <div class="h-[150px] bg-primary"></div>
+    <div class="mt-44 mb-24 h-[150px] bg-secondary"></div>
 </template>
