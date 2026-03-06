@@ -17,7 +17,7 @@
     import useVuelidate from '@vuelidate/core';
     import { email, maxLength, required } from '@vuelidate/validators';
     import { login } from '../model/login.model';
-    import { showErrorDialog } from '@/features/dialog';
+    import { showDialog, showErrorDialog } from '@/features/dialog/@x';
     import type { AppError } from '@/shared/model';
     import { baseURL } from '@/shared/config';
 
@@ -45,6 +45,11 @@
             if (!isValid) return;
             await login(loginDto.value);
             router.push('/');
+            showDialog(
+                'success',
+                t('app.login_page.success_login_msg'),
+                t('app.login_page.success_login_msg_desc')
+            );
         } catch (error) {
             showErrorDialog(error as AppError);
         }

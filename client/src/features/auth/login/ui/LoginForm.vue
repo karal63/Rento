@@ -7,7 +7,7 @@
     import Button from '@/shared/ui/button/Button.vue';
     import { Icon } from '@iconify/vue';
     import { useI18n } from 'vue-i18n';
-    import { showErrorDialog } from '@/features/dialog/@x';
+    import { showDialog, showErrorDialog } from '@/features/dialog/@x';
     import type { AppError } from '@/shared/model';
 
     const { t } = useI18n();
@@ -39,6 +39,11 @@
         loading.value = true;
         try {
             await login(loginUser);
+            showDialog(
+                'success',
+                t('app.login_page.success_login_msg'),
+                t('app.login_page.success_login_msg_desc')
+            );
         } catch (error) {
             showErrorDialog(error as AppError);
         } finally {

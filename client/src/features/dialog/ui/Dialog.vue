@@ -107,7 +107,7 @@
             >
                 <PopoverPanel
                     static
-                    class="fixed top-5 left-1/2 transform -translate-x-1/2 w-[350px] sm:w-[440px] rounded-md bg-pure-theme p-4 text-left shadow-xl flex gap-3"
+                    class="fixed top-5 left-1/2 transform -translate-x-1/2 w-[350px] sm:w-[440px] rounded-md bg-popover text-popover-foreground p-4 border border-border text-left shadow-xl flex gap-3"
                 >
                     <div>
                         <Icon

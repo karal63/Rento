@@ -62,7 +62,7 @@
     ></div>
 
     <nav
-        class="fixed top-0 left-0 bg-main-bg border-r border-main-border h-full w-60 py-5 z-20 transform transition"
+        class="fixed top-0 left-0 bg-sidebar text-sidebar-foreground border-r border-border h-full w-60 py-5 z-20 transform transition"
         :class="sidebarStore.isAdminOpen || !isMobile ? 'translate-x-0' : '-translate-x-full'"
     >
         <h1 class="text-2xl font-semibold text-center pt-4 pb-6 border-b border-main-border mx-5">
