@@ -78,7 +78,7 @@
                     class="border px-2 py-2 rounded-md flex items-center gap-2 cursor-pointer"
                     :class="
                         route.fullPath.includes(link.path)
-                            ? 'bg-main-gray-bg border-main-border shadow shadow-main-border'
+                            ? 'bg-secondary border-border shadow shadow-border'
                             : 'border-transparent'
                     "
                 >
@@ -151,7 +151,7 @@
 
                 <button
                     @click="handleMenu"
-                    class="bg-linear-to-br from-primary to-primary/50 text-white px-4 py-3 rounded-md w-full flex-between cursor-pointer"
+                    class="bg-secondary border border-border text-secondary-foreground px-4 py-3 rounded-md w-full flex-between cursor-pointer"
                 >
                     {{ userStore.user?.name }}
                     <Icon icon="pepicons-pencil:dots-y" />

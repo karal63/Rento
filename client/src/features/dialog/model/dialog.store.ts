@@ -6,13 +6,13 @@ import type { ErrorContext } from '@/shared/model';
 export const useDialogStore = defineStore('dialogStore', () => {
     const dialog = ref<{
         isOpen: boolean;
-        type: DialogType | '';
+        type: DialogType;
         message: string;
         description: string;
         context: ErrorContext | undefined;
     }>({
         isOpen: false,
-        type: '',
+        type: 'default',
         message: '',
         description: '',
         context: [],
