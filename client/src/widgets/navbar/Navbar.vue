@@ -23,7 +23,7 @@
 </script>
 
 <template>
-    <nav class="py-5 fixed top-0 w-full backdrop-blur-md bg-main-bg/30 z-20">
+    <nav class="py-5 fixed top-0 w-full backdrop-blur-md bg-background/30 z-20">
         <div class="max-w-[1700px] m-auto flex items-center flex-between px-5 md:px-10">
             <h3 class="text-3xl md:text-4xl font-semibold">
                 <RouterLink to="/">Rento</RouterLink>

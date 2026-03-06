@@ -11,7 +11,7 @@ function loadLocaleMessages() {
         const matched = path.match(/\.\/const\/lang\/([A-Za-z0-9-_]+)\.json$/i);
         if (matched && matched[1]) {
             const locale = matched[1];
-            messages[locale] = (locales[path] as any).default || locales[path];
+            messages[locale] = ((locales[path] as any).default as never) || locales[path];
             languages.push(locale);
         }
     }

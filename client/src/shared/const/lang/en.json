@@ -38,7 +38,8 @@
             "quick_links": "Quick Links",
             "contact": "Contact",
             "home": "Home",
-            "cars": "Cars"
+            "cars": "Cars",
+            "login": "Login"
         },
         "auth": {
             "rent_details": "Rent details",
@@ -444,6 +445,16 @@
 
         "car_details_page": {
             "cars": "Cars"
+        },
+
+        "login_page": {
+            "card_title": "Login to your account",
+            "card_desc": "Enter your email below to login to your account",
+            "email-required": "Email is required",
+            "email-email": "Email must be valid email",
+            "password-required": "Password is required",
+            "success_login_msg": "Logged in",
+            "success_login_msg_desc": "Successfully logged in to account"
         }
     }
 }

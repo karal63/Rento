@@ -23,7 +23,7 @@
 <template>
     <div
         @click="isChecked = !isChecked"
-        class="w-full text-left py-2 px-4 cursor-pointer flex items-center gap-3"
+        class="bg-popover text-popover-foreground w-full rounded-md text-left py-2 px-4 cursor-pointer flex items-center gap-3"
     >
         <button
             class="w-6 h-6 bg-main-hover-bg rounded-md border border-main-border cursor-pointer"

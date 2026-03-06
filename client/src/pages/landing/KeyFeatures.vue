@@ -7,7 +7,7 @@
 </script>
 
 <template>
-    <section class="max-w-[1500px] m-auto my-52 px-5">
+    <section class="max-w-[1500px] m-auto mb-52 px-5">
         <h1 class="text-5xl sm:text-6xl font-extrabold">
             {{ t('app.key_features') }}
         </h1>

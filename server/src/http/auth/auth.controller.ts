@@ -131,6 +131,6 @@ export class AuthController {
             httpOnly: true,
         });
 
-        return res.redirect(`${process.env.CORS_ORIGIN}/book/${query.car_id}`);
+        return res.redirect(`${process.env.CORS_ORIGIN}${query.url}`);
     }
 }

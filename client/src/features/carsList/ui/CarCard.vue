@@ -19,7 +19,7 @@
 </script>
 
 <template>
-    <div class="bg-main-gray-bg border border-main-border rounded-md overflow-hidden">
+    <div class="bg-card text-card-foreground border border-border rounded-md overflow-hidden">
         <div @click="select" class="h-[250px] sm:h-[400px] md:h-[300px] lg:h-[400px]">
             <img
                 :src="car.images[0]"
@@ -32,7 +32,9 @@
             <div>
                 <h1 class="text-2xl font-bold">{{ car.name }}</h1>
 
-                <div class="mt-8 text-base lg:text-lg flex-col gap-2 lg:gap-3 text-main-gray">
+                <div
+                    class="mt-8 text-base lg:text-lg flex-col gap-2 lg:gap-3 text-secondary-foreground"
+                >
                     <div class="flex-between">
                         <p>{{ t('app.acceleration') }}:</p>
                         <p class="font-semibold">

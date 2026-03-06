@@ -6,7 +6,7 @@
 </script>
 
 <template>
-    <footer class="bg-main-bg mt-12">
+    <footer class="bg-secondary text-secondary-foreground mt-12">
         <div class="max-w-[1700px] m-auto px-6 py-12">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                 <!-- Logo + description -->
@@ -29,6 +29,9 @@
                         </li>
                         <li>
                             <RouterLink to="/contact">{{ t('app.footer.contact') }}</RouterLink>
+                        </li>
+                        <li>
+                            <RouterLink to="/login">{{ t('app.footer.login') }}</RouterLink>
                         </li>
                     </ul>
                 </div>

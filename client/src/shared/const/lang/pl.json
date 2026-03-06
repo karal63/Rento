@@ -38,7 +38,8 @@
             "quick_links": "Szybkie linki",
             "contact": "Kontakt",
             "home": "Strona główna",
-            "cars": "Lista samochodów"
+            "cars": "Lista samochodów",
+            "login": "Zaloguj się"
         },
         "auth": {
             "rent_details": "Szczegóły wynajmu",
@@ -444,6 +445,14 @@
 
         "car_details_page": {
             "cars": "Samochody"
+        },
+
+        "login_page": {
+            "card_title": "Zaloguj się do swojego konta",
+            "card_desc": "Wprowadź swój adres e-mail poniżej, aby zalogować się do konta",
+            "email-required": "Adres e-mail jest wymagany",
+            "email-email": "Adres e-mail musi być prawidłowy",
+            "password-required": "Hasło jest wymagane"
         }
     }
 }

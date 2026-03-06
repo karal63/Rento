@@ -21,7 +21,7 @@
         script.setAttribute('data-size', 'large');
         script.setAttribute('data-userpic', 'false');
         script.setAttribute('data-radius', '8');
-        script.setAttribute('data-auth-url', `${baseURL}auth/telegram?car_id=${params.id}`);
+        script.setAttribute('data-auth-url', `${baseURL}auth/telegram?url=${'/book/' + params.id}`);
 
         document.getElementById('telegram-login')?.appendChild(script);
     });

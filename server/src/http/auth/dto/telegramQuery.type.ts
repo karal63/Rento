@@ -5,5 +5,5 @@ export type TelegramLoginQuery = {
     photo_url: string;
     auth_date: string;
     hash: string;
-    car_id: string;
+    url: string;
 };
