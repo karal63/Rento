@@ -7,7 +7,7 @@ import boundaries from 'eslint-plugin-boundaries';
 
 const config = [
     {
-        ignores: ['**/node_modules/**', '**/build/**', '**/*config.ts', 'eslint.config.*'],
+        ignores: ['**/node_modules/**', '**/dist/**', '**/*config.ts', 'eslint.config.*'],
     },
 
     // Spread TypeScript recommended rules directly

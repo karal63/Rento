@@ -5,7 +5,7 @@
 
     const props = defineProps<{
         class?: HTMLAttributes['class'];
-        errors?: Array<string | { message: string | undefined } | undefined>;
+        errors?: (string | { message: string | undefined } | undefined)[];
     }>();
 
     const content = computed(() => {
@@ -15,6 +15,7 @@
             ...new Map(
                 props.errors.filter(Boolean).map(error => {
                     const message = typeof error === 'string' ? error : error?.message;
+
                     return [message, error];
                 })
             ).values(),
