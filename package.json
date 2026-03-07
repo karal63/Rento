@@ -1,0 +1,13 @@
+{
+    "private": true,
+    "workspaces": [
+        "client",
+        "server"
+    ],
+    "scripts": {
+        "dev": "concurrently \"npm run dev --prefix client\" \"npm run start:dev --prefix server\""
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.1"
+    }
+}
