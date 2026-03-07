@@ -12,7 +12,6 @@
     },
     "dependencies": {
         "@iconify/vue": "^5.0.0",
-        "@stripe/stripe-js": "^8.6.0",
         "@tailwindcss/vite": "^4.1.17",
         "@tanstack/vue-query": "^5.92.8",
         "@vue-stripe/vue-stripe": "^5.2.1",
