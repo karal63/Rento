@@ -34,6 +34,8 @@ Administrators have full system control and are responsible for managing the pla
     - Cars
 - Viewing dashboard with statistics
 
+---
+
 ## 🌟 Technology stack
 
 #### Frontend
@@ -66,6 +68,8 @@ Administrators have full system control and are responsible for managing the pla
 - JWT
 - Cloudinary
 - Stripe
+
+---
 
 ## 📑 Architecture
 
@@ -106,13 +110,7 @@ src/
  │   └─ ui/
 ```
 
-## 💡 Future ideas
-
-- Implement discounts
-
-- TODO something
-
-- TODO something
+---
 
 ## ⚡ Run Locally
 
@@ -141,6 +139,18 @@ Start the server
 ```
 
 App is running now on [https://localhost:5173](https://localhost:5173)
+
+---
+
+## 💡 Future ideas
+
+- Implement discounts
+
+- TODO something
+
+- TODO something
+
+---
 
 ## ✍️ Project Objectives
 
