@@ -5,7 +5,9 @@
         "server"
     ],
     "scripts": {
-        "dev": "concurrently \"npm run dev --prefix client\" \"npm run start:dev --prefix server\""
+        "dev": "concurrently \"npm run dev --prefix client\" \"npm run start:dev --prefix server\"",
+        "format": "concurrently \"npm run format --prefix client\" \"npm run format --prefix server\"",
+        "prepare": "husky"
     },
     "devDependencies": {
         "concurrently": "^9.2.1"
