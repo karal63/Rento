@@ -23,15 +23,15 @@ import { CloudinaryModule } from './http/cloudinary/cloudinary.module';
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: `.env.${process.env.NODE_ENV}`,
+            envFilePath: `.env.${process.env.NODE_ENV}.local`,
             isGlobal: true,
         }),
         ServeStaticModule.forRoot({
             rootPath: join(__dirname, '..', 'public'), // path to Vue build
             exclude: ['/api', '/auth'], // simple string prefixes
         }),
-        CarModule,
         MongooseModule.forRoot(process.env.MONGODB_URI!),
+        CarModule,
         RentModule,
         AuthModule,
         UserModule,

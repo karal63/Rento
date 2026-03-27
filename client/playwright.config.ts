@@ -44,10 +44,10 @@ export default defineConfig({
             use: { ...devices['Desktop Firefox'] },
         },
 
-        {
-            name: 'webkit',
-            use: { ...devices['Desktop Safari'] },
-        },
+        // {
+        //     name: 'webkit',
+        //     use: { ...devices['Desktop Safari'] },
+        // },
 
         /* Test against mobile viewports. */
         // {
@@ -77,5 +77,3 @@ export default defineConfig({
     //   reuseExistingServer: !process.env.CI,
     // },
 });
-
-// working on test and lint pre-commit

@@ -61,8 +61,7 @@ export class CarService {
     }
 
     async addCar(car: AddCarDto) {
-        const newCar = new this.carModel(car);
-        await newCar.save();
+        return this.carModel.create(car);
     }
 
     async removeCar(id: string) {
@@ -72,15 +71,21 @@ export class CarService {
         await car.deleteOne();
     }
 
-    async editCar(id: string, body: EditCarDto) {
-        const car = await this.carModel.findById(id);
-        if (!car) throw new NotFoundException(LogCode.CODE_C004);
+    async editCar(id: string, body: EditCarDto): Promise<Car> {
+        console.log(body);
 
         const updateData = this.flattenObject(body);
+        console.log(updateData);
 
-        await car.updateOne({
-            $set: updateData,
-        });
+        const updated = await this.carModel.findByIdAndUpdate(
+            id,
+            { $set: updateData },
+            { new: true },
+        );
+
+        if (!updated) throw new NotFoundException(LogCode.CODE_C004);
+
+        return updated;
     }
 
     flattenObject<T extends object>(
