@@ -25,6 +25,13 @@ jobs:
 
             - name: Run e2e tests
               run: npm run test:e2e
+              env:
+                  STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+                  CORS_ORIGIN: http://localhost:5173
+                  PORT: 2000
+                  MONGODB_URI: "mongodb://127.0.0.1:27017/test"
+                  JWT_ACCESS_SECRET: "secret_access_token"
+                  JWT_REFRESH_SECRET: "secret_refresh_token"
 
             - uses: actions/upload-artifact@v4
               if: ${{ !cancelled() }}
