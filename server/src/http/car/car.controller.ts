@@ -7,7 +7,6 @@ import {
     Patch,
     Post,
     Query,
-    Req,
 } from '@nestjs/common';
 import { CarService } from './car.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -18,6 +17,7 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { AddCarDto } from './dto/addCar.dto';
 import { EditCarDto } from './dto/editCar.dto';
+import { GetAllCarsDto } from './dto/getAllCars.dto';
 
 @ApiTags('Cars')
 @Controller('cars')
@@ -28,10 +28,8 @@ export class CarController {
     @ApiOperation({ summary: 'Get all cars' })
     @ApiResponse({ status: 200, description: 'Returns a list of cars.' })
     @Get()
-    async getAllCars(@Req() req: Request) {
-        const { cars, pages, brands } = await this.carService.findAll(
-            req.query as any,
-        );
+    async getAllCars(@Query() query: GetAllCarsDto) {
+        const { cars, pages, brands } = await this.carService.findAll(query);
         return { cars, pagesAmount: pages, allBrands: brands };
     }
 

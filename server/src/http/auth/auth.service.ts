@@ -143,7 +143,7 @@ export class AuthService {
     }
 
     verifyTelegramData(data: TelegramLoginQuery) {
-        const { hash, url, ...fields } = data;
+        const { hash, ...fields } = data;
         const dataCheckString = Object.keys(fields)
             .sort()
             .map((key) => `${key}=${fields[key]}`)

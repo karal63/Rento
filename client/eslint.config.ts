@@ -21,7 +21,6 @@ const config = [
         languageOptions: { parserOptions: { parser: tseslint.parser } },
         rules: {
             'vue/multi-word-component-names': 'off',
-            '@typescript-eslint/no-unused-vars': 'warn',
             // 'vue/html-indent': ['error', 4],
             'vue/html-self-closing': [
                 'error',

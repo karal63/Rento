@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepo } from '../user/user.repository';
 import { RentalRepo } from '../rent/rental.repository';
-import { DashboardDto } from './dto/dashboard.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Rent } from 'src/schemas/rentSchema';
 import { Model } from 'mongoose';
@@ -17,7 +16,7 @@ export class DashboardService {
         @InjectModel(User.name) private userModel: Model<User>,
     ) {}
 
-    async getSummary(query: DashboardDto) {
+    async getSummary() {
         // users
         const [
             totalUsers,

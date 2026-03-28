@@ -6,18 +6,13 @@ import { GetFoundCarsDto } from './dto/getFoundCars.dto';
 import { AddCarDto } from './dto/addCar.dto';
 import { LogCode } from 'src/enums';
 import { EditCarDto } from './dto/editCar.dto';
-
-type Query = {
-    page: string;
-    brand?: string[];
-    search?: string;
-};
+import { GetAllCarsDto } from './dto/getAllCars.dto';
 
 @Injectable()
 export class CarService {
     constructor(@InjectModel(Car.name) private carModel: Model<Car>) {}
 
-    async findAll(query: Query) {
+    async findAll(query: GetAllCarsDto) {
         const limit = 16;
         const page = parseInt(query.page, 10) || 1;
         const offset = (page - 1) * limit;

@@ -38,7 +38,7 @@ describe('CarsService', () => {
         expect(service).toBeDefined();
     });
 
-    let carId;
+    let carId: string;
 
     it('should add car', async () => {
         const mockedCar: AddCarDto = {
@@ -66,7 +66,7 @@ describe('CarsService', () => {
         };
 
         const result = await service.addCar(mockedCar);
-        carId = result._id;
+        carId = result._id.toString();
 
         expect(result).toMatchObject({
             name: mockedCar.name,
@@ -84,5 +84,3 @@ describe('CarsService', () => {
         });
     });
 });
-
-// solve problem with ts error

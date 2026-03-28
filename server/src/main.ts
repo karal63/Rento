@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
+import { IncomingMessage, ServerResponse } from 'http';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -31,7 +32,11 @@ async function bootstrap() {
     app.use(cookieParser());
     app.use(
         bodyParser.json({
-            verify: (req: any, _res, buf) => {
+            verify: (
+                req: IncomingMessage & { rawBody?: Buffer },
+                _res: ServerResponse,
+                buf: Buffer,
+            ) => {
                 req.rawBody = buf;
             },
         }),
@@ -46,7 +51,7 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/api/docs', app, document);
 
-    console.log(process.env.PORT);
     await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+
+void bootstrap();
