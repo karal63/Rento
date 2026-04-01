@@ -6,18 +6,13 @@ import { GetFoundCarsDto } from './dto/getFoundCars.dto';
 import { AddCarDto } from './dto/addCar.dto';
 import { LogCode } from 'src/enums';
 import { EditCarDto } from './dto/editCar.dto';
-
-type Query = {
-    page: string;
-    brand?: string[];
-    search?: string;
-};
+import { GetAllCarsDto } from './dto/getAllCars.dto';
 
 @Injectable()
 export class CarService {
     constructor(@InjectModel(Car.name) private carModel: Model<Car>) {}
 
-    async findAll(query: Query) {
+    async findAll(query: GetAllCarsDto) {
         const limit = 16;
         const page = parseInt(query.page, 10) || 1;
         const offset = (page - 1) * limit;
@@ -61,8 +56,7 @@ export class CarService {
     }
 
     async addCar(car: AddCarDto) {
-        const newCar = new this.carModel(car);
-        await newCar.save();
+        return this.carModel.create(car);
     }
 
     async removeCar(id: string) {
@@ -72,15 +66,21 @@ export class CarService {
         await car.deleteOne();
     }
 
-    async editCar(id: string, body: EditCarDto) {
-        const car = await this.carModel.findById(id);
-        if (!car) throw new NotFoundException(LogCode.CODE_C004);
+    async editCar(id: string, body: EditCarDto): Promise<Car> {
+        console.log(body);
 
         const updateData = this.flattenObject(body);
+        console.log(updateData);
 
-        await car.updateOne({
-            $set: updateData,
-        });
+        const updated = await this.carModel.findByIdAndUpdate(
+            id,
+            { $set: updateData },
+            { new: true },
+        );
+
+        if (!updated) throw new NotFoundException(LogCode.CODE_C004);
+
+        return updated;
     }
 
     flattenObject<T extends object>(

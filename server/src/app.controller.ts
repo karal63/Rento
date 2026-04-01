@@ -1,12 +1,15 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from './common/decorators/public.decorator';
 
-// @ApiTags('Welcome message')
-@Controller()
+@ApiTags('Root')
+@Controller('/')
 export class AppController {
-    // @ApiOperation({ summary: 'Get welcome message' })
-    // @ApiResponse({ status: 200, description: 'Returns a welcome message.' })
-    // @Get()
-    // getHello(): string {
-    //     return this.appService.getHello();
-    // }
+    @ApiOperation({ summary: 'Health check' })
+    @ApiResponse({ status: 200, description: 'Checks health.' })
+    @Public()
+    @Get('/')
+    getHello(): string {
+        return 'OK';
+    }
 }

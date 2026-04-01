@@ -1,4 +1,10 @@
 services:
+    mongo:
+        image: mongo:latest
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongo-data:/data/db
     app:
         build:
             context: .
@@ -6,4 +12,13 @@ services:
         ports:
             - "3000:3000"
         env_file:
-            - server/.env
+            - server/.env.production.local
+        depends_on:
+            - mongo
+
+volumes:
+    mongo-data:
+
+# some problem with db connection
+# set CLOUDINARY_URL in secrets
+# test if connects to database and consider that app container doesnt have schemas yet

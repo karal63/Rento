@@ -79,9 +79,15 @@
                 }: {
                     series: number[][];
                     dataPointIndex: number;
-                    w: any;
+                    w: {
+                        globals: {
+                            seriesX: number[][];
+                            colors: string[];
+                            seriesNames: string[];
+                        };
+                    };
                 }): string {
-                    const timestamp = w.globals.seriesX[0][dataPointIndex];
+                    const timestamp = w.globals.seriesX[0]![dataPointIndex]!;
 
                     const dateLabel = new Date(timestamp).toLocaleDateString('en-US', {
                         month: 'short',

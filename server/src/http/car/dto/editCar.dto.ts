@@ -81,35 +81,35 @@ export class EditCarDto {
     @IsString()
     @Length(2, 100)
     @IsOptional()
-    name: string;
+    name?: string;
 
     @ApiProperty({ example: 'https://example.com/car-image.jpg' })
     @ArrayMinSize(1)
     @ArrayMaxSize(10)
     @IsOptional()
-    images: string[];
+    images?: string[];
 
     @ApiProperty({ description: 'Car details', type: CarDetailsDto })
     @ValidateNested()
     @Type(() => CarDetailsDto)
     @IsOptional()
-    details: CarDetailsDto;
+    details?: CarDetailsDto;
 
     @ApiProperty({ example: 30000, description: 'Deposit amount in zl' })
     @IsInt()
     @Min(0)
     @IsOptional()
-    deposit: number;
+    deposit?: number;
 
     @ApiProperty({ description: 'Car pricing', type: CarPricingDto })
     @ValidateNested()
     @Type(() => CarPricingDto)
     @IsOptional()
-    pricing: CarPricingDto;
+    pricing?: CarPricingDto;
 
     @ApiProperty({ example: 'Lamborghini', description: 'Car brand' })
     @IsString()
     @Length(2, 100)
     @IsOptional()
-    brand: string;
+    brand?: string;
 }

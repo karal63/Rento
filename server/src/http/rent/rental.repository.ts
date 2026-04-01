@@ -87,7 +87,9 @@ export class RentalRepo {
 
     async getTotalOverdueRentals() {
         // return await this.rentalModel.find({status: ''})
-        return 'not implemented';
+        return new Promise((resolve) => {
+            resolve('not implemented');
+        });
     }
 
     async getLastPayments() {

@@ -18,10 +18,16 @@ const config = [
 
     {
         files: ['**/*.vue'],
-        languageOptions: { parserOptions: { parser: tseslint.parser } },
+        languageOptions: {
+            parserOptions: {
+                parser: tseslint.parser,
+                tsconfigRootDir: __dirname,
+                project: ['./tsconfig.app.json'],
+                extraFileExtensions: ['.vue'],
+            },
+        },
         rules: {
             'vue/multi-word-component-names': 'off',
-            '@typescript-eslint/no-unused-vars': 'warn',
             // 'vue/html-indent': ['error', 4],
             'vue/html-self-closing': [
                 'error',
@@ -56,7 +62,9 @@ const config = [
                 ecmaVersion: 2020,
                 sourceType: 'module',
                 parser: tseslint.parser,
-                project: [path.resolve('./tsconfig.app.json')], // enables type-aware linting
+                tsconfigRootDir: __dirname,
+                project: ['./tsconfig.app.json'],
+                extraFileExtensions: ['.vue'],
             },
             globals: { ...globals.browser },
         },

@@ -1,15 +1,28 @@
 {
-    "private": true,
-    "workspaces": [
-        "client",
-        "server"
-    ],
-    "scripts": {
-        "dev": "concurrently \"npm run dev --prefix client\" \"npm run start:dev --prefix server\"",
-        "format": "concurrently \"npm run format --prefix client\" \"npm run format --prefix server\"",
-        "prepare": "husky"
-    },
-    "devDependencies": {
-        "concurrently": "^9.2.1"
-    }
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "lint-staged": {
+    "*.{js,ts,vue,css,json}": [
+      "npm run format",
+      "npm run lint"
+    ]
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run start:dev --prefix server\" \"npm run dev --prefix client\"",
+    "format": "cd client && npm run format && cd ../server && npm run format",
+    "lint": "cd client && npm run lint && cd ../server npm run lint",
+    "prepare": "husky || true",
+    "test:unit": "cd server && npm run test",
+    "test:e2e": "cd client && npm run test:e2e && cd ../server && npm run test:e2e"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "husky": "^9.1.7"
+  },
+  "dependencies": {
+    "lint-staged": "^16.4.0"
+  }
 }
