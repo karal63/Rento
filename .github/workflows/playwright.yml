@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Rento CI
 on:
     push:
         branches: [main, master]
@@ -6,6 +6,11 @@ on:
         branches: [main, master]
 jobs:
     test:
+        services:
+            mongodb:
+                image: mongo:latest
+                ports:
+                    - 27017:27017
         timeout-minutes: 60
         runs-on: ubuntu-latest
         steps:

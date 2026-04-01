@@ -1,22 +1,32 @@
-# ---- 1. Build client ----
-FROM node:20 AS client-builder
+FROM node:20 AS builder
 
-WORKDIR /app/client
-COPY client/package*.json ./
-RUN npm install
-COPY client .
-RUN npm run build
+WORKDIR /app
+COPY package*.json ./
+COPY client ./client
+COPY server ./server
 
+RUN npm ci
+RUN npm run build --workspace=client
+RUN npm run build --workspace=server
 
-# ---- 2. Server runtime ----
 FROM node:20
+
+WORKDIR /app
+
+# Copy server code
+COPY --from=builder /app/server ./server
+
+# Copy built client
+COPY --from=builder /app/client/dist ./server/public
+COPY --from=builder /app/server/dist ./server/dist
+
+# Copy package files (important!)
+COPY package*.json ./
+
+ENV NODE_ENV=production
+ENV HUSKY=0
+RUN npm ci --omit=dev
 
 WORKDIR /app/server
 
-COPY server/package*.json ./
-RUN npm install --production
-COPY server .
-COPY --from=client-builder /app/client/dist ./public
-
-EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["node", "dist/main.js"]

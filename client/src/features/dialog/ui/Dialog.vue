@@ -9,7 +9,7 @@
 
     const dialogStore = useDialogStore();
     const { t } = useI18n();
-    const timeout = ref<number | null>(null);
+    const timeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
     const getIcon = computed(() => {
         switch (dialogStore.dialog.type) {
