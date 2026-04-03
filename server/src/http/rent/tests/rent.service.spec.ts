@@ -16,7 +16,9 @@ describe('CarsService', () => {
     let mongod: MongoMemoryServer;
 
     beforeAll(async () => {
-        mongod = await MongoMemoryServer.create();
+        mongod = await MongoMemoryServer.create({
+            binary: { version: '6.0.14' },
+        });
 
         const uri = mongod.getUri();
 
