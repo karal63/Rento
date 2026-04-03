@@ -21,7 +21,7 @@ export class EditDto {
     @IsString()
     @Length(3, 25)
     @IsOptional()
-    name: string;
+    name?: string;
 
     @ApiProperty({
         example: 'Your second name',
@@ -30,7 +30,7 @@ export class EditDto {
     @IsString()
     @Length(3, 25)
     @IsOptional()
-    secondName: string;
+    secondName?: string;
 
     @ApiProperty({
         example: 'leo@gmail.com',
@@ -39,7 +39,7 @@ export class EditDto {
     @IsEmail()
     @MaxLength(254)
     @IsOptional()
-    email: string;
+    email?: string;
 
     @ApiProperty({
         example: '+12345678910',
@@ -47,7 +47,7 @@ export class EditDto {
     })
     @IsPhoneNumber()
     @IsOptional()
-    phoneNumber: string;
+    phoneNumber?: string;
 
     @ApiProperty({
         example: '1._Aqq@/2',
@@ -56,7 +56,7 @@ export class EditDto {
     @IsString()
     @IsStrongPassword()
     @IsOptional()
-    password: string;
+    password?: string;
 
     @ApiPropertyOptional({
         example: ['admin'],
@@ -68,5 +68,5 @@ export class EditDto {
     @ArrayMinSize(1)
     @IsEnum(Role, { each: true })
     @IsOptional()
-    roles: Role[];
+    roles?: Role[];
 }
