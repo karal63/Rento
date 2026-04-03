@@ -241,7 +241,7 @@ export class RentalRepo {
     }
 
     async cancel(id: string) {
-        await this.rentalModel.findByIdAndUpdate(id, {
+        return await this.rentalModel.findByIdAndUpdate(id, {
             $set: { status: Status.Cancelled, cancelledAt: Date.now() },
         });
     }

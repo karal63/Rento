@@ -67,10 +67,7 @@ export class CarService {
     }
 
     async editCar(id: string, body: EditCarDto): Promise<Car> {
-        console.log(body);
-
         const updateData = this.flattenObject(body);
-        console.log(updateData);
 
         const updated = await this.carModel.findByIdAndUpdate(
             id,

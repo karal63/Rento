@@ -16,7 +16,7 @@ export class AdminUpdateDto {
     })
     @IsString()
     @IsOptional()
-    carId: string;
+    carId?: string;
 
     @ApiPropertyOptional({
         example: '692f4e940bb25367ab854f7e',
@@ -24,7 +24,7 @@ export class AdminUpdateDto {
     })
     @IsString()
     @IsOptional()
-    employee: string;
+    employee?: string;
 
     @ApiPropertyOptional({
         example: '692f4e940bb25367ab854f7e',
@@ -32,7 +32,7 @@ export class AdminUpdateDto {
     })
     @IsString()
     @IsOptional()
-    userId: string;
+    userId?: string;
 
     @ApiPropertyOptional({
         example: '1766345820000',
@@ -40,7 +40,7 @@ export class AdminUpdateDto {
     })
     @IsNumber()
     @IsOptional()
-    rentFrom: number;
+    rentFrom?: number;
 
     @ApiPropertyOptional({
         example: '1766345820000',
@@ -48,7 +48,7 @@ export class AdminUpdateDto {
     })
     @IsNumber()
     @IsOptional()
-    rentTo: number;
+    rentTo?: number;
 
     @ApiPropertyOptional({
         example: 'Airport XYZ',
@@ -58,7 +58,7 @@ export class AdminUpdateDto {
     @IsString()
     @Length(4, 50)
     @IsOptional()
-    pickupLocation: string;
+    pickupLocation?: string;
 
     @ApiPropertyOptional({
         example: '09:00',
@@ -67,7 +67,7 @@ export class AdminUpdateDto {
     @IsString()
     @IsOptional()
     @Matches(/^([01]\d|2[0-3]):([0-5]\d)$/)
-    pickupTime: string;
+    pickupTime?: string;
 
     @ApiPropertyOptional({
         example: 'Completed',
@@ -75,5 +75,5 @@ export class AdminUpdateDto {
     })
     @IsEnum(Status)
     @IsOptional()
-    status: string;
+    status?: string;
 }
