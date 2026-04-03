@@ -12,7 +12,9 @@ describe('CarsService', () => {
     let mongod: MongoMemoryServer;
 
     beforeAll(async () => {
-        mongod = await MongoMemoryServer.create();
+        mongod = await MongoMemoryServer.create({
+            binary: { version: '6.0.14' },
+        });
 
         const uri = mongod.getUri();
 
@@ -34,13 +36,13 @@ describe('CarsService', () => {
         await mongod.stop();
     });
 
-    it('should be defined', () => {
+    it('CAR_000: health check', () => {
         expect(service).toBeDefined();
     });
 
     let carId: string;
 
-    it('should add car', async () => {
+    it('CAR_001: should add car', async () => {
         const mockedCar: AddCarDto = {
             name: 'BMW M4 Competition',
             images: [
@@ -74,7 +76,7 @@ describe('CarsService', () => {
         });
     });
 
-    it('should edit car', async () => {
+    it('CAR_002: should edit car', async () => {
         const mockedPayload: EditCarDto = {
             name: 'Mocked name',
         };
@@ -82,5 +84,29 @@ describe('CarsService', () => {
         expect(editedCar).toMatchObject({
             name: mockedPayload.name,
         });
+    });
+
+    it('CAR_004: should flatten object', () => {
+        const nestedObject = {
+            name: 'BMW M4 Competition',
+            details: {
+                horsepower: 510,
+                transmission: 'Automatic (8-speed Steptronic)',
+            },
+        };
+
+        const flattened = service.flattenObject(nestedObject);
+
+        expect(flattened).toEqual({
+            name: 'BMW M4 Competition',
+            'details.horsepower': 510,
+            'details.transmission': 'Automatic (8-speed Steptronic)',
+        });
+    });
+
+    it('CAR_005: should remove car', async () => {
+        await service.removeCar(carId);
+        const deletedCar = await service.find(carId);
+        expect(deletedCar).toBeNull();
     });
 });

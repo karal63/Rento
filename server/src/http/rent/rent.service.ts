@@ -47,7 +47,7 @@ export class RentService {
 
     async createRent(rent: Rent) {
         const newRent = new this.rentModel(rent);
-        await newRent.save();
+        return await newRent.save();
     }
 
     async findRentalBySessionId(sessionId: string, userId: string) {
@@ -86,7 +86,10 @@ export class RentService {
     async updateRental(rentalId: string, userId: string, body: UserUpdateDto) {
         const updatedRental = await this.rentModel
             .findOneAndUpdate(
-                { _id: rentalId, userId: new Types.ObjectId(userId) }, // ownership check
+                {
+                    _id: new Types.ObjectId(rentalId),
+                    userId: new Types.ObjectId(userId),
+                }, // ownership check
                 {
                     $set: {
                         pickupTime: body.time,
@@ -172,9 +175,13 @@ export class RentService {
     }
 
     async assign(rentalId: string, employeId: string) {
-        await this.rentModel.findByIdAndUpdate(rentalId, {
-            employee: new Types.ObjectId(employeId),
-        });
+        return await this.rentModel.findByIdAndUpdate(
+            rentalId,
+            {
+                employee: new Types.ObjectId(employeId),
+            },
+            { new: true },
+        );
     }
 
     async unassign(rentalId: string, user: UserPayload) {
@@ -189,12 +196,20 @@ export class RentService {
             throw new ForbiddenException(LogCode.CODE_R009);
         }
 
-        await this.rentModel.findByIdAndUpdate(rentalId, {
-            employee: null,
-        });
+        return await this.rentModel.findByIdAndUpdate(
+            rentalId,
+            {
+                employee: null,
+            },
+            { new: true },
+        );
     }
 
     async changeStatus(rentalId: string, status: Status) {
         await this.rentalRepo.changeStatus(rentalId, status);
+    }
+
+    async findRentalById(id: string) {
+        return await this.rentalRepo.findRentalById(id);
     }
 }
