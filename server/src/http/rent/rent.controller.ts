@@ -146,8 +146,7 @@ export class RentController {
             employee: body.employee ? new Types.ObjectId(body.employee) : null,
             totalPrice: 0,
         };
-        await this.rentalService.createRent(readyBody);
-        return;
+        return await this.rentalService.createRent(readyBody);
     }
 
     @ApiOperation({ summary: 'Find a rental by ID' })

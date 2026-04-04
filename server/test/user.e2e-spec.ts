@@ -1,4 +1,4 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
@@ -13,7 +13,6 @@ import { Connection } from 'mongoose';
 import { getConnectionToken } from '@nestjs/mongoose';
 import { createUser } from './utils/user/createUser';
 import { getAccessToken } from './utils/getAccessToken';
-import { SignupDto } from 'src/http/auth/dto/signup.dto';
 
 describe('UserController (e2e)', () => {
     let app: INestApplication<App>;
@@ -22,24 +21,21 @@ describe('UserController (e2e)', () => {
     let token: string;
 
     beforeEach(async () => {
-        const moduleFixture: TestingModule = await Test.createTestingModule({
+        const moduleFixture = await Test.createTestingModule({
             imports: [AppModule],
         }).compile();
 
         app = moduleFixture.createNestApplication();
+        connection = app.get<Connection>(getConnectionToken());
+
         app.use(cookieParser());
         await app.init();
-        connection = app.get<Connection>(getConnectionToken());
-    });
 
-    beforeEach(async () => {
         await resetDatabase(connection);
     });
 
     afterAll(async () => {
         if (app) {
-            console.log('close');
-
             await app.close();
         }
     });
@@ -141,9 +137,3 @@ describe('UserController (e2e)', () => {
             .expect(200);
     });
 });
-
-// PLAN
-// migrate db in ci that it already has user with admin
-// log in
-// but this is only ci
-// think how to do locally

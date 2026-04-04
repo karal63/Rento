@@ -30,7 +30,18 @@ import { CloudinaryModule } from './http/cloudinary/cloudinary.module';
             rootPath: join(__dirname, '..', 'public'), // path to Vue build
             exclude: ['/api', '/auth'], // simple string prefixes
         }),
-        MongooseModule.forRoot(process.env.MONGODB_URI!),
+        MongooseModule.forRootAsync({
+            useFactory: () => {
+                const workerId = process.env.JEST_WORKER_ID || '1';
+
+                return {
+                    uri:
+                        process.env.NODE_ENV === 'test'
+                            ? `${process.env.MONGODB_URI}_${workerId}`
+                            : process.env.MONGODB_URI,
+                };
+            },
+        }),
         CarModule,
         RentModule,
         AuthModule,
