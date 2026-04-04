@@ -46,7 +46,7 @@ export class CarController {
     @Roles(Role.Admin)
     @Post('add')
     async addCar(@Body() body: AddCarDto) {
-        await this.carService.addCar(body);
+        return await this.carService.addCar(body);
     }
 
     @ApiOperation({ summary: 'Remove car' })
