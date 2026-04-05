@@ -1,3 +1,5 @@
+/// <reference types="vitest/config" />
+
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import tailwindcss from '@tailwindcss/vite';
@@ -13,5 +15,9 @@ export default defineConfig({
     },
     server: {
         allowedHosts: ['maniacally-clodhopping-bernice.ngrok-free.dev'],
+    },
+    test: {
+        include: ['**/*.test.*'],
+        environment: 'jsdom',
     },
 });

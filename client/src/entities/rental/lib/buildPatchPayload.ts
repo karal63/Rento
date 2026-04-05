@@ -40,7 +40,5 @@ export const buildPatchPayload = (
         result.status = newRental.status;
     }
 
-    console.log(result);
-
     return result;
 };
