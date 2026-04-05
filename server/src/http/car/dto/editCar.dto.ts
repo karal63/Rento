@@ -18,62 +18,62 @@ class CarDetailsDto {
     @Min(0)
     @Max(20)
     @IsOptional()
-    accelerationTo100: number;
+    accelerationTo100?: number;
 
     @IsInt()
     @Min(1)
     @Max(3000)
     @IsOptional()
-    horsepower: number;
+    horsepower?: number;
 
     @IsInt()
     @Min(1)
     @Max(5000)
     @IsOptional()
-    torqueNm: number;
+    torqueNm?: number;
 
     @IsString()
     @Length(3, 50)
     @IsOptional()
-    transmission: string;
+    transmission?: string;
 
     @IsInt()
     @Min(1)
     @Max(20)
     @IsOptional()
-    numberOfSeats: number;
+    numberOfSeats?: number;
 }
 
 class CarPricingDto {
     @IsNumber()
     @Min(0)
     @IsOptional()
-    day: number;
+    day?: number;
 
     @IsNumber()
     @Min(0)
     @IsOptional()
-    days2_3: number;
+    days2_3?: number;
 
     @IsNumber()
     @Min(0)
     @IsOptional()
-    days4_6: number;
+    days4_6?: number;
 
     @IsNumber()
     @Min(0)
     @IsOptional()
-    days7_13: number;
+    days7_13?: number;
 
     @IsNumber()
     @Min(0)
     @IsOptional()
-    days14_29: number;
+    days14_29?: number;
 
     @IsNumber()
     @Min(0)
     @IsOptional()
-    month: number;
+    month?: number;
 }
 
 export class EditCarDto {

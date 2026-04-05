@@ -42,7 +42,7 @@ export class AuthController {
             maxAge: 30 * 24 * 60 * 60 * 1000,
             httpOnly: true,
         });
-        res.status(200).json({ user });
+        res.status(201).json({ user });
     }
 
     @Public()
@@ -67,7 +67,7 @@ export class AuthController {
             sameSite: 'none',
             httpOnly: true,
         });
-        res.status(200).json({ user });
+        res.status(201).json({ user });
     }
 
     @ApiOperation({ summary: 'Log out' })
