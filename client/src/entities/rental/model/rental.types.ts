@@ -26,10 +26,10 @@ export type RentalWithCar = Rental & {
     carId: Car;
 };
 
-export type RentalWithAllDetails = Rental & {
+export type RentalWithAllDetails = Omit<Rental, 'carId' | 'userId' | 'employee'> & {
     carId: Car;
     userId: User;
-    employee: User;
+    employee: User | null;
 };
 
 export const RENTAL_STATUS = {

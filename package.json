@@ -15,7 +15,7 @@
     "format": "cd client && npm run format && cd ../server && npm run format",
     "lint": "cd client && npm run lint && cd ../server npm run lint",
     "prepare": "husky || true",
-    "test:unit": "cd server && npm run test",
+    "test:unit": "cd client && npm run test && cd ../server && npm run test",
     "test:e2e": "cd client && npm run test:e2e && cd ../server && npm run test:e2e"
   },
   "devDependencies": {
