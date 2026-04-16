@@ -95,10 +95,11 @@
                                     {{ t('app.auth.name') }}
                                 </p>
                                 <Input
-                                    size="medium"
                                     v-model="user.name"
-                                    :is-error="v$.name.$error || errorFields.includes('name')"
                                     @onUpdate="$emit('clearError', 'name')"
+                                    data-testid="user-name-input"
+                                    size="medium"
+                                    :is-error="v$.name.$error || errorFields.includes('name')"
                                 />
                             </label>
                             <label>
@@ -109,12 +110,13 @@
                                     {{ t('app.auth.second_name') }}
                                 </p>
                                 <Input
-                                    size="medium"
                                     v-model="user.secondName"
+                                    @onUpdate="$emit('clearError', 'secondName')"
+                                    data-testid="user-second-name-input"
+                                    size="medium"
                                     :is-error="
                                         v$.secondName.$error || errorFields.includes('secondName')
                                     "
-                                    @onUpdate="$emit('clearError', 'secondName')"
                                 />
                             </label>
                             <label>
@@ -125,10 +127,11 @@
                                     {{ t('app.auth.email') }}
                                 </p>
                                 <Input
-                                    size="medium"
                                     v-model="user.email"
-                                    :is-error="v$.email.$error || errorFields.includes('email')"
                                     @onUpdate="$emit('clearError', 'email')"
+                                    data-testid="user-email-input"
+                                    size="medium"
+                                    :is-error="v$.email.$error || errorFields.includes('email')"
                                 />
                             </label>
                             <label>
@@ -139,12 +142,13 @@
                                     {{ t('app.auth.phone_number') }}
                                 </p>
                                 <Input
-                                    size="medium"
                                     v-model="user.phoneNumber"
+                                    @onUpdate="$emit('clearError', 'phoneNumber')"
+                                    data-testid="user-phone-number-input"
+                                    size="medium"
                                     :is-error="
                                         v$.phoneNumber.$error || errorFields.includes('phoneNumber')
                                     "
-                                    @onUpdate="$emit('clearError', 'phoneNumber')"
                                 />
                             </label>
                             <label>
@@ -155,12 +159,13 @@
                                     {{ t('app.auth.password') }}
                                 </p>
                                 <Input
-                                    size="medium"
                                     v-model="user.password"
+                                    @onUpdate="$emit('clearError', 'password')"
+                                    data-testid="user-password-input"
+                                    size="medium"
                                     :is-error="
                                         v$.password.$error || errorFields.includes('password')
                                     "
-                                    @onUpdate="$emit('clearError', 'password')"
                                 />
                             </label>
                         </div>

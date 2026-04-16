@@ -4,7 +4,7 @@ import { defineConfig, devices } from '@playwright/test';
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 // import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
@@ -26,7 +26,7 @@ export default defineConfig({
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('')`. */
-        // baseURL: 'http://localhost:3000',
+        baseURL: 'http://localhost:5173',
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',
@@ -35,8 +35,16 @@ export default defineConfig({
     /* Configure projects for major browsers */
     projects: [
         {
+            name: 'setup',
+            testMatch: /auth\.setup\.ts/,
+        },
+        {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'] },
+            use: {
+                ...devices['Desktop Chrome'],
+                storageState: 'playwright/auth.json',
+            },
+            dependencies: ['setup'],
         },
 
         // {
@@ -71,9 +79,24 @@ export default defineConfig({
     ],
 
     /* Run your local dev server before starting the tests */
-    // webServer: {
-    //   command: 'npm run start',
-    //   url: 'http://localhost:3000',
-    //   reuseExistingServer: !process.env.CI,
-    // },
+    webServer: [
+        {
+            command: 'npm run dev',
+            url: 'http://localhost:5173',
+            reuseExistingServer: !process.env.CI,
+        },
+        {
+            command: 'cd ../server && npm run start:playwright',
+            url: 'http://localhost:2000/health',
+            env: {
+                MONGODB_URI: `mongodb://127.0.0.1:27017/test_playwright_${process.env.WORKER_ID || '1'}`,
+                NODE_ENV: 'test',
+            },
+            reuseExistingServer: !process.env.CI,
+        },
+    ],
 });
+
+// would like to test if env position matters
+// 1. Here we override mongo uri that allows use testing
+// 2. In CI we have all neccessar env's declared in github actions and it may work with playwright

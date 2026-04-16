@@ -94,6 +94,7 @@
                             <Input
                                 v-model="loginDto.email"
                                 id="email"
+                                data-testid="email-input"
                                 placeholder="m@example.com"
                                 required
                             />
@@ -111,12 +112,15 @@
                             <Input
                                 v-model="loginDto.password"
                                 id="password"
+                                data-testid="password-input"
                                 type="password"
                                 required
                             />
                         </Field>
                         <Field>
-                            <Button type="submit">{{ t('app.auth.login') }}</Button>
+                            <Button type="submit" data-testid="login-button">
+                                {{ t('app.auth.login') }}
+                            </Button>
                             <div id="telegram-login"></div>
                         </Field>
                     </FieldGroup>

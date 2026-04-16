@@ -8,7 +8,7 @@ export class AppController {
     @ApiOperation({ summary: 'Health check' })
     @ApiResponse({ status: 200, description: 'Checks health.' })
     @Public()
-    @Get('/')
+    @Get('/health')
     getHello(): string {
         return 'OK';
     }
