@@ -7,7 +7,7 @@ export async function createUser(
     overrides: Partial<any> = {},
 ) {
     const UserModel = connection.model<User>('User', UserSchema);
-    const password = await argon.hash("/']{:>");
+    const password = await argon.hash('test');
 
     const user = await UserModel.create({
         name: 'test',
