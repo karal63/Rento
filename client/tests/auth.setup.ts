@@ -1,16 +1,9 @@
 import { test } from '@playwright/test';
-import { execSync } from 'child_process';
+import { resetDatabase } from './test-helpers';
 
+// here we need reset to ensure we are running tests on fresh db
 test.beforeEach(async () => {
-    // Reset database and seed admin before each test for clean state
-    execSync('cd ../server && npm run db:reset && npm run db:seed', {
-        stdio: 'inherit',
-        env: {
-            ...process.env,
-            MONGODB_URI: `mongodb://127.0.0.1:27017/test_playwright_${process.env.WORKER_ID || '1'}`,
-            NODE_ENV: 'test',
-        },
-    });
+    resetDatabase();
 });
 
 test('authenticate', async ({ page }) => {

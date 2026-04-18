@@ -11,6 +11,7 @@ async function seedAdmin() {
     );
 
     await createUser(connection, {
+        _id: new mongoose.Types.ObjectId('507f1f77bcf86cd799439011'), // Fixed ID for consistency
         name: 'admin',
         secondName: 'admin',
         phoneNumber: '+48123123123',
