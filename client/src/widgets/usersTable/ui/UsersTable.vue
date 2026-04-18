@@ -93,6 +93,7 @@
 
                         <button
                             @click="handleDelete(row)"
+                            data-testid="delete-user-btn"
                             class="px-3 py-2 w-full text-left hover:bg-red-600/10 cursor-pointer flex items-center gap-2 text-red-600 transition rounded-bl-md rounded-br-md"
                         >
                             <Icon icon="material-symbols:delete-outline-rounded" class="text-xl" />

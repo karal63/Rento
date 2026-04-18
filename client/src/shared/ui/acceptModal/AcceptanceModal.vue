@@ -37,7 +37,13 @@
                     {{ t('app.back') }}
                 </Button>
 
-                <Button @click="onConfirm" size="md" color="red" class="flex-1">
+                <Button
+                    @click="onConfirm"
+                    data-testid="confirm-deletion-btn"
+                    size="md"
+                    color="red"
+                    class="flex-1"
+                >
                     {{ t('app.confirm') }}
                 </Button>
             </div>
