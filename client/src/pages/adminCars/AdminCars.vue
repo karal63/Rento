@@ -69,6 +69,7 @@
                         color="transparent"
                         disableUppercase
                         class="w-full flex items-center gap-3"
+                        data-testid="edit-car-btn"
                     >
                         <Icon icon="lucide:edit" class="text-xl" />
                         Edit
@@ -81,6 +82,7 @@
                     color="transparent"
                     disableUppercase
                     class="w-full flex items-center gap-3"
+                    data-testid="delete-car-btn"
                 >
                     <Icon icon="material-symbols:cancel-outline-rounded" class="text-xl" />
                     Delete

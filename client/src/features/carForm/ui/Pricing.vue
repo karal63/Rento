@@ -36,6 +36,7 @@
                         size="medium"
                         placeholder="500"
                         class="py-2 px-4"
+                        testid="car-pricing-day-input"
                     />
                 </td>
             </tr>
@@ -50,6 +51,7 @@
                         :is-error="v$.pricing.days2_3.$error"
                         placeholder="500"
                         class="py-2 px-4"
+                        testid="car-pricing-days2_3-input"
                     />
                 </td>
             </tr>
@@ -64,6 +66,7 @@
                         :is-error="v$.pricing.days4_6.$error"
                         placeholder="500"
                         class="py-2 px-4"
+                        testid="car-pricing-days4_6-input"
                     />
                 </td>
             </tr>
@@ -78,6 +81,7 @@
                         :is-error="v$.pricing.days7_13.$error"
                         placeholder="500"
                         class="py-2 px-4"
+                        testid="car-pricing-days7_13-input"
                     />
                 </td>
             </tr>
@@ -92,6 +96,7 @@
                         :is-error="v$.pricing.days14_29.$error"
                         placeholder="500"
                         class="py-2 px-4"
+                        testid="car-pricing-days14_29-input"
                     />
                 </td>
             </tr>
@@ -106,6 +111,7 @@
                         :is-error="v$.pricing.month.$error"
                         placeholder="500"
                         class="py-2 px-4"
+                        testid="car-pricing-month-input"
                     />
                 </td>
             </tr>

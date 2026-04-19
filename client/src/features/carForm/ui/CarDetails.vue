@@ -33,6 +33,7 @@
                         size="medium"
                         placeholder="2.8"
                         class="w-18"
+                        testid="car-acceleration-input"
                     />
                     <div class="flex gap-2 items-end">
                         <span class="text-xl">{{ t('app.s') }}</span>
@@ -60,6 +61,7 @@
                 :min="0"
                 :placeholder="t('app.car_form.auto')"
                 class="border border-main-border p-4"
+                testid="car-transmission-input"
             />
         </div>
 
@@ -88,6 +90,7 @@
                         size="medium"
                         placeholder="640"
                         class="w-18"
+                        testid="car-horsepower-input"
                     />
                     <span class="text-xl">{{ t('app.hp') }}</span>
                 </div>
@@ -103,6 +106,7 @@
                         size="medium"
                         placeholder="600"
                         class="w-18"
+                        testid="car-torque-input"
                     />
                     <span class="text-xl">{{ t('app.nm') }}</span>
                 </div>
@@ -126,6 +130,7 @@
                 size="medium"
                 placeholder="2"
                 class="border border-t-0 border-main-border p-4"
+                testid="car-number-of-seats-input"
             />
         </div>
     </div>

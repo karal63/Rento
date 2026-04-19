@@ -11,9 +11,6 @@ import { getConnectionToken } from '@nestjs/mongoose';
 import { createUser } from './utils/user/createUser';
 import { getAccessToken } from './utils/getAccessToken';
 import { LoginDto } from 'src/http/auth/dto/login.dto';
-import { CreateRentalDto } from 'src/http/rent/dto/createRental.dto';
-import { UserUpdateDto } from 'src/http/rent/dto/userUpdate.dto';
-import { AdminUpdateDto } from 'src/http/rent/dto/adminUpdate.dto';
 import { AddCarDto } from 'src/http/car/dto/addCar.dto';
 import { EditCarDto } from 'src/http/car/dto/editCar.dto';
 

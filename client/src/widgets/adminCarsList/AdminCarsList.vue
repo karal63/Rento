@@ -15,7 +15,7 @@
 <template>
     <section class="mt-10">
         <div v-if="!loading">
-            <ul class="flex-col gap-3 md:gap-5">
+            <ul class="flex-col gap-3 md:gap-5" data-testid="admin-cars-list">
                 <CarItem v-for="car in cars" :key="car._id" :car="car">
                     <template #actions="{ car }">
                         <slot name="actions" v-bind="{ car }" />

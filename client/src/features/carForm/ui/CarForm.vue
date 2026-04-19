@@ -67,6 +67,7 @@
                         v-model="car.brand"
                         :is-error="v$.brand.$error"
                         :placeholder="t('app.car_form.car_brand')"
+                        testid="car-brand-input"
                     />
                     <p v-if="v$.brand.$error" class="mt-1 text-sm text-red-500">
                         {{ t(`app.car_form.${v$.brand.$errors[0]?.$uid}`) }}
@@ -76,6 +77,7 @@
                     <Input
                         size="medium"
                         v-model="car.name"
+                        testid="car-full-name-input"
                         :is-error="v$.name.$error"
                         :placeholder="t('app.car_form.car_full_name')"
                     />
@@ -126,6 +128,7 @@
             >
                 <input
                     type="file"
+                    data-testid="car-images-input"
                     @change="handleUpload"
                     multiple
                     class="absolute inset-0 opacity-0 cursor-pointer"
@@ -192,6 +195,7 @@
                     :is-error="v$.deposit.$error"
                     size="medium"
                     placeholder="30000"
+                    testid="car-deposit-input"
                 />
             </div>
 
@@ -208,7 +212,12 @@
             <RouterLink to="/admin/cars">
                 <Button size="sm" color="transparent">{{ t('app.button.cancel') }}</Button>
             </RouterLink>
-            <Button @click="handleSubmit" :disabled="v$.$error" size="sm">
+            <Button
+                @click="handleSubmit"
+                :disabled="v$.$error"
+                size="sm"
+                data-testid="car-submit-btn"
+            >
                 {{ t('app.button.submit') }}
             </Button>
         </div>

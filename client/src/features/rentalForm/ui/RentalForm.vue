@@ -115,9 +115,7 @@
                             />
                         </div>
 
-                        <ul
-                            class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
-                        >
+                        <ul class="mt-3 divide-y divide-main-border max-h-112.5 overflow-y-scroll">
                             <li v-for="employee in employees?.users" :key="employee._id">
                                 <button
                                     @click="selectEmployee(employee)"
@@ -186,9 +184,7 @@
                             />
                         </div>
 
-                        <ul
-                            class="mt-3 divide-y divide-main-border max-h-[450px] overflow-y-scroll"
-                        >
+                        <ul class="mt-3 divide-y divide-main-border max-h-112.5 overflow-y-scroll">
                             <li v-for="user in users?.users" :key="user._id">
                                 <button
                                     @click="selectUser(user)"
