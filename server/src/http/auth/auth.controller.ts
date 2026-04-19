@@ -29,6 +29,8 @@ export class AuthController {
     @ApiResponse({ status: 200, description: 'Creates a new user' })
     @Post('signup')
     async signup(@Res() res: Response, @Body() candidate: SignupDto) {
+        const node_env = process.env.NODE_ENV;
+
         const {
             user,
             tokens: { accessToken, refreshToken },
@@ -42,7 +44,7 @@ export class AuthController {
             maxAge: 30 * 24 * 60 * 60 * 1000,
             httpOnly: true,
         });
-        res.status(201).json({ user });
+        res.status(201).json({ user, node_env });
     }
 
     @Public()

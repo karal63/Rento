@@ -1,13 +1,17 @@
-import path from 'path';
 import typescriptParser from '@typescript-eslint/parser';
 import tseslint from 'typescript-eslint';
 import pluginVue from 'eslint-plugin-vue';
 import globals from 'globals';
-import boundaries from 'eslint-plugin-boundaries';
 
 const config = [
     {
-        ignores: ['**/node_modules/**', '**/dist/**', '**/*config.ts', 'eslint.config.*'],
+        ignores: [
+            '**/node_modules/**',
+            '**/dist/**',
+            '**/*config.ts',
+            'eslint.config.*',
+            '**/playwright-report/**',
+        ],
     },
 
     // Spread TypeScript recommended rules directly

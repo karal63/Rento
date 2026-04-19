@@ -110,6 +110,7 @@
                 <Button
                     type="submit"
                     size="sm"
+                    data-testid="submit-edit-user-btn"
                     :disabled="formUser.roles.length <= 0 || editUserStore.loading"
                     class="w-full md:max-w-max"
                 >

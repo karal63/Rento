@@ -49,7 +49,12 @@
 
 <template>
     <ProtectedHeader :title="t('app.protected_users_page.all_users')">
-        <Button @click="createUserStore.openModal" size="sm" class="flex items-center gap-3">
+        <Button
+            @click="createUserStore.openModal"
+            data-testid="create-user-btn"
+            size="sm"
+            class="flex items-center gap-3"
+        >
             <Icon icon="material-symbols:add-rounded" class="text-xl" />
             {{ t('app.protected_users_page.new_user') }}
         </Button>

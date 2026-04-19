@@ -15,7 +15,9 @@ async function bootstrap() {
         origin: [process.env.CORS_ORIGIN?.split(',')],
     });
 
-    app.setGlobalPrefix('api');
+    app.setGlobalPrefix('api', {
+        exclude: ['health'],
+    });
     app.useGlobalPipes(
         new ValidationPipe({
             exceptionFactory: (errors) => {

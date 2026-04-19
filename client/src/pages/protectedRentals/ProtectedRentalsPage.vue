@@ -103,7 +103,7 @@
 <template>
     <ProtectedHeader :title="t('app.protected_rentals_page.all_rentals')">
         <RouterLink to="rentals/create">
-            <Button size="sm" class="flex items-center gap-3">
+            <Button data-testid="create-rental-btn" size="sm" class="flex items-center gap-3">
                 <Icon icon="material-symbols:add-rounded" class="text-xl" />
                 {{ t('app.protected_rentals_page.new_rental') }}
             </Button>

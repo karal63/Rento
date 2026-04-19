@@ -13,6 +13,7 @@
         disabled?: boolean;
         min?: number;
         max?: number;
+        testid?: string;
     }>();
 
     defineEmits<{
@@ -57,6 +58,7 @@
             :class="getClasses"
             :min="min"
             :max="max"
+            :data-testid="testid"
         />
 
         <Icon

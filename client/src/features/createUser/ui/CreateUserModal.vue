@@ -99,6 +99,7 @@
                 <Button
                     type="submit"
                     size="sm"
+                    data-testid="user-create-btn"
                     :disabled="user.roles.length <= 0 || createUserStore.loading"
                     class="w-full md:max-w-max"
                 >

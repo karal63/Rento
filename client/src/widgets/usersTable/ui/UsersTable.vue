@@ -73,11 +73,18 @@
 <template>
     <section class="mt-10">
         <div class="overflow-x-scroll">
-            <Table :rows="users" :columns="columns" :loading="false" class="overflow-x-scroll">
+            <Table
+                :rows="users"
+                :columns="columns"
+                :loading="false"
+                data-testid="users-table"
+                class="overflow-x-scroll"
+            >
                 <template #actions="{ row }">
-                    <div class="w-[120px] rounded-md">
+                    <div class="w-30 rounded-md">
                         <button
                             @click="handleEdit(row)"
+                            data-testid="edit-user-btn"
                             class="px-3 py-2 w-full text-left hover:bg-main-hover-bg cursor-pointer flex items-center gap-2 transition"
                         >
                             <Icon icon="lucide:edit" class="text-xl" />
@@ -86,6 +93,7 @@
 
                         <button
                             @click="handleDelete(row)"
+                            data-testid="delete-user-btn"
                             class="px-3 py-2 w-full text-left hover:bg-red-600/10 cursor-pointer flex items-center gap-2 text-red-600 transition rounded-bl-md rounded-br-md"
                         >
                             <Icon icon="material-symbols:delete-outline-rounded" class="text-xl" />
