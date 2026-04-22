@@ -14,6 +14,7 @@ function loadLocaleMessages() {
             messages[locale] =
                 ((locales[path] as { default: Record<string, never> }).default as never) ||
                 locales[path];
+            languages.push(locale);
         }
     }
 

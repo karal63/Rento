@@ -17,6 +17,8 @@ const bootstrap = async () => {
     await refreshTokens();
 
     router.beforeEach(to => {
+        const t = i18n.global.t;
+
         if (
             (to.meta.requiresAuth && !userStore.isAuthenticated) ||
             (to.meta.requiresAdmin && !hasPermission('view:admin-page')) ||
@@ -24,6 +26,9 @@ const bootstrap = async () => {
         ) {
             return '/';
         }
+        document.title = t('app.page_title.' + to.meta.title)
+            ? `${t('app.page_title.' + to.meta.title)} - Rento`
+            : 'Unknown';
     });
 
     app.use(router);
