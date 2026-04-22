@@ -453,6 +453,29 @@
             "email-required": "Adres e-mail jest wymagany",
             "email-email": "Adres e-mail musi być prawidłowy",
             "password-required": "Hasło jest wymagane"
+        },
+
+        "page_title": {
+            "landing": "Strona główna",
+            "cars": "Samochody",
+            "single-car": "Szczegóły samochodu",
+            "book": "Rezerwacja",
+            "payment": "Płatność",
+            "payment-success": "Płatność zakończona sukcesem",
+            "user-profile": "Profil użytkownika",
+            "user-rentals": "Wypożyczenia użytkownika",
+            "login": "Logowanie",
+            "admin-dashboard": "Panel administratora",
+            "rentals": "Wypożyczenia",
+            "new-rental": "Nowe wypożyczenie",
+            "edit-rental": "Edytuj wypożyczenie",
+            "users": "Użytkownicy",
+            "rental": "Wypożyczenie",
+            "new-car": "Nowy samochód",
+            "edit-car": "Edytuj samochód",
+            "car": "Samochód",
+            "employee-dashboard": "Panel pracownika",
+            "tickets": "Zgłoszenia"
         }
     }
 }

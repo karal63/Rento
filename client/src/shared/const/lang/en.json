@@ -455,6 +455,29 @@
             "password-required": "Password is required",
             "success_login_msg": "Logged in",
             "success_login_msg_desc": "Successfully logged in to account"
+        },
+
+        "page_title": {
+            "landing": "Landing",
+            "cars": "Cars",
+            "single-car": "Single car",
+            "book": "Booking",
+            "payment": "Payment",
+            "payment-success": "Payment success",
+            "user-profile": "User profile",
+            "user-rentals": "User rentals",
+            "login": "Login",
+            "admin-dashboard": "Admin dashboard",
+            "rentals": "Rentals",
+            "new-rental": "New rental",
+            "edit-rental": "Edit rental",
+            "users": "Users",
+            "rental": "Rental",
+            "new-car": "New car",
+            "edit-car": "Edit car",
+            "car": "Car",
+            "employee-dashboard": "Employee dashboard",
+            "tickets": "Tickets"
         }
     }
 }

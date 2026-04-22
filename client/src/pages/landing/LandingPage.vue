@@ -21,7 +21,7 @@
                 backgroundImage: `url('${themeStore.isDark ? darkBg : lightBg}')`,
             }"
         >
-            <div class="max-w-[1500px] m-auto pt-24">
+            <div class="max-w-375 m-auto pt-24">
                 <div class="flex gap-5 items-center">
                     <div class="w-full lg:w-1/2">
                         <h1 class="text-7xl sm:text-8xl font-extrabold multiline">
