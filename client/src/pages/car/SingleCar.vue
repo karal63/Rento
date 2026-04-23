@@ -28,20 +28,20 @@
 
 <template>
     <div>
-        <div class="max-w-[1700px] m-auto 0 px-5 mt-24 sm:mt-32">
+        <div class="max-w-425 m-auto 0 px-5 mt-24 sm:mt-32">
             <Breadcrumbs :breadcrumbs="breadcrumbs" />
             <div class="font-extrabold text-4xl md:text-6xl lg:text-8xl">
-                <div v-if="loading" class="skeleton h-[100px] w-2/3"></div>
+                <div v-if="loading" class="skeleton h-25 w-2/3"></div>
                 <div v-else>{{ carStore.selectedCar?.name }}</div>
             </div>
             <div class="xl:flex xl:gap-10 mt-5 md:mt-16">
                 <!-- Car Image Section -->
                 <div class="w-full xl:w-3/4">
-                    <div v-if="loading" class="w-full h-[420px] skeleton rounded-xl"></div>
+                    <div v-if="loading" class="w-full h-105 skeleton rounded-xl"></div>
                     <ImagesCarousel
                         v-else
                         :images="carStore.selectedCar?.images ?? []"
-                        class="h-[250px] sm:h-[400px] lg:h-[750px]"
+                        class="h-25 sm:h-40 lg:h-75"
                     />
                 </div>
 

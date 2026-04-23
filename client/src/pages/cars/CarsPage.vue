@@ -14,7 +14,7 @@
 
 <template>
     <div>
-        <div class="max-w-[1700px] m-auto 0 px-5 mt-24 sm:mt-32">
+        <div class="max-w-425 m-auto 0 px-5 mt-24 sm:mt-32">
             <Breadcrumbs :breadcrumbs="breadcrumbs" />
 
             <div class="font-extrabold text-6xl lg:text-8xl">

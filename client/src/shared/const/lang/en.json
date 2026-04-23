@@ -477,7 +477,33 @@
             "edit-car": "Edit car",
             "car": "Car",
             "employee-dashboard": "Employee dashboard",
-            "tickets": "Tickets"
+            "tickets": "Tickets",
+            "contact": "Contact"
+        },
+
+        "contact_form": {
+            "page_title": "Contact us",
+            "page_desc": "If you have any questions or need assistance, please feel free to reach out to us.",
+
+            "name": "Name",
+            "email": "Email",
+            "content": "Message",
+
+            "name-required": "Name is required",
+            "name-minLength": "Name must be at least 2 characters long",
+            "name-maxLength": "Name must not exceed 25 characters",
+
+            "email-required": "Email is required",
+            "email-email": "Email is not a valid email address",
+
+            "content-required": "Message is required",
+            "content-minLength": "Name must be at least 4 characters long",
+            "content-maxLength": "Name must not exceed 500 characters",
+
+            "send-btn": "Send message",
+
+            "message_sent": "Message was successfully sent",
+            "message_sent_desc": "Thank you for contacting us. We will get back to you as soon as possible."
         }
     }
 }

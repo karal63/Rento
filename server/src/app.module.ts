@@ -19,6 +19,7 @@ import { RolesGuard } from './common/guards/roles.guard';
 import { DashboardModule } from './http/dashboard/dashboard.module';
 import { ImageModule } from './http/image/image.module';
 import { CloudinaryModule } from './http/cloudinary/cloudinary.module';
+import { MessageModule } from './http/message/message.module';
 
 @Module({
     imports: [
@@ -51,6 +52,7 @@ import { CloudinaryModule } from './http/cloudinary/cloudinary.module';
         DashboardModule,
         ImageModule,
         CloudinaryModule,
+        MessageModule,
     ],
     controllers: [AppController, RentController],
     providers: [

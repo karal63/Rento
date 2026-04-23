@@ -19,3 +19,4 @@ export { default as AdminAddCar } from './adminAddCar/AdminAddCar.vue';
 export { default as AdminEditCar } from './adminEditCar/AdminEditCar.vue';
 export { default as CarDetailsPage } from './carDetails/CarDetailsPage.vue';
 export { default as LoginPage } from './login/LoginPage.vue';
+export { default as ContactPage } from './contact/ContactPage.vue';

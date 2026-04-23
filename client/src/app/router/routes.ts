@@ -21,6 +21,7 @@ import {
     AdminEditCar,
     CarDetailsPage,
     LoginPage,
+    ContactPage,
 } from '@/pages';
 
 import BookingLayout from '../layouts/BookingLayout.vue';
@@ -39,6 +40,13 @@ export const routes: RouteRecordRaw[] = [
                     title: 'landing',
                 },
                 component: LandingPage,
+            },
+            {
+                path: 'contact',
+                meta: {
+                    title: 'contact',
+                },
+                component: ContactPage,
             },
             {
                 path: '/cars',

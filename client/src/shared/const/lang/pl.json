@@ -475,7 +475,33 @@
             "edit-car": "Edytuj samochód",
             "car": "Samochód",
             "employee-dashboard": "Panel pracownika",
-            "tickets": "Zgłoszenia"
+            "tickets": "Zgłoszenia",
+            "contact": "Kontakt"
+        },
+
+        "contact_form": {
+            "page_title": "Skontaktuj się z nami",
+            "page_desc": "Jeśli masz jakiekolwiek pytania lub potrzebujesz pomocy, skontaktuj się z nami.",
+
+            "name": "Imię",
+            "email": "E-mail",
+            "content": "Wiadomość",
+
+            "name-required": "Imię jest wymagane",
+            "name-minLength": "Imię musi mieć co najmniej 2 znaki",
+            "name-maxLength": "Imię nie może przekraczać 25 znaków",
+
+            "email-required": "Adres e-mail jest wymagany",
+            "email-email": "Nieprawidłowy adres e-mail",
+
+            "content-required": "Wiadomość jest wymagana",
+            "content-minLength": "Wiadomość musi mieć co najmniej 4 znaki",
+            "content-maxLength": "Wiadomość nie może przekraczać 500 znaków",
+
+            "send-btn": "Wyślij wiadomość",
+
+            "message_sent": "Wiadomość została pomyślnie wysłana",
+            "message_sent_desc": "Dziękujemy za kontakt. Odpowiemy najszybciej, jak to możliwe."
         }
     }
 }

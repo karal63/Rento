@@ -25,7 +25,7 @@
 
 <template>
     <div>
-        <main class="max-w-[1000px] m-auto px-5 mt-32">
+        <main class="max-w-250 m-auto px-5 mt-32">
             <Breadcrumbs :breadcrumbs="breadcrumbs" />
 
             <div class="lg:flex gap-10">
