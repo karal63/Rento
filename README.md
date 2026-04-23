@@ -193,6 +193,7 @@ For full API documentation navigate to [http://localhost:2000/api/docs](http://l
 ## 💡 Future ideas
 
 - Implement discounts
+- Contact feature
 
 ---
 

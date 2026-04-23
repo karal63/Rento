@@ -8,7 +8,7 @@
 </script>
 
 <template>
-    <section class="max-w-[1700px] m-auto 0 px-5 mt-24 sm:mt-32">
+    <section class="max-w-425 m-auto 0 px-5 mt-24 sm:mt-32">
         <div class="flex-col md:flex-between">
             <h1 class="text-3xl font-bold">{{ t('app.user_profile') }}</h1>
         </div>

@@ -65,3 +65,6 @@ export const API_GET_DASHBOARD_SUMMARY = '/admin/dashboard/summary';
 
 // IMAGE
 export const API_POST_IMAGE_UPLOAD = '/image/upload';
+
+// MESSAGE
+export const API_POST_MESSAGE_SEND = '/message/send';
