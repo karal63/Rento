@@ -18,7 +18,7 @@
 
     const loginRules = {
         email: { required, email },
-        password: { required, length: minLength(4) },
+        password: { required, minLength: minLength(4) },
     };
 
     const loginUser = reactive({
@@ -55,13 +55,9 @@
 <template>
     <form @submit.prevent="handleSubmit" class="flex-col gap-2">
         <div>
-            <span
-                v-for="error in loginV$.email.$errors"
-                :key="error.$uid"
-                class="text-red-500 text-sm"
-            >
-                {{ error.$message }}
-            </span>
+            <p v-if="loginV$.email.$errors[0]?.$uid" class="text-destructive text-sm">
+                {{ t(`app.auth_form.${loginV$.email.$errors[0]?.$uid}`) }}
+            </p>
             <Input
                 v-model="loginUser.email"
                 type="email"
@@ -73,13 +69,9 @@
             />
         </div>
         <div>
-            <span
-                v-for="error in loginV$.password.$errors"
-                :key="error.$uid"
-                class="text-red-500 text-sm"
-            >
-                {{ error.$message }}
-            </span>
+            <p v-if="loginV$.password.$errors[0]?.$uid" class="text-destructive text-sm">
+                {{ t(`app.auth_form.${loginV$.password.$errors[0]?.$uid}`) }}
+            </p>
             <Input
                 v-model="loginUser.password"
                 type="password"

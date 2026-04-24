@@ -6,6 +6,10 @@
     import { signup } from '../model/signup.model';
     import Button from '@/shared/ui/button/Button.vue';
     import { useI18n } from 'vue-i18n';
+    import { Icon } from '@iconify/vue';
+    import { showDialog, showErrorDialog } from '@/features/dialog/@x';
+    import type { AppError } from '@/shared/model';
+    import axios from 'axios';
 
     const { t } = useI18n();
 
@@ -25,10 +29,10 @@
     const password = computed(() => signupUser.password);
 
     const signupRules = {
-        name: { required },
-        secondName: { required },
+        name: { required, minLength: minLength(3) },
+        secondName: { required, minLength: minLength(3) },
         email: { required, email },
-        phoneNumber: { required, length: minLength(12) },
+        phoneNumber: { required, minLength: minLength(12) },
         password: { required, minLength: minLength(4) },
         passwordRepeat: {
             required,
@@ -48,23 +52,34 @@
 
         loading.value = true;
 
-        const res = await signup(signupUser);
-        serverErrors.value = Array.isArray(res) ? res : res ? [res] : [];
-
-        loading.value = false;
+        try {
+            await signup(signupUser);
+            showDialog(
+                'success',
+                t('app.auth_form.success_signup_msg'),
+                t('app.auth_form.success_signup_msg_desc')
+            );
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                serverErrors.value = Array.isArray(error.response?.data)
+                    ? error.response?.data
+                    : error.response?.data
+                      ? [error.response?.data]
+                      : [];
+            }
+            showErrorDialog(error as AppError);
+        } finally {
+            loading.value = false;
+        }
     };
 </script>
 
 <template>
     <form @submit.prevent="handleSubmit" class="flex-col gap-2">
         <div>
-            <span
-                v-for="error in signupV$.name.$errors"
-                :key="error.$uid"
-                class="text-red-500 text-sm"
-            >
-                {{ error.$message }}
-            </span>
+            <p v-if="signupV$.name.$errors[0]?.$uid" class="text-destructive text-sm">
+                {{ t(`app.auth_form.${signupV$.name.$errors[0]?.$uid}`) }}
+            </p>
             <Input
                 v-model="signupUser.name"
                 size="medium"
@@ -75,13 +90,9 @@
             />
         </div>
         <div>
-            <span
-                v-for="error in signupV$.secondName.$errors"
-                :key="error.$uid"
-                class="text-red-500 text-sm"
-            >
-                {{ error.$message }}
-            </span>
+            <p v-if="signupV$.secondName.$errors[0]?.$uid" class="text-destructive text-sm">
+                {{ t(`app.auth_form.${signupV$.secondName.$errors[0]?.$uid}`) }}
+            </p>
             <Input
                 v-model="signupUser.secondName"
                 size="medium"
@@ -92,13 +103,9 @@
             />
         </div>
         <div>
-            <span
-                v-for="error in signupV$.email.$errors"
-                :key="error.$uid"
-                class="text-red-500 text-sm"
-            >
-                {{ error.$message }}
-            </span>
+            <p v-if="signupV$.email.$errors[0]?.$uid" class="text-destructive text-sm">
+                {{ t(`app.auth_form.${signupV$.email.$errors[0]?.$uid}`) }}
+            </p>
             <Input
                 v-model="signupUser.email"
                 type="email"
@@ -110,13 +117,9 @@
             />
         </div>
         <div>
-            <span
-                v-for="error in signupV$.phoneNumber.$errors"
-                :key="error.$uid"
-                class="text-red-500 text-sm"
-            >
-                {{ error.$message }}
-            </span>
+            <p v-if="signupV$.phoneNumber.$errors[0]?.$uid" class="text-destructive text-sm">
+                {{ t(`app.auth_form.${signupV$.phoneNumber.$errors[0]?.$uid}`) }}
+            </p>
             <Input
                 v-model="signupUser.phoneNumber"
                 type="tel"
@@ -128,13 +131,9 @@
             />
         </div>
         <div>
-            <span
-                v-for="error in signupV$.password.$errors"
-                :key="error.$uid"
-                class="text-red-500 text-sm"
-            >
-                {{ error.$message }}
-            </span>
+            <p v-if="signupV$.password.$errors[0]?.$uid" class="text-destructive text-sm">
+                {{ t(`app.auth_form.${signupV$.password.$errors[0]?.$uid}`) }}
+            </p>
             <Input
                 v-model="signupUser.password"
                 type="password"
@@ -146,13 +145,9 @@
             />
         </div>
         <div>
-            <span
-                v-for="error in signupV$.passwordRepeat.$errors"
-                :key="error.$uid"
-                class="text-red-500 text-sm"
-            >
-                {{ error.$message }}
-            </span>
+            <p v-if="signupV$.passwordRepeat.$errors[0]?.$uid" class="text-destructive text-sm">
+                {{ t(`app.auth_form.${signupV$.passwordRepeat.$errors[0]?.$uid}`) }}
+            </p>
             <Input
                 v-model="signupUser.passwordRepeat"
                 type="password"
