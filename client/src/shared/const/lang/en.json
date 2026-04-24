@@ -478,7 +478,8 @@
             "car": "Car",
             "employee-dashboard": "Employee dashboard",
             "tickets": "Tickets",
-            "contact": "Contact"
+            "contact": "Contact",
+            "about-us": "About us"
         },
 
         "contact_form": {
@@ -504,6 +505,14 @@
 
             "message_sent": "Message was successfully sent",
             "message_sent_desc": "Thank you for contacting us. We will get back to you as soon as possible."
+        },
+
+        "about_us_page": {
+            "page_title": "About us",
+            "page_desc1": "Experience driving on a different level with our premium sports and luxury car rental app based in Warsaw. We offer seamless access to an exclusive fleet ofhigh-performance and prestige vehicles—from sleek supercars to elegant executivesedans—available at your fingertips.",
+            "page_desc2": "Whether you’re looking to make an impression at a business meeting, celebrate a special occasion, or simply enjoy the thrill of driving a world-class machine, our app makes the process effortless. Browse real-time availability, compare models, and book instantly with transparent pricing and flexible rental options.",
+            "page_desc3": "Designed for convenience and sophistication, the platform includes doorstep delivery within Warsaw, 24/7 customer support, and a smooth, secure booking experience. Every vehicle in our fleet is meticulously maintained to ensure top-tier performance, safety, and comfort.",
+            "page_desc4": "Drive exceptional. Anytime. Anywhere in Warsaw."
         }
     }
 }

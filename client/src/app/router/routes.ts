@@ -28,6 +28,7 @@ import BookingLayout from '../layouts/BookingLayout.vue';
 import ProfileLayout from '../layouts/ProfileLayout.vue';
 import AdminLayout from '../layouts/AdminLayout.vue';
 import AppLayout from '../layouts/AppLayout.vue';
+import AboutUsPage from '@/pages/aboutUs/AboutUsPage.vue';
 
 export const routes: RouteRecordRaw[] = [
     {
@@ -47,6 +48,13 @@ export const routes: RouteRecordRaw[] = [
                     title: 'contact',
                 },
                 component: ContactPage,
+            },
+            {
+                path: 'about-us',
+                meta: {
+                    title: 'about-us',
+                },
+                component: AboutUsPage,
             },
             {
                 path: '/cars',

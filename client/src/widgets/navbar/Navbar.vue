@@ -31,7 +31,7 @@
 
             <ul class="hidden md:flex divide-x divide-main-border">
                 <li class="text-lg px-6 font-semibold transition hover:text-primary">
-                    <RouterLink to="/about">{{ t('app.about_us') }}</RouterLink>
+                    <RouterLink to="/about-us">{{ t('app.about_us') }}</RouterLink>
                 </li>
                 <li class="text-lg px-6 font-semibold transition hover:text-primary">
                     <RouterLink to="/cars">{{ t('app.cars') }}</RouterLink>
