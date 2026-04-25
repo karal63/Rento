@@ -121,6 +121,14 @@
             "rentals": "wynajmów"
         },
 
+        "rental_details_page": {
+            "client": "Klient",
+            "employee": "Pracownik",
+            "total_paid": "Łącznie zapłacono",
+            "created_at": "Utworzony o",
+            "contact": "Kontakt"
+        },
+
         "account_page": {
             "email_addres": "Adres e-mail",
             "phone_number": "Numer telefonu",

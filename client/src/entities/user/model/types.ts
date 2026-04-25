@@ -16,4 +16,5 @@ export type User = {
     createdAt: number;
     updatedAt: number;
     auth_provider: string;
+    username?: string;
 };

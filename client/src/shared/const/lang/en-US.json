@@ -121,6 +121,14 @@
             "rentals": "rentals"
         },
 
+        "rental_details_page": {
+            "client": "Client",
+            "employee": "Employee",
+            "total_paid": "Total paid",
+            "created_at": "Created at",
+            "contact": "Contact"
+        },
+
         "account_page": {
             "email_addres": "Email addres",
             "phone_number": "Phone number",
