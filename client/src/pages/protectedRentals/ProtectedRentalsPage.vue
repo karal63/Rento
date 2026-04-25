@@ -4,6 +4,7 @@
     import { useCancelRental } from '@/features/cancelRental';
     import { useFilterRentals } from '@/features/filterRentals';
     import { useSortRentals } from '@/features/sortRentals';
+    import { normalizeDate } from '@/shared/lib/date';
     import { Button, type Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
     import { ProtectedHeader, RentalsFilter, RentalsTable } from '@/widgets';
@@ -48,16 +49,7 @@
         {
             key: 'rentalPeriod',
             header: t('app.protected_rentals_page.period'),
-            render: rental =>
-                `${new Date(rental.rentFrom).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                })} - ${new Date(rental.rentTo).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                })}`,
+            render: rental => `${normalizeDate(rental.rentFrom)} - ${normalizeDate(rental.rentTo)}`,
             width: '35%',
             minWidth: 300,
         },

@@ -26,7 +26,7 @@ export class UserService {
         const existingUser = await this.findByEmail(candidate.email);
 
         if (existingUser) {
-            throw new ConflictException('User with this email already exists');
+            throw new ConflictException(LogCode.CODE_U009);
         }
 
         const hashedPassword: string = await argon.hash(candidate.password);

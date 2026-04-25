@@ -4,6 +4,7 @@
     import { RentalActions } from '@/features/rentalActions';
     import { UnassignRentalButton } from '@/features/unassignRental';
     import { useBreakpoint } from '@/shared/lib';
+    import { normalizeDate } from '@/shared/lib/date';
     import { Button, type Breadcrumb } from '@/shared/ui';
     import type { TableColumn } from '@/shared/ui/table';
     import { ProtectedHeader, RentalCards, RentalsTable } from '@/widgets';
@@ -45,16 +46,7 @@
         {
             key: 'rentalPeriod',
             header: t('app.protected_rentals_page.period'),
-            render: rental =>
-                `${new Date(rental.rentFrom).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                })} - ${new Date(rental.rentTo).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                })}`,
+            render: rental => `${normalizeDate(rental.rentFrom)} - ${normalizeDate(rental.rentTo)}`,
             width: '25%',
             minWidth: 300,
         },

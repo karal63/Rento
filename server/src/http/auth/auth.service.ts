@@ -14,6 +14,7 @@ import { UserPayload } from 'src/common/types/user.type';
 import { TelegramLoginQuery } from './dto/telegramQuery.type';
 import * as crypto from 'crypto';
 import { Role } from 'src/enums/role.enum';
+import { LogCode } from 'src/enums';
 
 @Injectable()
 export class AuthService {
@@ -40,7 +41,7 @@ export class AuthService {
     async login(candidate: LoginDto) {
         let user = await this.userService.findByEmail(candidate.email);
         if (!user) {
-            throw new BadRequestException('User with given email not found');
+            throw new BadRequestException(LogCode.CODE_U000);
         }
         user = user.toObject() as User;
 
@@ -49,8 +50,7 @@ export class AuthService {
             candidate.password,
         );
 
-        if (!isValidPassword)
-            throw new BadRequestException('Email or password is incorrect');
+        if (!isValidPassword) throw new BadRequestException(LogCode.CODE_U000);
 
         const { accessToken, refreshToken } = await this.generateTokens({
             id: user._id.toString(),

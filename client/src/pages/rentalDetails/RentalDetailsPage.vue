@@ -36,7 +36,7 @@
     <ProtectedHeader title="Rental Details" />
 
     <section v-if="isLoading" class="mt-10">
-        <div class="skeleton w-full xl:w-[40%] h-[300px] rounded-md"></div>
+        <div class="skeleton w-full xl:w-[40%] h-75 rounded-md"></div>
     </section>
 
     <section v-else-if="error" class="mt-10">
@@ -64,7 +64,11 @@
             <div class="flex-col gap-4">
                 <div>
                     <p>{{ data?.carId.name }}</p>
-                    <p>
+                    <p
+                        class="border border-border rounded-md px-4 py-2 my-2 flex items-center gap-2 max-w-max"
+                    >
+                        <Icon icon="mdi:location" class="text-xl" />
+
                         {{ data?.pickupLocation }} {{ t('app.rentals_page.at') }}
                         {{ data?.pickupTime }}
                     </p>
@@ -72,11 +76,15 @@
 
                 <div>
                     <p>
-                        <span class="font-semibold">Client:</span>
+                        <span class="font-semibold">
+                            {{ t('app.rental_details_page.client') }}:
+                        </span>
                         {{ data?.userId.name }} {{ data?.userId.secondName }}
                     </p>
                     <p>
-                        <span class="font-semibold">Employee:</span>
+                        <span class="font-semibold">
+                            {{ t('app.rental_details_page.employee') }}:
+                        </span>
                         {{
                             data?.employee
                                 ? `${data?.employee.name} ${data?.employee?.secondName}`
@@ -87,16 +95,52 @@
 
                 <div>
                     <p>
-                        <span class="font-semibold">Total price:</span>
+                        <span class="font-semibold">
+                            {{ t('app.rental_details_page.total_paid') }}:
+                        </span>
                         {{ data?.totalPrice ? `${data.totalPrice}${t('app.zl')}` : '-' }}
                     </p>
                     <p>
-                        <span class="font-semibold">Created at:</span>
+                        <span class="font-semibold">
+                            {{ t('app.rental_details_page.created_at') }}:
+                        </span>
                         {{ data?.createdAt ? normalizeDate(data.createdAt) : '-' }}
                     </p>
                 </div>
+
+                <div>
+                    <h2 class="mb-2 text-2xl font-semibold">Contact</h2>
+
+                    <div class="flex flex-wrap gap-3 items-center">
+                        <a
+                            v-if="data?.userId.auth_provider === 'local'"
+                            :href="`tel:${data?.userId.phoneNumber}`"
+                            class="bg-primary text-white flex items-center gap-2 px-4 py-2 rounded-md"
+                        >
+                            <Icon icon="material-symbols:call" class="text-2xl" />
+                            <span class="text-lg">{{ data?.userId.phoneNumber }}</span>
+                        </a>
+
+                        <a
+                            v-if="data?.userId.auth_provider === 'local'"
+                            :href="`mailto:${data?.userId.email}`"
+                            class="bg-foreground text-white flex items-center gap-2 px-4 py-2 rounded-md"
+                        >
+                            <Icon icon="material-symbols:mail" class="text-2xl" />
+                            <span class="text-lg">{{ data?.userId.email }}</span>
+                        </a>
+
+                        <a
+                            v-if="data?.userId.auth_provider === 'telegram'"
+                            :href="`https://t.me/${data?.userId.username}`"
+                            class="bg-primary text-white flex items-center gap-2 px-4 py-2 rounded-md"
+                        >
+                            <Icon icon="ic:baseline-telegram" class="text-2xl" />
+                            <span class="text-lg">{{ data?.userId.username }}</span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <ul class="mt-5 text-lg"></ul>
         </div>
     </section>
 </template>

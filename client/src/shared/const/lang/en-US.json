@@ -121,6 +121,14 @@
             "rentals": "rentals"
         },
 
+        "rental_details_page": {
+            "client": "Client",
+            "employee": "Employee",
+            "total_paid": "Total paid",
+            "created_at": "Created at",
+            "contact": "Contact"
+        },
+
         "account_page": {
             "email_addres": "Email addres",
             "phone_number": "Phone number",
@@ -267,7 +275,10 @@
         },
 
         "errors": {
+            "CODE_U000": "Email or password is incorrect",
+            "CODE_U004": "User with given email not found",
             "CODE_U009": "User with this email already exists",
+            "CODE_R000": "It seems like the car you want to rent is already booked for the selected period.",
             "CODE_R004": "Rental not found",
             "UNKNOWN": "Unknown error",
             "VALIDATION_ERROR": "Some fields are filled in incorrectly: {field}"
@@ -478,7 +489,8 @@
             "car": "Car",
             "employee-dashboard": "Employee dashboard",
             "tickets": "Tickets",
-            "contact": "Contact"
+            "contact": "Contact",
+            "about-us": "About us"
         },
 
         "contact_form": {
@@ -504,6 +516,31 @@
 
             "message_sent": "Message was successfully sent",
             "message_sent_desc": "Thank you for contacting us. We will get back to you as soon as possible."
+        },
+
+        "about_us_page": {
+            "page_title": "About us",
+            "page_desc1": "Experience driving on a different level with our premium sports and luxury car rental app based in Warsaw. We offer seamless access to an exclusive fleet ofhigh-performance and prestige vehicles—from sleek supercars to elegant executivesedans—available at your fingertips.",
+            "page_desc2": "Whether you’re looking to make an impression at a business meeting, celebrate a special occasion, or simply enjoy the thrill of driving a world-class machine, our app makes the process effortless. Browse real-time availability, compare models, and book instantly with transparent pricing and flexible rental options.",
+            "page_desc3": "Designed for convenience and sophistication, the platform includes doorstep delivery within Warsaw, 24/7 customer support, and a smooth, secure booking experience. Every vehicle in our fleet is meticulously maintained to ensure top-tier performance, safety, and comfort.",
+            "page_desc4": "Drive exceptional. Anytime. Anywhere in Warsaw."
+        },
+
+        "auth_form": {
+            "success_signup_msg": "Account created",
+            "success_signup_msg_desc": "You successfully created an account. You were automatically logged in.",
+            "name-required": "Name is required",
+            "name-minLength": "Name must contain at least 3 characters",
+            "secondName-required": "Second name is required",
+            "secondName-minLength": "Second name must contain at least 3 characters",
+            "email-required": "Email is required",
+            "email-email": "Email must be a valid email address",
+            "phoneNumber-required": "Phone number is required",
+            "phoneNumber-minLength": "Phone number must contain at least 12 characters",
+            "password-required": "Password is required",
+            "password-minLength": "Password must contain at least 4 characters",
+            "passwordRepeat-required": "Password repeat is required",
+            "passwordRepeat-sameAsPassword": "Passwords are not the same"
         }
     }
 }

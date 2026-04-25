@@ -121,6 +121,14 @@
             "rentals": "wynajmów"
         },
 
+        "rental_details_page": {
+            "client": "Klient",
+            "employee": "Pracownik",
+            "total_paid": "Łącznie zapłacono",
+            "created_at": "Utworzony o",
+            "contact": "Kontakt"
+        },
+
         "account_page": {
             "email_addres": "Adres e-mail",
             "phone_number": "Numer telefonu",
@@ -267,7 +275,10 @@
         },
 
         "errors": {
+            "CODE_U000": "Email lub hasło jest nieprawidłowe",
+            "CODE_U004": "Użytkownik z podanym adresem e-mail nie został znaleziony",
             "CODE_U009": "Użytkownik z tym adresem e-mail już istnieje",
+            "CODE_R000": "Wygląda na to, że samochód, który chcesz wynająć, jest już zarezerwowany na wybrany okres.",
             "CODE_R004": "Wynajem nie istnieje",
             "UNKNOWN": "Nieznany błąd",
             "VALIDATION_ERROR": "Niektóre pola są wypełnione nieprawidłowo: {field}"
@@ -452,7 +463,9 @@
             "card_desc": "Wprowadź swój adres e-mail poniżej, aby zalogować się do konta",
             "email-required": "Adres e-mail jest wymagany",
             "email-email": "Adres e-mail musi być prawidłowy",
-            "password-required": "Hasło jest wymagane"
+            "password-required": "Hasło jest wymagane",
+            "success_login_msg": "Zalogowano pomyślnie",
+            "success_login_msg_desc": "Pomyślnie zalogowano do konta."
         },
 
         "page_title": {
@@ -476,7 +489,8 @@
             "car": "Samochód",
             "employee-dashboard": "Panel pracownika",
             "tickets": "Zgłoszenia",
-            "contact": "Kontakt"
+            "contact": "Kontakt",
+            "about-us": "O nas"
         },
 
         "contact_form": {
@@ -502,6 +516,31 @@
 
             "message_sent": "Wiadomość została pomyślnie wysłana",
             "message_sent_desc": "Dziękujemy za kontakt. Odpowiemy najszybciej, jak to możliwe."
+        },
+
+        "about_us_page": {
+            "page_title": "O nas",
+            "page_desc1": "Wejdź na wyższy poziom jazdy dzięki naszej aplikacji do wynajmu sportowych i luksusowych samochodów z siedzibą w Warszawie. Oferujemy łatwy dostęp do ekskluzywnej floty pojazdów o wysokich osiągach i prestiżowym charakterze — od zwinnych supersamochodów po eleganckie limuzyny biznesowe — dostępnych na wyciągnięcie ręki.",
+            "page_desc2": "Niezależnie od tego, czy chcesz zrobić wrażenie na spotkaniu biznesowym, uczcić wyjątkową okazję, czy po prostu poczuć dreszczyk emocji za kierownicą światowej klasy auta, nasza aplikacja sprawia, że cały proces jest niezwykle prosty. Sprawdzaj dostępność w czasie rzeczywistym, porównuj modele i rezerwuj natychmiast dzięki przejrzystym cenom oraz elastycznym opcjom wynajmu.",
+            "page_desc3": "Zaprojektowana z myślą o wygodzie i elegancji platforma oferuje dostawę pod wskazany adres na terenie Warszawy, całodobowe wsparcie klienta oraz szybki i bezpieczny proces rezerwacji. Każdy pojazd w naszej flocie jest starannie utrzymany, aby zapewnić najwyższą wydajność, bezpieczeństwo i komfort.",
+            "page_desc4": "Prowadź wyjątkowo. Zawsze. W całej Warszawie."
+        },
+
+        "auth_form": {
+            "success_signup_msg": "Konto zostało utworzone",
+            "success_signup_msg_desc": "Twoje konto zostało pomyślnie utworzone. Zostałeś automatycznie zalogowany.",
+            "name-required": "Imię jest wymagane",
+            "name-minLength": "Imię musi zawierać co najmniej 3 znaki",
+            "secondName-required": "Nazwisko jest wymagane",
+            "secondName-minLength": "Nazwisko musi zawierać co najmniej 3 znaki",
+            "email-required": "Adres e-mail jest wymagany",
+            "email-email": "Adres e-mail musi być prawidłowy",
+            "phoneNumber-required": "Numer telefonu jest wymagany",
+            "phoneNumber-minLength": "Numer telefonu musi zawierać co najmniej 12 znaków",
+            "password-required": "Hasło jest wymagane",
+            "password-minLength": "Hasło musi zawierać co najmniej 4 znaki",
+            "passwordRepeat-required": "Powtórzenie hasła jest wymagane",
+            "passwordRepeat-sameAsPassword": "Hasła nie są takie same"
         }
     }
 }

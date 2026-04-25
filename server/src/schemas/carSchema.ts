@@ -6,19 +6,19 @@ export type CatDocument = HydratedDocument<Car>;
 @Schema({ _id: false })
 export class Details {
     @Prop()
-    accelerationTo100: number;
+    accelerationTo100!: number;
 
     @Prop()
-    horsepower: number;
+    horsepower!: number;
 
     @Prop()
-    torqueNm: number;
+    torqueNm!: number;
 
     @Prop()
-    transmission: string;
+    transmission!: string;
 
     @Prop()
-    numberOfSeats: number;
+    numberOfSeats!: number;
 }
 
 export const DetailsSchema = SchemaFactory.createForClass(Details);
@@ -26,22 +26,22 @@ export const DetailsSchema = SchemaFactory.createForClass(Details);
 @Schema({ _id: false })
 export class Pricing {
     @Prop()
-    day: number;
+    day!: number;
 
     @Prop()
-    days2_3: number;
+    days2_3!: number;
 
     @Prop()
-    days4_6: number;
+    days4_6!: number;
 
     @Prop()
-    days7_13: number;
+    days7_13!: number;
 
     @Prop()
-    days14_29: number;
+    days14_29!: number;
 
     @Prop()
-    month: number;
+    month!: number;
 }
 
 const PriceSchema = SchemaFactory.createForClass(Pricing);
@@ -49,22 +49,22 @@ const PriceSchema = SchemaFactory.createForClass(Pricing);
 @Schema()
 export class Car {
     @Prop()
-    name: string;
+    name!: string;
 
     @Prop()
-    images: string[];
+    images!: string[];
 
     @Prop({ type: DetailsSchema })
-    details: Details;
+    details!: Details;
 
     @Prop()
-    deposit: number;
+    deposit!: number;
 
     @Prop({ type: PriceSchema })
-    pricing: Pricing;
+    pricing!: Pricing;
 
     @Prop()
-    brand: string;
+    brand!: string;
 }
 
 export const CarSchema = SchemaFactory.createForClass(Car);
