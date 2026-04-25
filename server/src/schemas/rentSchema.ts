@@ -7,25 +7,25 @@ export type RentDocument = HydratedDocument<Rent>;
 @Schema()
 export class Rent {
     @Prop({ type: Types.ObjectId, required: true, ref: 'Car' })
-    carId: Types.ObjectId;
+    carId!: Types.ObjectId;
 
     @Prop({ type: Types.ObjectId, required: true, ref: 'User' })
-    userId: Types.ObjectId;
+    userId!: Types.ObjectId;
 
     @Prop({ required: true })
-    rentFrom: number;
+    rentFrom!: number;
 
     @Prop({ required: true })
-    rentTo: number;
+    rentTo!: number;
 
     @Prop({ required: true })
-    totalPrice: number;
+    totalPrice!: number;
 
     @Prop({ required: true })
-    pickupLocation: string;
+    pickupLocation!: string;
 
     @Prop({ required: true })
-    pickupTime: string;
+    pickupTime!: string;
 
     @Prop({
         type: String,

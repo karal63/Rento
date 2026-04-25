@@ -270,6 +270,7 @@
             "CODE_U000": "Email or password is incorrect",
             "CODE_U004": "User with given email not found",
             "CODE_U009": "User with this email already exists",
+            "CODE_R000": "It seems like the car you want to rent is already booked for the selected period.",
             "CODE_R004": "Rental not found",
             "UNKNOWN": "Unknown error",
             "VALIDATION_ERROR": "Some fields are filled in incorrectly: {field}"

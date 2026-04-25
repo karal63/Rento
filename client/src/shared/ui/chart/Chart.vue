@@ -7,7 +7,7 @@
     import { useI18n } from 'vue-i18n';
 
     const themeStore = useThemeStore();
-    const { t } = useI18n();
+    const { t, locale } = useI18n();
 
     const props = defineProps<{
         rentalsStats: MonthSummary[] | undefined;
@@ -60,7 +60,7 @@
                 labels: {
                     formatter: (_value, timestamp) =>
                         timestamp
-                            ? new Date(timestamp).toLocaleDateString('en-US', {
+                            ? new Date(timestamp).toLocaleDateString(locale.value, {
                                   month: 'short',
                                   year: 'numeric',
                               })
@@ -89,7 +89,7 @@
                 }): string {
                     const timestamp = w.globals.seriesX[0]![dataPointIndex]!;
 
-                    const dateLabel = new Date(timestamp).toLocaleDateString('en-US', {
+                    const dateLabel = new Date(timestamp).toLocaleDateString(locale.value, {
                         month: 'short',
                         year: 'numeric',
                     });

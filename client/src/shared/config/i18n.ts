@@ -11,6 +11,7 @@ function loadLocaleMessages() {
         const matched = path.match(/\.\/const\/lang\/([A-Za-z0-9-_]+)\.json$/i);
         if (matched && matched[1]) {
             const locale = matched[1];
+
             messages[locale] =
                 ((locales[path] as { default: Record<string, never> }).default as never) ||
                 locales[path];
@@ -23,8 +24,8 @@ function loadLocaleMessages() {
 
 const i18n = createI18n({
     legacy: false, // optional, depending on Composition or Legacy API
-    locale: JSON.parse(localStorage.getItem('rento_lang') ?? '"en"'),
-    fallbackLocale: 'en',
+    locale: JSON.parse(localStorage.getItem('rento_lang') ?? '"en-US"'),
+    fallbackLocale: 'en-US',
     messages: loadLocaleMessages(),
 });
 

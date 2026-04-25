@@ -45,9 +45,32 @@ export class RentService {
         return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
     }
 
-    async createRent(rent: Rent) {
-        const newRent = new this.rentModel(rent);
+    async createRent(candidate: Rent) {
+        const allCarRentals = await this.rentModel.find({
+            carId: candidate.carId,
+            rentTo: { $gt: new Date().getTime() },
+            status: { $nin: [Status.Cancelled, Status.Completed] },
+        });
+
+        if (
+            this.hasRentalOverlap(
+                candidate.rentFrom,
+                candidate.rentTo,
+                allCarRentals,
+            )
+        ) {
+            throw new BadRequestException(LogCode.CODE_R000);
+        }
+
+        const newRent = new this.rentModel(candidate);
         return await newRent.save();
+    }
+
+    hasRentalOverlap(rentalFrom: number, rentalTo: number, rentals: Rent[]) {
+        return rentals.some(
+            (rental) =>
+                !(rental.rentFrom >= rentalFrom && rental.rentTo <= rentalTo),
+        );
     }
 
     async findRentalBySessionId(sessionId: string, userId: string) {

@@ -270,6 +270,7 @@
             "CODE_U000": "Email lub hasło jest nieprawidłowe",
             "CODE_U004": "Użytkownik z podanym adresem e-mail nie został znaleziony",
             "CODE_U009": "Użytkownik z tym adresem e-mail już istnieje",
+            "CODE_R000": "Wygląda na to, że samochód, który chcesz wynająć, jest już zarezerwowany na wybrany okres.",
             "CODE_R004": "Wynajem nie istnieje",
             "UNKNOWN": "Nieznany błąd",
             "VALIDATION_ERROR": "Niektóre pola są wypełnione nieprawidłowo: {field}"

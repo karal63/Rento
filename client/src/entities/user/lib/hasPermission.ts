@@ -21,8 +21,6 @@ export const hasPermission = (permission: Permission) => {
 
     if (!userStore.user) return false;
 
-    console.log(userStore.user.roles);
-
     return userStore.user.roles.some(role =>
         (ROLES[role] as readonly Permission[]).includes(permission)
     );

@@ -36,7 +36,7 @@
     <ProtectedHeader title="Rental Details" />
 
     <section v-if="isLoading" class="mt-10">
-        <div class="skeleton w-full xl:w-[40%] h-[300px] rounded-md"></div>
+        <div class="skeleton w-full xl:w-[40%] h-75 rounded-md"></div>
     </section>
 
     <section v-else-if="error" class="mt-10">

@@ -50,7 +50,7 @@
                         class="cursor-pointer hover:bg-main-hover-bg rounded-md px-2 py-1 transition"
                     >
                         <div class="flex gap-1 text-xl flex-center">
-                            {{ locale }}
+                            {{ locale.split('-')[0] }}
                             <Icon class="text-2xl" icon="iconamoon:arrow-down-2-light" />
                         </div>
                     </Button>
@@ -63,7 +63,7 @@
                             class="bg-main-bg uppercase py-2 w-full rounded-md cursor-pointer hover:bg-main-hover-bg transition"
                             :class="lang === locale && 'bg-main-hover-bg'"
                         >
-                            {{ lang }}
+                            {{ lang.split('-')[0] }}
                         </button>
                     </template>
                 </Dropdown>

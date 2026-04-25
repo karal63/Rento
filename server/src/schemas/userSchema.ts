@@ -7,7 +7,7 @@ export type UserDocument = HydratedDocument<User>;
 @Schema()
 export class User extends Document {
     @Prop()
-    name: string;
+    name!: string;
 
     @Prop()
     secondName?: string;
@@ -26,7 +26,7 @@ export class User extends Document {
         enum: Object.values(Role),
         default: [Role.User],
     })
-    roles: Role[];
+    roles!: Role[];
 
     @Prop()
     telegram_id?: string;
@@ -35,16 +35,16 @@ export class User extends Document {
         default: 'local',
         enum: ['local', 'telegram'],
     })
-    auth_provider: 'local' | 'telegram';
+    auth_provider!: 'local' | 'telegram';
 
     @Prop()
     username?: string;
 
     @Prop({ required: true, default: Date.now() })
-    createdAt: number;
+    createdAt?: number;
 
     @Prop()
-    updatedAt: number;
+    updatedAt?: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
